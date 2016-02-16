@@ -1,0 +1,5 @@
+'Hello Ordinary',
+error('Hello Error'),
+warning('Hello Warning'),
+trace('Hello Trace'),
+debug('Hello Debug')

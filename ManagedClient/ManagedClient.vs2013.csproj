@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B5E6635C-D67B-4FA2-BEC5-DEB09F731B54}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ManagedClient</RootNamespace>
+    <AssemblyName>ManagedClient.4</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>ArsMagna.private.snk</AssemblyOriginatorKeyFile>
+    <ApplicationIcon>BlueBook.ico</ApplicationIcon>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\ManagedClient.4.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr4.Runtime.net40, Version=4.3.0.0, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr4.Runtime.4.3.0\lib\net40-client\Antlr4.Runtime.net40.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Output\AbstractOutput.cs" />
+    <Compile Include="AfterQueryEventArgs.cs" />
+    <Compile Include="BatchRecordReader.cs" />
+    <Compile Include="BeforeQueryEventArgs.cs" />
+    <Compile Include="NumberText.cs" />
+    <Compile Include="DatabaseChangedEventArgs.cs" />
+    <Compile Include="Direct\InvertedFile32.cs" />
+    <Compile Include="Direct\IrbisDirectReader32.cs" />
+    <Compile Include="Direct\MstControlRecord32.cs" />
+    <Compile Include="Direct\MstDictionaryEntry32.cs" />
+    <Compile Include="Direct\MstRecordLeader32.cs" />
+    <Compile Include="Direct\MstFile32.cs" />
+    <Compile Include="Direct\MstRecord32.cs" />
+    <Compile Include="Direct\XrfFile32.cs" />
+    <Compile Include="Direct\XrfRecord32.cs" />
+    <Compile Include="ExceptionEventArgs.cs" />
+    <Compile Include="FieldFilter.cs" />
+    <Compile Include="FieldMergeSpecification.cs" />
+    <Compile Include="Fields\CodesInfo.cs" />
+    <Compile Include="Fields\ExemplarInfo.cs" />
+    <Compile Include="FieldReference.cs" />
+    <Compile Include="Fst\FstItem.cs" />
+    <Compile Include="Fst\FstProcessor.cs" />
+    <Compile Include="Gbl\GblCommand.cs" />
+    <Compile Include="Gbl\GblBuilder.cs" />
+    <Compile Include="Gbl\GblItem.cs" />
+    <Compile Include="Gbl\GblMaker.cs" />
+    <Compile Include="Gbl\GblResult.cs" />
+    <Compile Include="Gbl\GblEventArgs.cs" />
+    <Compile Include="Gbl\GblFinal.cs" />
+    <Compile Include="Gbl\GlobalCorrector.cs" />
+    <Compile Include="Highlight\IrbisHyperTextHighlighter.cs" />
+    <Compile Include="Highlight\IrbisPlainTextHighlighter.cs" />
+    <Compile Include="Highlight\IrbisRichTextHighlighter.cs" />
+    <Compile Include="Highlight\IrbisTextHighlighter.cs" />
+    <Compile Include="IfpRecord.cs" />
+    <Compile Include="IniFile.cs" />
+    <Compile Include="Direct\InvertedFile64.cs" />
+    <Compile Include="IrbisAddress.cs" />
+    <Compile Include="IrbisAlphabetTable.cs" />
+    <Compile Include="IrbisAnswerItem.cs" />
+    <Compile Include="IrbisAuthenticationEventArgs.cs" />
+    <Compile Include="IrbisCache.cs" />
+    <Compile Include="IrbisCatalogParameters.cs" />
+    <Compile Include="IrbisClientInfo.cs" />
+    <Compile Include="IrbisClientSettings.cs" />
+    <Compile Include="IrbisCommadEventArgs.cs" />
+    <Compile Include="IrbisContextSaver.cs" />
+    <Compile Include="IrbisDatabaseInfo.cs" />
+    <Compile Include="IrbisDate.cs" />
+    <Compile Include="IrbisException.cs" />
+    <Compile Include="IrbisExecutive.cs" />
+    <Compile Include="IrbisFst.cs" />
+    <Compile Include="IrbisIniFile.cs" />
+    <Compile Include="IrbisInputMode.cs" />
+    <Compile Include="IrbisIOUtils.cs" />
+    <Compile Include="IrbisLine.cs" />
+    <Compile Include="IrbisMenu.cs" />
+    <Compile Include="IrbisOpt.cs" />
+    <Compile Include="IrbisPath.cs" />
+    <Compile Include="IrbisPft.cs" />
+    <Compile Include="IrbisProcessInfo.cs" />
+    <Compile Include="Direct\IrbisDirectReader64.cs" />
+    <Compile Include="IrbisUpperCaseTable.cs" />
+    <Compile Include="Magazines\MagazineCumulation.cs" />
+    <Compile Include="Morphology\IrbisMorphologyProvider.cs" />
+    <Compile Include="Morphology\MorphologyEngine.cs" />
+    <Compile Include="Morphology\MorphologyEntry.cs" />
+    <Compile Include="Morphology\MorphologyProvider.cs" />
+    <Compile Include="Output\ConsoleOutput.cs" />
+    <Compile Include="Output\FileOutput.cs" />
+    <Compile Include="Output\NullOutput.cs" />
+    <Compile Include="Output\TeeOutput.cs" />
+    <Compile Include="Pft\Abstraction\PftAbstractionLayer.cs" />
+    <Compile Include="Pft\Ast\PftAstList.cs" />
+    <Compile Include="Pft\Ast\PftCommandC.cs" />
+    <Compile Include="Pft\Ast\PftCommandX.cs" />
+    <Compile Include="Pft\Ast\PftCompositeElement.cs" />
+    <Compile Include="Pft\Ast\PftCompositeElementList.cs" />
+    <Compile Include="Pft\Ast\PftCondition.cs" />
+    <Compile Include="Pft\Ast\PftConditionalLiteral.cs" />
+    <Compile Include="Pft\Ast\PftDebugBreak.cs" />
+    <Compile Include="Pft\Ast\PftDebugStatement.cs" />
+    <Compile Include="Pft\Ast\PftEatFunction.cs" />
+    <Compile Include="Pft\Ast\PftErrorStatement.cs" />
+    <Compile Include="Pft\Ast\PftEscapedLiteral.cs" />
+    <Compile Include="Pft\Ast\PftFatalStatement.cs" />
+    <Compile Include="Pft\Ast\PftFieldReference.cs" />
+    <Compile Include="Pft\Ast\PftGlobalReference.cs" />
+    <Compile Include="Pft\Ast\PftGroupMember.cs" />
+    <Compile Include="Pft\Ast\PftGroupStatement.cs" />
+    <Compile Include="Pft\Ast\PftHashOperator.cs" />
+    <Compile Include="Pft\Ast\PftIffFunction.cs" />
+    <Compile Include="Pft\Ast\PftIncrementFunction.cs" />
+    <Compile Include="Pft\Ast\PftLeftHand.cs" />
+    <Compile Include="Pft\Ast\PftModeSwitch.cs" />
+    <Compile Include="Pft\Ast\PftNlOperator.cs" />
+    <Compile Include="Pft\Ast\PftPercentOperator.cs" />
+    <Compile Include="Pft\Ast\PftRightHand.cs" />
+    <Compile Include="Pft\Ast\PftSimpleFormat.cs" />
+    <Compile Include="Pft\Ast\PftSlashOperator.cs" />
+    <Compile Include="Pft\Ast\PftUnused.cs" />
+    <Compile Include="Pft\Ast\PftRepeatableLiteral.cs" />
+    <Compile Include="Pft\Debugging\PftBreakpoint.cs" />
+    <Compile Include="Pft\Debugging\PftDebugEventArgs.cs" />
+    <Compile Include="Pft\Debugging\PftDebugger.cs" />
+    <Compile Include="Pft\PftArgument.cs" />
+    <Compile Include="Pft\PftAst.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pft\PftBaseListener.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pft\Ast\PftCommaOperator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pft\PftConditionalStatement.cs" />
+    <Compile Include="Pft\PftContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pft\PftDispatcher.cs" />
+    <Compile Include="Pft\PftException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pft\PftFatalException.cs" />
+    <Compile Include="Pft\PftFieldOutputMode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pft\Ast\PftFormatExit.cs" />
+    <Compile Include="Pft\PftFormatExitManager.cs" />
+    <Compile Include="Pft\PftFormatter.cs" />
+    <Compile Include="Pft\PftGlobalManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pft\PftGlobalVariable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pft\Ast\PftInfoBlock.cs" />
+    <Compile Include="Pft\PftLexer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pft\PftListener.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pft\PftNotConnectedException.cs" />
+    <Compile Include="Pft\PftOutputBuffer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pft\PftOutputFormat.cs" />
+    <Compile Include="Pft\PftParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pft\Ast\PftProcedure.cs" />
+    <Compile Include="Pft\PftProcedureManager.cs" />
+    <Compile Include="Pft\Ast\PftProgram.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pft\PftSemanticException.cs" />
+    <Compile Include="Pft\PftSyntaxException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pft\Ast\PftUnconditionalLiteral.cs" />
+    <Compile Include="Pft\PftUtility.cs" />
+    <Compile Include="Pft\PftVariable.cs" />
+    <Compile Include="Pft\PftVariableManager.cs" />
+    <Compile Include="Pft\PrettyPrinting\PftDefaultStyle.cs" />
+    <Compile Include="Pft\PrettyPrinting\PftPrettyPrinter.cs" />
+    <Compile Include="Pft\PrettyPrinting\PftStyle.cs" />
+    <Compile Include="Processing\ProcessingContext.cs" />
+    <Compile Include="Processing\ProcessingResult.cs" />
+    <Compile Include="Processing\ProtocolStream.cs" />
+    <Compile Include="Processing\RecordHandler.cs" />
+    <Compile Include="Processing\RecordProcessor.cs" />
+    <Compile Include="Quality\FieldDefect.cs" />
+    <Compile Include="Quality\IrbisRule.cs" />
+    <Compile Include="Quality\RecordReport.cs" />
+    <Compile Include="Quality\RuleContext.cs" />
+    <Compile Include="Quality\RuleReport.cs" />
+    <Compile Include="Quality\RuleSet.cs" />
+    <Compile Include="Quality\Rules\Check10.cs" />
+    <Compile Include="Quality\Rules\Check610.cs" />
+    <Compile Include="Quality\Rules\Check908.cs" />
+    <Compile Include="Quality\Rules\CheckEmptySubfields.cs" />
+    <Compile Include="Quality\Rules\CheckWhitespace.cs" />
+    <Compile Include="Quality\Rules\Require210.cs" />
+    <Compile Include="Quality\Rules\Require215.cs" />
+    <Compile Include="Quality\Rules\Require60.cs" />
+    <Compile Include="Quality\Rules\Require60x.cs" />
+    <Compile Include="Quality\Rules\Require900.cs" />
+    <Compile Include="Quality\Rules\Require903.cs" />
+    <Compile Include="Quality\Rules\Require910.cs" />
+    <Compile Include="Quality\Rules\Require920.cs" />
+    <Compile Include="Quality\Rules\Require101.cs" />
+    <Compile Include="Quality\Rules\Require102.cs" />
+    <Compile Include="Quality\Rules\Require200.cs" />
+    <Compile Include="Quality\Rules\Require461.cs" />
+    <Compile Include="Quality\Rules\Require700.cs" />
+    <Compile Include="Quality\RuleUtility.cs" />
+    <Compile Include="Query\QueryManager.cs" />
+    <Compile Include="IrbisRecord.cs" />
+    <Compile Include="IrbisReturnCode.cs" />
+    <Compile Include="IrbisServerSettings.cs" />
+    <Compile Include="IrbisServerStat.cs" />
+    <Compile Include="Query\IrbisQueryLexer.cs" />
+    <Compile Include="Query\IrbisQueryListener.cs" />
+    <Compile Include="Query\IrbisQueryParser.cs" />
+    <Compile Include="Query\QAst.cs" />
+    <Compile Include="Ranges\NumberRange.cs" />
+    <Compile Include="Ranges\NumberRangeCollection.cs" />
+    <Compile Include="Ranges\NumberRangesBaseListener.cs" />
+    <Compile Include="Ranges\NumberRangesLexer.cs" />
+    <Compile Include="Ranges\NumberRangesListener.cs" />
+    <Compile Include="Ranges\NumberRangesParser.cs" />
+    <Compile Include="Readers\ChairInfo.cs" />
+    <Compile Include="Readers\IriProfile.cs" />
+    <Compile Include="Readers\ReaderUtility.cs" />
+    <Compile Include="RecordFieldCollection.cs" />
+    <Compile Include="Schema\FieldSchema.cs" />
+    <Compile Include="Schema\RecordSchema.cs" />
+    <Compile Include="Schema\SchemaValidator.cs" />
+    <Compile Include="Schema\SubFieldSchema.cs" />
+    <Compile Include="Schema\SchemaItem.cs" />
+    <Compile Include="Sockets\IrbisAsyncSocket.cs" />
+    <Compile Include="Sockets\IrbisSocket.cs" />
+    <Compile Include="IrbisStandardDatabases.cs" />
+    <Compile Include="IrbisStopWords.cs" />
+    <Compile Include="IrbisPage.cs" />
+    <Compile Include="IrbisTags.cs" />
+    <Compile Include="SubFieldCollection.cs" />
+    <Compile Include="TextWithEncoding.cs" />
+    <Compile Include="Transactions\IrbisTransactionAction.cs" />
+    <Compile Include="Transactions\IrbisTransactionContext.cs" />
+    <Compile Include="Transactions\IrbisTransactionEventArgs.cs" />
+    <Compile Include="Transactions\IrbisTransactionItem.cs" />
+    <Compile Include="Transactions\IrbisTransactionManager.cs" />
+    <Compile Include="IrbisTree.cs" />
+    <Compile Include="IrbisUserInfo.cs" />
+    <Compile Include="IrbisUtilities.cs" />
+    <Compile Include="IrbisVersion.cs" />
+    <Compile Include="IrbisWorkSheet.cs" />
+    <Compile Include="IrbisWorkstation.cs" />
+    <Compile Include="IrbisXml.cs" />
+    <Compile Include="IrbisWorkSheets.cs" />
+    <Compile Include="ManagedClient64.cs" />
+    <Compile Include="Mapping\FieldAttribute.cs" />
+    <Compile Include="Mapping\FieldMapper.cs" />
+    <Compile Include="Mapping\SubFieldAttribute.cs" />
+    <Compile Include="Mapping\SubFieldMapper.cs" />
+    <Compile Include="MergeAction.cs" />
+    <Compile Include="Direct\MstControlRecord64.cs" />
+    <Compile Include="Direct\MstDictionaryEntry64.cs" />
+    <Compile Include="Direct\MstFile64.cs" />
+    <Compile Include="Direct\MstRecord64.cs" />
+    <Compile Include="Direct\MstRecordLeader64.cs" />
+    <Compile Include="NodeItem.cs" />
+    <Compile Include="NodeLeader.cs" />
+    <Compile Include="NodeRecord.cs" />
+    <Compile Include="NumberFilter.cs" />
+    <Compile Include="ObjectDumper.cs" />
+    <Compile Include="Magazines\MagazineArticleInfo.cs" />
+    <Compile Include="Magazines\MagazineInfo.cs" />
+    <Compile Include="Magazines\MagazineIssueInfo.cs" />
+    <Compile Include="Magazines\MagazineManager.cs" />
+    <Compile Include="OrganizationInfo.cs" />
+    <Compile Include="Parser\IrbisParser.cs" />
+    <Compile Include="IrbisSearchEngine.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryHeader.cs" />
+    <Compile Include="Readers\ReaderInfo.cs" />
+    <Compile Include="Readers\ReaderManager.cs" />
+    <Compile Include="RecordBuffer.cs" />
+    <Compile Include="RecordField.cs" />
+    <Compile Include="RecordMergeSpecification.cs" />
+    <Compile Include="RecordReference.cs" />
+    <Compile Include="RecordStatus.cs" />
+    <Compile Include="RegistrationInfo.cs" />
+    <Compile Include="Requests\BookRequest.cs" />
+    <Compile Include="Requests\RequestPrefixes.cs" />
+    <Compile Include="Requests\RequestRefusals.cs" />
+    <Compile Include="ResponseHeader.cs" />
+    <Compile Include="IrbisSearchMenu.cs" />
+    <Compile Include="Fields\RevisionInfo.cs" />
+    <Compile Include="SearchPostingInfo.cs" />
+    <Compile Include="SearchTermInfo.cs" />
+    <Compile Include="SubField.cs" />
+    <Compile Include="TermLink.cs" />
+    <Compile Include="Utilities.cs" />
+    <Compile Include="VisitInfo.cs" />
+    <Compile Include="Direct\XrfFile64.cs" />
+    <Compile Include="Direct\XrfRecord64.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Antlr\antlr4-csharp-4.3-complete.jar" />
+    <None Include="BlueBook.ico" />
+    <None Include="packages.config" />
+    <None Include="Quality\FieldSpec.txt" />
+    <Content Include="Server64.doc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Antlr\generate.cmd" />
+    <None Include="Antlr\IrbisQuery.g4" />
+    <None Include="ArsMagna.private.snk" />
+    <None Include="Pft\repeating_group.docx" />
+    <None Include="Pft\оператор break.docx" />
+    <None Include="Pft\Операторы языка форматирования ИРБИС.docx" />
+    <None Include="Pft\Функции языка форматирования ИРБИС.docx" />
+    <None Include="Pft\Функция f.docx" />
+    <None Include="Pft\Функция val.docx" />
+    <None Include="Pft\Язык форматирования системы ИРБИС.docx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

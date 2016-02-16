@@ -1,0 +1,6 @@
+EXPR=3
+BANG=1
+MINUS=4
+DELIMITER=2
+'!'=1
+'-'=4
