@@ -6,16 +6,26 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 
 #endregion
 
 namespace ManagedClient
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Serializable]
+    [ClassInterface(ClassInterfaceType.None)]
     public class IniFile
         : Dictionary<string, IniFile.Section>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        [Serializable]
+        [ClassInterface(ClassInterfaceType.None)]
         public sealed class Section
             : Dictionary<string, string>
         {

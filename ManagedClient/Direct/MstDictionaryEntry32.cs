@@ -15,6 +15,7 @@ namespace ManagedClient.Direct
     /// описывающий поле переменной длины.
     /// </summary>
     [Serializable]
+    [ComVisible(false)]
     [StructLayout(LayoutKind.Sequential)]
     public sealed class MstDictionaryEntry32
     {

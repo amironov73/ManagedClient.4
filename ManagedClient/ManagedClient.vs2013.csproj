@@ -228,6 +228,8 @@
     <Compile Include="Pft\PrettyPrinting\PftDefaultStyle.cs" />
     <Compile Include="Pft\PrettyPrinting\PftPrettyPrinter.cs" />
     <Compile Include="Pft\PrettyPrinting\PftStyle.cs" />
+    <Compile Include="Pooling\IrbisConnectionPool.cs" />
+    <Compile Include="Pooling\PoolUtilities.cs" />
     <Compile Include="Processing\ProcessingContext.cs" />
     <Compile Include="Processing\ProcessingResult.cs" />
     <Compile Include="Processing\ProtocolStream.cs" />
@@ -372,6 +374,7 @@
     <None Include="Pft\Язык форматирования системы ИРБИС.docx" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="SubBasing\" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>

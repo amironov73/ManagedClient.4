@@ -4,12 +4,17 @@
 #region Using directives
 
 using System;
+using System.Runtime.InteropServices;
 
 #endregion
 
 namespace ManagedClient
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Serializable]
+    [ClassInterface(ClassInterfaceType.None)]
     public sealed class IrbisIniFile
         : IniFile
     {

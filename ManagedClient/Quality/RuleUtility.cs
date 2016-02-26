@@ -118,8 +118,22 @@ namespace ManagedClient.Quality
             return result.ToArray();
         }
 
+        public static IrbisRecord RenumberFields
+            (
+                IrbisRecord record
+            )
+        {
+            RenumberFields
+                (
+                    record,
+                    record.Fields
+                );
+            return record;
+        }
+
         public static void RenumberFields
             (
+                IrbisRecord record,
                 IEnumerable<RecordField> fields
             )
         {
@@ -127,6 +141,7 @@ namespace ManagedClient.Quality
 
             foreach (RecordField field in fields)
             {
+                field.Record = record;
                 int count = 1;
                 foreach (string s in seen)
                 {
@@ -136,6 +151,10 @@ namespace ManagedClient.Quality
                     }
                 }
                 field.Repeat = count;
+                foreach (SubField subField in field.SubFields)
+                {
+                    subField.Field = field;
+                }
             }
 
         }

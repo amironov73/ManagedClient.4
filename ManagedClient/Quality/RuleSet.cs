@@ -85,7 +85,7 @@ namespace ManagedClient.Quality
             };
             RuleUtility.RenumberFields
                 (
-                    context.Record.Fields
+                    context.Record
                 );
 
             result.Gold = 1000;

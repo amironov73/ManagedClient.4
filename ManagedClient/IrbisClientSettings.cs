@@ -6,12 +6,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 #endregion
 
 namespace ManagedClient
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    [Serializable]
+    [ClassInterface(ClassInterfaceType.None)]
     public sealed class IrbisClientSettings
         : IniFile
     {

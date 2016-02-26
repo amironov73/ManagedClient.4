@@ -17,6 +17,7 @@ namespace ManagedClient.Direct
     /// автоматически.
     /// </summary>
     [Serializable]
+    [ComVisible(false)]
     [StructLayout(LayoutKind.Sequential)]
     public sealed class MstControlRecord64
     {

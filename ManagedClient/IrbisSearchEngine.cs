@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using ManagedClient;
 
@@ -14,10 +15,15 @@ namespace ManagedClient
     /// Параметры и операции, связанные с поисковыми сценариями
     /// </summary>
     [Serializable]
+    [ComVisible(false)]
     public sealed class IrbisSearchEngine
     {
         #region Nested classes
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [ComVisible(false)]
         public class SearchTerm
         {
             public String Key;
@@ -48,12 +54,14 @@ namespace ManagedClient
             }
         }
 
+        [ComVisible(false)]
         public struct PostingsParams
         {
             public String Text;
             public List<int> Mfn;
         }
 
+        [ComVisible(false)]
         public struct SearchScenario
         {
             public String ItemName;
@@ -70,10 +78,13 @@ namespace ManagedClient
             public String ItemPft;
         }
 
+        [ComVisible(false)]
         public enum DictionType { None, Explanation, Special }
 
+        [ComVisible(false)]
         public enum LogicType { Or, OrAnd, OrAndNot, OrAndNotAndField, OrAndNotAndPhrase }
 
+        [ComVisible(false)]
         public struct SearchQualifier
         {
             public String QualifName;

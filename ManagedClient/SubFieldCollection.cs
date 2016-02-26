@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 #endregion
 
@@ -18,6 +19,7 @@ namespace ManagedClient
     /// значения <c>null</c>.
     /// </summary>
     [Serializable]
+    [ClassInterface(ClassInterfaceType.None)]
     public sealed class SubFieldCollection
         : Collection<SubField>
     {

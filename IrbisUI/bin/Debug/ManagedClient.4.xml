@@ -901,6 +901,16 @@
             используется специальный блок ссылок.
             </summary>
         </member>
+        <member name="T:ManagedClient.IniFile">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ManagedClient.IniFile.Section">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="F:ManagedClient.Direct.InvertedFile64.NodeLength">
             <summary>
             Длина записи N01/L01.
@@ -1129,6 +1139,11 @@
             Номер последней команды
             </summary>
         </member>
+        <member name="T:ManagedClient.IrbisClientSettings">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:ManagedClient.IrbisCommadEventArgs.#ctor">
             <summary>
             Default constructor.
@@ -1333,6 +1348,11 @@
         <member name="T:ManagedClient.IrbisFst.Entry">
             <summary>
             Элемент (строка) FST.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.IrbisIniFile">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:ManagedClient.IrbisIniFile.AutoinFile">
@@ -7932,6 +7952,27 @@
             Красивое переформатирование PFT-скриптов.
             </summary>
         </member>
+        <member name="T:ManagedClient.Pooling.IrbisConnectionPool">
+            <summary>
+            Пул соединений с сервером.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Pooling.IrbisConnectionPool.#ctor">
+            <summary>
+            Конструктор по умолчанию.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Pooling.IrbisConnectionPool.#ctor(System.String)">
+            <summary>
+            Конструктор с конкретной строкой соединения.
+            </summary>
+            <param name="connectionString"></param>
+        </member>
+        <member name="T:ManagedClient.Pooling.PoolUtilities">
+            <summary>
+            Утилиты для работы пулом соединений.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Quality.FieldDefect">
             <summary>
             Дефект в поле/подполе.
@@ -9308,6 +9349,12 @@
             
             </summary>
         </member>
+        <member name="T:ManagedClient.Schema.SchemaValidator`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
         <member name="T:ManagedClient.Schema.SubFieldSchema">
             <summary>
             
@@ -10396,6 +10443,11 @@
             Параметры и операции, связанные с поисковыми сценариями
             </summary>
         </member>
+        <member name="T:ManagedClient.IrbisSearchEngine.SearchTerm">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ManagedClient.QueryHeader">
             <summary>
             Заголовок запроса, уходящего на сервер.
@@ -10739,6 +10791,22 @@
             присваивается значение, содержащее разделитель.
             </summary>
         </member>
+        <member name="F:ManagedClient.RecordField.Repeat">
+            <summary>
+            Повторение поля.
+            Настраивается перед передачей
+            в скрипты.
+            Не используется в большинстве сценариев.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.RecordField.Record">
+            <summary>
+            Ссылка на запись, владеющую
+            данным полем. Настраивается
+            перед передачей в скрипты.
+            Всё остальное время неактуально.
+            </summary>
+        </member>
         <member name="M:ManagedClient.RecordField.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:ManagedClient.RecordField"/> class.
@@ -10922,6 +10990,13 @@
             </summary>
             <returns>System.String.</returns>
         </member>
+        <member name="M:ManagedClient.RecordField.ToSortedText">
+            <summary>
+            Вывод поля в порядке алфавита
+            кодов подполей.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ManagedClient.RecordField.Parse(System.String,System.String)">
             <summary>
             Парсинг текстового проедставления поля
@@ -11011,11 +11086,6 @@
         <member name="P:ManagedClient.RecordField.Tag">
             <summary>
             Метка поля.
-            </summary>
-        </member>
-        <member name="P:ManagedClient.RecordField.Repeat">
-            <summary>
-            Повторение поля (не используется в большинстве сценариев).
             </summary>
         </member>
         <member name="P:ManagedClient.RecordField.Text">
@@ -11493,6 +11563,14 @@
         <member name="T:ManagedClient.SubField">
             <summary>
             Подполе MARC-записи.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.SubField.Field">
+            <summary>
+            Ссылка на поле, владеющее
+            данным подполем. Настраивается
+            перед передачей в скрипты.
+            Всё остальное время неактуально.
             </summary>
         </member>
         <member name="M:ManagedClient.SubField.#ctor">

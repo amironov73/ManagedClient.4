@@ -199,13 +199,13 @@ namespace ManagedClient
         public static string[] StandardConnectionStrings()
         {
             return new[]
-	        {
+            {
                 "irbis-connection",
                 "irbis-connection-string",
                 "irbis64-connection",
                 "irbis64",
                 "connection-string"
-	        };
+            };
         }
 
         /// <summary>

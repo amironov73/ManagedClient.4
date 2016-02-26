@@ -3,6 +3,7 @@
 
 #region Using directives
 
+using System.Runtime.InteropServices;
 using System.Text;
 
 #endregion
@@ -12,6 +13,7 @@ namespace ManagedClient
     /// <summary>
     /// Серверные настройки (живущие в irbis_server.ini).
     /// </summary>
+    [ComVisible(false)]
     public sealed class IrbisServerSettings
         : IniFile
     {

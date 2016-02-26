@@ -47,16 +47,15 @@ namespace ManagedClient
         public string Tag { get; set; }
 
         /// <summary>
-        /// Повторение поля (не используется в большинстве сценариев).
+        /// Повторение поля.
+        /// Настраивается перед передачей
+        /// в скрипты.
+        /// Не используется в большинстве сценариев.
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
-        [DebuggerNonUserCode]
-        public int Repeat
-        {
-            get { return _repeat; }
-            set { _repeat = value; }
-        }
+        [NonSerialized]
+        public int Repeat;
 
         /// <summary>
         /// Значение поля до первого разделителя подполей.
@@ -107,6 +106,7 @@ namespace ManagedClient
         /// Список подполей.
         /// </summary>
         [XmlElement("subfield")]
+        [JsonProperty("subfields")]
         public SubFieldCollection SubFields
         {
             get { return _subFields; }
@@ -122,6 +122,17 @@ namespace ManagedClient
             get { return _userData; }
             set { _userData = value; }
         }
+
+        /// <summary>
+        /// Ссылка на запись, владеющую
+        /// данным полем. Настраивается
+        /// перед передачей в скрипты.
+        /// Всё остальное время неактуально.
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        [NonSerialized]
+        public IrbisRecord Record;
 
         #endregion
 
@@ -164,9 +175,6 @@ namespace ManagedClient
         #endregion
 
         #region Private members
-
-        [NonSerialized]
-        private int _repeat;
 
         private string _text;
 
@@ -640,6 +648,11 @@ namespace ManagedClient
             return result.ToString();
         }
 
+        /// <summary>
+        /// Вывод поля в порядке алфавита
+        /// кодов подполей.
+        /// </summary>
+        /// <returns></returns>
         public string ToSortedText()
         {
             StringBuilder result = new StringBuilder();

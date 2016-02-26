@@ -88,6 +88,17 @@ namespace ManagedClient
             set { _userData = value; }
         }
 
+        /// <summary>
+        /// Ссылка на поле, владеющее
+        /// данным подполем. Настраивается
+        /// перед передачей в скрипты.
+        /// Всё остальное время неактуально.
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        [NonSerialized]
+        public RecordField Field;
+
         #endregion
 
         #region Construction

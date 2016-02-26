@@ -6,12 +6,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
 
 #endregion
 
 namespace ManagedClient.Pft.Ast
 {
     [Serializable]
+    [ComVisible(false)]
     public sealed class PftAstList
         : Collection<PftCompositeElement>
     {
