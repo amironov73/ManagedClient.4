@@ -7973,39 +7973,9 @@
             Утилиты для работы пулом соединений.
             </summary>
         </member>
-        <member name="T:ManagedClient.Quality.FieldDefect">
+        <member name="T:ManagedClient.Quality.CheckBadCharacters">
             <summary>
-            Дефект в поле/подполе.
-            </summary>
-        </member>
-        <member name="P:ManagedClient.Quality.FieldDefect.Field">
-            <summary>
-            Поле.
-            </summary>
-        </member>
-        <member name="P:ManagedClient.Quality.FieldDefect.FieldRepeat">
-            <summary>
-            Повторение поля.
-            </summary>
-        </member>
-        <member name="P:ManagedClient.Quality.FieldDefect.Subfield">
-            <summary>
-            Подполе (если есть).
-            </summary>
-        </member>
-        <member name="P:ManagedClient.Quality.FieldDefect.Value">
-            <summary>
-            Значение поля/подполя.
-            </summary>
-        </member>
-        <member name="P:ManagedClient.Quality.FieldDefect.Message">
-            <summary>
-            Сообщение об ошибке.
-            </summary>
-        </member>
-        <member name="P:ManagedClient.Quality.FieldDefect.Damage">
-            <summary>
-            Урон от дефекта.
+            Проверка на плохие символы.
             </summary>
         </member>
         <member name="T:ManagedClient.Quality.IrbisRule">
@@ -8048,6 +8018,41 @@
         <member name="P:ManagedClient.Quality.IrbisRule.Worksheet">
             <summary>
             Рабочий лист.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.Quality.FieldDefect">
+            <summary>
+            Дефект в поле/подполе.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Quality.FieldDefect.Field">
+            <summary>
+            Поле.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Quality.FieldDefect.FieldRepeat">
+            <summary>
+            Повторение поля.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Quality.FieldDefect.Subfield">
+            <summary>
+            Подполе (если есть).
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Quality.FieldDefect.Value">
+            <summary>
+            Значение поля/подполя.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Quality.FieldDefect.Message">
+            <summary>
+            Сообщение об ошибке.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Quality.FieldDefect.Damage">
+            <summary>
+            Урон от дефекта.
             </summary>
         </member>
         <member name="T:ManagedClient.Quality.RecordReport">
@@ -8249,6 +8254,21 @@
         <member name="T:ManagedClient.Quality.RuleUtility">
             <summary>
             Утилиты для правил.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.RuleUtility.IsBadCharacter(System.Char)">
+            <summary>
+            Плохой символ?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.RuleUtility.BadCharacterPosition(System.String)">
+            <summary>
+            Индекс первого найденного плохого символа в строке
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Quality.RuleUtility.BadCharacters">
+            <summary>
+            Плохие символы, которые не должны встречаться в записях.
             </summary>
         </member>
         <member name="T:ManagedClient.Query.QueryManager">

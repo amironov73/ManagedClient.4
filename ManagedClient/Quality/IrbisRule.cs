@@ -159,12 +159,12 @@ namespace ManagedClient.Quality
             return (entry != null);
         }
 
-        protected static string WhereDoubleWhiteSpace
+        protected static string GetTextAtPosition
             (
-                string text
+                string text,
+                int position
             )
         {
-            int position = text.IndexOf("  ");
             int length = text.Length;
             int start = Math.Max(0, position - 1);
             int stop = Math.Min(length - 1, position + 2);
@@ -190,7 +190,20 @@ namespace ManagedClient.Quality
             (
                 start,
                 stop - start + 1
-            ).Trim();            
+            ).Trim();
+        }
+
+        protected static string ShowDoubleWhiteSpace
+            (
+                string text
+            )
+        {
+            int position = text.IndexOf("  ");
+            return GetTextAtPosition
+                (
+                    text,
+                    position
+                );
         }
 
         protected void CheckWhitespace
@@ -251,7 +264,7 @@ namespace ManagedClient.Quality
                         "Подполе {0}^{1} содержит двойной пробел: {2}",
                         field.Tag,
                         subfield.Code,
-                        WhereDoubleWhiteSpace(text)
+                        ShowDoubleWhiteSpace(text)
                     );
             }
         }
@@ -292,7 +305,7 @@ namespace ManagedClient.Quality
                             1,
                             "Поле {0} содержит двойной пробел: {1}",
                             field.Tag,
-                            WhereDoubleWhiteSpace(text)
+                            ShowDoubleWhiteSpace(text)
                         );
                 }
             }
@@ -546,6 +559,54 @@ namespace ManagedClient.Quality
                         (
                             field,
                             subField
+                        );
+                }
+            }
+        }
+
+        protected void MustNotContainBadCharacters
+            (
+                RecordField field
+            )
+        {
+            string text = field.Text;
+            if (!string.IsNullOrEmpty(text))
+            {
+                int position = RuleUtility.BadCharacterPosition(text);
+                if (position >= 0)
+                {
+                    AddDefect
+                        (
+                            field,
+                            3,
+                            "Поле {0} содержит запрещённые символы: {1}",
+                            GetTextAtPosition(text, position)
+                        );
+                }
+            }
+        }
+
+        protected void MustNotContainBadCharacters
+            (
+                RecordField field,
+                SubField subField
+            )
+        {
+            string text = subField.Text;
+            if (!string.IsNullOrEmpty(text))
+            {
+                int position = RuleUtility.BadCharacterPosition(text);
+                if (position >= 0)
+                {
+                    AddDefect
+                        (
+                            field,
+                            subField,
+                            3,
+                            "Подполе {0}^{1} содержит запрещённые символы: {2}",
+                            field.Tag,
+                            subField.Code,
+                            GetTextAtPosition(text, position)
                         );
                 }
             }

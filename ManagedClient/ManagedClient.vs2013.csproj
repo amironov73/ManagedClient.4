@@ -235,6 +235,7 @@
     <Compile Include="Processing\ProtocolStream.cs" />
     <Compile Include="Processing\RecordHandler.cs" />
     <Compile Include="Processing\RecordProcessor.cs" />
+    <Compile Include="Quality\CheckBadCharacters.cs" />
     <Compile Include="Quality\FieldDefect.cs" />
     <Compile Include="Quality\IrbisRule.cs" />
     <Compile Include="Quality\RecordReport.cs" />
