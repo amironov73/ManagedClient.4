@@ -6,8 +6,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
 
 #endregion
 
@@ -36,10 +34,17 @@ namespace ManagedClient.Ranges
 
         #region Construction
 
+        /// <summary>
+        /// Конструктор по умолчанию.
+        /// </summary>
         public NumberRange()
         {
         }
 
+        /// <summary>
+        /// Конструктор для диапазона, состоящего
+        /// из одного числа.
+        /// </summary>
         public NumberRange
             (
                 NumberText startAndStop
@@ -49,6 +54,11 @@ namespace ManagedClient.Ranges
             Stop = startAndStop;
         }
 
+        /// <summary>
+        /// Конструктор для произвольного диапазона.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="stop"></param>
         public NumberRange
             (
                 NumberText start, 
@@ -88,6 +98,11 @@ namespace ManagedClient.Ranges
 
         #region Public methods
 
+        /// <summary>
+        /// Проверка, содержит ли диапазон указанное значение.
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
         public bool Contains
             (
                 NumberText number
@@ -109,6 +124,11 @@ namespace ManagedClient.Ranges
                     && (number.CompareTo(Stop)) <= 0);
         }
 
+        /// <summary>
+        /// Разбор текстового представления диапазона.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static NumberRange Parse
             (
                 string text
@@ -153,11 +173,16 @@ namespace ManagedClient.Ranges
             return result;
         }
 
+        /// <summary>
+        /// Выполнение указанного действия на всём диапазоне.
+        /// </summary>
+        /// <param name="action"></param>
         public void For
             (
                 Action<NumberText> action
             )
         {
+            // ReSharper disable NotResolvedInText
             if (ReferenceEquals(action, null))
             {
                 throw new ArgumentNullException("action");
@@ -170,6 +195,7 @@ namespace ManagedClient.Ranges
             {
                 throw new ArgumentNullException("Stop");
             }
+            // ReSharper restore NotResolvedInText
 
             for (
                     NumberText current = Start; 
@@ -184,6 +210,9 @@ namespace ManagedClient.Ranges
             }
         }
 
+        /// <summary>
+        /// Пересечение двух диапазонов.
+        /// </summary>
         public NumberRange Intersect
             (
                 NumberRange other
@@ -196,11 +225,17 @@ namespace ManagedClient.Ranges
                 );
         }
 
+        /// <summary>
+        /// Проверка, не пустой ли диапазон.
+        /// </summary>
         public bool IsEmpty ()
         {
             return (Start > Stop);
         }
 
+        /// <summary>
+        /// Объединение двух диапазонов.
+        /// </summary>
         public NumberRange Union
             (
                 NumberRange other

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedClient.vs2013", "Man
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IrbisUI.vs2013", "IrbisUI\IrbisUI.vs2013.csproj", "{5708EF22-999A-4965-BAAE-C113DD1656A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{C3936D3C-859A-4C4C-BA20-CC79C05F4D71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5708EF22-999A-4965-BAAE-C113DD1656A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5708EF22-999A-4965-BAAE-C113DD1656A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5708EF22-999A-4965-BAAE-C113DD1656A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3936D3C-859A-4C4C-BA20-CC79C05F4D71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3936D3C-859A-4C4C-BA20-CC79C05F4D71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3936D3C-859A-4C4C-BA20-CC79C05F4D71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3936D3C-859A-4C4C-BA20-CC79C05F4D71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

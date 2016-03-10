@@ -291,6 +291,10 @@
     <Compile Include="IrbisStopWords.cs" />
     <Compile Include="IrbisPage.cs" />
     <Compile Include="IrbisTags.cs" />
+    <Compile Include="SubBasing\RecordExtractor.cs" />
+    <Compile Include="SubBasing\SelectionQuery.cs" />
+    <Compile Include="SubBasing\SelectionType.cs" />
+    <Compile Include="SubBasing\SubBasingSettings.cs" />
     <Compile Include="SubFieldCollection.cs" />
     <Compile Include="TextWithEncoding.cs" />
     <Compile Include="Transactions\IrbisTransactionAction.cs" />
@@ -375,7 +379,6 @@
     <None Include="Pft\Язык форматирования системы ИРБИС.docx" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SubBasing\" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>

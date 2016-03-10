@@ -1,4 +1,4 @@
-﻿/* NumberRangeCollection.cs
+﻿/* NumberRangeCollection.cs -- набор диапазонов чисел.
  */
 
 #region Using directives
@@ -7,32 +7,44 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
+
 using Antlr4.Runtime;
 
 #endregion
 
 namespace ManagedClient.Ranges
 {
+    /// <summary>
+    /// Набор диапазонов чисел.
+    /// </summary>
     [Serializable]
     public sealed class NumberRangeCollection
         : IEnumerable<NumberText>
     {
         #region Constants
 
+        /// <summary>
+        /// Разделитель по умолчанию.
+        /// </summary>
         public const string DefaultDelimiter = ",";
 
         #endregion
 
         #region Properties
 
+        /// <summary>
+        /// Разделитель диапазонов.
+        /// </summary>
         public string Delimiter { get; set; }
 
         #endregion
 
         #region Construction
 
+        /// <summary>
+        /// Конструктор по умолчанию.
+        /// </summary>
         public NumberRangeCollection ()
         {
             Delimiter = DefaultDelimiter;
@@ -63,6 +75,11 @@ namespace ManagedClient.Ranges
 
         #region Public methods
 
+        /// <summary>
+        /// Добавление диапазона в набор.
+        /// </summary>
+        /// <param name="range"></param>
+        /// <returns></returns>
         public NumberRangeCollection Add
             (
                 NumberRange range
@@ -76,6 +93,12 @@ namespace ManagedClient.Ranges
             return this;
         }
 
+        /// <summary>
+        /// Добавление диапазона в набор.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="stop"></param>
+        /// <returns></returns>
         public NumberRangeCollection Add
             (
                 string start,
@@ -97,6 +120,11 @@ namespace ManagedClient.Ranges
                 );
         }
 
+        /// <summary>
+        /// Добавление диапазона в набор.
+        /// </summary>
+        /// <param name="startAndStop"></param>
+        /// <returns></returns>
         public NumberRangeCollection Add
             (
                 string startAndStop
@@ -112,6 +140,11 @@ namespace ManagedClient.Ranges
                 );
         }
 
+        /// <summary>
+        /// Проверка, содержит ли набор указанное число.
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
         public bool Contains
             (
                 NumberText number
@@ -124,6 +157,11 @@ namespace ManagedClient.Ranges
             return _items.Any(item => item.Contains(number));
         }
 
+        /// <summary>
+        /// Разбор текстового представления.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static NumberRangeCollection Parse
             (
                 string text
@@ -143,6 +181,11 @@ namespace ManagedClient.Ranges
             return result;
         }
 
+        /// <summary>
+        /// Кумуляция (сжатие).
+        /// </summary>
+        /// <param name="numbers"></param>
+        /// <returns></returns>
         public static NumberRangeCollection Cumulate
             (
                 List<NumberText> numbers
@@ -188,6 +231,9 @@ namespace ManagedClient.Ranges
             return result;
         }
 
+        /// <summary>
+        /// Кумуляция (сжатие).
+        /// </summary>
         public static NumberRangeCollection Cumulate
             (
                 IEnumerable<string> texts
@@ -205,6 +251,11 @@ namespace ManagedClient.Ranges
             return Cumulate(numbers);
         }
 
+        /// <summary>
+        /// Выполнение указанного действия
+        /// на всех диапазонах набора.
+        /// </summary>
+        /// <param name="action"></param>
         public void For
             (
                 Action<NumberText> action

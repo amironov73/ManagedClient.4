@@ -99,6 +99,12 @@
     <Compile Include="IrbisMenuForm.Designer.cs">
       <DependentUpon>IrbisMenuForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SelectionPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SelectionPanel.Designer.cs">
+      <DependentUpon>SelectionPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="TextBoxOutput.cs" />
     <Compile Include="LogTextBox.cs">
       <SubType>Component</SubType>
@@ -133,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IrbisMenuForm.resx">
       <DependentUpon>IrbisMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectionPanel.resx">
+      <DependentUpon>SelectionPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WssForm.resx">
       <DependentUpon>WssForm.cs</DependentUpon>

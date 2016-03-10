@@ -10,24 +10,40 @@ using System.Text;
 
 namespace ManagedClient
 {
+    /// <summary>
+    /// Текст с заданной кодировкой.
+    /// </summary>
     [Serializable]
     public sealed class TextWithEncoding
         : IComparable<TextWithEncoding>
     {
         #region Properties
 
+        /// <summary>
+        /// Собственно текст.
+        /// </summary>
         public string Text { get; set; }
 
+        /// <summary>
+        /// Кодировка.
+        /// </summary>
         public Encoding Encoding { get; set; }
 
         #endregion
 
         #region Construction
 
+        /// <summary>
+        /// Конструктор по умолчанию.
+        /// Не заданы ни текст, ни кодировка.
+        /// </summary>
         public TextWithEncoding()
         {
         }
 
+        /// <summary>
+        /// Текст с кодировкой UTF8.
+        /// </summary>
         public TextWithEncoding
             (
                 string text
@@ -37,6 +53,11 @@ namespace ManagedClient
             Encoding = Encoding.UTF8;
         }
 
+        /// <summary>
+        /// Текст с кодировкой ANSI либо UTF8.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="ansi"></param>
         public TextWithEncoding
             (
                 string text,
@@ -49,6 +70,11 @@ namespace ManagedClient
                 : Encoding.UTF8;
         }
 
+        /// <summary>
+        /// Текст с явно заданной кодировкой.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="encoding"></param>
         public TextWithEncoding
             (
                 string text,
@@ -67,6 +93,10 @@ namespace ManagedClient
 
         #region Public methods
 
+        /// <summary>
+        /// Конверсия в байтовое представление.
+        /// </summary>
+        /// <returns></returns>
         public byte[] ToBytes()
         {
             if (string.IsNullOrEmpty(Text))
@@ -78,6 +108,12 @@ namespace ManagedClient
             return encoding.GetBytes(Text);
         }
 
+        /// <summary>
+        /// Неявное преобразование текста
+        /// в текст с кодировкой.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static implicit operator TextWithEncoding
             (
                 string text
@@ -110,6 +146,12 @@ namespace ManagedClient
                 );
         }
 
+        /// <summary>
+        /// Оператор сравнения двух текстов.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==
             (
                 TextWithEncoding left,
@@ -127,6 +169,12 @@ namespace ManagedClient
             return left.Text == right.Text;
         }
 
+        /// <summary>
+        /// Оператор сравнения двух текстов.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=
             (
                 TextWithEncoding left,

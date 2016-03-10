@@ -4,6 +4,7 @@
 #region Using directives
 
 using System;
+using System.Linq;
 using System.Xml.Serialization;
 
 using Newtonsoft.Json;
@@ -21,6 +22,20 @@ namespace ManagedClient.Fields
     [XmlRoot("exemplar")]
     public sealed class ExemplarInfo
     {
+        #region Constants
+
+        /// <summary>
+        /// Известные коды подполей.
+        /// </summary>
+        public const string KnownCodes = "!=0124abcdefhiknpqrstuvwxyz";
+
+        /// <summary>
+        /// Тег полей, содержащих сведения об экземплярах.
+        /// </summary>
+        public const string ExemplarTag = "910";
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -240,6 +255,27 @@ namespace ManagedClient.Fields
         public string BindingNumber { get; set; }
 
         /// <summary>
+        /// Прочие подполя, не попавшие в вышеперечисленные.
+        /// </summary>
+        [XmlElement("other-subfields")]
+        [JsonProperty("other-subfields")]
+        public SubField[] OtherSubFields { get; set; }
+
+        /// <summary>
+        /// MFN записи, из которой заимствован экземпляр.
+        /// </summary>
+        [XmlAttribute("mfn")]
+        [JsonProperty("mfn")]
+        public int Mfn { get; set; }
+
+        /// <summary>
+        /// Краткое библиографическое описание экземпляра.
+        /// </summary>
+        [XmlAttribute("description")]
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
+        /// <summary>
         /// Произвольные пользовательские данные.
         /// </summary>
         [XmlIgnore]
@@ -299,15 +335,56 @@ namespace ManagedClient.Fields
                     CheckedAmount = field.GetSubFieldText ( '0', 0 ),
                     RealPlace = field.GetSubFieldText ( '!', 0 ),
                     BindingIndex = field.GetSubFieldText('p', 0),
-                    BindingNumber = field.GetSubFieldText('i',0)
+                    BindingNumber = field.GetSubFieldText('i',0),
+                    OtherSubFields = field.SubFields
+                        .Where(sub => KnownCodes
+                            .IndexOf(char.ToLower(sub.Code)) < 0)
+                        .ToArray()
                 };
             return result;
         }
 
         /// <summary>
-        /// Converts the info into the field 910.
+        /// Разбор записи на экземпляры.
         /// </summary>
-        /// <returns>RecordField.</returns>
+        public static ExemplarInfo[] Parse
+            (
+                IrbisRecord record,
+                string tagNumber
+            )
+        {
+            ExemplarInfo[] result = record.Fields
+                .GetField(tagNumber)
+                .Select(Parse)
+                .ToArray();
+
+            foreach (ExemplarInfo exemplar in result)
+            {
+                exemplar.Mfn = record.Mfn;
+                exemplar.Description = record.Description;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Разбор записи на экземпляры.
+        /// </summary>
+        public static ExemplarInfo[] Parse
+            (
+                IrbisRecord record
+            )
+        {
+            return Parse
+                (
+                    record,
+                    ExemplarTag
+                );
+        }
+
+        /// <summary>
+        /// Преобразование экземпляра обратно в поле записи.
+        /// </summary>
         public RecordField ToField ()
         {
             RecordField result = new RecordField("910")
@@ -338,6 +415,15 @@ namespace ManagedClient.Fields
                 .AddNonEmptySubField ( '!', RealPlace )
                 .AddNonEmptySubField ( 'p', BindingIndex )
                 .AddNonEmptySubField ( 'i', BindingNumber );
+
+            if (OtherSubFields != null)
+            {
+                foreach (SubField subField in OtherSubFields)
+                {
+                    result.AddSubField(subField.Code, subField.Text);
+                }
+            }
+
             return result;
         }
 

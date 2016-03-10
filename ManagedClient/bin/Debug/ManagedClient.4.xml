@@ -128,6 +128,31 @@
             Строка, содержащая числа, разделенные нечисловыми фрагментами.
             </summary>
         </member>
+        <member name="M:ManagedClient.NumberText.Increment">
+            <summary>
+            Увеличение на единицу последнего сегмента.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.NumberText.Increment(System.Int32)">
+            <summary>
+            Увеличение последнего сегмента на указанное число.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.NumberText.Empty">
+            <summary>
+            Пустое ли число?
+            </summary>
+        </member>
+        <member name="P:ManagedClient.NumberText.LastIndex">
+            <summary>
+            Номер последнего сегмента.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.NumberText.Length">
+            <summary>
+            Количество сегментов, из которых состоит число.
+            </summary>
+        </member>
         <member name="T:ManagedClient.NumberText.Chunk">
             <summary>
             Фрагмент: нечисловой префикс плюс число.
@@ -367,6 +392,16 @@
             Информация об экземпляре (поле 910).
             </summary>
         </member>
+        <member name="F:ManagedClient.Fields.ExemplarInfo.KnownCodes">
+            <summary>
+            Известные коды подполей.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.Fields.ExemplarInfo.ExemplarTag">
+            <summary>
+            Тег полей, содержащих сведения об экземплярах.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Fields.ExemplarInfo.Parse(ManagedClient.RecordField)">
             <summary>
             Parses the specified field.
@@ -374,11 +409,20 @@
             <param name="field">The field.</param>
             <returns>ExemplarInfo.</returns>
         </member>
+        <member name="M:ManagedClient.Fields.ExemplarInfo.Parse(ManagedClient.IrbisRecord,System.String)">
+            <summary>
+            Разбор записи на экземпляры.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarInfo.Parse(ManagedClient.IrbisRecord)">
+            <summary>
+            Разбор записи на экземпляры.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Fields.ExemplarInfo.ToField">
             <summary>
-            Converts the info into the field 910.
+            Преобразование экземпляра обратно в поле записи.
             </summary>
-            <returns>RecordField.</returns>
         </member>
         <member name="M:ManagedClient.Fields.ExemplarInfo.CompareNumbers(ManagedClient.Fields.ExemplarInfo,ManagedClient.Fields.ExemplarInfo)">
             <summary>
@@ -521,6 +565,21 @@
         <member name="P:ManagedClient.Fields.ExemplarInfo.BindingNumber">
             <summary>
             Инвентарный номер подшивки. Подполе i.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.ExemplarInfo.OtherSubFields">
+            <summary>
+            Прочие подполя, не попавшие в вышеперечисленные.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.ExemplarInfo.Mfn">
+            <summary>
+            MFN записи, из которой заимствован экземпляр.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.ExemplarInfo.Description">
+            <summary>
+            Краткое библиографическое описание экземпляра.
             </summary>
         </member>
         <member name="P:ManagedClient.Fields.ExemplarInfo.UserData">
@@ -9107,6 +9166,59 @@
             Диапазон чисел, содержащих нечисловые фрагменты.
             </summary>
         </member>
+        <member name="M:ManagedClient.Ranges.NumberRange.#ctor">
+            <summary>
+            Конструктор по умолчанию.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRange.#ctor(ManagedClient.NumberText)">
+            <summary>
+            Конструктор для диапазона, состоящего
+            из одного числа.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRange.#ctor(ManagedClient.NumberText,ManagedClient.NumberText)">
+            <summary>
+            Конструктор для произвольного диапазона.
+            </summary>
+            <param name="start"></param>
+            <param name="stop"></param>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRange.Contains(ManagedClient.NumberText)">
+            <summary>
+            Проверка, содержит ли диапазон указанное значение.
+            </summary>
+            <param name="number"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRange.Parse(System.String)">
+            <summary>
+            Разбор текстового представления диапазона.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRange.For(System.Action{ManagedClient.NumberText})">
+            <summary>
+            Выполнение указанного действия на всём диапазоне.
+            </summary>
+            <param name="action"></param>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRange.Intersect(ManagedClient.Ranges.NumberRange)">
+            <summary>
+            Пересечение двух диапазонов.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRange.IsEmpty">
+            <summary>
+            Проверка, не пустой ли диапазон.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRange.Union(ManagedClient.Ranges.NumberRange)">
+            <summary>
+            Объединение двух диапазонов.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Ranges.NumberRange.Start">
             <summary>
             Стартовое значение.
@@ -9115,6 +9227,81 @@
         <member name="P:ManagedClient.Ranges.NumberRange.Stop">
             <summary>
             Стоповое значение.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.Ranges.NumberRangeCollection">
+            <summary>
+            Набор диапазонов чисел.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.Ranges.NumberRangeCollection.DefaultDelimiter">
+            <summary>
+            Разделитель по умолчанию.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRangeCollection.#ctor">
+            <summary>
+            Конструктор по умолчанию.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRangeCollection.Add(ManagedClient.Ranges.NumberRange)">
+            <summary>
+            Добавление диапазона в набор.
+            </summary>
+            <param name="range"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRangeCollection.Add(System.String,System.String)">
+            <summary>
+            Добавление диапазона в набор.
+            </summary>
+            <param name="start"></param>
+            <param name="stop"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRangeCollection.Add(System.String)">
+            <summary>
+            Добавление диапазона в набор.
+            </summary>
+            <param name="startAndStop"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRangeCollection.Contains(ManagedClient.NumberText)">
+            <summary>
+            Проверка, содержит ли набор указанное число.
+            </summary>
+            <param name="number"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRangeCollection.Parse(System.String)">
+            <summary>
+            Разбор текстового представления.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRangeCollection.Cumulate(System.Collections.Generic.List{ManagedClient.NumberText})">
+            <summary>
+            Кумуляция (сжатие).
+            </summary>
+            <param name="numbers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRangeCollection.Cumulate(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Кумуляция (сжатие).
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Ranges.NumberRangeCollection.For(System.Action{ManagedClient.NumberText})">
+            <summary>
+            Выполнение указанного действия
+            на всех диапазонах набора.
+            </summary>
+            <param name="action"></param>
+        </member>
+        <member name="P:ManagedClient.Ranges.NumberRangeCollection.Delimiter">
+            <summary>
+            Разделитель диапазонов.
             </summary>
         </member>
         <member name="T:ManagedClient.Ranges.NumberRangesBaseListener">
@@ -9484,11 +9671,222 @@
             Год выпуска журнала.
             </summary>
         </member>
+        <member name="T:ManagedClient.SubBasing.RecordExtractor">
+            <summary>
+            Извлечение списка записей из ИРБИС.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.SubBasing.RecordExtractor.#ctor(ManagedClient.ManagedClient64)">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.SubBasing.RecordExtractor.#ctor(ManagedClient.ManagedClient64,ManagedClient.Output.AbstractOutput)">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.SubBasing.RecordExtractor.SearchRecords(ManagedClient.SubBasing.SelectionQuery)">
+            <summary>
+            Поиск записей согласно спецификации.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.SubBasing.RecordExtractor.Client">
+            <summary>
+            Клиент для подключения к ИРБИС64.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.SubBasing.RecordExtractor.Output">
+            <summary>
+            Отладочная печать.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.SubBasing.RecordExtractor.ReadRecords">
+            <summary>
+            Надо ли считывать записи.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.SubBasing.RecordExtractor.AllowDeleted">
+            <summary>
+            Можно ли считывать удаленные записи.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.SubBasing.SelectionQuery">
+            <summary>
+            Запрос на отбор записей.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.SubBasing.SelectionQuery.IsValid">
+            <summary>
+            Корректно заполнено?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.SubBasing.SelectionQuery.ToText">
+            <summary>
+            Получение текстового описания.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:ManagedClient.SubBasing.SelectionQuery.Description">
+            <summary>
+            Описание в произвольной форме.
+            Например, "Отбор по MFN".
+            </summary>
+        </member>
+        <member name="P:ManagedClient.SubBasing.SelectionQuery.Database">
+            <summary>
+            Имя базы данных.
+            Если не задано,
+            используется текущая база данных.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.SubBasing.SelectionQuery.SelectionType">
+            <summary>
+            Тип отбора записей.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.SubBasing.SelectionQuery.Prefix">
+            <summary>
+            Префикс.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.SubBasing.SelectionQuery.Statement">
+            <summary>
+            Формулировка запроса.
+            Например, "1-100,150-160"
+            </summary>
+        </member>
+        <member name="T:ManagedClient.SubBasing.SelectionType">
+            <summary>
+            Тип отбора записей
+            </summary>
+        </member>
+        <member name="F:ManagedClient.SubBasing.SelectionType.Mfn">
+            <summary>
+            По MFN
+            </summary>
+        </member>
+        <member name="F:ManagedClient.SubBasing.SelectionType.Sequential">
+            <summary>
+            По возрастающим числам
+            (например, инвентарным номерам).
+            </summary>
+        </member>
+        <member name="F:ManagedClient.SubBasing.SelectionType.Search">
+            <summary>
+            Согласно поисковому выражению.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.SubBasing.SelectionType.Deep">
+            <summary>
+            Глубокий последовательный поиск.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.SubBasing.SubBasingSettings">
+            <summary>
+            Варианты для отбора записей.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.SubBasing.SubBasingSettings.Databases">
+            <summary>
+            Перечень баз данных.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.SubBasing.SubBasingSettings.DatabaseIndex">
+            <summary>
+            База данных по умолчанию.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.SubBasing.SubBasingSettings.Criteria">
+            <summary>
+            Критерии отбора.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.SubBasing.SubBasingSettings.CriteriaIndex">
+            <summary>
+            Предлагаемый критерий отбора.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.SubBasing.SubBasingSettings.Statement">
+            <summary>
+            Предлагаемое выражение для отбора.
+            </summary>
+        </member>
         <member name="T:ManagedClient.SubFieldCollection">
             <summary>
             Коллекция подполей.
             Отличается тем, что принципиально не принимает
             значения <c>null</c>.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.TextWithEncoding">
+            <summary>
+            Текст с заданной кодировкой.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextWithEncoding.#ctor">
+            <summary>
+            Конструктор по умолчанию.
+            Не заданы ни текст, ни кодировка.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextWithEncoding.#ctor(System.String)">
+            <summary>
+            Текст с кодировкой UTF8.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextWithEncoding.#ctor(System.String,System.Boolean)">
+            <summary>
+            Текст с кодировкой ANSI либо UTF8.
+            </summary>
+            <param name="text"></param>
+            <param name="ansi"></param>
+        </member>
+        <member name="M:ManagedClient.TextWithEncoding.#ctor(System.String,System.Text.Encoding)">
+            <summary>
+            Текст с явно заданной кодировкой.
+            </summary>
+            <param name="text"></param>
+            <param name="encoding"></param>
+        </member>
+        <member name="M:ManagedClient.TextWithEncoding.ToBytes">
+            <summary>
+            Конверсия в байтовое представление.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.TextWithEncoding.op_Implicit(System.String)~ManagedClient.TextWithEncoding">
+            <summary>
+            Неявное преобразование текста
+            в текст с кодировкой.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.TextWithEncoding.op_Equality(ManagedClient.TextWithEncoding,ManagedClient.TextWithEncoding)">
+            <summary>
+            Оператор сравнения двух текстов.
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.TextWithEncoding.op_Inequality(ManagedClient.TextWithEncoding,ManagedClient.TextWithEncoding)">
+            <summary>
+            Оператор сравнения двух текстов.
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ManagedClient.TextWithEncoding.Text">
+            <summary>
+            Собственно текст.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.TextWithEncoding.Encoding">
+            <summary>
+            Кодировка.
             </summary>
         </member>
         <member name="T:ManagedClient.Transactions.IrbisTransactionAction">

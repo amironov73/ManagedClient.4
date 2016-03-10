@@ -149,11 +149,25 @@ namespace ManagedClient
 
         public static int DefaultIndex = 0;
 
+        /// <summary>
+        /// Пустое ли число?
+        /// </summary>
         public bool Empty
         {
             get { return _chunks.First == null; }
         }
 
+        /// <summary>
+        /// Номер последнего сегмента.
+        /// </summary>
+        public int LastIndex
+        {
+            get { return Length - 1; }
+        }
+
+        /// <summary>
+        /// Количество сегментов, из которых состоит число.
+        /// </summary>
         public int Length
         {
             get { return _chunks.Count; }
@@ -353,15 +367,21 @@ namespace ManagedClient
             return (chunk != null) && chunk.HaveValue;
         }
 
+        /// <summary>
+        /// Увеличение на единицу последнего сегмента.
+        /// </summary>
         public NumberText Increment()
         {
             return Increment
                 (
-                    DefaultIndex,
+                    LastIndex,
                     1
                 );
         }
 
+        /// <summary>
+        /// Увеличение последнего сегмента на указанное число.
+        /// </summary>
         public NumberText Increment
             (
                 int delta
@@ -369,7 +389,7 @@ namespace ManagedClient
         {
             return Increment
                 (
-                    DefaultIndex,
+                    LastIndex,
                     delta
                 );
         }
