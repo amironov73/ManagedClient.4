@@ -83,7 +83,7 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("address")]
         [JsonProperty("address")]
-        public IrbisAddress Address { get; set; }
+        public ReaderAddress Address { get; set; }
 
         /// <summary>
         /// Место работы. Поле 15.
@@ -377,7 +377,7 @@ namespace ManagedClient.Readers
                                         Ticket = record.FM("30"),
                                         Sex = record.FM("23"),
                                         Category = record.FM("50"),
-                                        Address = IrbisAddress.Parse
+                                        Address = ReaderAddress.Parse
                                             (
                                                 record.Fields
                                                 .GetField("13")

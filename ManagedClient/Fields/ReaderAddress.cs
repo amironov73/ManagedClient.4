@@ -1,4 +1,4 @@
-﻿/* IrbisAddress.cs -- адрес читателя
+﻿/* ReaderAddress.cs -- адрес читателя
  */
 
 #region Using directives
@@ -6,6 +6,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
+
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
+
+using Newtonsoft.Json;
 
 #endregion
 
@@ -14,8 +21,11 @@ namespace ManagedClient.Fields
     /// <summary>
     /// Адрес читателя: поле 13 в базе RDR.
     /// </summary>
+    [PublicAPI]
     [Serializable]
-    public sealed class IrbisAddress
+    [MoonSharpUserData]
+    [XmlRoot("address")]
+    public sealed class ReaderAddress
     {
         #region Constants
 
@@ -31,46 +41,80 @@ namespace ManagedClient.Fields
         /// <summary>
         /// Почтовый индекс. Подполе A.
         /// </summary>
+        [XmlAttribute("postcode")]
+        [JsonProperty("postcode")]
         public string Postcode { get; set; }
 
         /// <summary>
         /// Страна/республика. Подполе B.
         /// </summary>
+        [XmlAttribute("country")]
+        [JsonProperty("country")]
         public string Country { get; set; }
 
         /// <summary>
         /// Город. Подполе C.
         /// </summary>
+        [XmlAttribute("city")]
+        [JsonProperty("city")]
         public string City { get; set; }
 
         /// <summary>
         /// Улица. Подполе D.
         /// </summary>
+        [XmlAttribute("street")]
+        [JsonProperty("street")]
         public string Street { get; set; }
 
         /// <summary>
         /// Номер дома. Подполе E.
         /// </summary>
+        [XmlAttribute("building")]
+        [JsonProperty("building")]
         public string Building { get; set; }
 
         /// <summary>
         /// Номер подъезда. Подполе G.
         /// </summary>
+        [XmlAttribute("entrance")]
+        [JsonProperty("entrance")]
         public string Entrance { get; set; }
 
         /// <summary>
         /// Номер квартиры. Подполе H.
         /// </summary>
+        [XmlAttribute("apartment")]
+        [JsonProperty("apartment")]
         public string Apartment { get; set; }
 
         /// <summary>
         /// Дополнительные данные. Подполе F.
         /// </summary>
+        [XmlAttribute("additional-data")]
+        [JsonProperty("additional-data")]
         public string AdditionalData { get; set; }
+
+        /// <summary>
+        /// Произвольные пользовательские данные.
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        public object UserData
+        {
+            get { return _userData; }
+            set { _userData = value; }
+        }
 
         #endregion
 
         #region Construction
+
+        #endregion
+
+        #region Private members
+
+        [NonSerialized]
+        private object _userData;
 
         #endregion
 
@@ -79,9 +123,10 @@ namespace ManagedClient.Fields
         /// <summary>
         /// Разбор поля 13.
         /// </summary>
-        public static IrbisAddress Parse
+        [CanBeNull]
+        public static ReaderAddress Parse
             (
-                RecordField field
+                [CanBeNull]RecordField field
             )
         {
             if (ReferenceEquals(field, null))
@@ -89,7 +134,7 @@ namespace ManagedClient.Fields
                 return null;
             }
 
-            return new IrbisAddress
+            return new ReaderAddress
             {
                 Postcode = field.GetFirstSubFieldText('A'),
                 Country = field.GetFirstSubFieldText('B'),
@@ -105,10 +150,11 @@ namespace ManagedClient.Fields
         /// <summary>
         /// Разбор поля 13.
         /// </summary>
-        public static IrbisAddress Parse
+        [CanBeNull]
+        public static ReaderAddress Parse
             (
-                IrbisRecord record,
-                string tag
+                [NotNull]IrbisRecord record,
+                [NotNull]string tag
             )
         {
             if (ReferenceEquals(record, null))
@@ -132,9 +178,10 @@ namespace ManagedClient.Fields
         /// <summary>
         /// Разбор поля 13.
         /// </summary>
-        public static IrbisAddress Parse
+        [CanBeNull]
+        public static ReaderAddress Parse
             (
-                IrbisRecord record
+                [NotNull]IrbisRecord record
             )
         {
             return Parse

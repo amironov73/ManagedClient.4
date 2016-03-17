@@ -975,69 +975,74 @@
             Длина записи N01/L01.
             </summary>
         </member>
-        <member name="T:ManagedClient.Fields.IrbisAddress">
+        <member name="T:ManagedClient.Fields.ReaderAddress">
             <summary>
             Адрес читателя: поле 13 в базе RDR.
             </summary>
         </member>
-        <member name="F:ManagedClient.Fields.IrbisAddress.Tag">
+        <member name="F:ManagedClient.Fields.ReaderAddress.Tag">
             <summary>
             Тег поля.
             </summary>
         </member>
-        <member name="M:ManagedClient.Fields.IrbisAddress.Parse(ManagedClient.RecordField)">
+        <member name="M:ManagedClient.Fields.ReaderAddress.Parse(ManagedClient.RecordField)">
             <summary>
             Разбор поля 13.
             </summary>
         </member>
-        <member name="M:ManagedClient.Fields.IrbisAddress.Parse(ManagedClient.IrbisRecord,System.String)">
+        <member name="M:ManagedClient.Fields.ReaderAddress.Parse(ManagedClient.IrbisRecord,System.String)">
             <summary>
             Разбор поля 13.
             </summary>
         </member>
-        <member name="M:ManagedClient.Fields.IrbisAddress.Parse(ManagedClient.IrbisRecord)">
+        <member name="M:ManagedClient.Fields.ReaderAddress.Parse(ManagedClient.IrbisRecord)">
             <summary>
             Разбор поля 13.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.IrbisAddress.Postcode">
+        <member name="P:ManagedClient.Fields.ReaderAddress.Postcode">
             <summary>
             Почтовый индекс. Подполе A.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.IrbisAddress.Country">
+        <member name="P:ManagedClient.Fields.ReaderAddress.Country">
             <summary>
             Страна/республика. Подполе B.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.IrbisAddress.City">
+        <member name="P:ManagedClient.Fields.ReaderAddress.City">
             <summary>
             Город. Подполе C.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.IrbisAddress.Street">
+        <member name="P:ManagedClient.Fields.ReaderAddress.Street">
             <summary>
             Улица. Подполе D.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.IrbisAddress.Building">
+        <member name="P:ManagedClient.Fields.ReaderAddress.Building">
             <summary>
             Номер дома. Подполе E.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.IrbisAddress.Entrance">
+        <member name="P:ManagedClient.Fields.ReaderAddress.Entrance">
             <summary>
             Номер подъезда. Подполе G.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.IrbisAddress.Apartment">
+        <member name="P:ManagedClient.Fields.ReaderAddress.Apartment">
             <summary>
             Номер квартиры. Подполе H.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.IrbisAddress.AdditionalData">
+        <member name="P:ManagedClient.Fields.ReaderAddress.AdditionalData">
             <summary>
             Дополнительные данные. Подполе F.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.ReaderAddress.UserData">
+            <summary>
+            Произвольные пользовательские данные.
             </summary>
         </member>
         <member name="T:ManagedClient.IrbisAlphabetTable">

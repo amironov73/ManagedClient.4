@@ -47,6 +47,10 @@
       <HintPath>..\packages\Antlr4.Runtime.4.3.0\lib\net40-client\Antlr4.Runtime.net40.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="JetBrains.Annotations, Version=10.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MoonSharp.Interpreter, Version=1.5.0.0, Culture=neutral, PublicKeyToken=be0f2b9abd145942, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\MoonSharp.Interpreter.dll</HintPath>
@@ -102,7 +106,7 @@
     <Compile Include="IfpRecord.cs" />
     <Compile Include="IniFile.cs" />
     <Compile Include="Direct\InvertedFile64.cs" />
-    <Compile Include="Fields\IrbisAddress.cs" />
+    <Compile Include="Fields\ReaderAddress.cs" />
     <Compile Include="IrbisAlphabetTable.cs" />
     <Compile Include="IrbisAnswerItem.cs" />
     <Compile Include="IrbisAuthenticationEventArgs.cs" />
