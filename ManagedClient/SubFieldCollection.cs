@@ -1,4 +1,4 @@
-﻿/* SubFieldCollection.cs
+﻿/* SubFieldCollection.cs -- коллекция подполей
  */
 
 #region Using directives
@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
@@ -19,12 +21,16 @@ namespace ManagedClient
     /// значения <c>null</c>.
     /// </summary>
     [Serializable]
+    [MoonSharpUserData]
     [ClassInterface(ClassInterfaceType.None)]
     public sealed class SubFieldCollection
         : Collection<SubField>
     {
         #region Public methods
 
+        /// <summary>
+        /// Добавление в коллекцию нескольких подполей сразу
+        /// </summary>
         public void AddRange
             (
                 IEnumerable<SubField> subFields
@@ -36,15 +42,24 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Поиск с помощью предиката.
+        /// </summary>
         public SubField Find
             (
                 Predicate<SubField> predicate
             )
         {
             return this
-                .FirstOrDefault(subField => predicate(subField));
+                .FirstOrDefault
+                (
+                    subField => predicate(subField)
+                );
         }
 
+        /// <summary>
+        /// Отбор с помощью предиката.
+        /// </summary>
         public SubField[] FindAll
             (
                 Predicate<SubField> predicate
@@ -61,7 +76,7 @@ namespace ManagedClient
 
         protected override void InsertItem
             (
-                int index, 
+                int index,
                 SubField item
             )
         {
@@ -75,7 +90,7 @@ namespace ManagedClient
 
         protected override void SetItem
             (
-                int index, 
+                int index,
                 SubField item
             )
         {

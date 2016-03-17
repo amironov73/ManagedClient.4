@@ -1,4 +1,4 @@
-﻿/* VisitInfo.cs -- информация о посещении/выдаче.
+﻿/* VisitInfo.cs -- информация о посещении/выдаче
  */
 
 #region Using directives
@@ -6,6 +6,8 @@
 using System;
 using System.Text;
 using System.Xml.Serialization;
+
+using MoonSharp.Interpreter;
 
 using Newtonsoft.Json;
 
@@ -18,6 +20,7 @@ namespace ManagedClient
     /// </summary>
     [Serializable]
     [XmlRoot("visit")]
+    [MoonSharpUserData]
     public sealed class VisitInfo
     {
         #region Properties

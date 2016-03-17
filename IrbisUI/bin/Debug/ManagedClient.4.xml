@@ -975,44 +975,74 @@
             Длина записи N01/L01.
             </summary>
         </member>
-        <member name="P:ManagedClient.IrbisAddress.Postcode">
+        <member name="T:ManagedClient.Fields.IrbisAddress">
+            <summary>
+            Адрес читателя: поле 13 в базе RDR.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.Fields.IrbisAddress.Tag">
+            <summary>
+            Тег поля.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.IrbisAddress.Parse(ManagedClient.RecordField)">
+            <summary>
+            Разбор поля 13.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.IrbisAddress.Parse(ManagedClient.IrbisRecord,System.String)">
+            <summary>
+            Разбор поля 13.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.IrbisAddress.Parse(ManagedClient.IrbisRecord)">
+            <summary>
+            Разбор поля 13.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.IrbisAddress.Postcode">
             <summary>
             Почтовый индекс. Подполе A.
             </summary>
         </member>
-        <member name="P:ManagedClient.IrbisAddress.Country">
+        <member name="P:ManagedClient.Fields.IrbisAddress.Country">
             <summary>
             Страна/республика. Подполе B.
             </summary>
         </member>
-        <member name="P:ManagedClient.IrbisAddress.City">
+        <member name="P:ManagedClient.Fields.IrbisAddress.City">
             <summary>
             Город. Подполе C.
             </summary>
         </member>
-        <member name="P:ManagedClient.IrbisAddress.Street">
+        <member name="P:ManagedClient.Fields.IrbisAddress.Street">
             <summary>
             Улица. Подполе D.
             </summary>
         </member>
-        <member name="P:ManagedClient.IrbisAddress.Building">
+        <member name="P:ManagedClient.Fields.IrbisAddress.Building">
             <summary>
             Номер дома. Подполе E.
             </summary>
         </member>
-        <member name="P:ManagedClient.IrbisAddress.Entrance">
+        <member name="P:ManagedClient.Fields.IrbisAddress.Entrance">
             <summary>
             Номер подъезда. Подполе G.
             </summary>
         </member>
-        <member name="P:ManagedClient.IrbisAddress.Apartment">
+        <member name="P:ManagedClient.Fields.IrbisAddress.Apartment">
             <summary>
             Номер квартиры. Подполе H.
             </summary>
         </member>
-        <member name="P:ManagedClient.IrbisAddress.AdditionalData">
+        <member name="P:ManagedClient.Fields.IrbisAddress.AdditionalData">
             <summary>
             Дополнительные данные. Подполе F.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.IrbisAlphabetTable">
+            <summary>
+            ISISAC.TAB
             </summary>
         </member>
         <member name="T:ManagedClient.IrbisAnswerItem">
@@ -1150,7 +1180,13 @@
         </member>
         <member name="T:ManagedClient.IrbisClientInfo">
             <summary>
-            Информация о подключенном клиенте Ирбис
+            Информация о клиенте, подключенном к серверу ИРБИС
+            (не обязательно о текущем).
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisClientInfo.Number">
+            <summary>
+            Номер
             </summary>
         </member>
         <member name="P:ManagedClient.IrbisClientInfo.IPAddress">
@@ -1289,16 +1325,23 @@
         </member>
         <member name="T:ManagedClient.IrbisDatabaseInfo">
             <summary>
-            Информация о базе данных Ирбис
+            Информация о базе данных ИРБИС
             </summary>
         </member>
-        <member name="M:ManagedClient.IrbisDatabaseInfo.ToString">
+        <member name="F:ManagedClient.IrbisDatabaseInfo.ItemDelimiter">
             <summary>
-            Returns a <see cref="T:System.String"/> that represents this instance.
+            Разделитель элементов
             </summary>
-            <returns>
-            A <see cref="T:System.String"/> that represents this instance.
-            </returns>
+        </member>
+        <member name="M:ManagedClient.IrbisDatabaseInfo.ParseServerResponse(System.String[])">
+            <summary>
+            Разбор ответа сервера.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisDatabaseInfo.ParseMenu(System.String[])">
+            <summary>
+            Разбор файла меню
+            </summary>
         </member>
         <member name="P:ManagedClient.IrbisDatabaseInfo.Name">
             <summary>
@@ -1360,34 +1403,45 @@
         </member>
         <member name="T:ManagedClient.IrbisException">
             <summary>
-            
+            Исключения, специфичные для библиотеки
+            ManagedClient
             </summary>
         </member>
         <member name="M:ManagedClient.IrbisException.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:ManagedClient.IrbisException"/> class.
+            Конструктор по умолчанию.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisException.#ctor(System.Int32)">
+            <summary>
+            Конструктор с кодом ошибки.
             </summary>
         </member>
         <member name="M:ManagedClient.IrbisException.#ctor(System.String)">
             <summary>
-            Initializes a new instance of the <see cref="T:ManagedClient.IrbisException"/> class.
+            Конструктор с готовым сообщением
+            об ошибке.
             </summary>
-            <param name="message">The message.</param>
         </member>
         <member name="M:ManagedClient.IrbisException.#ctor(System.String,System.Exception)">
             <summary>
-            Initializes a new instance of the <see cref="T:ManagedClient.IrbisException"/> class.
+            Конструктор для десериализации.
             </summary>
-            <param name="message">The message.</param>
-            <param name="innerException">The inner exception.</param>
         </member>
-        <member name="M:ManagedClient.IrbisException.ToString">
+        <member name="M:ManagedClient.IrbisException.GetErrorDescription(ManagedClient.IrbisException)">
             <summary>
-            Returns a <see cref="T:System.String"/> that represents this instance.
+            Текстовое описание ошибки.
             </summary>
-            <returns>
-            A <see cref="T:System.String"/> that represents this instance.
-            </returns>
+        </member>
+        <member name="M:ManagedClient.IrbisException.GetErrorDescription(ManagedClient.IrbisReturnCode)">
+            <summary>
+            Текстовое описание ошибки.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisException.GetErrorDescription(System.Int32)">
+            <summary>
+            Текстовое описание ошибки.
+            </summary>
         </member>
         <member name="P:ManagedClient.IrbisException.ErrorCode">
             <summary>
@@ -2042,6 +2096,26 @@
         <member name="T:ManagedClient.Magazines.MagazineCumulation">
             <summary>
             Данные о кумуляции номеров. Поле 909.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.Magazines.MagazineCumulation.Tag">
+            <summary>
+            Тег поля.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Magazines.MagazineCumulation.Parse(ManagedClient.RecordField)">
+            <summary>
+            Разбор поля.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Magazines.MagazineCumulation.Parse(ManagedClient.IrbisRecord,System.String)">
+            <summary>
+            Разбор записи.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Magazines.MagazineCumulation.Parse(ManagedClient.IrbisRecord)">
+            <summary>
+            Разбор записи.
             </summary>
         </member>
         <member name="P:ManagedClient.Magazines.MagazineCumulation.Year">
@@ -8468,6 +8542,11 @@
             Поля записи.
             </summary>
         </member>
+        <member name="P:ManagedClient.IrbisRecord.Deleted">
+            <summary>
+            Признак удалённой записи.
+            </summary>
+        </member>
         <member name="P:ManagedClient.IrbisRecord.Description">
             <summary>
             Библиографическое описание.
@@ -9567,6 +9646,72 @@
             
             </summary>
         </member>
+        <member name="T:ManagedClient.Scripting.IrbisScript">
+            <summary>
+            Интерпретатор Lua-скриптов с учётом ИРБИС-специфики.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Scripting.IrbisScript.#ctor">
+            <summary>
+            Конструктор по умолчанию
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Scripting.IrbisScript.#ctor(ManagedClient.ManagedClient64)">
+            <summary>
+            Конструктор с заранее созданным клиентом.
+            </summary>
+            <param name="client"></param>
+        </member>
+        <member name="M:ManagedClient.Scripting.IrbisScript._Initialize">
+            <summary>
+            Внутренняя инициализация.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Scripting.IrbisScript.CallFunction(System.String,System.Object[])">
+            <summary>
+            Вызов Lua-функции и получение результата.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Scripting.IrbisScript.DoString(System.String)">
+            <summary>
+            Исполнение Lua-кода и получение результата.
+            </summary>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Scripting.IrbisScript.RegisterIrbisTypes">
+            <summary>
+            Регистрация типов, помеченных в данной сборке атрибутом
+            <see cref="T:MoonSharp.Interpreter.MoonSharpUserDataAttribute"/>
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Scripting.IrbisScript.SetGlobal(System.String,System.Object)">
+            <summary>
+            Установка глобального значения.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Scripting.IrbisScript.SetRecord(ManagedClient.IrbisRecord)">
+            <summary>
+            Установка новой текущей записи.
+            </summary>
+            <param name="record"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ManagedClient.Scripting.IrbisScript.Client">
+            <summary>
+            Клиент для доступа к серверу
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Scripting.IrbisScript.Engine">
+            <summary>
+            Скриптовый движок.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Scripting.IrbisScript.Record">
+            <summary>
+            Текущая запись
+            </summary>
+        </member>
         <member name="T:ManagedClient.Sockets.IrbisAsyncSocket">
             <summary>
             
@@ -9834,6 +9979,21 @@
             значения <c>null</c>.
             </summary>
         </member>
+        <member name="M:ManagedClient.SubFieldCollection.AddRange(System.Collections.Generic.IEnumerable{ManagedClient.SubField})">
+            <summary>
+            Добавление в коллекцию нескольких подполей сразу
+            </summary>
+        </member>
+        <member name="M:ManagedClient.SubFieldCollection.Find(System.Predicate{ManagedClient.SubField})">
+            <summary>
+            Поиск с помощью предиката.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.SubFieldCollection.FindAll(System.Predicate{ManagedClient.SubField})">
+            <summary>
+            Отбор с помощью предиката.
+            </summary>
+        </member>
         <member name="T:ManagedClient.TextWithEncoding">
             <summary>
             Текст с заданной кодировкой.
@@ -9956,6 +10116,64 @@
             Имя (чисто для идентификации).
             </summary>
         </member>
+        <member name="T:ManagedClient.IrbisUserInfo">
+            <summary>
+            Информация о зарегистрированном пользователе системы
+            (по данным client_m.mnu).
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUserInfo.Parse(System.String[])">
+            <summary>
+            Разбор ответа сервера.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ManagedClient.IrbisUserInfo.Number">
+            <summary>
+            Номер по порядку.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisUserInfo.Name">
+            <summary>
+            Логин.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisUserInfo.Password">
+            <summary>
+            Пароль.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisUserInfo.Cataloger">
+            <summary>
+            Доступность АРМ Каталогизатор.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisUserInfo.Reader">
+            <summary>
+            АРМ Читатель.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisUserInfo.Circulation">
+            <summary>
+            АРМ Книговыдача.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisUserInfo.Acquisitions">
+            <summary>
+            АРМ Комплектатор.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisUserInfo.Provision">
+            <summary>
+            АРМ Книгообеспеченность.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisUserInfo.Administrator">
+            <summary>
+            АРМ Администратор.
+            </summary>
+        </member>
         <member name="M:ManagedClient.IrbisUtilities.StandardConnectionStrings">
             <summary>
             Стандартные наименования для ключа строки подключения
@@ -9980,7 +10198,7 @@
         </member>
         <member name="T:ManagedClient.IrbisVersion">
             <summary>
-            Информация о версии Ирбис-сервера.
+            Информация о версии ИРБИС-сервера.
             </summary>
         </member>
         <member name="M:ManagedClient.IrbisVersion.Parse(System.Collections.Generic.List{System.String})">
@@ -9989,14 +10207,6 @@
             </summary>
             <param name="lines"></param>
             <returns></returns>
-        </member>
-        <member name="M:ManagedClient.IrbisVersion.ToString">
-            <summary>
-            Returns a <see cref="T:System.String"/> that represents this instance.
-            </summary>
-            <returns>
-            A <see cref="T:System.String"/> that represents this instance.
-            </returns>
         </member>
         <member name="P:ManagedClient.IrbisVersion.Organization">
             <summary>
@@ -10672,6 +10882,16 @@
             Информация о статье.
             </summary>
         </member>
+        <member name="M:ManagedClient.Magazines.MagazineArticleInfo.Parse(ManagedClient.IrbisRecord)">
+            <summary>
+            Разбор записи.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Magazines.MagazineArticleInfo.Parse(ManagedClient.RecordField)">
+            <summary>
+            Разбор поля (330 или 922).
+            </summary>
+        </member>
         <member name="T:ManagedClient.Magazines.MagazineInfo">
             <summary>
             Информация о журнале в целом.
@@ -10681,9 +10901,6 @@
             <summary>
             Разбор записи.
             </summary>
-            <param name="record"></param>
-            <returns></returns>
-            <exception cref="T:System.ArgumentNullException">record</exception>
         </member>
         <member name="M:ManagedClient.Magazines.MagazineInfo.ToString">
             <summary>
@@ -10694,6 +10911,11 @@
         <member name="P:ManagedClient.Magazines.MagazineInfo.Index">
             <summary>
             Код документа в базе. Поле 903.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Magazines.MagazineInfo.Description">
+            <summary>
+            Библиографическое описание.
             </summary>
         </member>
         <member name="P:ManagedClient.Magazines.MagazineInfo.Title">
@@ -10750,6 +10972,37 @@
             MFN записи журнала.
             </summary>
         </member>
+        <member name="P:ManagedClient.Magazines.MagazineInfo.UserData">
+            <summary>
+            Произвольные пользовательские данные.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.Magazines.MagazineIssueInfo">
+            <summary>
+            Сведения о номере журнала
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Magazines.MagazineIssueInfo.Parse(ManagedClient.IrbisRecord)">
+            <summary>
+            Разбор записи.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Magazines.MagazineIssueInfo.CompareNumbers(ManagedClient.Magazines.MagazineIssueInfo,ManagedClient.Magazines.MagazineIssueInfo)">
+            <summary>
+            Сравнение двух выпусков
+            (с целью сортировки по возрастанию номеров).
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Magazines.MagazineIssueInfo.Mfn">
+            <summary>
+            MFN записи.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Magazines.MagazineIssueInfo.Description">
+            <summary>
+            Библиографическое описание.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Magazines.MagazineIssueInfo.DocumentCode">
             <summary>
             Шифр документа в базе. Поле 903.
@@ -10796,6 +11049,11 @@
             Экземпляры. Поле 910.
             </summary>
         </member>
+        <member name="P:ManagedClient.Magazines.MagazineIssueInfo.UserData">
+            <summary>
+            Произвольные пользовательские данные.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Magazines.MagazineManager">
             <summary>
             Работа с периодикой.
@@ -10809,6 +11067,47 @@
         <member name="F:ManagedClient.Magazines.MagazineManager.Magazine">
             <summary>
             Вид документа – сводное описание журнала.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Magazines.MagazineManager.#ctor(ManagedClient.ManagedClient64)">
+            <summary>
+            Конструктор.
+            </summary>
+            <param name="client"></param>
+        </member>
+        <member name="M:ManagedClient.Magazines.MagazineManager.GetAllMagazines">
+            <summary>
+            Получение перечня всех журналов из базы.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Magazines.MagazineManager.GetMagazine(ManagedClient.Magazines.MagazineIssueInfo)">
+            <summary>
+            Получение журнала по его выпуску.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Magazines.MagazineManager.GetIssue(ManagedClient.Magazines.MagazineArticleInfo)">
+            <summary>
+            Получение выпуска журнала по статье из этого выпуска.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Magazines.MagazineManager.GetIssues(ManagedClient.Magazines.MagazineInfo)">
+            <summary>
+            Получение списка выпусков данного журнала.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Magazines.MagazineManager.GetArticles(ManagedClient.Magazines.MagazineIssueInfo)">
+            <summary>
+            Получение списка статей из выпуска.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Magazines.MagazineManager.CreateMagazine(ManagedClient.Magazines.MagazineInfo)">
+            <summary>
+            Создание журнала в базе по описанию.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Magazines.MagazineManager.Client">
+            <summary>
+            Клиент для связи с сервером.
             </summary>
         </member>
         <member name="T:ManagedClient.OrganizationInfo">
@@ -11917,6 +12216,32 @@
             Данные о редактировании записи (поле 907).
             </summary>
         </member>
+        <member name="F:ManagedClient.Fields.RevisionInfo.Tag">
+            <summary>
+            Тег поля.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.RevisionInfo.Parse(ManagedClient.RecordField)">
+            <summary>
+            Разбор поля.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.RevisionInfo.Parse(ManagedClient.IrbisRecord,System.String)">
+            <summary>
+            Разбор записи.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.RevisionInfo.Parse(ManagedClient.IrbisRecord)">
+            <summary>
+            Разбор записи.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.RevisionInfo.ToField">
+            <summary>
+            Превращение обратно в 
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:ManagedClient.Fields.RevisionInfo.Stage">
             <summary>
             Этап работы. Подполе c.
@@ -11931,6 +12256,25 @@
             <summary>
             ФИО оператора. Подполе b.
             </summary>
+        </member>
+        <member name="T:ManagedClient.SearchPostingInfo">
+            <summary>
+            Информация о постинге.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.SearchPostingInfo.Parse(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Разбор ответа сервера.
+            </summary>
+            <param name="answer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.SearchPostingInfo.ParseFormatted(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Разбор ответа сервера с расформатированными записями.
+            </summary>
+            <param name="answer"></param>
+            <returns></returns>
         </member>
         <member name="M:ManagedClient.SearchPostingInfo.ToString">
             <summary>
@@ -11950,14 +12294,14 @@
             Тег поля.
             </summary>
         </member>
-        <member name="P:ManagedClient.SearchPostingInfo.Occurences">
+        <member name="P:ManagedClient.SearchPostingInfo.Occurrence">
             <summary>
             Номер повторения поля
             </summary>
         </member>
         <member name="P:ManagedClient.SearchPostingInfo.Count">
             <summary>
-            
+            Количество повторений.
             </summary>
         </member>
         <member name="P:ManagedClient.SearchPostingInfo.Text">
@@ -11975,13 +12319,10 @@
             Информация о поисковом термине.
             </summary>
         </member>
-        <member name="M:ManagedClient.SearchTermInfo.ToString">
+        <member name="M:ManagedClient.SearchTermInfo.Parse(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
-            Returns a <see cref="T:System.String"/> that represents this instance.
+            Разбор ответа сервера
             </summary>
-            <returns>
-            A <see cref="T:System.String"/> that represents this instance.
-            </returns>
         </member>
         <member name="P:ManagedClient.SearchTermInfo.Count">
             <summary>

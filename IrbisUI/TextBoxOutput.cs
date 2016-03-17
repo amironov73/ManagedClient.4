@@ -91,7 +91,7 @@ namespace IrbisUI
                 string configuration
             )
         {
-            // TODO: impement
+            // TODO: implement
             return this;
         }
 

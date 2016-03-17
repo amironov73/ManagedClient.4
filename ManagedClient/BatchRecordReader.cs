@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient
@@ -18,6 +20,7 @@ namespace ManagedClient
     /// для увеличения производительности.
     /// Сами записи отдаются по одной.
     /// </summary>
+    [MoonSharpUserData]
     public sealed class BatchRecordReader
         : IEnumerable<IrbisRecord>
     {

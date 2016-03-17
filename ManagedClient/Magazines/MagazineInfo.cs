@@ -4,8 +4,12 @@
 #region Using directives
 
 using System;
-using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
+
+using MoonSharp.Interpreter;
+
+using Newtonsoft.Json;
 
 #endregion
 
@@ -15,6 +19,8 @@ namespace ManagedClient.Magazines
     /// Информация о журнале в целом.
     /// </summary>
     [Serializable]
+    [XmlRoot("magazine")]
+    [MoonSharpUserData]
     public sealed class MagazineInfo
     {
         #region Constants
@@ -26,35 +32,54 @@ namespace ManagedClient.Magazines
         /// <summary>
         /// Код документа в базе. Поле 903.
         /// </summary>
+        [XmlAttribute("index")]
+        [JsonProperty("index")]
         public string Index { get; set; }
+
+        /// <summary>
+        /// Библиографическое описание.
+        /// </summary>
+        [XmlAttribute("description")]
+        [JsonProperty("description")]
+        public string Description { get; set; }
 
         /// <summary>
         /// Заглавие. Поле 200^a
         /// </summary>
+        [XmlAttribute("title")]
+        [JsonProperty("title")]
         public string Title { get; set; }
 
         /// <summary>
         /// Подзаголовочные сведения.
         /// Поле 200^e.
         /// </summary>
+        [XmlAttribute("sub-title")]
+        [JsonProperty("sub-title")]
         public string SubTitle { get; set; }
 
         /// <summary>
         /// Обозначение и выпуск серии.
         /// Поле 923^1.
         /// </summary>
+        [XmlAttribute("series-number")]
+        [JsonProperty("series-number")]
         public string SeriesNumber { get; set; }
 
         /// <summary>
         /// Заголовок серии.
         /// Поле 923^i.
         /// </summary>
+        [XmlAttribute("series-title")]
+        [JsonProperty("series-title")]
         public string SeriesTitle { get; set; }
 
         /// <summary>
         /// Расширенное заглавие. 
         /// Включает заголовок выпуск и заголовок серии.
         /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
         public string ExtendedTitle
         {
             get
@@ -81,11 +106,15 @@ namespace ManagedClient.Magazines
         /// <summary>
         /// Тип издания. Поле 110^t
         /// </summary>
+        [XmlAttribute("magazine-type")]
+        [JsonProperty("magazine-type")]
         public string MagazineType { get; set; }
 
         /// <summary>
         /// Вид издания. Поле 110^b
         /// </summary>
+        [XmlAttribute("magazine-kind")]
+        [JsonProperty("magazine-kind")]
         public string MagazineKind { get; set; }
 
         /// <summary>
@@ -96,12 +125,27 @@ namespace ManagedClient.Magazines
         /// <summary>
         /// Кумуляция. Поле 909
         /// </summary>
+        [XmlElement("cumulation")]
+        [JsonProperty("cumulation")]
         public MagazineCumulation[] Cumulation { get; set; }
 
         /// <summary>
         /// MFN записи журнала.
         /// </summary>
+        [XmlElement("mfn")]
+        [JsonProperty("mfn")]
         public int Mfn { get; set; }
+
+        /// <summary>
+        /// Произвольные пользовательские данные.
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        public object UserData
+        {
+            get { return _userData; }
+            set { _userData = value; }
+        }
 
         #endregion
 
@@ -111,6 +155,9 @@ namespace ManagedClient.Magazines
 
         #region Private members
 
+        [NonSerialized]
+        private object _userData;
+
         #endregion
 
         #region Public methods
@@ -118,9 +165,6 @@ namespace ManagedClient.Magazines
         /// <summary>
         /// Разбор записи.
         /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">record</exception>
         public static MagazineInfo Parse
             (
                 IrbisRecord record
@@ -136,10 +180,7 @@ namespace ManagedClient.Magazines
                 Index = record.FM("903"),
                 Title = record.FM("200", 'a'),
                 SubTitle = record.FM("200", 'e'),
-                Cumulation = record.Fields
-                    .GetField("909")
-                    .Select(field => MagazineCumulation.Parse(field))
-                    .ToArray(),
+                Cumulation = MagazineCumulation.Parse(record),
                 SeriesNumber = record.FM("923",'h'),
                 SeriesTitle = record.FM("923", 'i'),
                 Mfn = record.Mfn

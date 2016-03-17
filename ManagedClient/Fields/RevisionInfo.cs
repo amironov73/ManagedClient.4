@@ -1,11 +1,16 @@
-﻿/* RevisionInfo.cs
+﻿/* RevisionInfo.cs -- данные о редактировании записи
  */
 
 #region Using directives
 
 using System;
+using System.Linq;
+using System.Xml.Serialization;
 
 using ManagedClient.Mapping;
+
+using MoonSharp.Interpreter;
+using Newtonsoft.Json;
 
 #endregion
 
@@ -15,53 +20,115 @@ namespace ManagedClient.Fields
     /// Данные о редактировании записи (поле 907).
     /// </summary>
     [Serializable]
+    [MoonSharpUserData]
     public sealed class RevisionInfo
     {
+        #region Constants
+
+        /// <summary>
+        /// Тег поля.
+        /// </summary>
+        public const string Tag = "907";
+
+        #endregion
+
         #region Properties
 
         /// <summary>
         /// Этап работы. Подполе c.
         /// </summary>
         [SubField('c')]
+        [XmlAttribute("stage")]
+        [JsonProperty("stage")]
         public string Stage { get; set; }
 
         /// <summary>
         /// Дата. Подполе a.
         /// </summary>
         [SubField('a')]
+        [XmlAttribute("date")]
+        [JsonProperty("date")]
         public string Date { get; set; }
 
         /// <summary>
         /// ФИО оператора. Подполе b.
         /// </summary>
         [SubField('b')]
+        [XmlAttribute("name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
         #endregion
 
         #region Public methods
 
+        /// <summary>
+        /// Разбор поля.
+        /// </summary>
         public static RevisionInfo Parse
-            ( 
-                RecordField field 
+            (
+                RecordField field
             )
         {
             RevisionInfo result = new RevisionInfo
                 {
-                    Date = field.GetSubFieldText ( 'a', 0 ),
-                    Name = field.GetSubFieldText ( 'b', 0 ),
-                    Stage = field.GetSubFieldText ( 'c', 0 )
+                    Date = field.GetSubFieldText('a', 0),
+                    Name = field.GetSubFieldText('b', 0),
+                    Stage = field.GetSubFieldText('c', 0)
                 };
 
             return result;
         }
 
-        public RecordField ToField ()
+        /// <summary>
+        /// Разбор записи.
+        /// </summary>
+        public static RevisionInfo[] Parse
+            (
+                IrbisRecord record,
+                string tag
+            )
         {
-            RecordField result = new RecordField ( "907" )
-                .AddNonEmptySubField ( 'a', Date )
-                .AddNonEmptySubField ( 'b', Name )
-                .AddNonEmptySubField ( 'c', Stage );
+            if (ReferenceEquals(record, null))
+            {
+                throw new ArgumentNullException("record");
+            }
+            if (string.IsNullOrEmpty(tag))
+            {
+                throw new ArgumentNullException("tag");
+            }
+
+            return record.Fields
+                .GetField(tag)
+                .Select(Parse)
+                .ToArray();
+        }
+
+        /// <summary>
+        /// Разбор записи.
+        /// </summary>
+        public static RevisionInfo[] Parse
+            (
+                IrbisRecord record
+            )
+        {
+            return Parse
+                (
+                    record,
+                    Tag
+                );
+        }
+
+        /// <summary>
+        /// Превращение обратно в 
+        /// </summary>
+        /// <returns></returns>
+        public RecordField ToField()
+        {
+            RecordField result = new RecordField("907")
+                .AddNonEmptySubField('a', Date)
+                .AddNonEmptySubField('b', Name)
+                .AddNonEmptySubField('c', Stage);
             return result;
         }
 
@@ -69,14 +136,14 @@ namespace ManagedClient.Fields
 
         #region Object members
 
-        public override string ToString ()
+        public override string ToString()
         {
-            return string.Format 
-                ( 
-                    "Stage: {0}, Date: {1}, Name: {2}", 
-                    Stage, 
-                    Date, 
-                    Name 
+            return string.Format
+                (
+                    "Stage: {0}, Date: {1}, Name: {2}",
+                    Stage,
+                    Date,
+                    Name
                 );
         }
 

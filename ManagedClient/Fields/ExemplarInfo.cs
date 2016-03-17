@@ -7,6 +7,8 @@ using System;
 using System.Linq;
 using System.Xml.Serialization;
 
+using MoonSharp.Interpreter;
+
 using Newtonsoft.Json;
 
 using ManagedClient.Mapping;
@@ -20,6 +22,7 @@ namespace ManagedClient.Fields
     /// </summary>
     [Serializable]
     [XmlRoot("exemplar")]
+    [MoonSharpUserData]
     public sealed class ExemplarInfo
     {
         #region Constants

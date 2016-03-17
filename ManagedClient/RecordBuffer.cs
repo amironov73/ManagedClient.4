@@ -1,10 +1,12 @@
-﻿/* RecordBuffer.cs
+﻿/* RecordBuffer.cs -- накопление записей перед отправкой
  */
 
 #region Using directives
 
 using System;
 using System.Collections.Generic;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
@@ -13,14 +15,15 @@ namespace ManagedClient
     /// <summary>
     /// Накапливает записи и отправляет их на сервер пакетами.
     /// </summary>
+    [MoonSharpUserData]
     public sealed class RecordBuffer
         : IDisposable
     {
-	#region Events
+        #region Events
 
-	public event EventHandler BatchWrite;
+        public event EventHandler BatchWrite;
 
-	#endregion
+        #endregion
 
         #region Properties
 
@@ -43,7 +46,7 @@ namespace ManagedClient
             get { return _database; }
             set
             {
-                lock ( _syncRoot )
+                lock (_syncRoot)
                 {
                     _database = value;
                 }
@@ -74,30 +77,30 @@ namespace ManagedClient
         /// Initializes a new instance of the <see cref="RecordBuffer" /> class.
         /// </summary>
         /// <param name="client">The client.</param>
-        public RecordBuffer 
+        public RecordBuffer
             (
                 ManagedClient64 client
             )
-            : this ( client, 10 )
+            : this(client, 10)
         {
         }
 
-        public RecordBuffer 
-            ( 
+        public RecordBuffer
+            (
                 ManagedClient64 client,
-                int capacity 
+                int capacity
             )
         {
-            _syncRoot = new object ();
-            _records = new List < IrbisRecord > ();
+            _syncRoot = new object();
+            _records = new List<IrbisRecord>();
 
-            if ( capacity <= 0 )
+            if (capacity <= 0)
             {
                 throw new ArgumentOutOfRangeException("capacity");
             }
             Capacity = capacity;
 
-            if ( client == null )
+            if (client == null)
             {
                 throw new ArgumentNullException("client");
             }
@@ -110,18 +113,18 @@ namespace ManagedClient
 
         private readonly object _syncRoot;
 
-        private readonly List < IrbisRecord > _records;
+        private readonly List<IrbisRecord> _records;
 
         private string _database;
 
-	private void _OnBatchWrite ()
-	{
-		EventHandler handler = BatchWrite;
-		if (handler != null)
-		{
-			handler ( this, EventArgs.Empty );
-		}
-	}
+        private void _OnBatchWrite()
+        {
+            EventHandler handler = BatchWrite;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+        }
 
         #endregion
 
@@ -137,18 +140,18 @@ namespace ManagedClient
                 IrbisRecord record
             )
         {
-            if ( record == null )
+            if (record == null)
             {
                 throw new ArgumentNullException("record");
             }
 
-            lock ( _syncRoot )
+            lock (_syncRoot)
             {
-                if ( _records.Count >= Capacity )
+                if (_records.Count >= Capacity)
                 {
-                    Flush ();
+                    Flush();
                 }
-                _records.Add ( record );
+                _records.Add(record);
                 if (_records.Count >= Capacity)
                 {
                     Flush();
@@ -159,32 +162,32 @@ namespace ManagedClient
         /// <summary>
         /// Flushes this instance.
         /// </summary>
-        public void Flush ( )
+        public void Flush()
         {
-            lock ( _syncRoot )
+            lock (_syncRoot)
             {
-                if ( _records.Count != 0 )
+                if (_records.Count != 0)
                 {
-                    if ( !string.IsNullOrEmpty ( Database ) )
+                    if (!string.IsNullOrEmpty(Database))
                     {
-                        Client.PushDatabase ( Database );
+                        Client.PushDatabase(Database);
                     }
 
-                    Client.WriteRecords 
-                        ( 
-                            _records.ToArray (),
+                    Client.WriteRecords
+                        (
+                            _records.ToArray(),
                             false,
                             Actualize
                         );
 
-                    _OnBatchWrite ();
+                    _OnBatchWrite();
 
-                    if ( !string.IsNullOrEmpty ( Database ) )
+                    if (!string.IsNullOrEmpty(Database))
                     {
-                        Client.PopDatabase ();
+                        Client.PopDatabase();
                     }
                 }
-                _records.Clear ();
+                _records.Clear();
             }
         }
 
@@ -196,9 +199,9 @@ namespace ManagedClient
         /// Performs application-defined tasks associated with freeing, 
         /// releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose ( )
+        public void Dispose()
         {
-            Flush ();
+            Flush();
         }
 
         #endregion

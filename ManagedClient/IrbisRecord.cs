@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient
@@ -18,6 +20,7 @@ namespace ManagedClient
     /// MARC-запись.
     /// </summary>
     [Serializable]
+    [MoonSharpUserData]
     public sealed class IrbisRecord
     {
         #region Properties
@@ -58,6 +61,9 @@ namespace ManagedClient
             get { return _fields; }
         }
 
+        /// <summary>
+        /// Признак удалённой записи.
+        /// </summary>
         public bool Deleted
         {
             get { return (( Status & RecordStatus.LogicallyDeleted ) != 0); }

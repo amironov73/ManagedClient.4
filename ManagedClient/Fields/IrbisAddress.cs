@@ -1,4 +1,4 @@
-﻿/* IrbisAddress.cs
+﻿/* IrbisAddress.cs -- адрес читателя
  */
 
 #region Using directives
@@ -9,11 +9,23 @@ using System.Linq;
 
 #endregion
 
-namespace ManagedClient
+namespace ManagedClient.Fields
 {
+    /// <summary>
+    /// Адрес читателя: поле 13 в базе RDR.
+    /// </summary>
     [Serializable]
     public sealed class IrbisAddress
     {
+        #region Constants
+
+        /// <summary>
+        /// Тег поля.
+        /// </summary>
+        public const string Tag = "13";
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -64,6 +76,9 @@ namespace ManagedClient
 
         #region Public methods
 
+        /// <summary>
+        /// Разбор поля 13.
+        /// </summary>
         public static IrbisAddress Parse
             (
                 RecordField field
@@ -85,6 +100,48 @@ namespace ManagedClient
                 Apartment = field.GetFirstSubFieldText('H'),
                 AdditionalData = field.GetFirstSubFieldText('F')
             };
+        }
+
+        /// <summary>
+        /// Разбор поля 13.
+        /// </summary>
+        public static IrbisAddress Parse
+            (
+                IrbisRecord record,
+                string tag
+            )
+        {
+            if (ReferenceEquals(record, null))
+            {
+                throw new ArgumentNullException("record");
+            }
+            if (string.IsNullOrEmpty(tag))
+            {
+                throw new ArgumentNullException("tag");
+            }
+
+            RecordField field = record.Fields
+                .GetField(tag)
+                .FirstOrDefault();
+
+            return ReferenceEquals(field, null)
+                ? null
+                : Parse(field);
+        }
+
+        /// <summary>
+        /// Разбор поля 13.
+        /// </summary>
+        public static IrbisAddress Parse
+            (
+                IrbisRecord record
+            )
+        {
+            return Parse
+                (
+                    record,
+                    Tag
+                );
         }
 
         #endregion
