@@ -16,7 +16,7 @@ namespace ManagedClient.SubBasing
     /// Варианты для отбора записей.
     /// </summary>
     [Serializable]
-    [XmlRoot("subbasing")]
+    [XmlRoot("sub-base")]
     public sealed class SubBasingSettings
     {
         #region Properties

@@ -9691,6 +9691,11 @@
             Поиск записей согласно спецификации.
             </summary>
         </member>
+        <member name="M:ManagedClient.SubBasing.RecordExtractor.SearchExemplars(ManagedClient.SubBasing.SelectionQuery)">
+            <summary>
+            Отбор экземпляров.
+            </summary>
+        </member>
         <member name="P:ManagedClient.SubBasing.RecordExtractor.Client">
             <summary>
             Клиент для подключения к ИРБИС64.
@@ -9772,6 +9777,11 @@
             (например, инвентарным номерам).
             </summary>
         </member>
+        <member name="F:ManagedClient.SubBasing.SelectionType.Dictionary">
+            <summary>
+            Элементы словаря.
+            </summary>
+        </member>
         <member name="F:ManagedClient.SubBasing.SelectionType.Search">
             <summary>
             Согласно поисковому выражению.
@@ -9780,6 +9790,11 @@
         <member name="F:ManagedClient.SubBasing.SelectionType.Deep">
             <summary>
             Глубокий последовательный поиск.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.SubBasing.SelectionType.Script">
+            <summary>
+            Отбор скриптом
             </summary>
         </member>
         <member name="T:ManagedClient.SubBasing.SubBasingSettings">

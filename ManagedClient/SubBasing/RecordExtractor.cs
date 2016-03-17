@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using ManagedClient.Fields;
 using ManagedClient.Output;
 using ManagedClient.Ranges;
 
@@ -138,6 +138,32 @@ namespace ManagedClient.SubBasing
         }
         // ReSharper restore ParameterTypeCanBeEnumerable.Local
 
+        private bool _SelectByMfn
+            (
+                ExemplarInfo exemplar
+            )
+        {
+            return true;
+        }
+
+        private void _SearchByDictionary
+            (
+                Dictionary<int, IrbisRecord> result,
+                string prefix,
+                NumberRangeCollection ranges
+            )
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool _SelectByDictionary
+            (
+                ExemplarInfo exemplar
+            )
+        {
+            throw new NotImplementedException();
+        }
+
         // ReSharper disable ParameterTypeCanBeEnumerable.Local
         private void _SearchBySequential
             (
@@ -188,6 +214,16 @@ namespace ManagedClient.SubBasing
         }
         // ReSharper restore ParameterTypeCanBeEnumerable.Local
 
+        private bool _SelectBySequential
+            (
+                string prefix,
+                NumberRangeCollection ranges,
+                ExemplarInfo exemplar
+            )
+        {
+            return false;
+        }
+
         private void _SearchByQuery
             (
                 Dictionary<int, IrbisRecord> result,
@@ -229,6 +265,16 @@ namespace ManagedClient.SubBasing
             }
         }
 
+        private bool _SelectByQuery
+            (
+                string prefix,
+                NumberRangeCollection ranges,
+                ExemplarInfo exemplar
+            )
+        {
+            return false;
+        }
+
         private void _SearchByDeep
             (
                 Dictionary<int, IrbisRecord> result,
@@ -249,6 +295,16 @@ namespace ManagedClient.SubBasing
                         mfn
                     );
             }
+        }
+
+        private bool _SelectByDeep
+            (
+                string prefix,
+                NumberRangeCollection ranges,
+                ExemplarInfo exemplar
+            )
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -309,6 +365,14 @@ namespace ManagedClient.SubBasing
                             ranges
                         );
                     break;
+                case SelectionType.Dictionary:
+                    _SearchByDictionary
+                        (
+                            result,
+                            query.Prefix,
+                            ranges
+                        );
+                    break;
                 case SelectionType.Search:
                     _SearchByQuery
                         (
@@ -339,6 +403,44 @@ namespace ManagedClient.SubBasing
 
             return result.Values.ToList();
         }
+
+        /// <summary>
+        /// Отбор экземпляров.
+        /// </summary>
+        public List<ExemplarInfo> SearchExemplars
+            (
+                SelectionQuery query
+            )
+        {
+            bool saveReadRecords = ReadRecords;
+            ReadRecords = true;
+            List<IrbisRecord> records = SearchRecords(query);
+            List<ExemplarInfo> result = new List<ExemplarInfo>
+                (
+                    records.Count
+                );
+            ReadRecords = saveReadRecords;
+
+            bool databaseChanged = false;
+            if (!string.IsNullOrEmpty(query.Database))
+            {
+                Client.PushDatabase(query.Database);
+                databaseChanged = true;
+            }
+
+            foreach (IrbisRecord record in records)
+            {
+                
+            }
+
+            if (databaseChanged)
+            {
+                Client.PopDatabase();
+            }
+
+            return result;
+        }
+
 
         #endregion
     }
