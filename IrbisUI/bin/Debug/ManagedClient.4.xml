@@ -10311,6 +10311,11 @@
             Статья из журнала.
             </summary>
         </member>
+        <member name="T:ManagedClient.ManagedClient64">
+            <summary>
+            Клиент для общения с сервером
+            </summary>
+        </member>
         <member name="F:ManagedClient.ManagedClient64.QueryLineDelimiter">
             <summary>
             Разделитель строк в пакете запроса к серверу.

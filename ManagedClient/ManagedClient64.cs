@@ -18,6 +18,8 @@ using System.Net.Sockets;
 using System.IO;
 using System.Text.RegularExpressions;
 
+using MoonSharp.Interpreter;
+
 #if !PocketPC
 using System.Runtime.Serialization.Formatters.Binary;
 using ManagedClient.Pft;
@@ -33,7 +35,11 @@ namespace ManagedClient
     using Transactions;
 #endif
 
+    /// <summary>
+    /// Клиент для общения с сервером
+    /// </summary>
     [Serializable]
+    [MoonSharpUserData]
     public class ManagedClient64
         : IDisposable
     {

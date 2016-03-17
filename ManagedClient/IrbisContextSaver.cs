@@ -15,7 +15,7 @@ namespace ManagedClient
     /// Простая сохранялка текущего контекста для клиента.
     /// </summary>
     [Serializable]
-    [MoonSharpUserData]
+    //[MoonSharpUserData]
     public class IrbisContextSaver
         : IDisposable
     {

@@ -46,8 +46,8 @@ namespace ManagedClient.Scripting
         /// </summary>
         public IrbisScript()
         {
-            _Initialize();
             Client = new ManagedClient64();
+            _Initialize();
             _ownClient = true;
         }
 
@@ -65,8 +65,8 @@ namespace ManagedClient.Scripting
                 throw new ArgumentNullException("client");
             }
 
-            _Initialize();
             Client = client;
+            _Initialize();
         }
 
         #endregion
@@ -166,6 +166,7 @@ namespace ManagedClient.Scripting
             if (!_typesRegistered)
             {
                 UserData.RegisterAssembly(typeof (IrbisScript).Assembly);
+                UserData.RegisterType<Version>();
                 _typesRegistered = true;
             }
         }

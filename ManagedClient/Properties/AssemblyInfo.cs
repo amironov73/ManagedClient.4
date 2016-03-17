@@ -9,9 +9,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ManagedClient")]
 [assembly: AssemblyDescription("IRBIS64 client runtime")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("IOGUNB")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ManagedClient")]
-[assembly: AssemblyCopyright("Copyright © Alexey Mironov 2014")]
+[assembly: AssemblyCopyright("Copyright © Alexey Mironov 2011-2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.5.15.77")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.5.17.80")]
+[assembly: AssemblyFileVersion("1.5.17.80")]
 
 [assembly: CLSCompliant(true)]

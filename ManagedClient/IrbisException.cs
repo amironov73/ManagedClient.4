@@ -16,7 +16,7 @@ namespace ManagedClient
     /// ManagedClient
     /// </summary>
     [Serializable]
-    [MoonSharpUserData]
+    //[MoonSharpUserData]
     public class IrbisException
         : ApplicationException
     {
@@ -65,6 +65,7 @@ namespace ManagedClient
         /// <summary>
         /// Конструктор для десериализации.
         /// </summary>
+        [MoonSharpHidden]
         public IrbisException
             (
                 string message,

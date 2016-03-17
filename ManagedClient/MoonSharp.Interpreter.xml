@@ -4,6 +4,306 @@
         <name>MoonSharp.Interpreter</name>
     </assembly>
     <members>
+        <member name="T:MoonSharp.Interpreter.AsyncExtensions">
+            <summary>
+            This class contains extension methods providing async wrappers of many methods.
+            Asynchronous execution is performed by scheduling the method on the thread pool (through a Task.Factory.StartNew).
+            
+            This type is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.CallAsync(MoonSharp.Interpreter.Closure)">
+            <summary>
+            Asynchronously calls this function with the specified args
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="function">The function.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">Thrown if function is not of DataType.Function</exception>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.CallAsync(MoonSharp.Interpreter.Closure,System.Object[])">
+            <summary>
+            Asynchronously calls this function with the specified args
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="function">The function.</param>
+            <param name="args">The arguments to pass to the function.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">Thrown if function is not of DataType.Function</exception>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.CallAsync(MoonSharp.Interpreter.Closure,MoonSharp.Interpreter.DynValue[])">
+            <summary>
+            Asynchronously calls this function with the specified args
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="function">The function.</param>
+            <param name="args">The arguments to pass to the function.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">Thrown if function is not of DataType.Function</exception>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.DoString(MoonSharp.Interpreter.Script,System.String,MoonSharp.Interpreter.Table)">
+            <summary>
+            Asynchronously loads and executes a string containing a Lua/MoonSharp script.
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="script">The script.</param>
+            <param name="code">The code.</param>
+            <param name="globalContext">The global context.</param>
+            <returns>
+            A DynValue containing the result of the processing of the loaded chunk.
+            </returns>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.DoStreamAsync(MoonSharp.Interpreter.Script,System.IO.Stream,MoonSharp.Interpreter.Table)">
+            <summary>
+            Asynchronously loads and executes a stream containing a Lua/MoonSharp script.
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="script">The script.</param>
+            <param name="stream">The stream.</param>
+            <param name="globalContext">The global context.</param>
+            <returns>
+            A DynValue containing the result of the processing of the loaded chunk.
+            </returns>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.DoFile(MoonSharp.Interpreter.Script,System.String,MoonSharp.Interpreter.Table)">
+            <summary>
+            Asynchronously loads and executes a file containing a Lua/MoonSharp script.
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="script">The script.</param>
+            <param name="filename">The filename.</param>
+            <param name="globalContext">The global context.</param>
+            <returns>
+            A DynValue containing the result of the processing of the loaded chunk.
+            </returns>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.LoadFunctionAsync(MoonSharp.Interpreter.Script,System.String,MoonSharp.Interpreter.Table,System.String)">
+            <summary>
+            Asynchronously loads a string containing a Lua/MoonSharp function.
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="script">The script.</param>
+            <param name="code">The code.</param>
+            <param name="globalTable">The global table to bind to this chunk.</param>
+            <param name="funcFriendlyName">Name of the function used to report errors, etc.</param>
+            <returns>
+            A DynValue containing a function which will execute the loaded code.
+            </returns>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.LoadStringAsync(MoonSharp.Interpreter.Script,System.String,MoonSharp.Interpreter.Table,System.String)">
+            <summary>
+            Asynchronously loads a string containing a Lua/MoonSharp script.
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="script">The script.</param>
+            <param name="code">The code.</param>
+            <param name="globalTable">The global table to bind to this chunk.</param>
+            <param name="codeFriendlyName">Name of the code - used to report errors, etc.</param>
+            <returns>
+            A DynValue containing a function which will execute the loaded code.
+            </returns>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.LoadStreamAsync(MoonSharp.Interpreter.Script,System.IO.Stream,MoonSharp.Interpreter.Table,System.String)">
+            <summary>
+            Asynchronously loads a Lua/MoonSharp script from a System.IO.Stream. NOTE: This will *NOT* close the stream!
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="script">The script.</param>
+            <param name="stream">The stream containing code.</param>
+            <param name="globalTable">The global table to bind to this chunk.</param>
+            <param name="codeFriendlyName">Name of the code - used to report errors, etc.</param>
+            <returns>
+            A DynValue containing a function which will execute the loaded code.
+            </returns>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.DumpAsync(MoonSharp.Interpreter.Script,MoonSharp.Interpreter.DynValue,System.IO.Stream)">
+            <summary>
+            Asynchronously dumps a function on the specified stream.
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="script">The script.</param>
+            <param name="function">The function.</param>
+            <param name="stream">The stream.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">function arg is not a function!
+            or
+            stream is readonly!
+            or
+            function arg has upvalues other than _ENV</exception>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.LoadFileAsync(MoonSharp.Interpreter.Script,System.String,MoonSharp.Interpreter.Table,System.String)">
+            <summary>
+            Asynchronously loads a string containing a Lua/MoonSharp script.
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="script">The script.</param>
+            <param name="filename">The code.</param>
+            <param name="globalContext">The global table to bind to this chunk.</param>
+            <param name="friendlyFilename">The filename to be used in error messages.</param>
+            <returns>
+            A DynValue containing a function which will execute the loaded code.
+            </returns>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.CallAsync(MoonSharp.Interpreter.Script,MoonSharp.Interpreter.DynValue)">
+            <summary>
+            Calls the specified function.
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="script">The script.</param>
+            <param name="function">The Lua/MoonSharp function to be called</param>
+            <returns>
+            The return value(s) of the function call.
+            </returns>
+            <exception cref="T:System.ArgumentException">Thrown if function is not of DataType.Function</exception>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.CallAsync(MoonSharp.Interpreter.Script,MoonSharp.Interpreter.DynValue,MoonSharp.Interpreter.DynValue[])">
+            <summary>
+            Asynchronously calls the specified function.
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="script">The script.</param>
+            <param name="function">The Lua/MoonSharp function to be called</param>
+            <param name="args">The arguments to pass to the function.</param>
+            <returns>
+            The return value(s) of the function call.
+            </returns>
+            <exception cref="T:System.ArgumentException">Thrown if function is not of DataType.Function</exception>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.CallAsync(MoonSharp.Interpreter.Script,MoonSharp.Interpreter.DynValue,System.Object[])">
+            <summary>
+            Asynchronously calls the specified function.
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="script">The script.</param>
+            <param name="function">The Lua/MoonSharp function to be called</param>
+            <param name="args">The arguments to pass to the function.</param>
+            <returns>
+            The return value(s) of the function call.
+            </returns>
+            <exception cref="T:System.ArgumentException">Thrown if function is not of DataType.Function</exception>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.CallAsync(MoonSharp.Interpreter.Script,System.Object)">
+            <summary>
+            Asynchronously calls the specified function.
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="script">The script.</param>
+            <param name="function">The Lua/MoonSharp function to be called</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">Thrown if function is not of DataType.Function</exception>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.CallAsync(MoonSharp.Interpreter.Script,System.Object,System.Object[])">
+            <summary>
+            Asynchronously calls the specified function.
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="script">The script.</param>
+            <param name="function">The Lua/MoonSharp function to be called</param>
+            <param name="args">The arguments to pass to the function.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">Thrown if function is not of DataType.Function</exception>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.CreateDynamicExpressionAsync(MoonSharp.Interpreter.Script,System.String)">
+            <summary>
+            Asynchronously creates a new dynamic expression.
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="script">The script.</param>
+            <param name="code">The code of the expression.</param>
+            <returns></returns>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.EvaluateAsync(MoonSharp.Interpreter.REPL.ReplInterpreter,System.String)">
+            <summary>
+            Asynchronously evaluates a REPL command.
+            This method returns the result of the computation, or null if more input is needed for having valid code.
+            In case of errors, exceptions are propagated to the caller.
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="interpreter">The interpreter.</param>
+            <param name="input">The input.</param>
+            <returns>
+            This method returns the result of the computation, or null if more input is needed for a computation.
+            </returns>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.ResumeAsync(MoonSharp.Interpreter.Coroutine,MoonSharp.Interpreter.DynValue[])">
+            <summary>
+            Resumes the coroutine.
+            Only non-CLR coroutines can be resumed with this overload of the Resume method. Use the overload accepting a ScriptExecutionContext instead.
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="cor">The coroutine</param>
+            <param name="args">The arguments.</param>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException">Only non-CLR coroutines can be resumed with this overload of the Resume method. Use the overload accepting a ScriptExecutionContext instead</exception>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.ResumeAsync(MoonSharp.Interpreter.Coroutine,MoonSharp.Interpreter.ScriptExecutionContext,MoonSharp.Interpreter.DynValue[])">
+            <summary>
+            Resumes the coroutine.
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="cor">The coroutine</param>
+            <param name="context">The ScriptExecutionContext.</param>
+            <param name="args">The arguments.</param>
+            <returns></returns>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.ResumeAsync(MoonSharp.Interpreter.Coroutine)">
+            <summary>
+            Resumes the coroutine.
+            Only non-CLR coroutines can be resumed with this overload of the Resume method. Use the overload accepting a ScriptExecutionContext instead.
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="cor">The coroutine</param>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException">Only non-CLR coroutines can be resumed with this overload of the Resume method. Use the overload accepting a ScriptExecutionContext instead</exception>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.ResumeAsync(MoonSharp.Interpreter.Coroutine,MoonSharp.Interpreter.ScriptExecutionContext)">
+            <summary>
+            Resumes the coroutine.
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="cor">The coroutine</param>
+            <param name="context">The ScriptExecutionContext.</param>
+            <returns></returns>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.ResumeAsync(MoonSharp.Interpreter.Coroutine,System.Object[])">
+            <summary>
+            Resumes the coroutine.
+            Only non-CLR coroutines can be resumed with this overload of the Resume method. Use the overload accepting a ScriptExecutionContext instead.
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="cor">The coroutine</param>
+            <param name="args">The arguments.</param>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException">Only non-CLR coroutines can be resumed with this overload of the Resume method. Use the overload accepting a ScriptExecutionContext instead.</exception>
+        </member>
+        <member name="M:MoonSharp.Interpreter.AsyncExtensions.ResumeAsync(MoonSharp.Interpreter.Coroutine,MoonSharp.Interpreter.ScriptExecutionContext,System.Object[])">
+            <summary>
+            Resumes the coroutine
+            
+            This method is supported only on .NET 4.x and .NET 4.x PCL targets.
+            </summary>
+            <param name="cor">The coroutine</param>
+            <param name="context">The ScriptExecutionContext.</param>
+            <param name="args">The arguments.</param>
+            <returns></returns>
+        </member>
         <member name="T:MoonSharp.Interpreter.CoreLib.CoroutineModule">
             <summary>
             Class implementing coroutine Lua functions 
@@ -4957,6 +5257,11 @@
         <member name="M:MoonSharp.Interpreter.DynValue.ToObject``1">
             <summary>
             Converts this MoonSharp DynValue to a CLR object of the specified type.
+            </summary>
+        </member>
+        <member name="M:MoonSharp.Interpreter.DynValue.ToDynamic">
+            <summary>
+            Converts this MoonSharp DynValue to a CLR object, marked as dynamic
             </summary>
         </member>
         <member name="M:MoonSharp.Interpreter.DynValue.CheckType(System.String,MoonSharp.Interpreter.DataType,System.Int32,MoonSharp.Interpreter.TypeValidationFlags)">
