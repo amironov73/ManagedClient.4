@@ -1,4 +1,4 @@
-﻿/* IrbisAlphabetTable.cs
+﻿/* IrbisAlphabetTable.cs -- ISISAC.TAB
  */
 
 #region Using directives
@@ -12,6 +12,9 @@ using System.Text;
 
 namespace ManagedClient
 {
+    /// <summary>
+    /// ISISAC.TAB
+    /// </summary>
     [Serializable]
     public sealed class IrbisAlphabetTable
     {

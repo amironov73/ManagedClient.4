@@ -20,6 +20,11 @@ namespace ManagedClient.SubBasing
         Sequential,
 
         /// <summary>
+        /// Элементы словаря.
+        /// </summary>
+        Dictionary,
+
+        /// <summary>
         /// Согласно поисковому выражению.
         /// </summary>
         Search,
@@ -27,6 +32,11 @@ namespace ManagedClient.SubBasing
         /// <summary>
         /// Глубокий последовательный поиск.
         /// </summary>
-        Deep
+        Deep,
+
+        /// <summary>
+        /// Отбор скриптом
+        /// </summary>
+        Script
     }
 }

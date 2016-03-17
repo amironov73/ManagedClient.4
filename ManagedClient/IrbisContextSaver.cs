@@ -1,9 +1,11 @@
-﻿/* IrbisContextSaver.cs
+﻿/* IrbisContextSaver.cs -- сохранение текущего контекста клиента
  */
 
 #region Using directives
 
 using System;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
@@ -13,6 +15,7 @@ namespace ManagedClient
     /// Простая сохранялка текущего контекста для клиента.
     /// </summary>
     [Serializable]
+    [MoonSharpUserData]
     public class IrbisContextSaver
         : IDisposable
     {

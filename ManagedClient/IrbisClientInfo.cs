@@ -1,25 +1,29 @@
-﻿/* IrbisClientInfo.cs
+﻿/* IrbisClientInfo.cs -- информация о клиенте, подключенном к серверу ИРБИС
  */
 
 #region Using directives
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
 namespace ManagedClient
 {
 	/// <summary>
-	/// Информация о подключенном клиенте Ирбис
+	/// Информация о клиенте, подключенном к серверу ИРБИС
+	/// (не обязательно о текущем).
 	/// </summary>
 	[Serializable]
+    [MoonSharpUserData]
 	public sealed class IrbisClientInfo
 	{
 		#region Properties
 
+        /// <summary>
+        /// Номер
+        /// </summary>
         public string Number { get; set; }
 
 		/// <summary>

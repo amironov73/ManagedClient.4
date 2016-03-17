@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient.Magazines
@@ -14,6 +16,7 @@ namespace ManagedClient.Magazines
     /// <summary>
     /// Работа с периодикой.
     /// </summary>
+    [MoonSharpUserData]
     public sealed class MagazineManager
     {
         #region Constants
@@ -32,18 +35,25 @@ namespace ManagedClient.Magazines
 
         #region Properties
 
-        public ManagedClient64 Client{get { return _client; }}
+        /// <summary>
+        /// Клиент для связи с сервером.
+        /// </summary>
+        public ManagedClient64 Client { get { return _client; } }
 
         #endregion
 
         #region Construction
 
-        public MagazineManager 
-            ( 
-                ManagedClient64 client 
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        /// <param name="client"></param>
+        public MagazineManager
+            (
+                ManagedClient64 client
             )
         {
-            if ( ReferenceEquals ( client, null ) )
+            if (ReferenceEquals(client, null))
             {
                 throw new ArgumentNullException("client");
             }
@@ -61,14 +71,17 @@ namespace ManagedClient.Magazines
 
         #region Public methods
 
-        public MagazineInfo[] GetAllMagazines ()
+        /// <summary>
+        /// Получение перечня всех журналов из базы.
+        /// </summary>
+        public MagazineInfo[] GetAllMagazines()
         {
             List<MagazineInfo> result = new List<MagazineInfo>();
 
             BatchRecordReader batch = new BatchRecordReader
                 (
                     Client,
-                    String.Concat ( Newspaper, " + ", Magazine )
+                    String.Concat(Newspaper, " + ", Magazine)
                 );
             foreach (IrbisRecord record in batch)
             {
@@ -85,6 +98,9 @@ namespace ManagedClient.Magazines
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Получение журнала по его выпуску.
+        /// </summary>
         public MagazineInfo GetMagazine
             (
                 MagazineIssueInfo issue
@@ -94,9 +110,13 @@ namespace ManagedClient.Magazines
             {
                 throw new ArgumentNullException("issue");
             }
+
             return null;
         }
 
+        /// <summary>
+        /// Получение выпуска журнала по статье из этого выпуска.
+        /// </summary>
         public MagazineIssueInfo GetIssue
             (
                 MagazineArticleInfo article
@@ -110,6 +130,9 @@ namespace ManagedClient.Magazines
             return null;
         }
 
+        /// <summary>
+        /// Получение списка выпусков данного журнала.
+        /// </summary>
         public MagazineIssueInfo[] GetIssues
             (
                 MagazineInfo magazine
@@ -128,13 +151,16 @@ namespace ManagedClient.Magazines
 
             MagazineIssueInfo[] result = records
                 .NonNullItems()
-                .Select(record => MagazineIssueInfo.Parse(record))
+                .Select(MagazineIssueInfo.Parse)
                 .NonNullItems()
                 .ToArray();
 
             return result;
         }
 
+        /// <summary>
+        /// Получение списка статей из выпуска.
+        /// </summary>
         public MagazineArticleInfo[] GetArticles
             (
                 MagazineIssueInfo issue
@@ -144,14 +170,23 @@ namespace ManagedClient.Magazines
             {
                 throw new ArgumentNullException("issue");
             }
+
             return null;
         }
 
+        /// <summary>
+        /// Создание журнала в базе по описанию.
+        /// </summary>
         public MagazineManager CreateMagazine
             (
                 MagazineInfo magazine
             )
         {
+            if (ReferenceEquals(magazine, null))
+            {
+                throw new ArgumentNullException("magazine");
+            }
+
             return this;
         }
 

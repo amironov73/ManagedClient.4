@@ -78,6 +78,7 @@ namespace IrbisUI
 
         public override AbstractOutput Clear()
         {
+            HaveError = false;
             if (TextBox != null)
             {
                 TextBox.Clear();
@@ -90,7 +91,7 @@ namespace IrbisUI
                 string configuration
             )
         {
-            // TODO: impement
+            // TODO: implement
             return this;
         }
 

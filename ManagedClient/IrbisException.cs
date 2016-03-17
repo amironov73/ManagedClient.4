@@ -1,17 +1,22 @@
-﻿/* IrbisException.cs
+﻿/* IrbisException.cs -- исключения, специфичные для библиотеки
  */
 
 #region Using directives
 
 using System;
 
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient
 {
     /// <summary>
-    /// 
+    /// Исключения, специфичные для библиотеки
+    /// ManagedClient
     /// </summary>
+    [Serializable]
+    [MoonSharpUserData]
     public class IrbisException
         : ApplicationException
     {
@@ -27,12 +32,15 @@ namespace ManagedClient
         #region Construction
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IrbisException"/> class.
+        /// Конструктор по умолчанию.
         /// </summary>
         public IrbisException()
         {
         }
 
+        /// <summary>
+        /// Конструктор с кодом ошибки.
+        /// </summary>
         public IrbisException
             (
                 int returnCode
@@ -43,9 +51,9 @@ namespace ManagedClient
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IrbisException"/> class.
+        /// Конструктор с готовым сообщением
+        /// об ошибке.
         /// </summary>
-        /// <param name="message">The message.</param>
         public IrbisException
             (
                 string message
@@ -55,10 +63,8 @@ namespace ManagedClient
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IrbisException"/> class.
+        /// Конструктор для десериализации.
         /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="innerException">The inner exception.</param>
         public IrbisException
             (
                 string message,
@@ -72,6 +78,9 @@ namespace ManagedClient
 
         #region Public methods
 
+        /// <summary>
+        /// Текстовое описание ошибки.
+        /// </summary>
         public static string GetErrorDescription
             (
                 IrbisException exception
@@ -83,6 +92,9 @@ namespace ManagedClient
         }
 
 
+        /// <summary>
+        /// Текстовое описание ошибки.
+        /// </summary>
         public static string GetErrorDescription
             (
                 IrbisReturnCode code
@@ -91,6 +103,9 @@ namespace ManagedClient
             return GetErrorDescription((int) code);
         }
 
+        /// <summary>
+        /// Текстовое описание ошибки.
+        /// </summary>
         public static string GetErrorDescription
             (
                 int code
@@ -254,12 +269,6 @@ namespace ManagedClient
 
         #region Object members
 
-        /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
-        /// </returns>
         public override string ToString()
         {
             return string.Format

@@ -4,6 +4,9 @@
 #region Using directives
 
 using System;
+using System.Xml.Serialization;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
@@ -13,6 +16,8 @@ namespace ManagedClient.Magazines
     /// Информация о статье.
     /// </summary>
     [Serializable]
+    [XmlRoot("article")]
+    [MoonSharpUserData]
     public sealed class MagazineArticleInfo
     {
         #region Properties
@@ -29,6 +34,9 @@ namespace ManagedClient.Magazines
 
         #region Public methods
 
+        /// <summary>
+        /// Разбор записи.
+        /// </summary>
         public static MagazineArticleInfo Parse
             (
                 IrbisRecord record
@@ -43,6 +51,9 @@ namespace ManagedClient.Magazines
             return result;
         }
 
+        /// <summary>
+        /// Разбор поля (330 или 922).
+        /// </summary>
         public static MagazineArticleInfo Parse
             (
                 RecordField field

@@ -4,16 +4,16 @@
 #region Using directives
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
 namespace ManagedClient
 {
     [Serializable]
+    [MoonSharpUserData]
     public sealed class TermLink
     {
         #region Properties
