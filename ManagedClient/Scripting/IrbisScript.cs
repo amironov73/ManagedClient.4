@@ -121,10 +121,30 @@ namespace ManagedClient.Scripting
         }
 
         /// <summary>
+        /// Исполнение Lua-скрипта из файла
+        /// и получение результата.
+        /// </summary>
+        public DynValue DoFile
+            (
+                string filename
+            )
+        {
+            if (string.IsNullOrEmpty(filename))
+            {
+                throw new ArgumentNullException("filename");
+            }
+
+            DynValue result = Engine.DoFile
+                (
+                    filename
+                );
+
+            return result;
+        }
+
+        /// <summary>
         /// Исполнение Lua-кода и получение результата.
         /// </summary>
-        /// <param name="code"></param>
-        /// <returns></returns>
         public DynValue DoString
             (
                 string code

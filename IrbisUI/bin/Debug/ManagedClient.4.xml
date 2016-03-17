@@ -9672,12 +9672,16 @@
             Вызов Lua-функции и получение результата.
             </summary>
         </member>
+        <member name="M:ManagedClient.Scripting.IrbisScript.DoFile(System.String)">
+            <summary>
+            Исполнение Lua-скрипта из файла
+            и получение результата.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Scripting.IrbisScript.DoString(System.String)">
             <summary>
             Исполнение Lua-кода и получение результата.
             </summary>
-            <param name="code"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Scripting.IrbisScript.RegisterIrbisTypes">
             <summary>
