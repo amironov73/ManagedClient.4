@@ -293,6 +293,7 @@
     <Compile Include="Schema\SchemaValidator.cs" />
     <Compile Include="Schema\SubFieldSchema.cs" />
     <Compile Include="Schema\SchemaItem.cs" />
+    <Compile Include="Scripting\ScriptUtility.cs" />
     <Compile Include="Scripting\IrbisScript.cs" />
     <Compile Include="Sockets\IrbisAsyncSocket.cs" />
     <Compile Include="Sockets\IrbisSocket.cs" />

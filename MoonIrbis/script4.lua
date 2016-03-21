@@ -1,0 +1,12 @@
+local record = IrbisRecord.__new ()
+local field700 = RecordField.__new ("700")
+local subA = SubField.__new ('a', "Управляемый клиент")
+field700.SubFields.Add (subA)
+record.Fields.Add (field700)
+local field200 = RecordField.__new ("200")
+subA = SubField.__new ('a', "Новая запись")
+field200.SubFields.Add (subA)
+record.Fields.Add (field200)
+record.AddField ("300", "Комментарий")
+
+print (IrbisRecord.EncodeIrbisText(record))

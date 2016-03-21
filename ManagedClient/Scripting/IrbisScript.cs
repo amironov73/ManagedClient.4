@@ -4,9 +4,6 @@
 #region Using directives
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using MoonSharp.Interpreter;
 
@@ -85,20 +82,10 @@ namespace ManagedClient.Scripting
             Engine = new Script(CoreModules.Preset_Complete);
 
             SetGlobal ("Client", Client);
-            SetFunction
-                (
-                    "CreateRecord", 
-                    () => new IrbisRecord()
-                );
-            SetFunction<string,RecordField>
-                (
-                    "CreateField", 
-                    tag => new RecordField(tag)
-                );
 
-            foreach (Type type in UserData.GetRegisteredTypes(false))
+            foreach (Type type in UserData.GetRegisteredTypes())
             {
-                if (!string.IsNullOrEmpty(type.Namespace)
+                if ((type.Namespace != null)
                     && type.Namespace.StartsWith("ManagedClient"))
                 {
                     SetGlobal
@@ -197,77 +184,6 @@ namespace ManagedClient.Scripting
             }
         }
 
-        /// <summary>
-        /// Регистрация функции.
-        /// </summary>
-        public IrbisScript SetFunction<TResult>
-            (
-                string name,
-                Func<TResult> func
-            )
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentNullException("name");
-            }
-
-            Engine.Globals[name] = func;
-            return this;
-        }
-
-        /// <summary>
-        /// Регистрация функции.
-        /// </summary>
-        public IrbisScript SetFunction<TArg,TResult>
-            (
-                string name,
-                Func<TArg,TResult> func
-            )
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentNullException("name");
-            }
-
-            Engine.Globals[name] = func;
-            return this;
-        }
-
-        /// <summary>
-        /// Регистрация функции.
-        /// </summary>
-        public IrbisScript SetFunction<TArg1, TArg2, TResult>
-            (
-                string name,
-                Func<TArg1, TArg2, TResult> func
-            )
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentNullException("name");
-            }
-
-            Engine.Globals[name] = func;
-            return this;
-        }
-
-        /// <summary>
-        /// Регистрация функции.
-        /// </summary>
-        public IrbisScript SetFunction<TArg1, TArg2, TArg3, TResult>
-            (
-                string name,
-                Func<TArg1, TArg2, TArg3, TResult> func
-            )
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentNullException("name");
-            }
-
-            Engine.Globals[name] = func;
-            return this;
-        }
 
         /// <summary>
         /// Установка глобального значения.

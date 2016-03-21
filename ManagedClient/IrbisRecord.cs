@@ -594,6 +594,8 @@ namespace ManagedClient
                     {
                         result.Append(" ");
                     }
+                    result.Append('^');
+                    result.Append(subField.Code);
                     result.Append(subField.Text);
                     begin = false;
                 }
