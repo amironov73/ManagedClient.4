@@ -58,6 +58,11 @@ namespace MoonIrbis
                     }
                 }
             }
+            catch (ScriptRuntimeException sre)
+            {
+                Console.WriteLine(sre.DecoratedMessage);
+                Console.WriteLine(sre.ToString());
+            }
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);

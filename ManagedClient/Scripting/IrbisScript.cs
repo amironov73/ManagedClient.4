@@ -82,8 +82,34 @@ namespace ManagedClient.Scripting
         private void _Initialize()
         {
             RegisterIrbisTypes();
-            Engine = new Script();
+            Engine = new Script(CoreModules.Preset_Complete);
+
             SetGlobal ("Client", Client);
+            SetFunction
+                (
+                    "CreateRecord", 
+                    () => new IrbisRecord()
+                );
+            SetFunction<string,RecordField>
+                (
+                    "CreateField", 
+                    tag => new RecordField(tag)
+                );
+
+            foreach (Type type in UserData.GetRegisteredTypes(false))
+            {
+                if (!string.IsNullOrEmpty(type.Namespace)
+                    && type.Namespace.StartsWith("ManagedClient"))
+                {
+                    SetGlobal
+                        (
+                            type.Name,
+                            type
+                        );
+                }
+            }
+
+
             SetRecord(null);
         }
 
@@ -169,6 +195,78 @@ namespace ManagedClient.Scripting
                 UserData.RegisterType<Version>();
                 _typesRegistered = true;
             }
+        }
+
+        /// <summary>
+        /// Регистрация функции.
+        /// </summary>
+        public IrbisScript SetFunction<TResult>
+            (
+                string name,
+                Func<TResult> func
+            )
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            Engine.Globals[name] = func;
+            return this;
+        }
+
+        /// <summary>
+        /// Регистрация функции.
+        /// </summary>
+        public IrbisScript SetFunction<TArg,TResult>
+            (
+                string name,
+                Func<TArg,TResult> func
+            )
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            Engine.Globals[name] = func;
+            return this;
+        }
+
+        /// <summary>
+        /// Регистрация функции.
+        /// </summary>
+        public IrbisScript SetFunction<TArg1, TArg2, TResult>
+            (
+                string name,
+                Func<TArg1, TArg2, TResult> func
+            )
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            Engine.Globals[name] = func;
+            return this;
+        }
+
+        /// <summary>
+        /// Регистрация функции.
+        /// </summary>
+        public IrbisScript SetFunction<TArg1, TArg2, TArg3, TResult>
+            (
+                string name,
+                Func<TArg1, TArg2, TArg3, TResult> func
+            )
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            Engine.Globals[name] = func;
+            return this;
         }
 
         /// <summary>

@@ -9694,6 +9694,26 @@
             <see cref="T:MoonSharp.Interpreter.MoonSharpUserDataAttribute"/>
             </summary>
         </member>
+        <member name="M:ManagedClient.Scripting.IrbisScript.SetFunction``1(System.String,System.Func{``0})">
+            <summary>
+            Регистрация функции.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Scripting.IrbisScript.SetFunction``2(System.String,System.Func{``0,``1})">
+            <summary>
+            Регистрация функции.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Scripting.IrbisScript.SetFunction``3(System.String,System.Func{``0,``1,``2})">
+            <summary>
+            Регистрация функции.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Scripting.IrbisScript.SetFunction``4(System.String,System.Func{``0,``1,``2,``3})">
+            <summary>
+            Регистрация функции.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Scripting.IrbisScript.SetGlobal(System.String,System.Object)">
             <summary>
             Установка глобального значения.

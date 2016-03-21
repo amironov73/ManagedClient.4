@@ -9,6 +9,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient
@@ -19,6 +21,7 @@ namespace ManagedClient
     /// не принимает значения <c>null</c>.
     /// </summary>
     [Serializable]
+    [MoonSharpUserData]
     [ClassInterface(ClassInterfaceType.None)]
     public sealed class RecordFieldCollection
         : Collection<RecordField>
