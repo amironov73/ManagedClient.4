@@ -7,6 +7,8 @@ using System;
 using System.Linq;
 using System.Xml.Serialization;
 
+using BLToolkit.DataAccess;
+using BLToolkit.Mapping;
 using MoonSharp.Interpreter;
 
 using Newtonsoft.Json;
@@ -21,6 +23,7 @@ namespace ManagedClient.Fields
     /// Информация об экземпляре (поле 910).
     /// </summary>
     [Serializable]
+    [TableName("exemplars")]
     [XmlRoot("exemplar")]
     [MoonSharpUserData]
     public sealed class ExemplarInfo
@@ -47,6 +50,7 @@ namespace ManagedClient.Fields
         [SubField('a')]
         [XmlAttribute("status")]
         [JsonProperty("status")]
+        [MapField("status")]
         public string Status { get; set; }
 
         /// <summary>
@@ -55,6 +59,7 @@ namespace ManagedClient.Fields
         [SubField('b')]
         [XmlAttribute("number")]
         [JsonProperty("number")]
+        [MapField("number")]
         public string Number { get; set; }
 
         /// <summary>
@@ -63,6 +68,7 @@ namespace ManagedClient.Fields
         [SubField('c')]
         [XmlAttribute("date")]
         [JsonProperty("date")]
+        [MapField("date")]
         public string Date { get; set; }
 
         /// <summary>
@@ -71,6 +77,7 @@ namespace ManagedClient.Fields
         [SubField('d')]
         [XmlAttribute("place")]
         [JsonProperty("place")]
+        [MapField("place")]
         public string Place { get; set; }
 
         /// <summary>
@@ -79,6 +86,7 @@ namespace ManagedClient.Fields
         [SubField('q')]
         [XmlAttribute("collection")]
         [JsonProperty("collection")]
+        [MapField("collection")]
         public string Collection { get; set; }
 
         /// <summary>
@@ -87,6 +95,7 @@ namespace ManagedClient.Fields
         [SubField('r')]
         [XmlAttribute("shelf-index")]
         [JsonProperty("shelf-index")]
+        [MapField("shelfindex")]
         public string ShelfIndex { get; set; }
 
         /// <summary>
@@ -95,6 +104,7 @@ namespace ManagedClient.Fields
         [SubField('e')]
         [XmlAttribute("price")]
         [JsonProperty("price")]
+        [MapField("price")]
         public string Price { get; set; }
 
         /// <summary>
@@ -103,6 +113,7 @@ namespace ManagedClient.Fields
         [SubField('h')]
         [XmlAttribute("barcode")]
         [JsonProperty("barcode")]
+        [MapField("barcode")]
         public string Barcode { get; set; }
 
         /// <summary>
@@ -111,6 +122,7 @@ namespace ManagedClient.Fields
         [SubField('1')]
         [XmlAttribute("amount")]
         [JsonProperty("amount")]
+        [MapField("amount")]
         public string Amount { get; set; }
 
         /// <summary>
@@ -119,6 +131,7 @@ namespace ManagedClient.Fields
         [SubField('t')]
         [XmlAttribute("purpose")]
         [JsonProperty("purpose")]
+        [MapField("purpose")]
         public string Purpose { get; set; }
 
         /// <summary>
@@ -127,6 +140,7 @@ namespace ManagedClient.Fields
         [SubField('=')]
         [XmlAttribute("coefficient")]
         [JsonProperty("coefficient")]
+        [MapField("coefficient")]
         public string Coefficient { get; set; }
 
         /// <summary>
@@ -135,6 +149,7 @@ namespace ManagedClient.Fields
         [SubField('4')]
         [XmlAttribute("off-balance")]
         [JsonProperty("off-balance")]
+        [MapField("offbalance")]
         public string OffBalance { get; set; }
 
         /// <summary>
@@ -143,6 +158,7 @@ namespace ManagedClient.Fields
         [SubField('u')]
         [XmlAttribute("ksu-number1")]
         [JsonProperty("ksu-number1")]
+        [MapField("ksunumber1")]
         public string KsuNumber1 { get; set; }
 
         /// <summary>
@@ -151,6 +167,7 @@ namespace ManagedClient.Fields
         [SubField('y')]
         [XmlAttribute("act-number1")]
         [JsonProperty("act-number1")]
+        [MapField("actnumber1")]
         public string ActNumber1 { get; set; }
 
         /// <summary>
@@ -159,6 +176,7 @@ namespace ManagedClient.Fields
         [SubField('f')]
         [XmlAttribute("channel")]
         [JsonProperty("channel")]
+        [MapField("channel")]
         public string Channel { get; set; }
 
         /// <summary>
@@ -167,6 +185,7 @@ namespace ManagedClient.Fields
         [SubField('2')]
         [XmlAttribute("on-hand")]
         [JsonProperty("on-hand")]
+        [MapField("onhand")]
         public string OnHand { get; set; }
 
         /// <summary>
@@ -175,6 +194,7 @@ namespace ManagedClient.Fields
         [SubField('v')]
         [XmlAttribute("act-number2")]
         [JsonProperty("act-number2")]
+        [MapField("actnumber2")]
         public string ActNumber2 { get; set; }
 
         /// <summary>
@@ -183,6 +203,7 @@ namespace ManagedClient.Fields
         [SubField('x')]
         [XmlAttribute("write-off")]
         [JsonProperty("write-off")]
+        [MapField("writeoff")]
         public string WriteOff { get; set; }
 
         /// <summary>
@@ -191,6 +212,7 @@ namespace ManagedClient.Fields
         [SubField('k')]
         [XmlAttribute("completion")]
         [JsonProperty("completion")]
+        [MapField("completion")]
         public string Completion { get; set; }
 
         /// <summary>
@@ -199,6 +221,7 @@ namespace ManagedClient.Fields
         [SubField('w')]
         [XmlAttribute("act-number3")]
         [JsonProperty("act-number3")]
+        [MapField("actnumber3")]
         public string ActNumber3 { get; set; }
 
         /// <summary>
@@ -207,6 +230,7 @@ namespace ManagedClient.Fields
         [SubField('z')]
         [XmlAttribute("moving")]
         [JsonProperty("moving")]
+        [MapField("moving")]
         public string Moving { get; set; }
 
         /// <summary>
@@ -215,6 +239,7 @@ namespace ManagedClient.Fields
         [SubField('m')]
         [XmlAttribute("new-place")]
         [JsonProperty("new-place")]
+        [MapField("newplace")]
         public string NewPlace { get; set; }
 
         /// <summary>
@@ -223,6 +248,7 @@ namespace ManagedClient.Fields
         [SubField('s')]
         [XmlAttribute("checked-date")]
         [JsonProperty("checked-date")]
+        [MapField("checkeddate")]
         public string CheckedDate { get; set; }
 
         /// <summary>
@@ -231,6 +257,7 @@ namespace ManagedClient.Fields
         [SubField('0')]
         [XmlAttribute("checked-amount")]
         [JsonProperty("checked-amount")]
+        [MapField("checkedamount")]
         public string CheckedAmount { get; set; }
 
         /// <summary>
@@ -239,6 +266,7 @@ namespace ManagedClient.Fields
         [SubField('!')]
         [XmlAttribute("real-place")]
         [JsonProperty("real-place")]
+        [MapField("realplace")]
         public string RealPlace { get; set; }
 
         /// <summary>
@@ -247,6 +275,7 @@ namespace ManagedClient.Fields
         [SubField('p')]
         [XmlAttribute("binding-index")]
         [JsonProperty("binding-index")]
+        [MapField("bindingindex")]
         public string BindingIndex { get; set; }
 
         /// <summary>
@@ -255,6 +284,7 @@ namespace ManagedClient.Fields
         [SubField('i')]
         [XmlAttribute("binding-number")]
         [JsonProperty("binding-number")]
+        [MapField("bindingnumber")]
         public string BindingNumber { get; set; }
 
         /// <summary>
@@ -262,6 +292,7 @@ namespace ManagedClient.Fields
         /// </summary>
         [XmlElement("other-subfields")]
         [JsonProperty("other-subfields")]
+        [MapIgnore]
         public SubField[] OtherSubFields { get; set; }
 
         /// <summary>
@@ -269,6 +300,7 @@ namespace ManagedClient.Fields
         /// </summary>
         [XmlAttribute("mfn")]
         [JsonProperty("mfn")]
+        [MapField("mfn")]
         public int Mfn { get; set; }
 
         /// <summary>
@@ -276,6 +308,7 @@ namespace ManagedClient.Fields
         /// </summary>
         [XmlAttribute("description")]
         [JsonProperty("description")]
+        [MapField("description")]
         public string Description { get; set; }
 
         /// <summary>
@@ -283,6 +316,7 @@ namespace ManagedClient.Fields
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
+        [MapIgnore]
         public object UserData
         {
             get { return _userData; } 
