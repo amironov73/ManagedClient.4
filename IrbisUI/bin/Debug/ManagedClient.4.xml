@@ -1395,16 +1395,68 @@
         </member>
         <member name="T:ManagedClient.IrbisDate">
             <summary>
-            Строка с Ирбис-датой yyyyMMdd.
+            Строка с ИРБИС-датой yyyyMMdd.
             </summary>
         </member>
-        <member name="M:ManagedClient.IrbisDate.ToString">
+        <member name="F:ManagedClient.IrbisDate.DefaultFormat">
             <summary>
-            Returns a <see cref="T:System.String"/> 
-            that represents this instance.
+            Формат конверсии по умолчанию.
             </summary>
-            <returns>A <see cref="T:System.String"/> 
-            that represents this instance.</returns>
+        </member>
+        <member name="F:ManagedClient.IrbisDate.ConversionFormat">
+            <summary>
+            Формат конверсии.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisDate.#ctor(System.String)">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisDate.#ctor(System.DateTime)">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisDate.ConvertDateToString(System.DateTime)">
+            <summary>
+            Преобразование даты в строку.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisDate.ConvertStringToDate(System.String)">
+            <summary>
+            Преобразование строки в дату.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisDate.op_Implicit(System.String)~ManagedClient.IrbisDate">
+            <summary>
+            Неявное преобразование
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisDate.op_Implicit(System.DateTime)~ManagedClient.IrbisDate">
+            <summary>
+            Неявное преобразование
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisDate.op_Implicit(ManagedClient.IrbisDate)~System.String">
+            <summary>
+            Неявное преобразование
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisDate.op_Implicit(ManagedClient.IrbisDate)~System.DateTime">
+            <summary>
+            Неявное преобразование
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisDate.Text">
+            <summary>
+            В виде текста.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisDate.Date">
+            <summary>
+            В виде даты.
+            </summary>
         </member>
         <member name="T:ManagedClient.IrbisException">
             <summary>
@@ -9575,6 +9627,26 @@
             Название.
             </summary>
         </member>
+        <member name="T:ManagedClient.Readers.IriProfile">
+            <summary>
+            Профиль ИРИ
+            </summary>
+        </member>
+        <member name="F:ManagedClient.Readers.IriProfile.IriTag">
+            <summary>
+            Тег поля ИРИ.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.IriProfile.ParseField(ManagedClient.RecordField)">
+            <summary>
+            Разбор поля.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.IriProfile.ParseRecord(ManagedClient.IrbisRecord)">
+            <summary>
+            Разбор записи.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Readers.IriProfile.Active">
             <summary>
             Подполе A
@@ -9622,6 +9694,58 @@
             <param name="client"></param>
             <param name="readers"></param>
             <param name="dbName"></param>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderUtility.MergeReaders(System.Collections.Generic.List{ManagedClient.Readers.ReaderInfo})">
+            <summary>
+            Слияние записей о читателях из разных баз.
+            </summary>
+            <remarks>
+            Слияние происходит на основе читательского билета.
+            </remarks>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderUtility.LoadReaders(ManagedClient.ManagedClient64,System.String[])">
+            <summary>
+            Загрузка сведений о читателях из нескольких баз.
+            </summary>
+            <remarks>
+            Выполняется слияние сведений на основе
+            номера читательского билета.
+            </remarks>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderUtility.CountEvents(System.Collections.Generic.List{ManagedClient.Readers.ReaderInfo},System.DateTime,System.DateTime,System.Boolean)">
+            <summary>
+            Подсчёт количества событий.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderUtility.CountEvents(System.Collections.Generic.List{ManagedClient.Readers.ReaderInfo},System.DateTime,System.DateTime,System.String,System.Boolean)">
+            <summary>
+            Подсчёт количества событий
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderUtility.GetEvents(System.Collections.Generic.List{ManagedClient.Readers.ReaderInfo})">
+            <summary>
+            Отбор событий.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderUtility.GetEvents(ManagedClient.VisitInfo[],System.String)">
+            <summary>
+            Отбор событий.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderUtility.GetEvents(ManagedClient.VisitInfo[],System.Boolean)">
+            <summary>
+            Отбор событий.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderUtility.GetEvents(ManagedClient.VisitInfo[],System.DateTime)">
+            <summary>
+            Отбор событий.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderUtility.GetEvents(ManagedClient.VisitInfo[],System.DateTime,System.DateTime)">
+            <summary>
+            Отбор событий.
+            </summary>
         </member>
         <member name="T:ManagedClient.RecordFieldCollection">
             <summary>
@@ -11345,7 +11469,7 @@
             Номер читательского. Поле 30.
             </summary>
         </member>
-        <member name="P:ManagedClient.Readers.ReaderInfo.Sex">
+        <member name="P:ManagedClient.Readers.ReaderInfo.Gender">
             <summary>
             Пол. Поле 23.
             </summary>
@@ -11458,6 +11582,17 @@
         <member name="P:ManagedClient.Readers.ReaderInfo.LastVisitResponsible">
             <summary>
             Последний обслуживавший библиотекарь.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.ReaderInfo.Description">
+            <summary>
+            Расформатированное описание.
+            Не соответствует никакому полю.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.ReaderInfo.Mfn">
+            <summary>
+            MFN записи.
             </summary>
         </member>
         <member name="T:ManagedClient.Readers.ReaderManager">

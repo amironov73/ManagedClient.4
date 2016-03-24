@@ -6,7 +6,13 @@
 using System;
 using System.Linq;
 using System.Xml.Serialization;
+
+using BLToolkit.Mapping;
+
+using JetBrains.Annotations;
+
 using ManagedClient.Fields;
+
 using Newtonsoft.Json;
 
 #endregion
@@ -16,6 +22,7 @@ namespace ManagedClient.Readers
     /// <summary>
     /// Информация о читателе.
     /// </summary>
+    [PublicAPI]
     [Serializable]
     [XmlRoot("reader")]
     public sealed class ReaderInfo
@@ -27,6 +34,8 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
+        [CanBeNull]
+        [MapField("name")]
         public string Fio { get; set; }
 
         /// <summary>
@@ -34,6 +43,8 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("family-name")]
         [JsonProperty("family-name")]
+        [CanBeNull]
+        [MapIgnore]
         public string FamilyName { get; set; }
 
         /// <summary>
@@ -41,6 +52,8 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("first-name")]
         [JsonProperty("first-name")]
+        [CanBeNull]
+        [MapIgnore]
         public string FirstName { get; set; }
 
         /// <summary>
@@ -48,6 +61,8 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("patronym")]
         [JsonProperty("patronym")]
+        [CanBeNull]
+        [MapIgnore]
         public string Patronym { get; set; }
 
         /// <summary>
@@ -55,6 +70,8 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("birthdate")]
         [JsonProperty("birthdate")]
+        [CanBeNull]
+        [MapField("birthdate")]
         public string Birthdate { get; set; }
 
         /// <summary>
@@ -62,20 +79,26 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("ticket")]
         [JsonProperty("ticket")]
+        [CanBeNull]
+        [MapField("ticket")]
         public string Ticket { get; set; }
 
         /// <summary>
         /// Пол. Поле 23.
         /// </summary>
-        [XmlAttribute("sex")]
-        [JsonProperty("sex")]
-        public string Sex { get; set; }
+        [XmlAttribute("gender")]
+        [JsonProperty("gender")]
+        [CanBeNull]
+        [MapField("gender")]
+        public string Gender { get; set; }
 
         /// <summary>
         /// Категория. Поле 50.
         /// </summary>
         [XmlAttribute("category")]
-        [JsonProperty("category")]        
+        [JsonProperty("category")]
+        [CanBeNull]
+        [MapField("category")]
         public string Category { get; set; }
 
         /// <summary>
@@ -83,6 +106,8 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("address")]
         [JsonProperty("address")]
+        [CanBeNull]
+        [MapIgnore]
         public ReaderAddress Address { get; set; }
 
         /// <summary>
@@ -90,6 +115,8 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("work")]
         [JsonProperty("work")]
+        [CanBeNull]
+        [MapField("work")]
         public string Work { get; set; }
 
         /// <summary>
@@ -97,6 +124,8 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("education")]
         [JsonProperty("education")]
+        [CanBeNull]
+        [MapField("education")]
         public string Education { get; set; }
 
         /// <summary>
@@ -104,6 +133,8 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("email")]
         [JsonProperty("email")]
+        [CanBeNull]
+        [MapField("email")]
         public string Email { get; set; }
 
         /// <summary>
@@ -111,6 +142,8 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("home-phone")]
         [JsonProperty("home-phone")]
+        [CanBeNull]
+        [MapField("homephone")]
         public string HomePhone { get; set; }
 
         /// <summary>
@@ -118,6 +151,8 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("registration-date")]
         [JsonProperty("registration-date")]
+        [CanBeNull]
+        [MapField("registration")]
         public string RegistrationDateString { get; set; }
 
         /// <summary>
@@ -125,6 +160,7 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
+        [MapIgnore]
         public DateTime RegistrationDate
         {
             get
@@ -137,16 +173,22 @@ namespace ManagedClient.Readers
         /// <summary>
         /// Дата перерегистрации. Поле 52.
         /// </summary>
+        [XmlArray("registrations")]
+        [JsonProperty("registrations")]
         public RegistrationInfo[] Registrations;
 
         /// <summary>
         /// Дата последней перерегистрации.
         /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        [MapIgnore]
         public DateTime LastRegistrationDate
         {
             get
             {
-                if ((Registrations == null) || (Registrations.Length == 0))
+                if ((Registrations == null) 
+                    || (Registrations.Length == 0))
                 {
                     return DateTime.MinValue;
                 }
@@ -159,11 +201,14 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
+        [CanBeNull]
+        [MapIgnore]
         public string LastRegistrationPlace
         {
             get
             {
-                if ((Registrations == null) || (Registrations.Length == 0))
+                if ((Registrations == null) 
+                    || (Registrations.Length == 0))
                 {
                     return null;
                 }
@@ -176,6 +221,7 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("enabled-places")]
         [JsonProperty("enabled-places")]
+        [MapField("enabledplaces")]
         public string EnabledPlaces { get; set; }
 
         /// <summary>
@@ -183,6 +229,7 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("disabled-places")]
         [JsonProperty("disabled-places")]
+        [MapField("disabledplaces")]
         public string DisabledPlaces { get; set; }
 
         /// <summary>
@@ -190,6 +237,7 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("rights")]
         [JsonProperty("rights")]
+        [MapField("rights")]
         public string Rights { get; set; }
 
         /// <summary>
@@ -197,6 +245,7 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("remarks")]
         [JsonProperty("remarks")]
+        [MapField("remarks")]
         public string Remarks { get; set; }
 
         /// <summary>
@@ -204,6 +253,7 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("photo-file")]
         [JsonProperty("photo-file")]
+        [MapField("photofile")]
         public string PhotoFile { get; set; }
 
         /// <summary>
@@ -211,6 +261,7 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlArray("visits")]
         [JsonProperty("visits")]
+        [MapIgnore]
         public VisitInfo[] Visits;
 
         /// <summary>
@@ -218,6 +269,7 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlArray("iri")]
         [JsonProperty("iri")]
+        [MapIgnore]
         public IriProfile[] Profiles;
 
         /// <summary>
@@ -225,15 +277,16 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
+        [MapIgnore]
         public int Age
         {
             get
             {
-                if (string.IsNullOrEmpty(Birthdate))
+                string yearText = Birthdate;
+                if (string.IsNullOrEmpty(yearText))
                 {
                     return 0;
                 }
-                string yearText = Birthdate;
                 if (yearText.Length > 4)
                 {
                     yearText = yearText.Substring(1, 4);
@@ -256,6 +309,8 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
+        [MapIgnore]
+        [JetBrains.Annotations.NotNull]
         public string AgeCategory
         {
             get
@@ -276,6 +331,7 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
+        [MapIgnore]
         public object UserData
         {
             get { return _userData; }
@@ -287,6 +343,7 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
+        [MapIgnore]
         public DateTime FirstVisitDate
         {
             get
@@ -304,6 +361,7 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
+        [MapIgnore]
         public DateTime LastVisitDate
         {
             get
@@ -321,6 +379,8 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
+        [CanBeNull]
+        [MapIgnore]
         public string LastVisitPlace
         {
             get
@@ -338,6 +398,8 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
+        [CanBeNull]
+        [MapIgnore]
         public string LastVisitResponsible
         {
             get
@@ -349,6 +411,24 @@ namespace ManagedClient.Readers
                 return Visits.Last().Responsible;
             }
         }
+
+        /// <summary>
+        /// Расформатированное описание.
+        /// Не соответствует никакому полю.
+        /// </summary>
+        [XmlAttribute("description")]
+        [JsonProperty("description")]
+        [MapField("description")]
+        [CanBeNull]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// MFN записи.
+        /// </summary>
+        [XmlAttribute("mfn")]
+        [JsonProperty("mfn")]
+        [MapIgnore]
+        public int Mfn { get; set; }
 
         #endregion
 
@@ -366,8 +446,17 @@ namespace ManagedClient.Readers
         /// </summary>
         /// <param name="record"></param>
         /// <returns></returns>
-        public static ReaderInfo Parse(IrbisRecord record)
+        [JetBrains.Annotations.NotNull]
+        public static ReaderInfo Parse
+            (
+                [JetBrains.Annotations.NotNull] IrbisRecord record
+            )
         {
+            if (ReferenceEquals(record, null))
+            {
+                throw new ArgumentNullException("record");
+            }
+
             ReaderInfo result = new ReaderInfo
                                     {
                                         FamilyName = record.FM("10"),
@@ -375,7 +464,7 @@ namespace ManagedClient.Readers
                                         Patronym = record.FM("12"),
                                         Birthdate = record.FM("21"),
                                         Ticket = record.FM("30"),
-                                        Sex = record.FM("23"),
+                                        Gender = record.FM("23"),
                                         Category = record.FM("50"),
                                         Address = ReaderAddress.Parse
                                             (
@@ -390,7 +479,7 @@ namespace ManagedClient.Readers
                                         RegistrationDateString = record.FM("51"),
                                         Registrations = record.Fields
                                             .GetField("52")
-                                            .Select(field=>RegistrationInfo.Parse(field))
+                                            .Select(RegistrationInfo.Parse)
                                             .ToArray(),
                                         EnabledPlaces = record.FM("56"),
                                         DisabledPlaces = record.FM("57"),
@@ -399,7 +488,7 @@ namespace ManagedClient.Readers
                                         PhotoFile = record.FM("950"),
                                         Visits = record.Fields
                                             .GetField("40")
-                                            .Select(field=>VisitInfo.Parse(field))
+                                            .Select(VisitInfo.Parse)
                                             .ToArray(),
                                         Profiles = IriProfile.ParseRecord(record)
                                     };
@@ -422,6 +511,7 @@ namespace ManagedClient.Readers
         /// Формирование записи по данным о читателе.
         /// </summary>
         /// <returns></returns>
+        [JetBrains.Annotations.NotNull]
         public IrbisRecord ToRecord()
         {
             throw new NotImplementedException();

@@ -5,8 +5,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+using JetBrains.Annotations;
 
 #endregion
 
@@ -15,6 +15,7 @@ namespace ManagedClient.Readers
     /// <summary>
     /// Основные операции с читателями.
     /// </summary>
+    [PublicAPI]
     public sealed class ReaderManager
     {
         #region Constants
@@ -32,6 +33,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// Клиент, общающийся с сервером.
         /// </summary>
+        [NotNull]
         public ManagedClient64 Client
         {
             get { return _client; }
@@ -48,13 +50,14 @@ namespace ManagedClient.Readers
         /// <exception cref="System.ArgumentNullException">client</exception>
         public ReaderManager
             (
-                ManagedClient64 client
+                [NotNull] ManagedClient64 client
             )
         {
             if (ReferenceEquals(client, null))
             {
                 throw new ArgumentNullException("client");
             }
+
             _client = client;
         }
 
@@ -72,6 +75,8 @@ namespace ManagedClient.Readers
         /// Получение массива всех (не удалённых) читателей из базы данных.
         /// </summary>
         /// <returns></returns>
+        [NotNull]
+        [ItemNotNull]
         public ReaderInfo[] GetAllReaders()
         {
             List<ReaderInfo> result = new List<ReaderInfo> 
@@ -84,10 +89,7 @@ namespace ManagedClient.Readers
                 if (!ReferenceEquals(record, null))
                 {
                     ReaderInfo reader = ReaderInfo.Parse(record);
-                    if (!ReferenceEquals(reader, null))
-                    {
-                        result.Add(reader);
-                    }
+                    result.Add(reader);
                 }
             }
             return result.ToArray();
@@ -98,9 +100,10 @@ namespace ManagedClient.Readers
         /// </summary>
         /// <param name="ticket"></param>
         /// <returns></returns>
+        [CanBeNull]
         public ReaderInfo GetReader
             (
-                string ticket
+                [NotNull] string ticket
             )
         {
             if (string.IsNullOrEmpty(ticket))

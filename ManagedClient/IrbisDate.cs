@@ -1,98 +1,186 @@
-﻿/* IrbisDate.cs
+﻿/* IrbisDate.cs -- строка с ИРБИС-датой
  */
 
 #region Using directives
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Globalization;
+
+using JetBrains.Annotations;
 
 #endregion
 
 namespace ManagedClient
 {
     /// <summary>
-    /// Строка с Ирбис-датой yyyyMMdd.
+    /// Строка с ИРБИС-датой yyyyMMdd.
     /// </summary>
+    [PublicAPI]
     [Serializable]
     public sealed class IrbisDate
     {
+        #region Constants
+
+        /// <summary>
+        /// Формат конверсии по умолчанию.
+        /// </summary>
+        public const string DefaultFormat = "yyyyMMdd";
+
+        #endregion
+
         #region Properties
 
-        public string AsString { get; set; }
+        /// <summary>
+        /// Формат конверсии.
+        /// </summary>
+        public static string ConversionFormat = DefaultFormat;
 
-        public DateTime AsDate { get; set; }
+        /// <summary>
+        /// В виде текста.
+        /// </summary>
+        public string Text { get; private set; }
 
-        public bool Valid { get; set; }
+        /// <summary>
+        /// В виде даты.
+        /// </summary>
+        public DateTime Date { get; private set; }
 
         #endregion
 
         #region Construction
 
-        public IrbisDate()
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        public IrbisDate
+            (
+                [NotNull] string text
+            )
         {
+            if (string.IsNullOrEmpty(text))
+            {
+                throw new ArgumentNullException("text");
+            }
+
+            Text = text;
+            Date = ConvertStringToDate(text);
         }
 
-        public IrbisDate(string asString)
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        public IrbisDate
+            (
+                DateTime date
+            )
         {
-            AsString = asString;
-        }
-
-        public IrbisDate(DateTime asDate)
-        {
-            AsDate = asDate;
+            Date = date;
+            Text = ConvertDateToString(date);
         }
 
         #endregion
 
         #region Public methods
 
-        public static implicit operator IrbisDate
+        /// <summary>
+        /// Преобразование даты в строку.
+        /// </summary>
+        [NotNull]
+        public static string ConvertDateToString
             (
-                string text
+                DateTime date
             )
         {
-            return null;
+            return date.ToString(ConversionFormat);
         }
 
+        /// <summary>
+        /// Преобразование строки в дату.
+        /// </summary>
+        public static DateTime ConvertStringToDate
+            (
+                [NotNull] string date
+            )
+        {
+            if (string.IsNullOrEmpty(date))
+            {
+                throw new ArgumentNullException("date");
+            }
+
+            DateTime result = DateTime.ParseExact
+                (
+                    date,
+                    ConversionFormat,
+                    CultureInfo.CurrentCulture
+                );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Неявное преобразование
+        /// </summary>
+        [NotNull]
+        public static implicit operator IrbisDate
+            (
+                [NotNull] string text
+            )
+        {
+            return new IrbisDate(text);
+        }
+
+        /// <summary>
+        /// Неявное преобразование
+        /// </summary>
+        [NotNull]
         public static implicit operator IrbisDate
             (
                 DateTime date
             )
         {
-            return null;
+            return new IrbisDate(date);
         }
 
+        /// <summary>
+        /// Неявное преобразование
+        /// </summary>
+        [NotNull]
         public static implicit operator string 
             ( 
-                IrbisDate date 
+                [NotNull] IrbisDate date 
             )
         {
-            return null;
+            if (ReferenceEquals(date, null))
+            {
+                throw new ArgumentNullException("date");
+            }
+
+            return date.Text;
         }
 
+        /// <summary>
+        /// Неявное преобразование
+        /// </summary>
         public static implicit operator DateTime
             (
-                IrbisDate date
+                [NotNull] IrbisDate date
             )
         {
-            return DateTime.MinValue;
+            if (ReferenceEquals(date, null))
+            {
+                throw new ArgumentNullException("date");
+            }
+
+            return date.Date;
         }
 
         #endregion
 
         #region Object members
 
-        /// <summary>
-        /// Returns a <see cref="System.String" /> 
-        /// that represents this instance.
-        /// </summary>
-        /// <returns>A <see cref="System.String" /> 
-        /// that represents this instance.</returns>
         public override string ToString()
         {
-            return string.Format("AsString: {0}", AsString);
+            return Text;
         }
 
         #endregion

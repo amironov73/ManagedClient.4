@@ -9,6 +9,9 @@ using System.Xml.Serialization;
 
 using BLToolkit.DataAccess;
 using BLToolkit.Mapping;
+
+using JetBrains.Annotations;
+
 using MoonSharp.Interpreter;
 
 using Newtonsoft.Json;
@@ -22,6 +25,7 @@ namespace ManagedClient.Fields
     /// <summary>
     /// Информация об экземпляре (поле 910).
     /// </summary>
+    [PublicAPI]
     [Serializable]
     [TableName("exemplars")]
     [XmlRoot("exemplar")]
@@ -339,11 +343,17 @@ namespace ManagedClient.Fields
         /// </summary>
         /// <param name="field">The field.</param>
         /// <returns>ExemplarInfo.</returns>
+        [JetBrains.Annotations.NotNull]
         public static ExemplarInfo Parse
             (
-                RecordField field
+                [JetBrains.Annotations.NotNull] RecordField field
             )
         {
+            if (ReferenceEquals(field, null))
+            {
+                throw new ArgumentNullException("field");
+            }
+
             ExemplarInfo result = new ExemplarInfo
                 {
                     Status = field.GetSubFieldText ( 'a', 0 ),
@@ -384,12 +394,23 @@ namespace ManagedClient.Fields
         /// <summary>
         /// Разбор записи на экземпляры.
         /// </summary>
+        [ItemNotNull]
+        [JetBrains.Annotations.NotNull]
         public static ExemplarInfo[] Parse
             (
-                IrbisRecord record,
-                string tagNumber
+                [JetBrains.Annotations.NotNull] IrbisRecord record,
+                [JetBrains.Annotations.NotNull] string tagNumber
             )
         {
+            if (ReferenceEquals(record, null))
+            {
+                throw new ArgumentNullException("record");
+            }
+            if (string.IsNullOrEmpty(tagNumber))
+            {
+                throw new ArgumentNullException("tagNumber");
+            }
+
             ExemplarInfo[] result = record.Fields
                 .GetField(tagNumber)
                 .Select(Parse)
@@ -407,9 +428,11 @@ namespace ManagedClient.Fields
         /// <summary>
         /// Разбор записи на экземпляры.
         /// </summary>
+        [ItemNotNull]
+        [JetBrains.Annotations.NotNull]
         public static ExemplarInfo[] Parse
             (
-                IrbisRecord record
+                [JetBrains.Annotations.NotNull] IrbisRecord record
             )
         {
             return Parse
@@ -422,6 +445,7 @@ namespace ManagedClient.Fields
         /// <summary>
         /// Преобразование экземпляра обратно в поле записи.
         /// </summary>
+        [JetBrains.Annotations.NotNull]
         public RecordField ToField ()
         {
             RecordField result = new RecordField("910")
@@ -472,8 +496,8 @@ namespace ManagedClient.Fields
         /// <returns>System.Int32.</returns>
         public static int CompareNumbers
             (
-                ExemplarInfo first,
-                ExemplarInfo second
+                [JetBrains.Annotations.NotNull] ExemplarInfo first,
+                [JetBrains.Annotations.NotNull] ExemplarInfo second
             )
         {
             NumberText one = new NumberText(first.Number);

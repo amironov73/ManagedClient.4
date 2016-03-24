@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient.Readers
@@ -15,6 +17,7 @@ namespace ManagedClient.Readers
     /// <summary>
     /// Методы для работы с БД читателей.
     /// </summary>
+    [PublicAPI]
     public static class ReaderUtility
     {
         #region Private members
@@ -29,13 +32,28 @@ namespace ManagedClient.Readers
         /// <param name="client"></param>
         /// <param name="readers"></param>
         /// <param name="dbName"></param>
+        [NotNull]
+        [ItemNotNull]
         public static List<ReaderInfo> LoadReaders
             (
-                ManagedClient64 client,
-                List<ReaderInfo> readers,
-                string dbName
+                [NotNull] ManagedClient64 client,
+                [NotNull] List<ReaderInfo> readers,
+                [NotNull] string dbName
             )
         {
+            if (ReferenceEquals(client, null))
+            {
+                throw new ArgumentNullException("client");
+            }
+            if (ReferenceEquals(readers, null))
+            {
+                throw new ArgumentNullException("readers");
+            }
+            if (string.IsNullOrEmpty(dbName))
+            {
+                throw new ArgumentNullException("dbName");
+            }
+
             try
             {
                 client.PushDatabase(dbName);
@@ -54,13 +72,11 @@ namespace ManagedClient.Readers
                         {
                             if (!record.Deleted)
                             {
-                                ReaderInfo reader = ReaderInfo.Parse(record);
-                                if (reader != null)
+                                ReaderInfo reader 
+                                    = ReaderInfo.Parse(record);
+                                lock (readers)
                                 {
-                                    lock (readers)
-                                    {
-                                        readers.Add(reader);
-                                    }
+                                    readers.Add(reader);
                                 }
                             }
                         }
@@ -74,9 +90,17 @@ namespace ManagedClient.Readers
             return readers;
         }
 
+        /// <summary>
+        /// Слияние записей о читателях из разных баз.
+        /// </summary>
+        /// <remarks>
+        /// Слияние происходит на основе читательского билета.
+        /// </remarks>
+        [NotNull]
+        [ItemNotNull]
         public static List<ReaderInfo> MergeReaders
             (
-                List<ReaderInfo> readers
+                [NotNull][ItemNotNull] List<ReaderInfo> readers
             )
         {
             var grouped = readers
@@ -97,16 +121,39 @@ namespace ManagedClient.Readers
             return result;
         }
 
+        /// <summary>
+        /// Загрузка сведений о читателях из нескольких баз.
+        /// </summary>
+        /// <remarks>
+        /// Выполняется слияние сведений на основе
+        /// номера читательского билета.
+        /// </remarks>
+        [NotNull]
+        [ItemNotNull]
         public static List<ReaderInfo> LoadReaders
             (
-                ManagedClient64 client,
-                string[] databases
+                [NotNull] ManagedClient64 client,
+                [NotNull][ItemNotNull] string[] databases
             )
         {
+            if (ReferenceEquals(client, null))
+            {
+                throw new ArgumentNullException("client");
+            }
+            if (ReferenceEquals(databases, null))
+            {
+                throw new ArgumentNullException("databases");
+            }
+
             List<ReaderInfo> result = new List<ReaderInfo>();
 
             foreach (string database in databases)
             {
+                if (string.IsNullOrEmpty(database))
+                {
+                    throw new ArgumentNullException("databases");
+                }
+
                 LoadReaders
                     (
                         client,
@@ -122,16 +169,24 @@ namespace ManagedClient.Readers
             return result;
         }
 
+        /// <summary>
+        /// Подсчёт количества событий.
+        /// </summary>
         public static int CountEvents
             (
-                List<ReaderInfo> readers,
+                [NotNull] List<ReaderInfo> readers,
                 DateTime fromDay,
                 DateTime toDay,
                 bool visit
             )
         {
-            string fromDayString = new IrbisDate(fromDay).AsString;
-            string toDayString = new IrbisDate(toDay).AsString;
+            if (ReferenceEquals(readers, null))
+            {
+                throw new ArgumentNullException("readers");
+            }
+
+            string fromDayString = IrbisDate.ConvertDateToString(fromDay);
+            string toDayString = IrbisDate.ConvertDateToString(toDay);
             int result = readers
                 .SelectMany(r => r.Visits)
                 .Count(v => (v.DateGivenString.SafeCompare(fromDayString) >= 0)
@@ -140,17 +195,30 @@ namespace ManagedClient.Readers
             return result;
         }
 
+        /// <summary>
+        /// Подсчёт количества событий
+        /// </summary>
         public static int CountEvents
             (
-                List<ReaderInfo> readers,
+                [NotNull] List<ReaderInfo> readers,
                 DateTime fromDay,
                 DateTime toDay,
-                string department,
+                [NotNull] string department,
                 bool visit
             )
         {
-            string fromDayString = new IrbisDate(fromDay).AsString;
-            string toDayString = new IrbisDate(toDay).AsString;
+            if (ReferenceEquals(readers, null))
+            {
+                throw new ArgumentNullException("readers");
+            }
+            if (string.IsNullOrEmpty(department))
+            {
+                throw new ArgumentNullException("department");
+            }
+
+            string fromDayString = 
+                new IrbisDate(fromDay).Text;
+            string toDayString = new IrbisDate(toDay).Text;
             int result = readers
                 .SelectMany(r => r.Visits)
                 .Count(v => (v.DateGivenString.SafeCompare(fromDayString) >= 0)
@@ -160,47 +228,87 @@ namespace ManagedClient.Readers
             return result;
         }
 
+        /// <summary>
+        /// Отбор событий.
+        /// </summary>
+        [NotNull]
         public static VisitInfo[] GetEvents
             (
-                this List<ReaderInfo> readers
+                [NotNull] this List<ReaderInfo> readers
             )
         {
+            if (ReferenceEquals(readers, null))
+            {
+                throw new ArgumentNullException("readers");
+            }
+
             return readers
                 .SelectMany(r => r.Visits)
                 .ToArray();
         }
 
+        /// <summary>
+        /// Отбор событий.
+        /// </summary>
+        [NotNull]
         public static VisitInfo[] GetEvents
             (
-                this VisitInfo[] events,
-                string department
+                [NotNull] this VisitInfo[] events,
+                [NotNull] string department
             )
         {
+            if (ReferenceEquals(events, null))
+            {
+                throw new ArgumentNullException("events");
+            }
+            if (string.IsNullOrEmpty(department))
+            {
+                throw new ArgumentNullException("department");
+            }
+
             return events
                 .AsParallel()
                 .Where(v => v.Department.SameString(department))
                 .ToArray();
         }
 
+        /// <summary>
+        /// Отбор событий.
+        /// </summary>
+        [NotNull]
         public static VisitInfo[] GetEvents
             (
-                this VisitInfo[] events,
+                [NotNull] this VisitInfo[] events,
                 bool visit
             )
         {
+            if (ReferenceEquals(events, null))
+            {
+                throw new ArgumentNullException("events");
+            }
+
             return events
                 .AsParallel()
                 .Where(v => v.IsVisit == visit)
                 .ToArray();
         }
 
+        /// <summary>
+        /// Отбор событий.
+        /// </summary>
+        [NotNull]
         public static VisitInfo[] GetEvents
             (
-                this VisitInfo[] events,
+                [NotNull] this VisitInfo[] events,
                 DateTime day
             )
         {
-            string dayString = day.ToString("yyyyMMdd");
+            if (ReferenceEquals(events, null))
+            {
+                throw new ArgumentNullException("events");
+            }
+
+            string dayString = IrbisDate.ConvertDateToString(day);
             VisitInfo[] result = events
                 .AsParallel()
                 .Where(v => v.DateGivenString.SameString(dayString))
@@ -208,15 +316,24 @@ namespace ManagedClient.Readers
             return result;
         }
 
+        /// <summary>
+        /// Отбор событий.
+        /// </summary>
+        [NotNull]
         public static VisitInfo[] GetEvents
             (
-                this VisitInfo[] events,
+                [NotNull] this VisitInfo[] events,
                 DateTime fromDay,
                 DateTime toDay
             )
         {
-            string fromDayString = new IrbisDate(fromDay).AsString;
-            string toDayString = new IrbisDate(toDay).AsString;
+            if (ReferenceEquals(events, null))
+            {
+                throw new ArgumentNullException("events");
+            }
+
+            string fromDayString = IrbisDate.ConvertDateToString(fromDay);
+            string toDayString = IrbisDate.ConvertDateToString(toDay);
             VisitInfo[] result = events
                 .AsParallel()
                 .Where(v => (v.DateGivenString.SafeCompare(fromDayString) >= 0)

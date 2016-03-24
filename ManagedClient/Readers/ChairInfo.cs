@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 
+using JetBrains.Annotations;
+
 using Newtonsoft.Json;
 
 #endregion
@@ -17,6 +19,7 @@ namespace ManagedClient.Readers
     /// <summary>
     /// Информация о кафедре обслуживания.
     /// </summary>
+    [PublicAPI]
     [Serializable]
     [XmlRoot("chair")]
     public sealed class ChairInfo
@@ -62,7 +65,11 @@ namespace ManagedClient.Readers
         /// </summary>
         /// <param name="code">Код.</param>
         /// <param name="title">Название.</param>
-        public ChairInfo(string code, string title)
+        public ChairInfo
+            (
+                [NotNull] string code, 
+                [NotNull] string title
+            )
         {
             if (string.IsNullOrEmpty(code))
             {
@@ -86,9 +93,11 @@ namespace ManagedClient.Readers
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
+        [NotNull]
+        [ItemNotNull]
         public static ChairInfo[] Parse
             (
-                string text
+                [NotNull] string text
             )
         {
             if (string.IsNullOrEmpty(text))
@@ -135,12 +144,23 @@ namespace ManagedClient.Readers
         /// <param name="client"></param>
         /// <param name="fileName"></param>
         /// <returns></returns>
+        [NotNull]
+        [ItemNotNull]
         public static ChairInfo[] Read
             (
-                ManagedClient64 client,
-                string fileName
+                [NotNull] ManagedClient64 client,
+                [NotNull] string fileName
             )
         {
+            if (ReferenceEquals(client, null))
+            {
+                throw new ArgumentNullException("client");
+            }
+            if (string.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentNullException("fileName");
+            }
+
             string chairText = client.ReadTextFile
                 (
                     IrbisPath.MasterFile, 
@@ -157,9 +177,11 @@ namespace ManagedClient.Readers
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
+        [NotNull]
+        [ItemNotNull]
         public static ChairInfo[] Read
             (
-                ManagedClient64 client
+                [NotNull] ManagedClient64 client
             )
         {
             return Read
