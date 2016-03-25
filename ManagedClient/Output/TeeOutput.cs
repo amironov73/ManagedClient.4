@@ -129,5 +129,18 @@ namespace ManagedClient.Output
         }
 
         #endregion
+
+        #region IDisposable members
+
+        public override void Dispose()
+        {
+            foreach (AbstractOutput output in Output)
+            {
+                output.Dispose();
+            }
+            base.Dispose();
+        }
+
+        #endregion
     }
 }

@@ -5,6 +5,8 @@
 
 using System;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient.Output
@@ -13,6 +15,7 @@ namespace ManagedClient.Output
     /// Абстрактный объект текстового вывода. 
     /// Например, консоль или текстовое окно.
     /// </summary>
+    [PublicAPI]
     public abstract class AbstractOutput
         : IDisposable
     {

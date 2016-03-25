@@ -64,11 +64,7 @@ namespace ManagedClient.Output
 
         public void Close()
         {
-            if (_writer != null)
-            {
-                _writer.Dispose();
-                _writer = null;
-            }
+            Dispose();
         }
 
         public void Open
@@ -142,6 +138,7 @@ namespace ManagedClient.Output
             if (!ReferenceEquals(_writer, null))
             {
                 _writer.Write(text);
+                _writer.Flush();
             }
             return this;
         }
@@ -155,6 +152,7 @@ namespace ManagedClient.Output
             if (!ReferenceEquals(_writer, null))
             {
                 _writer.Write(text);
+                _writer.Flush();
             }
             return this;
         }
