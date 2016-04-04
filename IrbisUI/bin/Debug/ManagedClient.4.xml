@@ -8544,6 +8544,29 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ManagedClient.IrbisRecord.ToPlainText">
+            <summary>
+            Формирует плоское текстовое представление записи.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.ToIsisText">
+            <summary>
+            Формирует текстовое представление записи,
+            характерное для ISIS.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.ParseIsisRecord(System.String)">
+            <summary>
+            Разбор ISIS-представления записи.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.ToIrbisJson">
+            <summary>
+            Строит представление записи в виде JSON,
+            характерном для ИРБИС.
+            </summary>
+        </member>
         <member name="M:ManagedClient.IrbisRecord.ParseIrbisText(System.String)">
             <summary>
             Метод предназачен для парсинга текста, передаваемого АРМ ИРБИС плагинам.

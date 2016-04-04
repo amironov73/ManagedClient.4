@@ -12,6 +12,8 @@ using System.Text.RegularExpressions;
 
 using MoonSharp.Interpreter;
 
+using Newtonsoft.Json.Linq;
+
 #endregion
 
 namespace ManagedClient
@@ -575,6 +577,10 @@ namespace ManagedClient
             return 0;
         }
 
+        /// <summary>
+        /// Формирует плоское текстовое представление записи.
+        /// </summary>
+        /// <returns></returns>
         public string ToPlainText()
         {
             StringBuilder result = new StringBuilder();
@@ -605,6 +611,10 @@ namespace ManagedClient
             return result.ToString();
         }
 
+        /// <summary>
+        /// Формирует текстовое представление записи,
+        /// характерное для ISIS.
+        /// </summary>
         public string ToIsisText()
         {
             StringBuilder result = new StringBuilder();
@@ -623,9 +633,56 @@ namespace ManagedClient
             return result.ToString();
         }
 
-        public static IrbisRecord ParseIsisRecord(string text)
+        /// <summary>
+        /// Разбор ISIS-представления записи.
+        /// </summary>
+        public static IrbisRecord ParseIsisRecord
+            (
+                string text
+            )
         {
             throw new NotImplementedException("ParseIsisRecord not implemented");
+        }
+
+        /// <summary>
+        /// Строит представление записи в виде JSON,
+        /// характерном для ИРБИС.
+        /// </summary>
+        public string ToIrbisJson()
+        {
+            JObject result = new JObject();
+
+            string[] tags = Fields
+                .Select(field => field.Tag)
+                .Distinct()
+                .ToArray();
+            foreach (string tag in tags)
+            {
+                RecordField[] fields = Fields.GetField(tag);
+                JProperty tagProperty = new JProperty(tag);
+                for (int i = 0; i < fields.Length; i++)
+                {
+                    JProperty repeatProperty = new JProperty(i.ToString());
+                    tagProperty.Add(repeatProperty);
+                    RecordField field = fields[i];
+                    if (!string.IsNullOrEmpty(field.Text))
+                    {
+                        JProperty textProperty = new JProperty("*", field.Text);
+                        repeatProperty.Add(textProperty);
+                    }
+                    foreach (SubField subField in field.SubFields)
+                    {
+                        JProperty subProperty = new JProperty
+                            (
+                                subField.CodeString, 
+                                subField.Text
+                            );
+                        repeatProperty.Add(subProperty);
+                    }
+                }
+            }
+
+            return result.ToString();
         }
 
         #region Парсинг ISO2709
