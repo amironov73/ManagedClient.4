@@ -146,6 +146,8 @@
     <Compile Include="Output\FileOutput.cs" />
     <Compile Include="Output\NullOutput.cs" />
     <Compile Include="Output\TeeOutput.cs" />
+    <Compile Include="ParallelFormatter.cs" />
+    <Compile Include="ParallelRecordReader.cs" />
     <Compile Include="Pft\Abstraction\PftAbstractionLayer.cs" />
     <Compile Include="Pft\Ast\PftAstList.cs" />
     <Compile Include="Pft\Ast\PftCommandC.cs" />

@@ -292,6 +292,14 @@ namespace ManagedClient.Fields
         public string BindingNumber { get; set; }
 
         /// <summary>
+        /// Год издания. Берётся не из подполя.
+        /// </summary>
+        [XmlAttribute("year")]
+        [JsonProperty("year")]
+        [MapField("year")]
+        public string Year { get; set; }
+
+        /// <summary>
         /// Прочие подполя, не попавшие в вышеперечисленные.
         /// </summary>
         [XmlElement("other-subfields")]
@@ -314,6 +322,14 @@ namespace ManagedClient.Fields
         [JsonProperty("description")]
         [MapField("description")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// ББК.
+        /// </summary>
+        [XmlAttribute("bbk")]
+        [JsonProperty("bbk")]
+        [MapIgnore]
+        public string Bbk { get; set; }
 
         /// <summary>
         /// Произвольные пользовательские данные.

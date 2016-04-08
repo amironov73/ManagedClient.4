@@ -1,4 +1,4 @@
-﻿/* BatchRecordReader
+﻿/* BatchRecordReader -- считывание записей большими порциями.
  */
 
 #region Using directives
@@ -8,6 +8,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+
+using JetBrains.Annotations;
 
 using MoonSharp.Interpreter;
 
@@ -20,6 +22,7 @@ namespace ManagedClient
     /// для увеличения производительности.
     /// Сами записи отдаются по одной.
     /// </summary>
+    [PublicAPI]
     [MoonSharpUserData]
     public sealed class BatchRecordReader
         : IEnumerable<IrbisRecord>
@@ -35,23 +38,38 @@ namespace ManagedClient
 
         #region Events
 
-	    public event EventHandler BatchRead;
+        /// <summary>
+        /// Вызывается во время считывания очередной порции.
+        /// </summary>
+        public event EventHandler BatchRead;
 
+        /// <summary>
+        /// Вызывается при возникновении исключения.
+        /// </summary>
         public event EventHandler<ExceptionEventArgs<Exception>> Exception;
 
-	    #endregion
+        #endregion
 
         #region Properties
 
+        /// <summary>
+        /// Размер порции.
+        /// </summary>
         [DefaultValue(DefaultBatchSize)]
         public int BatchSize { get; private set; }
 
+        /// <summary>
+        /// ИРБИС-клиент.
+        /// </summary>
         public ManagedClient64 Client { get; private set; }
 
         #endregion
 
         #region Construction
 
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
         public BatchRecordReader
             (
                 ManagedClient64 client
@@ -64,6 +82,9 @@ namespace ManagedClient
         {
         }
 
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
         public BatchRecordReader
             (
                 ManagedClient64 client,
@@ -84,6 +105,9 @@ namespace ManagedClient
             _InitializePackages(range);
         }
 
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
         public BatchRecordReader
             (
                 ManagedClient64 client,
@@ -105,6 +129,9 @@ namespace ManagedClient
             _InitializePackages(found);
         }
 
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
         public BatchRecordReader
             (
                 ManagedClient64 client,
@@ -129,6 +156,9 @@ namespace ManagedClient
             _InitializePackages(range);
         }
 
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
         public BatchRecordReader
             (
                 ManagedClient64 client,
@@ -157,14 +187,14 @@ namespace ManagedClient
             _packages = range.Slice(BatchSize);
         }
 
-	    private void _OnBatchRead ()
-	    {
-		    EventHandler handler = BatchRead;
-		    if (handler != null)
-		    {
-			    handler ( this, EventArgs.Empty );
-		    }
-	    }
+        private void _OnBatchRead ()
+        {
+            EventHandler handler = BatchRead;
+            if (handler != null)
+            {
+                handler ( this, EventArgs.Empty );
+            }
+        }
 
         private void _OnException
             (
@@ -177,6 +207,25 @@ namespace ManagedClient
                 ExceptionEventArgs<Exception> args = new ExceptionEventArgs<Exception>(ex);
                 handler(this, args);
             }
+        }
+
+        #endregion
+
+        #region Public methods
+
+        /// <summary>
+        /// Считывает все записи сразу.
+        /// </summary>
+        public List<IrbisRecord> ReadAll()
+        {
+            List<IrbisRecord> result = new List<IrbisRecord>();
+
+            foreach (IrbisRecord record in this)
+            {
+                result.Add(record);
+            }
+
+            return result;
         }
 
         #endregion

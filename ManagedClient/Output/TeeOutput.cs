@@ -3,10 +3,7 @@
 
 #region Using directives
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 #endregion
 
@@ -32,7 +29,6 @@ namespace ManagedClient.Output
         /// Создание объекта с заранее установленным
         /// списком.
         /// </summary>
-        /// <param name="children"></param>
         public TeeOutput
             (
                 params AbstractOutput[] children
@@ -67,6 +63,9 @@ namespace ManagedClient.Output
 
         #region AbstractOutput members
 
+        /// <summary>
+        /// Есть ошибка?
+        /// </summary>
         public override bool HaveError
         {
             get { return _haveError; }
@@ -80,6 +79,9 @@ namespace ManagedClient.Output
             }
         }
 
+        /// <summary>
+        /// Очистка.
+        /// </summary>
         public override AbstractOutput Clear()
         {
             _haveError = false;
@@ -90,6 +92,9 @@ namespace ManagedClient.Output
             return this;
         }
 
+        /// <summary>
+        /// Конфигурация.
+        /// </summary>
         public override AbstractOutput Configure
             (
                 string configuration
@@ -103,6 +108,9 @@ namespace ManagedClient.Output
             return this;
         }
 
+        /// <summary>
+        /// Вывод.
+        /// </summary>
         public override AbstractOutput Write
             (
                 string text
@@ -115,6 +123,9 @@ namespace ManagedClient.Output
             return this;
         }
 
+        /// <summary>
+        /// Вывод.
+        /// </summary>
         public override AbstractOutput WriteError
             (
                 string text

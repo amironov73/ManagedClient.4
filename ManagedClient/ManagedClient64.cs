@@ -11,12 +11,13 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Net.Sockets;
 using System.IO;
 using System.Text.RegularExpressions;
+
+using JetBrains.Annotations;
 
 using MoonSharp.Interpreter;
 
@@ -38,6 +39,7 @@ namespace ManagedClient
     /// <summary>
     /// Клиент для общения с сервером
     /// </summary>
+    [PublicAPI]
     [Serializable]
     [MoonSharpUserData]
     public class ManagedClient64
@@ -105,6 +107,9 @@ namespace ManagedClient
 
         #region Events
 
+        /// <summary>
+        /// Вызывается при возникновении ошибки.
+        /// </summary>
         #if !PocketPC
         public event EventHandler<IrbisCommadEventArgs> ErrorHandler;
         #endif
@@ -928,6 +933,9 @@ namespace ManagedClient
 
         #region Public methods
 
+        /// <summary>
+        /// Разбор строки подключения.
+        /// </summary>
         public void ParseConnectionString
             (
                 string connectionString
@@ -3821,19 +3829,21 @@ TryAgain:
                 string format,
                 int minMfn,
                 int maxMfn,
-                string booleanExpression
+                string booleanExpression,
+                bool forEveryField
             )
         {
             _CheckConnected();
             _CheckBusy();
 
-            if (!booleanExpression.StartsWith("!"))
+            if (!booleanExpression.StartsWith("!")
+                && !booleanExpression.StartsWith("*!"))
             {
                 booleanExpression = string.Concat
                     (
-                        "!if ",
+                        (forEveryField ? "*!" : "!if "),
                         booleanExpression,
-                        " then '1' else '0' fi"                        
+                        " then '1' else '0' fi"
                     );
             }
 
@@ -3875,6 +3885,33 @@ TryAgain:
                 int offset,
                 int minMfn,
                 int maxMfn,
+                string booleanExpression,
+                bool forEveryRepeat
+            )
+        {
+            return RawSequentialSearch
+                (
+                    dictionaryExpression,
+                    count,
+                    offset,
+                    null,
+                    minMfn,
+                    maxMfn,
+                    booleanExpression,
+                    forEveryRepeat
+                )
+                .Where(_ => !string.IsNullOrEmpty(_))
+                .Select(int.Parse)
+                .ToArray();
+        }
+
+        public int[] SequentialSearch
+            (
+                string dictionaryExpression,
+                int count,
+                int offset,
+                int minMfn,
+                int maxMfn,
                 string booleanExpression
             )
         {
@@ -3886,10 +3923,34 @@ TryAgain:
                     null,
                     minMfn,
                     maxMfn,
-                    booleanExpression
+                    booleanExpression,
+                    false
                 )
                 .Where(_ => !string.IsNullOrEmpty(_))
                 .Select(_ => int.Parse(_))
+                .ToArray();
+        }
+
+        public int[] SequentialSearch
+            (
+                string dictionaryExpression,
+                string booleanExpression,
+                bool forEveryRepeat
+            )
+        {
+            return RawSequentialSearch
+                (
+                    dictionaryExpression,
+                    0,
+                    1,
+                    null,
+                    0,
+                    0,
+                    booleanExpression,
+                    forEveryRepeat
+                )
+                .Where(_ => !string.IsNullOrEmpty(_))
+                .Select(int.Parse)
                 .ToArray();
         }
 
@@ -3907,7 +3968,8 @@ TryAgain:
                     null,
                     0,
                     0,
-                    booleanExpression
+                    booleanExpression,
+                    false
                 )
                 .Where(_ => !string.IsNullOrEmpty(_))
                 .Select(_ => int.Parse(_))
@@ -3929,7 +3991,8 @@ TryAgain:
                     format,
                     0,
                     0,
-                    booleanExpression
+                    booleanExpression,
+                    false
                 );
             return found
                 .Where(_ => !string.IsNullOrEmpty(_))
@@ -3951,7 +4014,8 @@ TryAgain:
                     "&uf('+0')",
                     0,
                     0,
-                    booleanExpression
+                    booleanExpression,
+                    false
                 );
 
             return found

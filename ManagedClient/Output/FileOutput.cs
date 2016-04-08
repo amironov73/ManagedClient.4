@@ -1,4 +1,4 @@
-﻿/* FileOutput.cs
+﻿/* FileOutput.cs -- файловый вывод
  */
 
 #region
@@ -12,7 +12,7 @@ using System.Text;
 namespace ManagedClient.Output
 {
     /// <summary>
-    /// Файловый вывод
+    /// Файловый вывод.
     /// </summary>
     public sealed class FileOutput
         : AbstractOutput
@@ -20,7 +20,7 @@ namespace ManagedClient.Output
         #region Properties
 
         /// <summary>
-        /// 
+        /// Имя файла.
         /// </summary>
         public string FileName { get { return _fileName; } }
 
@@ -29,16 +29,15 @@ namespace ManagedClient.Output
         #region Construction
 
         /// <summary>
-        /// 
+        /// Конструктор.
         /// </summary>
         public FileOutput()
         {
         }
 
         /// <summary>
-        /// 
+        /// Конструктор.
         /// </summary>
-        /// <param name="fileName"></param>
         public FileOutput
             (
                 string fileName
@@ -62,14 +61,21 @@ namespace ManagedClient.Output
 
         #region Public methods
 
+        /// <summary>
+        /// Закрытие файла.
+        /// </summary>
         public void Close()
         {
             Dispose();
         }
 
+        /// <summary>
+        /// Открытие файла.
+        /// </summary>
         public void Open
             (
-                string fileName
+                string fileName,
+                bool append
             )
         {
             if (string.IsNullOrEmpty(fileName))
@@ -80,13 +86,33 @@ namespace ManagedClient.Output
             _fileName = fileName;
             _writer = new StreamWriter
                 (
-                    fileName
+                    fileName,
+                    append
                 );
         }
 
+        /// <summary>
+        /// Открытие файла.
+        /// </summary>
         public void Open
             (
-                string fileName, 
+                string fileName
+            )
+        {
+            Open
+                (
+                    fileName, 
+                    false
+                );
+        }
+
+        /// <summary>
+        /// Открытие файла.
+        /// </summary>
+        public void Open
+            (
+                string fileName,
+                bool append,
                 Encoding encoding
             )
         {
@@ -101,6 +127,23 @@ namespace ManagedClient.Output
             Close();
             _fileName = fileName;
             _writer = new StreamWriter
+                (
+                    fileName,
+                    append,
+                    encoding
+                );
+        }
+
+        /// <summary>
+        /// Открытие файла.
+        /// </summary>
+        public void Open
+            (
+                string fileName, 
+                Encoding encoding
+            )
+        {
+            Open
                 (
                     fileName,
                     false,

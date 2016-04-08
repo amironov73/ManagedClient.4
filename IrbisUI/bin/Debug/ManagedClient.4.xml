@@ -118,6 +118,56 @@
             Размер порции по умолчанию.
             </summary>
         </member>
+        <member name="M:ManagedClient.BatchRecordReader.#ctor(ManagedClient.ManagedClient64)">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.BatchRecordReader.#ctor(ManagedClient.ManagedClient64,System.Int32)">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.BatchRecordReader.#ctor(ManagedClient.ManagedClient64,System.String,System.Object[])">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.BatchRecordReader.#ctor(ManagedClient.ManagedClient64,System.Int32,System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.BatchRecordReader.#ctor(ManagedClient.ManagedClient64,System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.BatchRecordReader.ReadAll">
+            <summary>
+            Считывает все записи сразу.
+            </summary>
+        </member>
+        <member name="E:ManagedClient.BatchRecordReader.BatchRead">
+            <summary>
+            Вызывается во время считывания очередной порции.
+            </summary>
+        </member>
+        <member name="E:ManagedClient.BatchRecordReader.Exception">
+            <summary>
+            Вызывается при возникновении исключения.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.BatchRecordReader.BatchSize">
+            <summary>
+            Размер порции.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.BatchRecordReader.Client">
+            <summary>
+            ИРБИС-клиент.
+            </summary>
+        </member>
         <member name="T:ManagedClient.BeforeQueryEventArgs">
             <summary>
             Трансформация поискового запроса перед отправкой на сервер.
@@ -567,6 +617,11 @@
             Инвентарный номер подшивки. Подполе i.
             </summary>
         </member>
+        <member name="P:ManagedClient.Fields.ExemplarInfo.Year">
+            <summary>
+            Год издания. Берётся не из подполя.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Fields.ExemplarInfo.OtherSubFields">
             <summary>
             Прочие подполя, не попавшие в вышеперечисленные.
@@ -580,6 +635,11 @@
         <member name="P:ManagedClient.Fields.ExemplarInfo.Description">
             <summary>
             Краткое библиографическое описание экземпляра.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.ExemplarInfo.Bbk">
+            <summary>
+            ББК.
             </summary>
         </member>
         <member name="P:ManagedClient.Fields.ExemplarInfo.UserData">
@@ -2207,23 +2267,47 @@
         </member>
         <member name="T:ManagedClient.Output.FileOutput">
             <summary>
-            Файловый вывод
+            Файловый вывод.
             </summary>
         </member>
         <member name="M:ManagedClient.Output.FileOutput.#ctor">
             <summary>
-            
+            Конструктор.
             </summary>
         </member>
         <member name="M:ManagedClient.Output.FileOutput.#ctor(System.String)">
             <summary>
-            
+            Конструктор.
             </summary>
-            <param name="fileName"></param>
+        </member>
+        <member name="M:ManagedClient.Output.FileOutput.Close">
+            <summary>
+            Закрытие файла.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Output.FileOutput.Open(System.String,System.Boolean)">
+            <summary>
+            Открытие файла.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Output.FileOutput.Open(System.String)">
+            <summary>
+            Открытие файла.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Output.FileOutput.Open(System.String,System.Boolean,System.Text.Encoding)">
+            <summary>
+            Открытие файла.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Output.FileOutput.Open(System.String,System.Text.Encoding)">
+            <summary>
+            Открытие файла.
+            </summary>
         </member>
         <member name="P:ManagedClient.Output.FileOutput.FileName">
             <summary>
-            
+            Имя файла.
             </summary>
         </member>
         <member name="T:ManagedClient.Output.NullOutput">
@@ -2278,11 +2362,82 @@
             Создание объекта с заранее установленным
             списком.
             </summary>
-            <param name="children"></param>
+        </member>
+        <member name="M:ManagedClient.Output.TeeOutput.Clear">
+            <summary>
+            Очистка.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Output.TeeOutput.Configure(System.String)">
+            <summary>
+            Конфигурация.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Output.TeeOutput.Write(System.String)">
+            <summary>
+            Вывод.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Output.TeeOutput.WriteError(System.String)">
+            <summary>
+            Вывод.
+            </summary>
         </member>
         <member name="P:ManagedClient.Output.TeeOutput.Output">
             <summary>
             Подчинённые потоки
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Output.TeeOutput.HaveError">
+            <summary>
+            Есть ошибка?
+            </summary>
+        </member>
+        <member name="T:ManagedClient.ParallelFormatter">
+            <summary>
+            Форматирование записей в несколько потоков.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ParallelFormatter.#ctor(System.Int32,System.String,System.Int32[],System.String)">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ParallelFormatter.FormatAll">
+            <summary>
+            Форматирование всех записей.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ManagedClient.ParallelRecordReader">
+            <summary>
+            Считывание записей с сервера в
+            несколько потоков.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ParallelRecordReader.#ctor(System.Int32,System.String,System.Int32[])">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ParallelRecordReader.WaitAll">
+            <summary>
+            Ожидание окончания.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ParallelRecordReader.Parallelism">
+            <summary>
+            Степень параллелизма.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ParallelRecordReader.ConnectionString">
+            <summary>
+            Строка подключения.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ParallelRecordReader.Stop">
+            <summary>
+            Признак окончания.
             </summary>
         </member>
         <member name="T:ManagedClient.Pft.Ast.PftCommandC">
@@ -10561,6 +10716,11 @@
             ломанётся в закрытое соедиение, и выйдет облом.
             </remarks>
         </member>
+        <member name="M:ManagedClient.ManagedClient64.ParseConnectionString(System.String)">
+            <summary>
+            Разбор строки подключения.
+            </summary>
+        </member>
         <member name="M:ManagedClient.ManagedClient64.PushDatabase(System.String)">
             <summary>
             Устанавливает подключение к новой базе.
@@ -10654,7 +10814,7 @@
             <param name="updateIf">Актуализировать словарь</param>
             <param name="flc">Формально-логический контроль</param>
         </member>
-        <member name="M:ManagedClient.ManagedClient64.RawSequentialSearch(System.String,System.Int32,System.Int32,System.String,System.Int32,System.Int32,System.String)">
+        <member name="M:ManagedClient.ManagedClient64.RawSequentialSearch(System.String,System.Int32,System.Int32,System.String,System.Int32,System.Int32,System.String,System.Boolean)">
             <summary>
             Последовательный поиск.
             </summary>
@@ -10673,6 +10833,11 @@
             Фиксирует в серверном INI-файле ФИО оператора и этап работы.
             Это нужно для работы &amp;unifor('IPRIVATE,FIO') 
             и &amp;unifor('IPRIVATE,ETR')
+            </summary>
+        </member>
+        <member name="E:ManagedClient.ManagedClient64.ErrorHandler">
+            <summary>
+            Вызывается при возникновении ошибки.
             </summary>
         </member>
         <member name="E:ManagedClient.ManagedClient64.BusyChanged">
