@@ -9860,6 +9860,63 @@
             Подполе I
             </summary>
         </member>
+        <member name="T:ManagedClient.Readers.ReaderRegistration">
+            <summary>
+            Информация о регистрации/перерегистрации читателя.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.Readers.ReaderRegistration.RegistrationTag">
+            <summary>
+            Поле регистрация.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.Readers.ReaderRegistration.ReregistrationTag">
+            <summary>
+            Поле "перерегистрация".
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderRegistration.Parse(ManagedClient.RecordField)">
+            <summary>
+            Разбор поля.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderRegistration.Parse(ManagedClient.IrbisRecord,System.String)">
+            <summary>
+            Разбор записи.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderRegistration.ToField">
+            <summary>
+            Преобразование в поле.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:ManagedClient.Readers.ReaderRegistration.DateString">
+            <summary>
+            Дата. Подполе *.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.ReaderRegistration.Date">
+            <summary>
+            Дата.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.ReaderRegistration.Chair">
+            <summary>
+            Место (кафедра обслуживания).
+            Подполе c.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.ReaderRegistration.OrderNumber">
+            <summary>
+            Номер приказа. Подполе a.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.ReaderRegistration.Reason">
+            <summary>
+            Причина. Подполе b.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Readers.ReaderUtility">
             <summary>
             Методы для работы с БД читателей.
@@ -12288,21 +12345,6 @@
             Запись заблокирована
             </summary>
         </member>
-        <member name="T:ManagedClient.RegistrationInfo">
-            <summary>
-            Информация о (пере)регистрации читателя.
-            </summary>
-        </member>
-        <member name="P:ManagedClient.RegistrationInfo.DateString">
-            <summary>
-            Дата. Подполе *
-            </summary>
-        </member>
-        <member name="P:ManagedClient.RegistrationInfo.Place">
-            <summary>
-            Место (пере)регистрации. Подполе C.
-            </summary>
-        </member>
         <member name="T:ManagedClient.Requests.BookRequest">
             <summary>
             
@@ -13098,10 +13140,15 @@
         </member>
         <member name="M:ManagedClient.Utilities.PrepareQuery(System.String)">
             <summary>
-            Подготавливает строку запроса
+            Подготавливает строку запроса,
+            заменяя запрещённые символы на пробелы.
             </summary>
-            <param name="text"></param>
-            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Utilities.MakeVisibleString(System.String)">
+            <summary>
+            Превращает строку в видимую.
+            Пример: "(null)".
+            </summary>
         </member>
         <member name="T:ManagedClient.VisitInfo">
             <summary>

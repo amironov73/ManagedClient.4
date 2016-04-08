@@ -10,6 +10,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+
+using JetBrains.Annotations;
+
 using CM=System.Configuration.ConfigurationManager;
 
 #endregion
@@ -19,6 +22,7 @@ namespace ManagedClient
     /// <summary>
     /// Несколько утилит, упрощающих код.
     /// </summary>
+    [PublicAPI]
     public static class Utilities
     {
         /// <summary>
@@ -774,9 +778,10 @@ namespace ManagedClient
         /// строки (настоящих и ирбисных)
         /// </remarks>
         /// <returns></returns>
+        [CanBeNull]
         public static string PrepareFormat
             (
-                this string text
+                [CanBeNull] this string text
             )
         {
             if (string.IsNullOrEmpty(text))
@@ -800,13 +805,13 @@ namespace ManagedClient
         }
 
         /// <summary>
-        /// Подготавливает строку запроса
+        /// Подготавливает строку запроса,
+        /// заменяя запрещённые символы на пробелы.
         /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
+        [CanBeNull]
         public static string PrepareQuery
             (
-                string text
+                [CanBeNull] this string text
             )
         {
             if (string.IsNullOrEmpty(text))
@@ -817,6 +822,32 @@ namespace ManagedClient
                 .Replace('\r', ' ')
                 .Replace('\n', ' ')
                 .Replace('\t', ' ');
+        }
+
+        /// <summary>
+        /// Превращает строку в видимую.
+        /// Пример: "(null)".
+        /// </summary>
+        [NotNull]
+        public static string MakeVisibleString
+            (
+                [CanBeNull] this string text
+            )
+        {
+            if (ReferenceEquals(text, null))
+            {
+                return "(null)";
+            }
+            if (string.IsNullOrEmpty(text))
+            {
+                return "(empty)";
+            }
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return "(whitespace)";
+            }
+
+            return text;
         }
     }
 }

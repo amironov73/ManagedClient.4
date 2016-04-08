@@ -175,7 +175,7 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlArray("registrations")]
         [JsonProperty("registrations")]
-        public RegistrationInfo[] Registrations;
+        public ReaderRegistration[] Registrations;
 
         /// <summary>
         /// Дата последней перерегистрации.
@@ -212,7 +212,7 @@ namespace ManagedClient.Readers
                 {
                     return null;
                 }
-                return Registrations.Last().Place;
+                return Registrations.Last().Chair;
             }
         }
 
@@ -479,7 +479,7 @@ namespace ManagedClient.Readers
                                         RegistrationDateString = record.FM("51"),
                                         Registrations = record.Fields
                                             .GetField("52")
-                                            .Select(RegistrationInfo.Parse)
+                                            .Select(ReaderRegistration.Parse)
                                             .ToArray(),
                                         EnabledPlaces = record.FM("56"),
                                         DisabledPlaces = record.FM("57"),

@@ -293,6 +293,7 @@
     <Compile Include="Ranges\NumberRangesParser.cs" />
     <Compile Include="Readers\ChairInfo.cs" />
     <Compile Include="Readers\IriProfile.cs" />
+    <Compile Include="Readers\ReaderRegistration.cs" />
     <Compile Include="Readers\ReaderUtility.cs" />
     <Compile Include="RecordFieldCollection.cs" />
     <Compile Include="Schema\FieldSchema.cs" />
@@ -360,7 +361,6 @@
     <Compile Include="RecordMergeSpecification.cs" />
     <Compile Include="RecordReference.cs" />
     <Compile Include="RecordStatus.cs" />
-    <Compile Include="RegistrationInfo.cs" />
     <Compile Include="Requests\BookRequest.cs" />
     <Compile Include="Requests\RequestPrefixes.cs" />
     <Compile Include="Requests\RequestRefusals.cs" />

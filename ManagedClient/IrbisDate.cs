@@ -99,12 +99,12 @@ namespace ManagedClient
         /// </summary>
         public static DateTime ConvertStringToDate
             (
-                [NotNull] string date
+                [CanBeNull] string date
             )
         {
             if (string.IsNullOrEmpty(date))
             {
-                throw new ArgumentNullException("date");
+                return DateTime.MinValue;
             }
 
             DateTime result = DateTime.ParseExact
