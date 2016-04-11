@@ -6,7 +6,10 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+
 using JetBrains.Annotations;
+
+using Newtonsoft.Json;
 
 #endregion
 
@@ -41,17 +44,20 @@ namespace ManagedClient.Readers
         /// Подполе B
         /// </summary>
         [XmlAttribute("id")]
+        [CanBeNull]
         public string ID { get; set; }
 
         /// <summary>
         /// Подполе C
         /// </summary>
         [XmlAttribute("title")]
+        [CanBeNull]
         public string Title { get; set; }
 
         /// <summary>
         /// Подполе D
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("query")]
         public string Query { get; set; }
 
@@ -63,12 +69,23 @@ namespace ManagedClient.Readers
         /// <summary>
         /// Подполе F
         /// </summary>
+        [CanBeNull]
         public string LastServed { get; set; }
 
         /// <summary>
         /// Подполе I
         /// </summary>
+        [CanBeNull]
         public string Database { get; set; }
+
+
+        /// <summary>
+        /// Ссылка на читателя.
+        /// </summary>
+        [CanBeNull]
+        [XmlIgnore]
+        [JsonIgnore]
+        public ReaderInfo Reader { get; set; }
 
         #endregion
 

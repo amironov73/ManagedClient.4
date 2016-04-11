@@ -9860,6 +9860,11 @@
             Подполе I
             </summary>
         </member>
+        <member name="P:ManagedClient.Readers.IriProfile.Reader">
+            <summary>
+            Ссылка на читателя.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Readers.ReaderRegistration">
             <summary>
             Информация о регистрации/перерегистрации читателя.
@@ -9917,6 +9922,11 @@
             Причина. Подполе b.
             </summary>
         </member>
+        <member name="P:ManagedClient.Readers.ReaderRegistration.Reader">
+            <summary>
+            Ссылка на зарегистрированного читателя.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Readers.ReaderUtility">
             <summary>
             Методы для работы с БД читателей.
@@ -9962,22 +9972,22 @@
             Отбор событий.
             </summary>
         </member>
-        <member name="M:ManagedClient.Readers.ReaderUtility.GetEvents(ManagedClient.VisitInfo[],System.String)">
+        <member name="M:ManagedClient.Readers.ReaderUtility.GetEvents(ManagedClient.Readers.VisitInfo[],System.String)">
             <summary>
             Отбор событий.
             </summary>
         </member>
-        <member name="M:ManagedClient.Readers.ReaderUtility.GetEvents(ManagedClient.VisitInfo[],System.Boolean)">
+        <member name="M:ManagedClient.Readers.ReaderUtility.GetEvents(ManagedClient.Readers.VisitInfo[],System.Boolean)">
             <summary>
             Отбор событий.
             </summary>
         </member>
-        <member name="M:ManagedClient.Readers.ReaderUtility.GetEvents(ManagedClient.VisitInfo[],System.DateTime)">
+        <member name="M:ManagedClient.Readers.ReaderUtility.GetEvents(ManagedClient.Readers.VisitInfo[],System.DateTime)">
             <summary>
             Отбор событий.
             </summary>
         </member>
-        <member name="M:ManagedClient.Readers.ReaderUtility.GetEvents(ManagedClient.VisitInfo[],System.DateTime,System.DateTime)">
+        <member name="M:ManagedClient.Readers.ReaderUtility.GetEvents(ManagedClient.Readers.VisitInfo[],System.DateTime,System.DateTime)">
             <summary>
             Отбор событий.
             </summary>
@@ -13150,129 +13160,134 @@
             Пример: "(null)".
             </summary>
         </member>
-        <member name="T:ManagedClient.VisitInfo">
+        <member name="T:ManagedClient.Readers.VisitInfo">
             <summary>
             Информация о посещении/выдаче.
             </summary>
         </member>
-        <member name="M:ManagedClient.VisitInfo.Parse(ManagedClient.RecordField)">
+        <member name="M:ManagedClient.Readers.VisitInfo.Parse(ManagedClient.RecordField)">
             <summary>
             Parses the specified field.
             </summary>
             <param name="field">The field.</param>
             <returns>VisitInfo.</returns>
         </member>
-        <member name="M:ManagedClient.VisitInfo.ToField">
+        <member name="M:ManagedClient.Readers.VisitInfo.ToField">
             <summary>
             Формирование поля 40 
             из данных о выдаче/посещении.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ManagedClient.VisitInfo.ToString">
+        <member name="M:ManagedClient.Readers.VisitInfo.ToString">
             <summary>
             Returns a <see cref="T:System.String"/> that represents this instance.
             </summary>
             <returns>A <see cref="T:System.String"/> that represents this instance.</returns>
         </member>
-        <member name="P:ManagedClient.VisitInfo.Database">
+        <member name="P:ManagedClient.Readers.VisitInfo.Database">
             <summary>
             подполе G, имя БД каталога.
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.Index">
+        <member name="P:ManagedClient.Readers.VisitInfo.Index">
             <summary>
             подполе A, шифр документа.
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.Inventory">
+        <member name="P:ManagedClient.Readers.VisitInfo.Inventory">
             <summary>
             подполе B, инвентарный номер экземпляра
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.Barcode">
+        <member name="P:ManagedClient.Readers.VisitInfo.Barcode">
             <summary>
             подполе H, штрих-код экземпляра.
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.Sigla">
+        <member name="P:ManagedClient.Readers.VisitInfo.Sigla">
             <summary>
             подполе K, место хранения экземпляра
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.DateGivenString">
+        <member name="P:ManagedClient.Readers.VisitInfo.DateGivenString">
             <summary>
             подполе D, дата выдачи
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.Department">
+        <member name="P:ManagedClient.Readers.VisitInfo.Department">
             <summary>
             подполе V, место выдачи
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.DateExpectedString">
+        <member name="P:ManagedClient.Readers.VisitInfo.DateExpectedString">
             <summary>
             подполе E, дата предполагаемого возврата
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.DateReturnedString">
+        <member name="P:ManagedClient.Readers.VisitInfo.DateReturnedString">
             <summary>
             подполе F, дата фактического возврата
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.DateProlongString">
+        <member name="P:ManagedClient.Readers.VisitInfo.DateProlongString">
             <summary>
             подполе L, дата продления
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.Lost">
+        <member name="P:ManagedClient.Readers.VisitInfo.Lost">
             <summary>
             подполе U, признак утерянной книги
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.Description">
+        <member name="P:ManagedClient.Readers.VisitInfo.Description">
             <summary>
             подполе C, краткое библиографическое описание
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.Responsible">
+        <member name="P:ManagedClient.Readers.VisitInfo.Responsible">
             <summary>
             подполе I, ответственное лицо
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.TimeIn">
+        <member name="P:ManagedClient.Readers.VisitInfo.TimeIn">
             <summary>
             подполе 1, время начала визита в библиотеку
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.TimeOut">
+        <member name="P:ManagedClient.Readers.VisitInfo.TimeOut">
             <summary>
             подполе 2, время окончания визита в библиотеку
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.IsVisit">
+        <member name="P:ManagedClient.Readers.VisitInfo.IsVisit">
             <summary>
             Не посещение ли?
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.IsReturned">
+        <member name="P:ManagedClient.Readers.VisitInfo.IsReturned">
             <summary>
             Возвращена ли книга?
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.DateGiven">
+        <member name="P:ManagedClient.Readers.VisitInfo.DateGiven">
             <summary>
             Дата выдачи/посещения.
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.DateReturned">
+        <member name="P:ManagedClient.Readers.VisitInfo.DateReturned">
             <summary>
             Дата возврата
             </summary>
         </member>
-        <member name="P:ManagedClient.VisitInfo.DateExpected">
+        <member name="P:ManagedClient.Readers.VisitInfo.DateExpected">
             <summary>
             Ожидаемая дата возврата
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.VisitInfo.Reader">
+            <summary>
+            Ссылка на читателя, сделавшего посещение.
             </summary>
         </member>
         <member name="T:ManagedClient.Direct.XrfFile64">

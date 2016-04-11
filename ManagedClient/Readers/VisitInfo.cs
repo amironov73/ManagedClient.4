@@ -6,14 +6,14 @@
 using System;
 using System.Text;
 using System.Xml.Serialization;
-
+using ManagedClient.Readers;
 using MoonSharp.Interpreter;
 
 using Newtonsoft.Json;
 
 #endregion
 
-namespace ManagedClient
+namespace ManagedClient.Readers
 {
     /// <summary>
     /// Информация о посещении/выдаче.
@@ -192,6 +192,13 @@ namespace ManagedClient
                 return DateExpectedString.ParseIrbisDate();
             }
         }
+
+        /// <summary>
+        /// Ссылка на читателя, сделавшего посещение.
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        public ReaderInfo Reader { get; set; }
 
         #endregion
 

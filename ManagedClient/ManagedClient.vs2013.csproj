@@ -373,7 +373,7 @@
     <Compile Include="SubField.cs" />
     <Compile Include="TermLink.cs" />
     <Compile Include="Utilities.cs" />
-    <Compile Include="VisitInfo.cs" />
+    <Compile Include="Readers\VisitInfo.cs" />
     <Compile Include="Direct\XrfFile64.cs" />
     <Compile Include="Direct\XrfRecord64.cs" />
   </ItemGroup>

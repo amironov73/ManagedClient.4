@@ -96,6 +96,14 @@ namespace ManagedClient.Readers
         [JsonProperty("reason")]
         public string Reason { get; set; }
 
+        /// <summary>
+        /// Ссылка на зарегистрированного читателя.
+        /// </summary>
+        [CanBeNull]
+        [XmlIgnore]
+        [JsonIgnore]
+        public ReaderInfo Reader { get; set; }
+
         #endregion
 
         #region Construction

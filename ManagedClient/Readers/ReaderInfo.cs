@@ -493,6 +493,15 @@ namespace ManagedClient.Readers
                                         Profiles = IriProfile.ParseRecord(record)
                                     };
 
+            foreach (ReaderRegistration registration in result.Registrations)
+            {
+                registration.Reader = result;
+            }
+            foreach (VisitInfo visit in result.Visits)
+            {
+                visit.Reader = result;
+            }
+
             string fio = result.FamilyName;
             if (!string.IsNullOrEmpty(result.FirstName))
             {
