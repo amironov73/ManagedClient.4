@@ -44,11 +44,65 @@ namespace ManagedClient
         /// <summary>
         /// Признак окончания.
         /// </summary>
-        public bool Stop { get { return _stop; } }
+        public bool Stop { get { return _AllDone(); } }
 
         #endregion
 
         #region Construction
+
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        public ParallelRecordReader ()
+        {
+            int parallelism = Environment.ProcessorCount;
+            string connectionString
+                = IrbisUtilities.GetConnectionString();
+            int[] mfnList = _GetMfnList(connectionString);
+            _Run
+                (
+                    parallelism,
+                    connectionString,
+                    mfnList
+                );
+        }
+
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        public ParallelRecordReader
+            (
+                int parallelism
+            )
+        {
+            string connectionString 
+                = IrbisUtilities.GetConnectionString();
+            int[] mfnList = _GetMfnList(connectionString);
+            _Run
+                (
+                    parallelism,
+                    connectionString,
+                    mfnList
+                );
+        }
+
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        public ParallelRecordReader
+            (
+                int parallelism,
+                string connectionString
+            )
+        {
+            int[] mfnList = _GetMfnList(connectionString);
+            _Run
+                (
+                    parallelism,
+                    connectionString,
+                    mfnList
+                );
+        }
 
         /// <summary>
         /// Конструктор
@@ -60,9 +114,62 @@ namespace ManagedClient
                 int[] mfnList
             )
         {
+            _Run
+                (
+                    parallelism,
+                    connectionString,
+                    mfnList
+                );
+        }
+
+        #endregion
+
+        #region Private members
+
+        private Task[] _tasks;
+
+        private int[] _mfnList;
+
+        private ConcurrentQueue<IrbisRecord> _queue;
+
+        private AutoResetEvent _event;
+
+        private object _lock;
+
+        private int[] _GetMfnList
+            (
+                string connectionString
+            )
+        {
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new ArgumentNullException("connectionString");
+            }
+
+            using (ManagedClient64 client = new ManagedClient64())
+            {
+                client.ParseConnectionString(connectionString);
+                client.Connect();
+                int maxMfn = client.GetMaxMfn() - 1;
+                if (maxMfn <= 0)
+                {
+                    throw new ApplicationException("MaxMFN=0");
+                }
+                int[] result = Enumerable.Range(1, maxMfn).ToArray();
+                return result;
+            }
+        }
+
+        private void _Run
+            (
+                int parallelism,
+                string connectionString,
+                int[] mfnList
+            )
+        {
             int maxParallelism = Environment.ProcessorCount;
             if ((parallelism < 1)
-                || (parallelism>maxParallelism))
+                || (parallelism > maxParallelism))
             {
                 parallelism = maxParallelism;
             }
@@ -75,8 +182,8 @@ namespace ManagedClient
                 throw new ArgumentNullException("mfnList");
             }
 
-            parallelism = Math.Max(mfnList.Length/100, parallelism);
-
+            ConnectionString = connectionString;
+            parallelism = Math.Min(mfnList.Length / 100, parallelism);
             Parallelism = parallelism;
 
             _queue = new ConcurrentQueue<IrbisRecord>();
@@ -84,38 +191,52 @@ namespace ManagedClient
             _lock = new object();
 
             _tasks = new Task[parallelism];
+            int[][] chunks = Utilities.SplitArray(mfnList, parallelism);
             for (int i = 0; i < parallelism; i++)
             {
-                Task task = Task.Factory.StartNew(_Worker);
+                Task task = new Task
+                    (
+                        _Worker,
+                        chunks[i]
+                    );
                 _tasks[i] = task;
             }
+            foreach (Task task in _tasks)
+            {
+                Thread.Sleep(50);
+                task.Start();
+            }
+            
         }
-
-        #endregion
-
-        #region Private members
-
-        private Task[] _tasks;
-
-        private int[] _mfnList;
-
-        private readonly ConcurrentQueue<IrbisRecord> _queue;
-
-        private AutoResetEvent _event;
-
-        private object _lock;
-
-        private bool _stop;
 
         private void _Worker
             (
+                object state
             )
         {
-            ManagedClient64 client = new ManagedClient64();
-            client.ParseConnectionString(ConnectionString);
-            client.Connect();
+            int[] chunk = (int[]) state;
+            //foreach (int mfn in chunk)
+            //{
+            //    IrbisRecord record = new IrbisRecord{Mfn = mfn};
+            //    _PutRecord(record);
+            //}
+            //_event.Set();
 
-
+            using (ManagedClient64 client = new ManagedClient64())
+            {
+                client.ParseConnectionString(ConnectionString);
+                client.Connect();
+                BatchRecordReader batch = new BatchRecordReader
+                    (
+                        client,
+                        chunk
+                    );
+                foreach (IrbisRecord record in batch)
+                {
+                    _PutRecord(record);
+                }
+            }
+            _event.Set();
         }
 
         private void _PutRecord
@@ -127,6 +248,12 @@ namespace ManagedClient
             _event.Set();
         }
 
+        private bool _AllDone()
+        {
+            return _queue.IsEmpty
+                && _tasks.All(t => t.IsCompleted);
+        }
+
         #endregion
 
         #region Public methods
@@ -136,7 +263,7 @@ namespace ManagedClient
         /// </summary>
         public void WaitAll()
         {
-
+            Task.WaitAll(_tasks);
         }
 
         #endregion
@@ -147,27 +274,42 @@ namespace ManagedClient
         {
             while (true)
             {
-                if (_stop)
-                {
-                    yield break;
-                }
-
-                if (!_event.WaitOne())
+                if (Stop)
                 {
                     yield break;
                 }
 
                 IrbisRecord record;
-                if (_queue.TryDequeue(out record))
+                while (_queue.TryDequeue(out record))
                 {
                     yield return record;
                 }
+                _event.Reset();
+
+                _event.WaitOne(10);
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        /// <summary>
+        /// Считываем все записи.
+        /// </summary>
+        [NotNull]
+        [ItemNotNull]
+        public IrbisRecord[] ReadAll()
+        {
+            List<IrbisRecord> result = new List<IrbisRecord>();
+
+            foreach (IrbisRecord record in this)
+            {
+                result.Add(record);
+            }
+
+            return result.ToArray();
         }
 
         #endregion

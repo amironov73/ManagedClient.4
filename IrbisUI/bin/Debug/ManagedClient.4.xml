@@ -2265,6 +2265,22 @@
             Консольный вывод.
             </summary>
         </member>
+        <member name="T:ManagedClient.Output.DummyOutput">
+            <summary>
+            Выходной поток, который не даёт закрыться
+            другому потоку.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Output.DummyOutput.#ctor(ManagedClient.Output.AbstractOutput)">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Output.DummyOutput.Inner">
+            <summary>
+            Внутренний поток.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Output.FileOutput">
             <summary>
             Файловый вывод.
@@ -2415,6 +2431,21 @@
             несколько потоков.
             </summary>
         </member>
+        <member name="M:ManagedClient.ParallelRecordReader.#ctor">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ParallelRecordReader.#ctor(System.Int32)">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ParallelRecordReader.#ctor(System.Int32,System.String)">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
         <member name="M:ManagedClient.ParallelRecordReader.#ctor(System.Int32,System.String,System.Int32[])">
             <summary>
             Конструктор
@@ -2423,6 +2454,11 @@
         <member name="M:ManagedClient.ParallelRecordReader.WaitAll">
             <summary>
             Ожидание окончания.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ParallelRecordReader.ReadAll">
+            <summary>
+            Считываем все записи.
             </summary>
         </member>
         <member name="P:ManagedClient.ParallelRecordReader.Parallelism">
@@ -11660,6 +11696,12 @@
             Информация о читателе.
             </summary>
         </member>
+        <member name="F:ManagedClient.Readers.ReaderInfo.Enrolment">
+            <summary>
+            Запись/перерегистрация в библиотеку.
+            Поле 51.
+            </summary>
+        </member>
         <member name="F:ManagedClient.Readers.ReaderInfo.Registrations">
             <summary>
             Дата перерегистрации. Поле 52.
@@ -13158,6 +13200,11 @@
             <summary>
             Превращает строку в видимую.
             Пример: "(null)".
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Utilities.SplitArray``1(``0[],System.Int32)">
+            <summary>
+            Разбиение массива на (почти) равные части.
             </summary>
         </member>
         <member name="T:ManagedClient.Readers.VisitInfo">

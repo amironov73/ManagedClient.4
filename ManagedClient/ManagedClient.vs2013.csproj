@@ -144,6 +144,7 @@
     <Compile Include="Morphology\MorphologyEntry.cs" />
     <Compile Include="Morphology\MorphologyProvider.cs" />
     <Compile Include="Output\ConsoleOutput.cs" />
+    <Compile Include="Output\DummyOutput.cs" />
     <Compile Include="Output\FileOutput.cs" />
     <Compile Include="Output\NullOutput.cs" />
     <Compile Include="Output\TeeOutput.cs" />

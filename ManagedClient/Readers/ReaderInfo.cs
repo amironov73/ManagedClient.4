@@ -171,6 +171,14 @@ namespace ManagedClient.Readers
         }
 
         /// <summary>
+        /// Запись/перерегистрация в библиотеку.
+        /// Поле 51.
+        /// </summary>
+        [XmlArray("enrolment")]
+        [JsonProperty("enrolment")]
+        public ReaderRegistration[] Enrolment;
+
+        /// <summary>
         /// Дата перерегистрации. Поле 52.
         /// </summary>
         [XmlArray("registrations")]
@@ -477,6 +485,10 @@ namespace ManagedClient.Readers
                                         Email = record.FM("32"),
                                         HomePhone = record.FM("17"),
                                         RegistrationDateString = record.FM("51"),
+                                        Enrolment = record.Fields
+                                            .GetField("51")
+                                            .Select(ReaderRegistration.Parse)
+                                            .ToArray(),
                                         Registrations = record.Fields
                                             .GetField("52")
                                             .Select(ReaderRegistration.Parse)

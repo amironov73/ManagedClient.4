@@ -849,5 +849,35 @@ namespace ManagedClient
 
             return text;
         }
+
+        /// <summary>
+        /// Разбиение массива на (почти) равные части.
+        /// </summary>
+        [NotNull]
+        public static T[][] SplitArray<T>
+            (
+                [NotNull] T[] array, 
+                int partCount
+            )
+        {
+            List<T[]> result = new List<T[]>(partCount);
+            int length = array.Length;
+            int chunkSize = length / partCount;
+            while (chunkSize * partCount < length)
+            {
+                chunkSize++;
+            }
+            int offset = 0;
+            for (int i = 0; i < partCount; i++)
+            {
+                int size = Math.Min(chunkSize, length - offset);
+                T[] chunk = new T[size];
+                Array.Copy(array, offset, chunk, 0, size);
+                result.Add(chunk);
+                offset += size;
+            }
+
+            return result.ToArray();
+        }
     }
 }

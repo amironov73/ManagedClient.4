@@ -107,11 +107,15 @@ namespace ManagedClient
                 return DateTime.MinValue;
             }
 
-            DateTime result = DateTime.ParseExact
+            DateTime result;
+            
+            DateTime.TryParseExact
                 (
                     date,
                     ConversionFormat,
-                    CultureInfo.CurrentCulture
+                    CultureInfo.CurrentCulture,
+                    DateTimeStyles.None,
+                    out result
                 );
 
             return result;
