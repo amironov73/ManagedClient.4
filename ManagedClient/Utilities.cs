@@ -712,9 +712,10 @@ namespace ManagedClient
         /// </summary>
         /// <param name="candidates"></param>
         /// <returns></returns>
+        [CanBeNull]
         public static string FindSetting
             (
-                params string[] candidates
+                [NotNull] params string[] candidates
             )
         {
             foreach (string candidate in candidates.NonEmptyLines())

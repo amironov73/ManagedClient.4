@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BatchRecordFormatter.cs" />
     <Compile Include="ConfigDatabase.cs" />
     <Compile Include="Output\AbstractOutput.cs" />
     <Compile Include="AfterQueryEventArgs.cs" />

@@ -1078,6 +1078,8 @@ namespace ManagedClient
             Connect();
         }
 
+        private Random _random = new Random();
+
         // ReSharper disable once UnusedMethodReturnValue.Local
         // ReSharper disable once UnusedParameter.Local
         private object _Connect
@@ -1100,7 +1102,7 @@ TryAgain:
                 throw new ApplicationException("Can't connect");
             }
 
-            _userID = new Random().Next(400000, 600000);
+            _userID = _random.Next(400000, 600000);
             _queryID = 0;            
 
             try

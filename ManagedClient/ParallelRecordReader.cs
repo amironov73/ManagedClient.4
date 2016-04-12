@@ -55,7 +55,7 @@ namespace ManagedClient
         /// </summary>
         public ParallelRecordReader ()
         {
-            int parallelism = Environment.ProcessorCount;
+            int parallelism = Environment.ProcessorCount - 1;
             string connectionString
                 = IrbisUtilities.GetConnectionString();
             int[] mfnList = _GetMfnList(connectionString);
@@ -167,11 +167,14 @@ namespace ManagedClient
                 int[] mfnList
             )
         {
-            int maxParallelism = Environment.ProcessorCount;
-            if ((parallelism < 1)
-                || (parallelism > maxParallelism))
+            int maxParallelism = Environment.ProcessorCount - 1;
+            if (parallelism > maxParallelism)
             {
                 parallelism = maxParallelism;
+            }
+            if (parallelism < 1)
+            {
+                parallelism = 1;
             }
             if (string.IsNullOrEmpty(connectionString))
             {
@@ -206,7 +209,6 @@ namespace ManagedClient
                 Thread.Sleep(50);
                 task.Start();
             }
-            
         }
 
         private void _Worker
@@ -319,6 +321,10 @@ namespace ManagedClient
         public void Dispose()
         {
             _event.Dispose();
+            foreach (Task task in _tasks)
+            {
+                task.Dispose();
+            }
         }
 
         #endregion

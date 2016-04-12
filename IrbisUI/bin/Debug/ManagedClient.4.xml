@@ -4,6 +4,73 @@
         <name>ManagedClient.4</name>
     </assembly>
     <members>
+        <member name="T:ManagedClient.BatchRecordFormatter">
+            <summary>
+            Форматирование записей с сервера большими порциями
+            для увеличения производительности.
+            Сами записи отдаются по одной.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.BatchRecordFormatter.DefaultBatchSize">
+            <summary>
+            Размер порции по умолчанию.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.BatchRecordFormatter.#ctor(ManagedClient.ManagedClient64,System.String)">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.BatchRecordFormatter.#ctor(ManagedClient.ManagedClient64,System.Int32,System.String)">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.BatchRecordFormatter.#ctor(ManagedClient.ManagedClient64,System.String,System.String,System.Object[])">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.BatchRecordFormatter.#ctor(ManagedClient.ManagedClient64,System.Int32,System.Collections.Generic.IEnumerable{System.Int32},System.String)">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.BatchRecordFormatter.#ctor(ManagedClient.ManagedClient64,System.Collections.Generic.IEnumerable{System.Int32},System.String)">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.BatchRecordFormatter.FormatAll">
+            <summary>
+            Считывает все записи сразу.
+            </summary>
+        </member>
+        <member name="E:ManagedClient.BatchRecordFormatter.BatchRead">
+            <summary>
+            Вызывается во время считывания очередной порции.
+            </summary>
+        </member>
+        <member name="E:ManagedClient.BatchRecordFormatter.Exception">
+            <summary>
+            Вызывается при возникновении исключения.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.BatchRecordFormatter.BatchSize">
+            <summary>
+            Размер порции.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.BatchRecordFormatter.Client">
+            <summary>
+            ИРБИС-клиент.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.BatchRecordFormatter.Format">
+            <summary>
+            Формат.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Output.AbstractOutput">
             <summary>
             Абстрактный объект текстового вывода. 
@@ -2423,7 +2490,26 @@
             <summary>
             Форматирование всех записей.
             </summary>
-            <returns></returns>
+        </member>
+        <member name="P:ManagedClient.ParallelFormatter.Parallelism">
+            <summary>
+            Степень параллелизма.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ParallelFormatter.ConnectionString">
+            <summary>
+            Строка подключения.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ParallelFormatter.Stop">
+            <summary>
+            Признак окончания.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ParallelFormatter.Format">
+            <summary>
+            Используемый формат.
+            </summary>
         </member>
         <member name="T:ManagedClient.ParallelRecordReader">
             <summary>

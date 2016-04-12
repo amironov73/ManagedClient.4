@@ -56,6 +56,7 @@
     <Compile Include="ParallelReaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RangeTest.cs" />
+    <Compile Include="BatchFormatterTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ManagedClient\ManagedClient.vs2013.csproj">
