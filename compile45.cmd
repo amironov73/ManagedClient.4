@@ -1,0 +1,9 @@
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe ManagedClient\ManagedClient.vs2013.csproj /t:Clean   /p:Configuration=Debug   /p:TargetFrameworkVersion=v4.5 /p:OutputPath=bin\Debug45
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe ManagedClient\ManagedClient.vs2013.csproj /t:Clean   /p:Configuration=Release /p:TargetFrameworkVersion=v4.5 /p:OutputPath=bin\Release45
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe IrbisUI\IrbisUI.vs2013.csproj             /t:Clean   /p:Configuration=Debug   /p:TargetFrameworkVersion=v4.5 /p:OutputPath=bin\Debug45
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe IrbisUI\IrbisUI.vs2013.csproj             /t:Clean   /p:Configuration=Release /p:TargetFrameworkVersion=v4.5 /p:OutputPath=bin\Release45
+
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe ManagedClient\ManagedClient.vs2013.csproj /t:Rebuild /p:Configuration=Debug   /p:TargetFrameworkVersion=v4.5 /p:OutputPath=bin\Debug45   /consoleloggerparameters:ErrorsOnly
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe ManagedClient\ManagedClient.vs2013.csproj /t:Rebuild /p:Configuration=Release /p:TargetFrameworkVersion=v4.5 /p:OutputPath=bin\Release45 /consoleloggerparameters:ErrorsOnly
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe IrbisUI\IrbisUI.vs2013.csproj             /t:Rebuild /p:Configuration=Debug   /p:TargetFrameworkVersion=v4.5 /p:OutputPath=bin\Debug45   /consoleloggerparameters:ErrorsOnly
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe IrbisUI\IrbisUI.vs2013.csproj             /t:Rebuild /p:Configuration=Release /p:TargetFrameworkVersion=v4.5 /p:OutputPath=bin\Release45 /consoleloggerparameters:ErrorsOnly
