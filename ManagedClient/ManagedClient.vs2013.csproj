@@ -247,6 +247,7 @@
     <Compile Include="Pft\PrettyPrinting\PftPrettyPrinter.cs" />
     <Compile Include="Pft\PrettyPrinting\PftStyle.cs" />
     <Compile Include="Pooling\IrbisConnectionPool.cs" />
+    <Compile Include="Pooling\IrbisPoolGuard.cs" />
     <Compile Include="Pooling\PoolUtilities.cs" />
     <Compile Include="Processing\ProcessingContext.cs" />
     <Compile Include="Processing\ProcessingResult.cs" />
