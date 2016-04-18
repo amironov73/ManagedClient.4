@@ -74,6 +74,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BatchRecordFormatter.cs" />
+    <Compile Include="CharacterClass.cs" />
+    <Compile Include="CharacterClassifier.cs" />
     <Compile Include="ConfigDatabase.cs" />
     <Compile Include="Output\AbstractOutput.cs" />
     <Compile Include="AfterQueryEventArgs.cs" />
@@ -255,6 +257,7 @@
     <Compile Include="Processing\RecordHandler.cs" />
     <Compile Include="Processing\RecordProcessor.cs" />
     <Compile Include="Quality\CheckBadCharacters.cs" />
+    <Compile Include="Quality\Rules\CheckMixedCharacters.cs" />
     <Compile Include="Quality\FieldDefect.cs" />
     <Compile Include="Quality\IrbisRule.cs" />
     <Compile Include="Quality\RecordReport.cs" />

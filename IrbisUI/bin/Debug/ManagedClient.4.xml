@@ -71,6 +71,51 @@
             Формат.
             </summary>
         </member>
+        <member name="T:ManagedClient.CharacterClass">
+            <summary>
+            Класс символов Unicode.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.CharacterClass.None">
+            <summary>
+            None.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.CharacterClass.ControlCharacter">
+            <summary>
+            Control character.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.CharacterClass.Digit">
+            <summary>
+            Digit.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.CharacterClass.BasicLatin">
+            <summary>
+            Basic Latin.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.CharacterClass.Cyrillic">
+            <summary>
+            Cyrillic.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.CharacterClassifier">
+            <summary>
+            Классы символов Unicode.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.CharacterClassifier.DetectCharacterClasses(System.String)">
+            <summary>
+            Выявление классов символов.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.CharacterClassifier.IsBothCyrillicAndLatin(ManagedClient.CharacterClass)">
+            <summary>
+            Смешаны ли в тексте латиница с кириллицей?
+            </summary>
+        </member>
         <member name="T:ManagedClient.Output.AbstractOutput">
             <summary>
             Абстрактный объект текстового вывода. 
@@ -8592,6 +8637,11 @@
         <member name="P:ManagedClient.Quality.IrbisRule.Worksheet">
             <summary>
             Рабочий лист.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.Quality.Rules.CheckMixedCharacters">
+            <summary>
+            Проверка на смешение символов.
             </summary>
         </member>
         <member name="T:ManagedClient.Quality.FieldDefect">
