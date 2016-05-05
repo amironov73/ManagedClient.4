@@ -489,6 +489,16 @@
             Коды (поле 900).
             </summary>
         </member>
+        <member name="M:ManagedClient.Fields.CodesInfo.Parse(ManagedClient.RecordField)">
+            <summary>
+            Parse the specified field.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.CodesInfo.ToField">
+            <summary>
+            Transform back to field.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Fields.CodesInfo.DocumentType">
             <summary>
             Тип документа. Подполе t.
@@ -593,6 +603,14 @@
             <param name="first">The first.</param>
             <param name="second">The second.</param>
             <returns>System.Int32.</returns>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarInfo.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/>
+            that represents this instance.
+            </summary>
+            <returns>A <see cref="T:System.String"/>
+            that represents this instance.</returns>
         </member>
         <member name="P:ManagedClient.Fields.ExemplarInfo.Status">
             <summary>
@@ -752,6 +770,16 @@
         <member name="P:ManagedClient.Fields.ExemplarInfo.Bbk">
             <summary>
             ББК.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.ExemplarInfo.SequentialNumber">
+            <summary>
+            Номер по порядку (для списков).
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.ExemplarInfo.OrderingData">
+            <summary>
+            Информация для упорядочения в списках.
             </summary>
         </member>
         <member name="P:ManagedClient.Fields.ExemplarInfo.UserData">
@@ -1171,6 +1199,14 @@
             <summary>
             Разбор поля 13.
             </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ReaderAddress.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/>
+            that represents this instance.
+            </summary>
+            <returns>A <see cref="T:System.String"/>
+            that represents this instance.</returns>
         </member>
         <member name="P:ManagedClient.Fields.ReaderAddress.Postcode">
             <summary>
@@ -12947,9 +12983,16 @@
         </member>
         <member name="M:ManagedClient.Fields.RevisionInfo.ToField">
             <summary>
-            Превращение обратно в 
+            Превращение обратно в поле.
             </summary>
-            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Fields.RevisionInfo.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/>
+            that represents this instance.
+            </summary>
+            <returns>A <see cref="T:System.String"/>
+            that represents this instance.</returns>
         </member>
         <member name="P:ManagedClient.Fields.RevisionInfo.Stage">
             <summary>

@@ -120,9 +120,8 @@ namespace ManagedClient.Fields
         }
 
         /// <summary>
-        /// Превращение обратно в 
+        /// Превращение обратно в поле.
         /// </summary>
-        /// <returns></returns>
         public RecordField ToField()
         {
             RecordField result = new RecordField("907")
@@ -136,6 +135,12 @@ namespace ManagedClient.Fields
 
         #region Object members
 
+        /// <summary>
+        /// Returns a <see cref="System.String" />
+        /// that represents this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.String" />
+        /// that represents this instance.</returns>
         public override string ToString()
         {
             return string.Format

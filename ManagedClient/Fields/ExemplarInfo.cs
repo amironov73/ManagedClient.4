@@ -332,6 +332,23 @@ namespace ManagedClient.Fields
         public string Bbk { get; set; }
 
         /// <summary>
+        /// Номер по порядку (для списков).
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        [MapIgnore]
+        public int SequentialNumber { get; set; }
+
+        /// <summary>
+        /// Информация для упорядочения в списках.
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        [MapIgnore]
+        [CanBeNull]
+        public string OrderingData { get; set; }
+
+        /// <summary>
         /// Произвольные пользовательские данные.
         /// </summary>
         [XmlIgnore]
@@ -525,6 +542,12 @@ namespace ManagedClient.Fields
 
         #region Object members
 
+        /// <summary>
+        /// Returns a <see cref="System.String" />
+        /// that represents this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.String" />
+        /// that represents this instance.</returns>
         public override string ToString()
         {
             string result = string.Format

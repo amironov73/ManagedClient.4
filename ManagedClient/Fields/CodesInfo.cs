@@ -95,6 +95,9 @@ namespace ManagedClient.Fields
 
         #region Public methods
 
+        /// <summary>
+        /// Parse the specified field.
+        /// </summary>
         public static CodesInfo Parse
             (
                 RecordField field
@@ -119,6 +122,9 @@ namespace ManagedClient.Fields
             return result;
         }
 
+        /// <summary>
+        /// Transform back to field.
+        /// </summary>
         public RecordField ToField ()
         {
             RecordField result = new RecordField("900")
