@@ -70,6 +70,31 @@ namespace ManagedClient.Fields
         /// <summary>
         /// Constructor.
         /// </summary>
+        public ExemplarManager()
+            : this
+            (
+                IrbisUtilities.GetClient(),
+                null
+            )
+        {
+            
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public ExemplarManager
+            (
+                [NotNull] ManagedClient64 client
+            )
+            : this (client, null)
+        {
+            
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public ExemplarManager
             (
                 [NotNull] ManagedClient64 client,
@@ -197,6 +222,57 @@ namespace ManagedClient.Fields
         }
 
         /// <summary>
+        /// Get bibliographic description.
+        /// </summary>
+        [NotNull]
+        public string GetDescription
+            (
+                [NotNull] IrbisRecord record
+            )
+        {
+            string result = record.Description;
+            if (string.IsNullOrEmpty(result))
+            {
+                result = Client.FormatRecord
+                    (
+                        Format,
+                        record.Mfn
+                    );
+                record.Description = result;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get bibliographic description.
+        /// </summary>
+        [NotNull]
+        public string GetDescription
+            (
+                [CanBeNull] IrbisRecord record,
+                [NotNull] ExemplarInfo exemplar
+            )
+        {
+            string result;
+
+            if (record != null)
+            {
+                result = GetDescription(record);
+            }
+            else
+            {
+                result = Client.FormatRecord
+                    (
+                        Format,
+                        exemplar.Mfn
+                    );
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Extend info.
         /// </summary>
         [NotNull]
@@ -211,11 +287,12 @@ namespace ManagedClient.Fields
                 throw new ApplicationException("MFN <= 0");
             }
 
-            exemplar.Description  = Client.FormatRecord
+            exemplar.Description = GetDescription
                 (
-                    Format,
-                    exemplar.Mfn
+                    record,
+                    exemplar
                 );
+
             if (record != null)
             {
                 exemplar.Year = _GetYear(record);

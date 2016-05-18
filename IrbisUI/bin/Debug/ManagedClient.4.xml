@@ -121,6 +121,16 @@
             Exemplar manager
             </summary>
         </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.#ctor(ManagedClient.ManagedClient64)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Fields.ExemplarManager.#ctor(ManagedClient.ManagedClient64,ManagedClient.Output.AbstractOutput)">
             <summary>
             Constructor.
@@ -139,6 +149,16 @@
         <member name="M:ManagedClient.Fields.ExemplarManager.Clear">
             <summary>
             Clear the list of exemplars.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.GetDescription(ManagedClient.IrbisRecord)">
+            <summary>
+            Get bibliographic description.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.GetDescription(ManagedClient.IrbisRecord,ManagedClient.Fields.ExemplarInfo)">
+            <summary>
+            Get bibliographic description.
             </summary>
         </member>
         <member name="M:ManagedClient.Fields.ExemplarManager.Extend(ManagedClient.Fields.ExemplarInfo,ManagedClient.IrbisRecord)">

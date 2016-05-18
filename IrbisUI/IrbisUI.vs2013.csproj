@@ -64,6 +64,7 @@
     <Compile Include="ExceptionForm.Designer.cs">
       <DependentUpon>ExceptionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormUtility.cs" />
     <Compile Include="IrbisBusyForm.cs">
       <SubType>Form</SubType>
     </Compile>
