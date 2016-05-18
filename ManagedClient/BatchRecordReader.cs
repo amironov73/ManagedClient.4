@@ -61,6 +61,7 @@ namespace ManagedClient
         /// <summary>
         /// ИРБИС-клиент.
         /// </summary>
+        [NotNull]
         public ManagedClient64 Client { get; private set; }
 
         #endregion
@@ -72,7 +73,7 @@ namespace ManagedClient
         /// </summary>
         public BatchRecordReader
             (
-                ManagedClient64 client
+                [NotNull] ManagedClient64 client
             )
             : this 
                 (
@@ -87,7 +88,7 @@ namespace ManagedClient
         /// </summary>
         public BatchRecordReader
             (
-                ManagedClient64 client,
+                [NotNull] ManagedClient64 client,
                 int batchSize
             )
         {
@@ -99,6 +100,7 @@ namespace ManagedClient
             {
                 throw new ArgumentOutOfRangeException("batchSize");
             }
+
             Client = client;
             BatchSize = batchSize;
             IEnumerable<int> range = Enumerable.Range(1, Client.GetMaxMfn());
@@ -108,10 +110,11 @@ namespace ManagedClient
         /// <summary>
         /// Конструктор.
         /// </summary>
+        [StringFormatMethod("format")]
         public BatchRecordReader
             (
-                ManagedClient64 client,
-                string format,
+                [NotNull] ManagedClient64 client,
+                [NotNull] string format,
                 params object[] args
             )
         {
@@ -123,6 +126,7 @@ namespace ManagedClient
             {
                 throw new ArgumentNullException("format");
             }
+
             Client = client;
             BatchSize = DefaultBatchSize;
             int[] found = Client.Search(format, args);
@@ -134,7 +138,7 @@ namespace ManagedClient
         /// </summary>
         public BatchRecordReader
             (
-                ManagedClient64 client,
+                [NotNull] ManagedClient64 client,
                 int batchSize,
                 IEnumerable<int> range
             )
@@ -151,6 +155,7 @@ namespace ManagedClient
             {
                 throw new ArgumentNullException("range");
             }
+
             Client = client;
             BatchSize = batchSize;
             _InitializePackages(range);
@@ -161,8 +166,8 @@ namespace ManagedClient
         /// </summary>
         public BatchRecordReader
             (
-                ManagedClient64 client,
-                IEnumerable<int> range
+                [NotNull] ManagedClient64 client,
+                [NotNull] IEnumerable<int> range
             )
             : this
                 (
@@ -216,6 +221,7 @@ namespace ManagedClient
         /// <summary>
         /// Считывает все записи сразу.
         /// </summary>
+        [NotNull]
         public List<IrbisRecord> ReadAll()
         {
             List<IrbisRecord> result = new List<IrbisRecord>();

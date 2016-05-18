@@ -1,4 +1,4 @@
-﻿/* IniFile.cs
+﻿/* IniFile.cs -- INI-файл
  */
 
 #region Using directives
@@ -9,13 +9,16 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient
 {
     /// <summary>
-    /// 
+    /// INI-файл.
     /// </summary>
+    [PublicAPI]
     [Serializable]
     [ClassInterface(ClassInterfaceType.None)]
     public class IniFile
@@ -84,16 +87,53 @@ namespace ManagedClient
             {
                 return Get(key, default(T));
             }
+
+            public void Save
+                (
+                    TextWriter writer
+                )
+            {
+                if (!string.IsNullOrEmpty(Name))
+                {
+                    writer.WriteLine("[{0}]", Name);
+                }
+                foreach (KeyValuePair<string, string> pair in this)
+                {
+                    writer.WriteLine
+                        (
+                            "{0}={1}",
+                            pair.Key,
+                            pair.Value
+                        );
+                }
+            }
         }
 
+        /// <summary>
+        /// Имя INI-файла.
+        /// </summary>
+        [NotNull]
         public string FileName { get; set; }
 
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
         public IniFile()
-            : base(StringComparer.CurrentCultureIgnoreCase)
+            : base
+            (
+                StringComparer.CurrentCultureIgnoreCase
+            )
         {
         }
 
-        public string this[string sectionName, string parameterName]
+        /// <summary>
+        /// Индексатор.
+        /// </summary>
+        public string this
+            [
+                string sectionName,
+                string parameterName
+            ]
         {
             get { return GetString(sectionName, parameterName, null); }
         }
@@ -102,6 +142,22 @@ namespace ManagedClient
         {
             Section result;
             TryGetValue(name, out result);
+            return result;
+        }
+
+        public Section GetOrCreateSection
+            (
+                string name
+            )
+        {
+            Section result = GetSection(name);
+            
+            if (result == null)
+            {
+                result = new Section(name);
+                Add(name, result);
+            }
+
             return result;
         }
 
@@ -239,6 +295,39 @@ namespace ManagedClient
 
             }
             return this;
+        }
+
+        public void Save
+            (
+                [NotNull] TextWriter writer
+            )
+        {
+            bool first = true;
+            foreach (KeyValuePair<string, Section> pair in this)
+            {
+                if (!first)
+                {
+                    writer.WriteLine();
+                }
+                pair.Value.Save(writer);
+                first = false;
+            }
+        }
+
+        public void Save
+            (
+                [NotNull] string fileName,
+                [CanBeNull] Encoding encoding
+            )
+        {
+            if (encoding == null)
+            {
+                encoding = Encoding.UTF8;
+            }
+            using (StreamWriter writer = new StreamWriter(fileName, false, encoding))
+            {
+                Save(writer);
+            }
         }
     }
 }

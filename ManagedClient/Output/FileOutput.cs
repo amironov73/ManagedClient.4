@@ -155,14 +155,29 @@ namespace ManagedClient.Output
 
         #region AbstractOutput members
 
+        /// <summary>
+        /// Флаг: был ли вывод с помощью WriteError.
+        /// </summary>
+        /// <value><c>true</c> if [have error]; otherwise, <c>false</c>.</value>
         public override bool HaveError { get; set; }
 
+        /// <summary>
+        /// Очищает вывод, например, окно.
+        /// Надо переопределить в потомке.
+        /// </summary>
+        /// <returns>AbstractOutput.</returns>
         public override AbstractOutput Clear()
         {
             // TODO: implement properly
             return this;
         }
 
+        /// <summary>
+        /// Конфигурирование объекта.
+        /// Надо переопределить в потомке.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>AbstractOutput.</returns>
         public override AbstractOutput Configure
             (
                 string configuration
@@ -173,6 +188,13 @@ namespace ManagedClient.Output
             return this;
         }
 
+        /// <summary>
+        /// Метод, который нужно переопределить
+        /// в потомке.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <returns>Возвращает сам объект
+        /// вывода.</returns>
         public override AbstractOutput Write
             (
                 string text
@@ -186,6 +208,12 @@ namespace ManagedClient.Output
             return this;
         }
 
+        /// <summary>
+        /// Выводит ошибку. Например, красным цветом.
+        /// Надо переопределить в потомке.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <returns>AbstractOutput.</returns>
         public override AbstractOutput WriteError
             (
                 string text
@@ -204,6 +232,9 @@ namespace ManagedClient.Output
 
         #region IDisposable members
 
+        /// <summary>
+        /// Disposes this instance.
+        /// </summary>
         public override void Dispose()
         {
             if (_writer != null)

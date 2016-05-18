@@ -5,6 +5,7 @@
 
 using System;
 using System.IO;
+using JetBrains.Annotations;
 
 #endregion
 
@@ -17,6 +18,9 @@ namespace ManagedClient
     {
         #region Public methods
 
+        /// <summary>
+        /// Converts network-ordered integer to host-ordered one.
+        /// </summary>
         public static void NetworkToHost16
             (
                 byte[] array, 
@@ -28,6 +32,9 @@ namespace ManagedClient
             array[offset + 1] = temp;
         }
 
+        /// <summary>
+        /// Converts network-ordered integer to host-ordered one.
+        /// </summary>
         public static void NetworkToHost32
             (
                 byte[] array, 
@@ -42,6 +49,9 @@ namespace ManagedClient
             array[offset + 2] = temp2;
         }
 
+        /// <summary>
+        /// Converts network-ordered integer to host-ordered one.
+        /// </summary>
         public static void NetworkToHost64
             (
                 byte[] array, 
@@ -52,6 +62,9 @@ namespace ManagedClient
             NetworkToHost32(array,offset+4);
         }
 
+        /// <summary>
+        /// Reads network-ordered integer from the stream.
+        /// </summary>
         public static short ReadInt16Network
             (
                 this Stream stream
@@ -69,6 +82,9 @@ namespace ManagedClient
             return result;
         }
 
+        /// <summary>
+        /// Reads network-ordered integer from the stream.
+        /// </summary>
         public static short ReadInt16Host
             (
                 this Stream stream
@@ -85,6 +101,9 @@ namespace ManagedClient
             return result;
         }
 
+        /// <summary>
+        /// Reads network-ordered integer from the stream.
+        /// </summary>
         public static int ReadInt32Network 
             ( 
                 this Stream stream 
@@ -102,6 +121,9 @@ namespace ManagedClient
             return result;
         }
 
+        /// <summary>
+        /// Reads network-ordered integer from the stream.
+        /// </summary>
         public static int ReadInt32Host
             (
                 this Stream stream
@@ -115,10 +137,13 @@ namespace ManagedClient
                 throw new IOException();
             }
             int result = BitConverter.ToInt32(buffer, 0);
+
             return result;
         }
 
-
+        /// <summary>
+        /// Reads network-ordered integer from the stream.
+        /// </summary>
         public static long ReadInt64Network 
             ( 
                 this Stream stream 
@@ -136,6 +161,9 @@ namespace ManagedClient
             return result;
         }
 
+        /// <summary>
+        /// Reads network-ordered integer from the stream.
+        /// </summary>
         public static long ReadInt64Host
             (
                 this Stream stream
@@ -152,6 +180,9 @@ namespace ManagedClient
             return result;
         }
 
+        /// <summary>
+        /// Read some bytes from the stream.
+        /// </summary>
         public static byte[] ReadBytes 
             ( 
                 this Stream stream, 
@@ -169,6 +200,44 @@ namespace ManagedClient
                 Array.Resize ( ref result, read );
             }
             return result;
+        }
+
+        /// <summary>
+        /// Reads string from the stream.
+        /// </summary>
+        [CanBeNull]
+        public static string ReadNullableString
+            (
+                [NotNull] this BinaryReader reader
+            )
+        {
+            bool flag = reader.ReadBoolean();
+            return flag
+                ? reader.ReadString()
+                : null;
+        }
+
+        /// <summary>
+        /// Writes specified text to the stream.
+        /// </summary>
+        [NotNull]
+        public static BinaryWriter WriteNullable
+            (
+                [NotNull] this BinaryWriter writer,
+                [CanBeNull] string text
+            )
+        {
+            if (text != null)
+            {
+                writer.Write(true);
+                writer.Write(text);
+            }
+            else
+            {
+                writer.Write(false);
+            }
+
+            return writer;
         }
 
         #endregion

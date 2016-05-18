@@ -116,6 +116,127 @@
             Смешаны ли в тексте латиница с кириллицей?
             </summary>
         </member>
+        <member name="T:ManagedClient.Fields.ExemplarManager">
+            <summary>
+            Exemplar manager
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.#ctor(ManagedClient.ManagedClient64,ManagedClient.Output.AbstractOutput)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.Add(ManagedClient.Fields.ExemplarInfo)">
+            <summary>
+            Add given exemplar to the collection.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.AddRange(System.Collections.Generic.IEnumerable{ManagedClient.Fields.ExemplarInfo})">
+            <summary>
+            Add many.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.Clear">
+            <summary>
+            Clear the list of exemplars.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.Extend(ManagedClient.Fields.ExemplarInfo,ManagedClient.IrbisRecord)">
+            <summary>
+            Extend info.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.Find(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.FromRecord(ManagedClient.IrbisRecord)">
+            <summary>
+            Parses the record for exemplars.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.IsNewspaper(ManagedClient.IrbisRecord)">
+            <summary>
+            Determines whether the record is newspaper/magazine
+            or not.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.ListPlaces">
+            <summary>
+            List library places.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.LoadFromFile(System.String)">
+            <summary>
+            Load from file.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.Read(System.String)">
+            <summary>
+            Reads exemplar for given number.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.ReadConfiguration(System.String,System.Text.Encoding)">
+            <summary>
+            Read configuration.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.SaveConfiguration(System.String,System.Text.Encoding)">
+            <summary>
+            Save the configuration.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.ReadRange(System.String,System.String,System.Object[])">
+            <summary>
+            Read many.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.Remove(System.String)">
+            <summary>
+            Remove
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.SaveToFile(System.String)">
+            <summary>
+            Save to file
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.WriteLine(System.String,System.Object[])">
+            <summary>
+            Write line.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.WriteDelimiter">
+            <summary>
+            Write delimiter.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.ExemplarManager.Client">
+            <summary>
+            Client.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.ExemplarManager.Format">
+            <summary>
+            Brief format name.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.ExemplarManager.List">
+            <summary>
+            List of exemplars.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.ExemplarManager.Output">
+            <summary>
+            Output.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.ExemplarManager.Prefix">
+            <summary>
+            Prefix.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Output.AbstractOutput">
             <summary>
             Абстрактный объект текстового вывода. 
@@ -603,6 +724,46 @@
             <param name="first">The first.</param>
             <param name="second">The second.</param>
             <returns>System.Int32.</returns>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarInfo.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Read one instance from the given stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarInfo.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Save this instance to the given stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarInfo.SaveToStream(System.Collections.Generic.IEnumerable{ManagedClient.Fields.ExemplarInfo},System.IO.Stream)">
+            <summary>
+            Save bunch of exemplars to the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarInfo.SaveToFile(System.Collections.Generic.IEnumerable{ManagedClient.Fields.ExemplarInfo},System.String)">
+            <summary>
+            Save bunch of exemplars to the file.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarInfo.SaveToMemory(System.Collections.Generic.IEnumerable{ManagedClient.Fields.ExemplarInfo})">
+            <summary>
+            Save bunch of exemplars to memory.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarInfo.ReadFromStream(System.IO.Stream)">
+            <summary>
+            Read bunch of exemplars from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarInfo.ReadFromMemory(System.Byte[])">
+            <summary>
+            Read bunch of exemplars from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.ExemplarInfo.ReadFromFile(System.String)">
+            <summary>
+            Read bunch of exemplars from the file.
+            </summary>
         </member>
         <member name="M:ManagedClient.Fields.ExemplarInfo.ToString">
             <summary>
@@ -1162,7 +1323,22 @@
         </member>
         <member name="T:ManagedClient.IniFile">
             <summary>
-            
+            INI-файл.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IniFile.#ctor">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IniFile.FileName">
+            <summary>
+            Имя INI-файла.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IniFile.Item(System.String,System.String)">
+            <summary>
+            Индексатор.
             </summary>
         </member>
         <member name="T:ManagedClient.IniFile.Section">
@@ -2104,6 +2280,66 @@
             
             </summary>
         </member>
+        <member name="M:ManagedClient.IrbisIOUtils.NetworkToHost16(System.Byte[],System.Int32)">
+            <summary>
+            Converts network-ordered integer to host-ordered one.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.NetworkToHost32(System.Byte[],System.Int32)">
+            <summary>
+            Converts network-ordered integer to host-ordered one.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.NetworkToHost64(System.Byte[],System.Int32)">
+            <summary>
+            Converts network-ordered integer to host-ordered one.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadInt16Network(System.IO.Stream)">
+            <summary>
+            Reads network-ordered integer from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadInt16Host(System.IO.Stream)">
+            <summary>
+            Reads network-ordered integer from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadInt32Network(System.IO.Stream)">
+            <summary>
+            Reads network-ordered integer from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadInt32Host(System.IO.Stream)">
+            <summary>
+            Reads network-ordered integer from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadInt64Network(System.IO.Stream)">
+            <summary>
+            Reads network-ordered integer from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadInt64Host(System.IO.Stream)">
+            <summary>
+            Reads network-ordered integer from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadBytes(System.IO.Stream,System.Int32)">
+            <summary>
+            Read some bytes from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadNullableString(System.IO.BinaryReader)">
+            <summary>
+            Reads string from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.WriteNullable(System.IO.BinaryWriter,System.String)">
+            <summary>
+            Writes specified text to the stream.
+            </summary>
+        </member>
         <member name="T:ManagedClient.IrbisLine">
             <summary>
             One line in worksheet
@@ -2413,6 +2649,38 @@
             Консольный вывод.
             </summary>
         </member>
+        <member name="M:ManagedClient.Output.ConsoleOutput.Clear">
+            <summary>
+            Очищает вывод, например, окно.
+            Надо переопределить в потомке.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Output.ConsoleOutput.Configure(System.String)">
+            <summary>
+            Конфигурирование объекта.
+            Надо переопределить в потомке.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Output.ConsoleOutput.Write(System.String)">
+            <summary>
+            Метод, который нужно переопределить
+            в потомке.
+            </summary>
+            <param name="text">The text.</param>
+            <returns>Возвращает сам объект
+            вывода.</returns>
+        </member>
+        <member name="M:ManagedClient.Output.ConsoleOutput.WriteError(System.String)">
+            <summary>
+            Выводит ошибку. Например, красным цветом.
+            Надо переопределить в потомке.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Output.ConsoleOutput.HaveError">
+            <summary>
+            Флаг: был ли вывод с помощью WriteError.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Output.DummyOutput">
             <summary>
             Выходной поток, который не даёт закрыться
@@ -2424,9 +2692,41 @@
             Конструктор.
             </summary>
         </member>
+        <member name="M:ManagedClient.Output.DummyOutput.Clear">
+            <summary>
+            Очищает вывод, например, окно.
+            Надо переопределить в потомке.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Output.DummyOutput.Configure(System.String)">
+            <summary>
+            Конфигурирование объекта.
+            Надо переопределить в потомке.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Output.DummyOutput.Write(System.String)">
+            <summary>
+            Метод, который нужно переопределить
+            в потомке.
+            </summary>
+            <param name="text">The text.</param>
+            <returns>Возвращает сам объект
+            вывода.</returns>
+        </member>
+        <member name="M:ManagedClient.Output.DummyOutput.WriteError(System.String)">
+            <summary>
+            Выводит ошибку. Например, красным цветом.
+            Надо переопределить в потомке.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Output.DummyOutput.Inner">
             <summary>
             Внутренний поток.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Output.DummyOutput.HaveError">
+            <summary>
+            Флаг: был ли вывод с помощью WriteError.
             </summary>
         </member>
         <member name="T:ManagedClient.Output.FileOutput">
@@ -2469,10 +2769,53 @@
             Открытие файла.
             </summary>
         </member>
+        <member name="M:ManagedClient.Output.FileOutput.Clear">
+            <summary>
+            Очищает вывод, например, окно.
+            Надо переопределить в потомке.
+            </summary>
+            <returns>AbstractOutput.</returns>
+        </member>
+        <member name="M:ManagedClient.Output.FileOutput.Configure(System.String)">
+            <summary>
+            Конфигурирование объекта.
+            Надо переопределить в потомке.
+            </summary>
+            <param name="configuration">The configuration.</param>
+            <returns>AbstractOutput.</returns>
+        </member>
+        <member name="M:ManagedClient.Output.FileOutput.Write(System.String)">
+            <summary>
+            Метод, который нужно переопределить
+            в потомке.
+            </summary>
+            <param name="text">The text.</param>
+            <returns>Возвращает сам объект
+            вывода.</returns>
+        </member>
+        <member name="M:ManagedClient.Output.FileOutput.WriteError(System.String)">
+            <summary>
+            Выводит ошибку. Например, красным цветом.
+            Надо переопределить в потомке.
+            </summary>
+            <param name="text">The text.</param>
+            <returns>AbstractOutput.</returns>
+        </member>
+        <member name="M:ManagedClient.Output.FileOutput.Dispose">
+            <summary>
+            Disposes this instance.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Output.FileOutput.FileName">
             <summary>
             Имя файла.
             </summary>
+        </member>
+        <member name="P:ManagedClient.Output.FileOutput.HaveError">
+            <summary>
+            Флаг: был ли вывод с помощью WriteError.
+            </summary>
+            <value><c>true</c> if [have error]; otherwise, <c>false</c>.</value>
         </member>
         <member name="T:ManagedClient.Output.NullOutput">
             <summary>
@@ -2545,6 +2888,11 @@
         <member name="M:ManagedClient.Output.TeeOutput.WriteError(System.String)">
             <summary>
             Вывод.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Output.TeeOutput.Dispose">
+            <summary>
+            Disposes this instance.
             </summary>
         </member>
         <member name="P:ManagedClient.Output.TeeOutput.Output">
@@ -11736,6 +12084,14 @@
             (с целью сортировки по возрастанию номеров).
             </summary>
         </member>
+        <member name="M:ManagedClient.Magazines.MagazineIssueInfo.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/>
+            that represents this instance.
+            </summary>
+            <returns>A <see cref="T:System.String"/>
+            that represents this instance.</returns>
+        </member>
         <member name="P:ManagedClient.Magazines.MagazineIssueInfo.Mfn">
             <summary>
             MFN записи.
@@ -12961,6 +13317,11 @@
             Данные о редактировании записи (поле 907).
             </summary>
         </member>
+        <member name="F:ManagedClient.Fields.RevisionInfo.KnownCodes">
+            <summary>
+            Известные коды подполей.
+            </summary>
+        </member>
         <member name="F:ManagedClient.Fields.RevisionInfo.Tag">
             <summary>
             Тег поля.
@@ -12986,6 +13347,48 @@
             Превращение обратно в поле.
             </summary>
         </member>
+        <member name="M:ManagedClient.Fields.RevisionInfo.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Save to stream
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.RevisionInfo.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Read from stream.
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Fields.RevisionInfo.SaveToStream(System.Collections.Generic.IEnumerable{ManagedClient.Fields.RevisionInfo},System.IO.Stream)">
+            <summary>
+            Save bunch to the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.RevisionInfo.SaveToFile(System.Collections.Generic.IEnumerable{ManagedClient.Fields.RevisionInfo},System.String)">
+            <summary>
+            Save bunch to the file.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.RevisionInfo.SaveToMemory(System.Collections.Generic.IEnumerable{ManagedClient.Fields.RevisionInfo})">
+            <summary>
+            Save bunch to memory.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.RevisionInfo.ReadFromStream(System.IO.Stream)">
+            <summary>
+            Read bunch from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.RevisionInfo.ReadFromMemory(System.Byte[])">
+            <summary>
+            Read bunch from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Fields.RevisionInfo.ReadFromFile(System.String)">
+            <summary>
+            Read bunch from the file.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Fields.RevisionInfo.ToString">
             <summary>
             Returns a <see cref="T:System.String"/>
@@ -13007,6 +13410,11 @@
         <member name="P:ManagedClient.Fields.RevisionInfo.Name">
             <summary>
             ФИО оператора. Подполе b.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.RevisionInfo.UserData">
+            <summary>
+            Arbitrary user data.
             </summary>
         </member>
         <member name="T:ManagedClient.SearchPostingInfo">
@@ -13161,6 +13569,16 @@
         <member name="P:ManagedClient.SubField.UserData">
             <summary>
             Произвольные пользовательские данные.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.Transliterator">
+            <summary>
+            Транслитерируем кириллицу в латиницу.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Transliterator.Transliterate(System.String)">
+            <summary>
+            Transliterates the specified text.
             </summary>
         </member>
         <member name="T:ManagedClient.Utilities">

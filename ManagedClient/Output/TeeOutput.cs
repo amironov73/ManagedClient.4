@@ -143,6 +143,9 @@ namespace ManagedClient.Output
 
         #region IDisposable members
 
+        /// <summary>
+        /// Disposes this instance.
+        /// </summary>
         public override void Dispose()
         {
             foreach (AbstractOutput output in Output)

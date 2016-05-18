@@ -20,8 +20,15 @@ namespace ManagedClient.Output
     {
         #region AbstractOutput members
 
+        /// <summary>
+        /// Флаг: был ли вывод с помощью WriteError.
+        /// </summary>
         public override bool HaveError { get; set; }
 
+        /// <summary>
+        /// Очищает вывод, например, окно.
+        /// Надо переопределить в потомке.
+        /// </summary>
         public override AbstractOutput Clear()
         {
             HaveError = false;
@@ -29,6 +36,10 @@ namespace ManagedClient.Output
             return this;
         }
 
+        /// <summary>
+        /// Конфигурирование объекта.
+        /// Надо переопределить в потомке.
+        /// </summary>
         public override AbstractOutput Configure
             (
                 string configuration
@@ -38,6 +49,13 @@ namespace ManagedClient.Output
             return this;
         }
 
+        /// <summary>
+        /// Метод, который нужно переопределить
+        /// в потомке.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <returns>Возвращает сам объект
+        /// вывода.</returns>
         public override AbstractOutput Write
             (
                 string text
@@ -47,6 +65,10 @@ namespace ManagedClient.Output
             return this;
         }
 
+        /// <summary>
+        /// Выводит ошибку. Например, красным цветом.
+        /// Надо переопределить в потомке.
+        /// </summary>
         public override AbstractOutput WriteError
             (
                 string text

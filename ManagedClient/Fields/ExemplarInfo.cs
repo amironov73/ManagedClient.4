@@ -4,6 +4,8 @@
 #region Using directives
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 
@@ -356,7 +358,7 @@ namespace ManagedClient.Fields
         [MapIgnore]
         public object UserData
         {
-            get { return _userData; } 
+            get { return _userData; }
             set { _userData = value; }
         }
 
@@ -389,33 +391,33 @@ namespace ManagedClient.Fields
 
             ExemplarInfo result = new ExemplarInfo
                 {
-                    Status = field.GetSubFieldText ( 'a', 0 ),
-                    Number = field.GetSubFieldText ( 'b', 0 ),
-                    Date = field.GetSubFieldText ( 'c', 0 ),
-                    Place = field.GetSubFieldText ( 'd', 0 ),
-                    Collection = field.GetSubFieldText ( 'q', 0 ),
-                    ShelfIndex = field.GetSubFieldText ( 'r', 0 ),
-                    Price = field.GetSubFieldText ( 'e', 0 ),
-                    Barcode = field.GetSubFieldText ( 'h', 0 ),
-                    Amount = field.GetSubFieldText ( '1', 0 ),
-                    Purpose = field.GetSubFieldText ( 't', 0 ),
-                    Coefficient = field.GetSubFieldText ( '=', 0 ),
-                    OffBalance = field.GetSubFieldText ( '4', 0 ),
-                    KsuNumber1 = field.GetSubFieldText ( 'u', 0 ),
-                    ActNumber1 = field.GetSubFieldText ( 'y', 0 ),
-                    Channel = field.GetSubFieldText ( 'f', 0 ),
-                    OnHand = field.GetSubFieldText ( '2', 0 ),
-                    ActNumber2 = field.GetSubFieldText ( 'v', 0 ),
-                    WriteOff = field.GetSubFieldText ( 'x', 0 ),
-                    Completion = field.GetSubFieldText ( 'k', 0 ),
-                    ActNumber3 = field.GetSubFieldText ( 'w', 0 ),
-                    Moving = field.GetSubFieldText ( 'z', 0 ),
-                    NewPlace = field.GetSubFieldText ( 'm', 0 ),
-                    CheckedDate = field.GetSubFieldText ( 's', 0 ),
-                    CheckedAmount = field.GetSubFieldText ( '0', 0 ),
-                    RealPlace = field.GetSubFieldText ( '!', 0 ),
+                    Status = field.GetSubFieldText('a', 0),
+                    Number = field.GetSubFieldText('b', 0),
+                    Date = field.GetSubFieldText('c', 0),
+                    Place = field.GetSubFieldText('d', 0),
+                    Collection = field.GetSubFieldText('q', 0),
+                    ShelfIndex = field.GetSubFieldText('r', 0),
+                    Price = field.GetSubFieldText('e', 0),
+                    Barcode = field.GetSubFieldText('h', 0),
+                    Amount = field.GetSubFieldText('1', 0),
+                    Purpose = field.GetSubFieldText('t', 0),
+                    Coefficient = field.GetSubFieldText('=', 0),
+                    OffBalance = field.GetSubFieldText('4', 0),
+                    KsuNumber1 = field.GetSubFieldText('u', 0),
+                    ActNumber1 = field.GetSubFieldText('y', 0),
+                    Channel = field.GetSubFieldText('f', 0),
+                    OnHand = field.GetSubFieldText('2', 0),
+                    ActNumber2 = field.GetSubFieldText('v', 0),
+                    WriteOff = field.GetSubFieldText('x', 0),
+                    Completion = field.GetSubFieldText('k', 0),
+                    ActNumber3 = field.GetSubFieldText('w', 0),
+                    Moving = field.GetSubFieldText('z', 0),
+                    NewPlace = field.GetSubFieldText('m', 0),
+                    CheckedDate = field.GetSubFieldText('s', 0),
+                    CheckedAmount = field.GetSubFieldText('0', 0),
+                    RealPlace = field.GetSubFieldText('!', 0),
                     BindingIndex = field.GetSubFieldText('p', 0),
-                    BindingNumber = field.GetSubFieldText('i',0),
+                    BindingNumber = field.GetSubFieldText('i', 0),
                     OtherSubFields = field.SubFields
                         .Where(sub => KnownCodes
                             .IndexOf(char.ToLower(sub.Code)) < 0)
@@ -479,36 +481,36 @@ namespace ManagedClient.Fields
         /// Преобразование экземпляра обратно в поле записи.
         /// </summary>
         [JetBrains.Annotations.NotNull]
-        public RecordField ToField ()
+        public RecordField ToField()
         {
             RecordField result = new RecordField("910")
-                .AddNonEmptySubField ( 'a', Status )
-                .AddNonEmptySubField ( 'b', Number )
-                .AddNonEmptySubField ( 'c', Date )
-                .AddNonEmptySubField ( 'd', Place )
-                .AddNonEmptySubField ( 'q', Collection )
-                .AddNonEmptySubField ( 'r', ShelfIndex )
-                .AddNonEmptySubField ( 'e', Price )
-                .AddNonEmptySubField ( 'h', Barcode )
-                .AddNonEmptySubField ( '1', Amount )
-                .AddNonEmptySubField ( 't', Purpose )
-                .AddNonEmptySubField ( '=', Coefficient )
-                .AddNonEmptySubField ( '4', OffBalance )
-                .AddNonEmptySubField ( 'u', KsuNumber1 )
-                .AddNonEmptySubField ( 'y', ActNumber1 )
-                .AddNonEmptySubField ( 'f', Channel )
-                .AddNonEmptySubField ( '2', OnHand )
-                .AddNonEmptySubField ( 'v', ActNumber2 )
-                .AddNonEmptySubField ( 'x', WriteOff )
-                .AddNonEmptySubField ( 'k', Completion )
-                .AddNonEmptySubField ( 'w', ActNumber3 )
-                .AddNonEmptySubField ( 'z', Moving )
-                .AddNonEmptySubField ( 'm', NewPlace )
-                .AddNonEmptySubField ( 's', CheckedDate )
-                .AddNonEmptySubField ( '0', CheckedAmount )
-                .AddNonEmptySubField ( '!', RealPlace )
-                .AddNonEmptySubField ( 'p', BindingIndex )
-                .AddNonEmptySubField ( 'i', BindingNumber );
+                .AddNonEmptySubField('a', Status)
+                .AddNonEmptySubField('b', Number)
+                .AddNonEmptySubField('c', Date)
+                .AddNonEmptySubField('d', Place)
+                .AddNonEmptySubField('q', Collection)
+                .AddNonEmptySubField('r', ShelfIndex)
+                .AddNonEmptySubField('e', Price)
+                .AddNonEmptySubField('h', Barcode)
+                .AddNonEmptySubField('1', Amount)
+                .AddNonEmptySubField('t', Purpose)
+                .AddNonEmptySubField('=', Coefficient)
+                .AddNonEmptySubField('4', OffBalance)
+                .AddNonEmptySubField('u', KsuNumber1)
+                .AddNonEmptySubField('y', ActNumber1)
+                .AddNonEmptySubField('f', Channel)
+                .AddNonEmptySubField('2', OnHand)
+                .AddNonEmptySubField('v', ActNumber2)
+                .AddNonEmptySubField('x', WriteOff)
+                .AddNonEmptySubField('k', Completion)
+                .AddNonEmptySubField('w', ActNumber3)
+                .AddNonEmptySubField('z', Moving)
+                .AddNonEmptySubField('m', NewPlace)
+                .AddNonEmptySubField('s', CheckedDate)
+                .AddNonEmptySubField('0', CheckedAmount)
+                .AddNonEmptySubField('!', RealPlace)
+                .AddNonEmptySubField('p', BindingIndex)
+                .AddNonEmptySubField('i', BindingNumber);
 
             if (OtherSubFields != null)
             {
@@ -538,6 +540,190 @@ namespace ManagedClient.Fields
             return one.CompareTo(two);
         }
 
+        /// <summary>
+        /// Read one instance from the given stream.
+        /// </summary>
+        public static ExemplarInfo ReadFromStream
+            (
+                BinaryReader reader
+            )
+        {
+            ExemplarInfo result = new ExemplarInfo
+            {
+                Status = reader.ReadNullableString(),
+                Number = reader.ReadNullableString(),
+                Date = reader.ReadNullableString(),
+                Place = reader.ReadNullableString(),
+                Collection = reader.ReadNullableString(),
+                ShelfIndex = reader.ReadNullableString(),
+                Price = reader.ReadNullableString(),
+                Barcode = reader.ReadNullableString(),
+                Amount = reader.ReadNullableString(),
+                Purpose = reader.ReadNullableString(),
+                Coefficient = reader.ReadNullableString(),
+                OffBalance = reader.ReadNullableString(),
+                KsuNumber1 = reader.ReadNullableString(),
+                ActNumber1 = reader.ReadNullableString(),
+                Channel = reader.ReadNullableString(),
+                OnHand = reader.ReadNullableString(),
+                ActNumber2 = reader.ReadNullableString(),
+                WriteOff = reader.ReadNullableString(),
+                Completion = reader.ReadNullableString(),
+                ActNumber3 = reader.ReadNullableString(),
+                Moving = reader.ReadNullableString(),
+                NewPlace = reader.ReadNullableString(),
+                CheckedDate = reader.ReadNullableString(),
+                CheckedAmount = reader.ReadNullableString(),
+                RealPlace = reader.ReadNullableString(),
+                BindingIndex = reader.ReadNullableString(),
+                BindingNumber = reader.ReadNullableString(),
+                Year = reader.ReadNullableString(),
+                Description = reader.ReadNullableString(),
+                Bbk = reader.ReadNullableString(),
+                OrderingData = reader.ReadNullableString(),
+                Mfn = reader.ReadInt32()
+            };
+
+            return result;
+        }
+
+        /// <summary>
+        /// Save this instance to the given stream.
+        /// </summary>
+        public void SaveToStream
+            (
+                BinaryWriter writer
+            )
+        {
+            writer
+                .WriteNullable(Status)
+                .WriteNullable(Number)
+                .WriteNullable(Date)
+                .WriteNullable(Place)
+                .WriteNullable(Collection)
+                .WriteNullable(ShelfIndex)
+                .WriteNullable(Price)
+                .WriteNullable(Barcode)
+                .WriteNullable(Amount)
+                .WriteNullable(Purpose)
+                .WriteNullable(Coefficient)
+                .WriteNullable(OffBalance)
+                .WriteNullable(KsuNumber1)
+                .WriteNullable(ActNumber1)
+                .WriteNullable(Channel)
+                .WriteNullable(OnHand)
+                .WriteNullable(ActNumber2)
+                .WriteNullable(WriteOff)
+                .WriteNullable(Completion)
+                .WriteNullable(ActNumber3)
+                .WriteNullable(Moving)
+                .WriteNullable(NewPlace)
+                .WriteNullable(CheckedDate)
+                .WriteNullable(CheckedAmount)
+                .WriteNullable(RealPlace)
+                .WriteNullable(BindingIndex)
+                .WriteNullable(BindingNumber)
+                .WriteNullable(Year)
+                .WriteNullable(Description)
+                .WriteNullable(Bbk)
+                .WriteNullable(OrderingData);
+            writer.Write(Mfn);
+        }
+
+        /// <summary>
+        /// Save bunch of exemplars to the stream.
+        /// </summary>
+        public static void SaveToStream
+            (
+                [JetBrains.Annotations.NotNull] IEnumerable<ExemplarInfo> exemplars,
+                [JetBrains.Annotations.NotNull] Stream stream
+            )
+        {
+            BinaryWriter writer = new BinaryWriter(stream);
+            foreach (ExemplarInfo exemplar in exemplars)
+            {
+                exemplar.SaveToStream(writer);
+            }
+        }
+
+        /// <summary>
+        /// Save bunch of exemplars to the file.
+        /// </summary>
+        public static void SaveToFile
+            (
+                [JetBrains.Annotations.NotNull] IEnumerable<ExemplarInfo> exemplars,
+                [JetBrains.Annotations.NotNull] string fileName
+            )
+        {
+            using (Stream stream = File.Create(fileName))
+            {
+                SaveToStream(exemplars, stream);
+            }
+        }
+
+        /// <summary>
+        /// Save bunch of exemplars to memory.
+        /// </summary>
+        public static byte[] SaveToMemory
+            (
+                [JetBrains.Annotations.NotNull] IEnumerable<ExemplarInfo> exemplars
+            )
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                SaveToStream(exemplars, stream);
+                return stream.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Read bunch of exemplars from the stream.
+        /// </summary>
+        public static List<ExemplarInfo> ReadFromStream
+            (
+                [JetBrains.Annotations.NotNull] Stream stream
+            )
+        {
+            BinaryReader reader = new BinaryReader(stream);
+            List<ExemplarInfo> result = new List<ExemplarInfo>();
+            
+            while (reader.PeekChar() >= 0)
+            {
+                ExemplarInfo exemplar = ReadFromStream(reader);
+                result.Add(exemplar);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Read bunch of exemplars from the stream.
+        /// </summary>
+        public static List<ExemplarInfo> ReadFromMemory
+            (
+                [JetBrains.Annotations.NotNull] byte[] bytes
+            )
+        {
+            using (Stream stream = new MemoryStream(bytes))
+            {
+                return ReadFromStream(stream);
+            }
+        }
+
+        /// <summary>
+        /// Read bunch of exemplars from the file.
+        /// </summary>
+        public static List<ExemplarInfo> ReadFromFile
+            (
+                [JetBrains.Annotations.NotNull] string fileName
+            )
+        {
+            using (Stream stream = File.OpenRead(fileName))
+            {
+                return ReadFromStream(stream);
+            }
+        }
+
         #endregion
 
         #region Object members
@@ -560,7 +746,7 @@ namespace ManagedClient.Fields
 
             if (!string.IsNullOrEmpty(BindingNumber))
             {
-                result = result + " <подшивка " +  BindingNumber + ">";
+                result = result + " <подшивка " + BindingNumber + ">";
             }
 
             return result;
