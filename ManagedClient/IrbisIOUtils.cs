@@ -240,6 +240,57 @@ namespace ManagedClient
             return writer;
         }
 
+        /// <summary>
+        /// Write 32-bit integer in packed format.
+        /// </summary>
+        /// <remarks>Borrowed from
+        /// http://referencesource.microsoft.com/
+        /// </remarks>
+        public static BinaryWriter WritePackedInt32
+            (
+                [NotNull] this BinaryWriter writer,
+                int value
+            )
+        {
+            uint v = (uint)value;
+            while (v >= 0x80)
+            {
+                writer.Write((byte)(v | 0x80));
+                v >>= 7;
+            }
+            writer.Write((byte)v);
+
+            return writer;
+        }
+
+        /// <summary>
+        /// Read 32-bit integer in packed format.
+        /// </summary>
+        /// <remarks>Borrowed from
+        /// http://referencesource.microsoft.com/
+        /// </remarks>
+        public static int ReadPackedInt32
+            (
+                [NotNull] this BinaryReader reader
+            )
+        {
+            int count = 0;
+            int shift = 0;
+            byte b;
+            do
+            {
+                if (shift == 5 * 7)
+                {
+                    throw new FormatException();
+                }
+
+                b = reader.ReadByte();
+                count |= (b & 0x7F) << shift;
+                shift += 7;
+            } while ((b & 0x80) != 0);
+            return count;
+        }
+
         #endregion
     }
 }

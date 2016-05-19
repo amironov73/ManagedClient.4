@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
+using JetBrains.Annotations;
+
 using MoonSharp.Interpreter;
 
 using Newtonsoft.Json.Linq;
@@ -33,6 +35,7 @@ namespace ManagedClient
         /// <value>
         /// The database.
         /// </value>
+        [CanBeNull]
         public string Database { get; set; }
 
         /// <summary>
@@ -85,16 +88,19 @@ namespace ManagedClient
         /// <summary>
         /// Библиографическое описание.
         /// </summary>
+        [CanBeNull]
         public string Description { get; set; }
 
         /// <summary>
         /// Используется при сортировке записей.
         /// </summary>
+        [CanBeNull]
         public string SortKey { get; set; }
 
         /// <summary>
         /// Произвольные пользовательские данные.
         /// </summary>
+        [CanBeNull]
         public object UserData { get; set; }
 
         #endregion
@@ -145,6 +151,9 @@ namespace ManagedClient
                 .GetFieldText();
         }
 
+        /// <summary>
+        /// Текст всех полей с указанным тегом.
+        /// </summary>
         public string[] FMA ( string tag )
         {
             return Fields
@@ -152,6 +161,9 @@ namespace ManagedClient
                 .GetFieldText ();
         }
 
+        /// <summary>
+        /// Текст первого подполя с указанным тегом и кодом.
+        /// </summary>
         public string FM(string tag, char code)
         {
             return Fields
@@ -161,6 +173,9 @@ namespace ManagedClient
                 .GetSubFieldText();
         }
 
+        /// <summary>
+        /// Текст всех подполей с указанным тегом и кодом.
+        /// </summary>
         public string[] FMA ( string tag, char code )
         {
             return Fields
@@ -169,12 +184,18 @@ namespace ManagedClient
                 .GetSubFieldText ();
         }
 
+        /// <summary>
+        /// Форматирование поля.
+        /// </summary>
         public string FR ( string format )
         {
             FieldReference fr = new FieldReference(format);
             return fr.FormatSingle ( this );
         }
 
+        /// <summary>
+        /// Форматирование поля.
+        /// </summary>
         public string FR ( string pre, string format, string post )
         {
             string result = FR ( format );
@@ -183,11 +204,17 @@ namespace ManagedClient
                 : ( pre + result + post );
         }
 
+        /// <summary>
+        /// Результат расформатирования пустой?
+        /// </summary>
         public bool FRE ( string format )
         {
             return string.IsNullOrEmpty ( FR ( format ) );
         }
 
+        /// <summary>
+        /// Форматирование поля.
+        /// </summary>
         public string[] FRA ( string format )
         {
             FieldReference fr = new FieldReference(format);
@@ -240,6 +267,9 @@ namespace ManagedClient
             return result.ToString();
         }
 
+        /// <summary>
+        /// Разбор записи в клиентском представлении.
+        /// </summary>
         public static IrbisRecord Parse 
             ( 
                 string text,
@@ -250,6 +280,10 @@ namespace ManagedClient
             return Parse ( lines, skipLines );
         }
 
+        /// <summary>
+        /// Разбор записи в клиентском представлении и слияние
+        /// с уже имеющимися полями.
+        /// </summary>
         public IrbisRecord MergeParse
             (
                 string[] text,
@@ -387,6 +421,9 @@ namespace ManagedClient
             return this;
         }
 
+        /// <summary>
+        /// Установка поля.
+        /// </summary>
         public IrbisRecord SetField
             (
                 string tag,
@@ -406,6 +443,9 @@ namespace ManagedClient
             return this;
         }
 
+        /// <summary>
+        /// Установка подполя.
+        /// </summary>
         public IrbisRecord SetSubField
             (
                 string tag,
@@ -428,6 +468,9 @@ namespace ManagedClient
             return this;
         }
 
+        /// <summary>
+        /// Установка подполя.
+        /// </summary>
         public IrbisRecord SetSubField
             (
                 string tag,
@@ -476,6 +519,9 @@ namespace ManagedClient
             return this;
         }
 
+        /// <summary>
+        /// Удаление поля.
+        /// </summary>
         public IrbisRecord RemoveField
             (
                 string tag,
@@ -498,6 +544,9 @@ namespace ManagedClient
             return this;
         }
 
+        /// <summary>
+        /// Есть хотя бы одно поле с указанными тегами?
+        /// </summary>
         public bool HaveField
             (
                 params string[] tags
@@ -506,6 +555,9 @@ namespace ManagedClient
             return (Fields.GetField(tags).Length != 0);
         }
 
+        /// <summary>
+        /// Нет ни одного поля с указанными тегами?
+        /// </summary>
         public bool HaveNotField
             (
                 params string[] tags
@@ -531,6 +583,13 @@ namespace ManagedClient
             return result;
         }
 
+        /// <summary>
+        /// Сравнение двух записей.
+        /// </summary>
+        /// <param name="record1"></param>
+        /// <param name="record2"></param>
+        /// <param name="verbose"></param>
+        /// <returns></returns>
         public static int Compare
             (
                 IrbisRecord record1,
@@ -703,9 +762,12 @@ namespace ManagedClient
             return result;
         }
 
+        /// <summary>
+        /// Разбор 2709.
+        /// </summary>
         public static IrbisRecord ReadIso
             (
-                Stream strm,
+                Stream stream,
                 Encoding enc
             )
         {
@@ -714,27 +776,27 @@ namespace ManagedClient
             byte[] marker = new byte[5];
 
             // Считываем длину записи
-            if (strm.Read(marker, 0, 5) != 5)
+            if (stream.Read(marker, 0, 5) != 5)
             {
                 return null;
             }
-            int reclen = _ToInt(marker, 0, 5);
-            byte[] record = new byte[reclen];
-            int need = reclen - 5;
+            int recordLength = _ToInt(marker, 0, 5);
+            byte[] record = new byte[recordLength];
+            int need = recordLength - 5;
             // А затем и ее остаток
-            if (strm.Read(record, 5, need) != need)
+            if (stream.Read(record, 5, need) != need)
             {
                 return null;
             }
 
             // простая проверка, что мы имеем дело с нормальной ISO-записью
-            if (record[reclen - 1] != RecordDelimiter)
+            if (record[recordLength - 1] != RecordDelimiter)
             {
                 return null;
             }
 
             // Превращаем в Unicode
-            char[] chars = enc.GetChars(record, 0, reclen);
+            char[] chars = enc.GetChars(record, 0, recordLength);
             int baseAddress = _ToInt(record, 12, 5) - 1;
             int start = baseAddress;
 
@@ -744,7 +806,7 @@ namespace ManagedClient
                 // находим следующее поле
                 // Если нарвались на разделитель, заканчиваем
                 if ((record[dic] == FieldDelimiter)
-                     || (start > (reclen - 4)))
+                     || (start > (recordLength - 4)))
                 {
                     break;
                 }
@@ -888,9 +950,10 @@ namespace ManagedClient
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
+        [NotNull]
         public static IrbisRecord ParseIrbisText
             (
-                string text
+                [NotNull] string text
             )
         {
             string[] lines = text
@@ -917,7 +980,9 @@ namespace ManagedClient
                 .AddRange
                 (
                     body
+// ReSharper disable ConvertClosureToMethodGroup
                     .Select(line => _ParseLine(line))
+// ReSharper restore ConvertClosureToMethodGroup
                     .Where(item => item != null)
                 );
 
@@ -954,6 +1019,120 @@ namespace ManagedClient
             }
 
             return result.ToString();
+        }
+
+        #endregion
+
+        #region Ручная сериализация
+
+        /// <summary>
+        /// Сохранение в поток.
+        /// </summary>
+        public void SaveToStream
+            (
+                [NotNull] BinaryWriter writer
+            )
+        {
+            writer.WriteNullable(Database);
+            writer.WritePackedInt32(Mfn);
+            writer.Write((byte)Status);
+            writer.WritePackedInt32(Version);
+            writer.WriteNullable(Description);
+            writer.WriteNullable(SortKey);
+            Fields.SaveToStream(writer);
+        }
+
+        /// <summary>
+        /// Сохранение в поток.
+        /// </summary>
+        public static void SaveToStream
+            (
+                [NotNull] BinaryWriter writer,
+                [NotNull][ItemNotNull] IrbisRecord[] records
+            )
+        {
+            writer.WritePackedInt32(records.Length);
+            foreach (IrbisRecord record in records)
+            {
+                record.SaveToStream(writer);
+            }
+        }
+
+        /// <summary>
+        /// Сохранение в файл.
+        /// </summary>
+        public static void SaveToFile
+            (
+                [NotNull] string fileName,
+                [NotNull][ItemNotNull] IrbisRecord[] records
+            )
+        {
+            using (Stream stream = File.Create(fileName))
+            using (BinaryWriter writer = new BinaryWriter(stream))
+            {
+                SaveToStream(writer, records);
+            }
+        }
+
+        /// <summary>
+        /// Считывание из потока.
+        /// </summary>
+        [NotNull]
+        [ItemNotNull]
+        public static IrbisRecord ReadFromStream
+            (
+                [NotNull] BinaryReader reader
+            )
+        {
+            IrbisRecord result = new IrbisRecord
+            {
+                Database = reader.ReadNullableString(),
+                Mfn = reader.ReadPackedInt32(),
+                Status = (RecordStatus) reader.ReadByte(),
+                Version = reader.ReadPackedInt32(),
+                Description = reader.ReadNullableString(),
+                SortKey = reader.ReadNullableString()
+            };
+            result.Fields.ReadFromStream(reader);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Считывание из файла.
+        /// </summary>
+        public static IrbisRecord[] ReadFromFile
+            (
+                [NotNull] string fileName
+            )
+        {
+            using (Stream stream = File.OpenRead(fileName))
+            using (BinaryReader reader = new BinaryReader(stream))
+            {
+                return ReadRecordsFromStream(reader);
+            }
+        }
+
+        /// <summary>
+        /// Считывание из потока.
+        /// </summary>
+        [NotNull]
+        [ItemNotNull]
+        public static IrbisRecord[] ReadRecordsFromStream
+            (
+                [NotNull] BinaryReader reader
+            )
+        {
+            int count = reader.ReadPackedInt32();
+            IrbisRecord[] result = new IrbisRecord[count];
+            
+            for (int i = 0; i < count; i++)
+            {
+                IrbisRecord record = ReadFromStream(reader);
+                result[i] = record;
+            }
+
+            return result;
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿/* SubFieldCollection.cs -- коллекция подполей
+ * Ars Magna project, http://arsmagna.ru
  */
 
 #region Using directives
@@ -6,8 +7,12 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+
+using JetBrains.Annotations;
 
 using MoonSharp.Interpreter;
 
@@ -23,6 +28,7 @@ namespace ManagedClient
     [Serializable]
     [MoonSharpUserData]
     [ClassInterface(ClassInterfaceType.None)]
+    [DebuggerDisplay("Count = {Count}")]
     public sealed class SubFieldCollection
         : Collection<SubField>
     {
@@ -69,6 +75,42 @@ namespace ManagedClient
                 .Where(subField => predicate(subField))
                 .ToArray();
         }
+
+        #region Ручная сериализация
+
+        /// <summary>
+        /// Сохранение в поток
+        /// </summary>
+        public void SaveToStream
+            (
+                [NotNull] BinaryWriter writer
+            )
+        {
+            writer.WritePackedInt32(Count);
+            foreach (SubField subField in this)
+            {
+                subField.SaveToStream(writer);
+            }
+        }
+
+        /// <summary>
+        /// Считывание из потока.
+        /// </summary>
+        public void ReadFromStream
+            (
+                [NotNull] BinaryReader reader
+            )
+        {
+            Clear();
+            int count = reader.ReadPackedInt32();
+            for (int i = 0; i < count; i++)
+            {
+                SubField subField = SubField.ReadFromStream(reader);
+                Add(subField);
+            }
+        }
+
+        #endregion
 
         #endregion
 

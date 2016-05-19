@@ -1,14 +1,17 @@
 ﻿/* RecordField.cs - поле библиографической записи
+ * Ars Magna project, http://arsmagna.ru
  */
 
 #region Using directives
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
-
+using JetBrains.Annotations;
 using MoonSharp.Interpreter;
 
 using Newtonsoft.Json;
@@ -23,6 +26,7 @@ namespace ManagedClient
     [Serializable]
     [XmlRoot("field")]
     [MoonSharpUserData]
+    [DebuggerDisplay("Tag={Tag} Text={Text}")]
     public sealed class RecordField
     {
         #region Constants
@@ -45,6 +49,7 @@ namespace ManagedClient
         /// <summary>
         /// Метка поля.
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("tag")]
         [JsonProperty("tag")]
         public string Tag { get; set; }
@@ -69,6 +74,7 @@ namespace ManagedClient
         /// Имеющиеся в SubFields значения при этом пропадают
         /// и замещаются на вновь присваиваемые!
         /// </remarks>
+        [CanBeNull]
         [XmlAttribute("text")]
         [JsonProperty("text")]
         public string Text
@@ -997,7 +1003,6 @@ namespace ManagedClient
         /// Gets the embedded fields.
         /// </summary>
         /// <param name="sign">The sign.</param>
-        /// <returns>RecordField[].</returns>
         public RecordField[] GetEmbeddedFields
             (
                 char sign
@@ -1052,11 +1057,49 @@ namespace ManagedClient
         /// <summary>
         /// Gets the embedded fields.
         /// </summary>
-        /// <returns>RecordField[].</returns>
         public RecordField[] GetEmbeddedFields()
         {
             return GetEmbeddedFields('1');
         }
+
+        #region Ручная сериализация
+
+        /// <summary>
+        /// Сохранение в поток.
+        /// </summary>
+        /// <param name="writer"></param>
+        public void SaveToStream
+            (
+                [NotNull] BinaryWriter writer
+            )
+        {
+            writer.WriteNullable(Tag);
+            writer.WriteNullable(Text);
+            SubFields.SaveToStream(writer);
+        }
+
+        /// <summary>
+        /// Считывание из потока.
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        [NotNull]
+        public static RecordField ReadFromStream
+            (
+                [NotNull] BinaryReader reader
+            )
+        {
+            RecordField result = new RecordField
+            {
+                Tag = reader.ReadNullableString(),
+                Text = reader.ReadNullableString()
+            };
+            result.SubFields.ReadFromStream(reader);
+
+            return result;
+        }
+
+        #endregion
 
         #endregion
 

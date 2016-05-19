@@ -396,9 +396,22 @@
             Конструктор.
             </summary>
         </member>
+        <member name="M:ManagedClient.BatchRecordReader.#ctor(System.String,System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            Конструктор.
+            </summary>
+            <param name="connectionString"></param>
+            <param name="range"></param>
+        </member>
         <member name="M:ManagedClient.BatchRecordReader.ReadAll">
             <summary>
             Считывает все записи сразу.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.BatchRecordReader.Dispose">
+            <summary>
+            Performs application-defined tasks associated
+            with freeing, releasing, or resetting unmanaged resources.
             </summary>
         </member>
         <member name="E:ManagedClient.BatchRecordReader.BatchRead">
@@ -2359,6 +2372,22 @@
             <summary>
             Writes specified text to the stream.
             </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.WritePackedInt32(System.IO.BinaryWriter,System.Int32)">
+            <summary>
+            Write 32-bit integer in packed format.
+            </summary>
+            <remarks>Borrowed from
+            http://referencesource.microsoft.com/
+            </remarks>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadPackedInt32(System.IO.BinaryReader)">
+            <summary>
+            Read 32-bit integer in packed format.
+            </summary>
+            <remarks>Borrowed from
+            http://referencesource.microsoft.com/
+            </remarks>
         </member>
         <member name="T:ManagedClient.IrbisLine">
             <summary>
@@ -9317,6 +9346,41 @@
             <param name="tag">Метка поля.</param>
             <returns>Текст поля или <c>null</c>.</returns>
         </member>
+        <member name="M:ManagedClient.IrbisRecord.FMA(System.String)">
+            <summary>
+            Текст всех полей с указанным тегом.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.FM(System.String,System.Char)">
+            <summary>
+            Текст первого подполя с указанным тегом и кодом.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.FMA(System.String,System.Char)">
+            <summary>
+            Текст всех подполей с указанным тегом и кодом.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.FR(System.String)">
+            <summary>
+            Форматирование поля.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.FR(System.String,System.String,System.String)">
+            <summary>
+            Форматирование поля.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.FRE(System.String)">
+            <summary>
+            Результат расформатирования пустой?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.FRA(System.String)">
+            <summary>
+            Форматирование поля.
+            </summary>
+        </member>
         <member name="M:ManagedClient.IrbisRecord.EncodeRecord(ManagedClient.IrbisRecord,System.Int32,System.Int32,System.Int32)">
             <summary>
             Кодирование записи в клиентское представление.
@@ -9328,6 +9392,17 @@
             <returns>
             Закодированная запись.
             </returns>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.Parse(System.String,System.Int32)">
+            <summary>
+            Разбор записи в клиентском представлении.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.MergeParse(System.String[],System.Int32)">
+            <summary>
+            Разбор записи в клиентском представлении и слияние
+            с уже имеющимися полями.
+            </summary>
         </member>
         <member name="M:ManagedClient.IrbisRecord.Parse(System.String[],System.Int32)">
             <summary>
@@ -9369,6 +9444,21 @@
             первого повторения поля (если в записи их несколько)!
             </remarks>
         </member>
+        <member name="M:ManagedClient.IrbisRecord.SetField(System.String,System.Int32,System.String)">
+            <summary>
+            Установка поля.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.SetSubField(System.String,System.Char,System.String)">
+            <summary>
+            Установка подполя.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.SetSubField(System.String,System.Int32,System.Char,System.Int32,System.String)">
+            <summary>
+            Установка подполя.
+            </summary>
+        </member>
         <member name="M:ManagedClient.IrbisRecord.RemoveField(System.String)">
             <summary>
             Removes the field.
@@ -9376,10 +9466,34 @@
             <param name="tag">The tag.</param>
             <returns></returns>
         </member>
+        <member name="M:ManagedClient.IrbisRecord.RemoveField(System.String,System.Int32)">
+            <summary>
+            Удаление поля.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.HaveField(System.String[])">
+            <summary>
+            Есть хотя бы одно поле с указанными тегами?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.HaveNotField(System.String[])">
+            <summary>
+            Нет ни одного поля с указанными тегами?
+            </summary>
+        </member>
         <member name="M:ManagedClient.IrbisRecord.Clone">
             <summary>
             Clones this instance.
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.Compare(ManagedClient.IrbisRecord,ManagedClient.IrbisRecord,System.Boolean)">
+            <summary>
+            Сравнение двух записей.
+            </summary>
+            <param name="record1"></param>
+            <param name="record2"></param>
+            <param name="verbose"></param>
             <returns></returns>
         </member>
         <member name="M:ManagedClient.IrbisRecord.ToPlainText">
@@ -9405,6 +9519,11 @@
             характерном для ИРБИС.
             </summary>
         </member>
+        <member name="M:ManagedClient.IrbisRecord.ReadIso(System.IO.Stream,System.Text.Encoding)">
+            <summary>
+            Разбор 2709.
+            </summary>
+        </member>
         <member name="M:ManagedClient.IrbisRecord.ParseIrbisText(System.String)">
             <summary>
             Метод предназачен для парсинга текста, передаваемого АРМ ИРБИС плагинам.
@@ -9418,6 +9537,36 @@
             </summary>
             <param name="record"></param>
             <returns></returns>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Сохранение в поток.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.SaveToStream(System.IO.BinaryWriter,ManagedClient.IrbisRecord[])">
+            <summary>
+            Сохранение в поток.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.SaveToFile(System.String,ManagedClient.IrbisRecord[])">
+            <summary>
+            Сохранение в файл.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Считывание из потока.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.ReadFromFile(System.String)">
+            <summary>
+            Считывание из файла.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisRecord.ReadRecordsFromStream(System.IO.BinaryReader)">
+            <summary>
+            Считывание из потока.
+            </summary>
         </member>
         <member name="M:ManagedClient.IrbisRecord.ToString">
             <summary>
@@ -10682,6 +10831,31 @@
             не принимает значения <c>null</c>.
             </summary>
         </member>
+        <member name="M:ManagedClient.RecordFieldCollection.AddRange(System.Collections.Generic.IEnumerable{ManagedClient.RecordField})">
+            <summary>
+            Добавление нескольких полей.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RecordFieldCollection.Find(System.Predicate{ManagedClient.RecordField})">
+            <summary>
+            Поиск первого вхождения с помощью предиката.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RecordFieldCollection.FindAll(System.Predicate{ManagedClient.RecordField})">
+            <summary>
+            Поиск всех вхождений с помощью предиката.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RecordFieldCollection.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Сохранение в поток.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RecordFieldCollection.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Считывание из потока.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Schema.FieldSchema">
             <summary>
             
@@ -11088,6 +11262,16 @@
         <member name="M:ManagedClient.SubFieldCollection.FindAll(System.Predicate{ManagedClient.SubField})">
             <summary>
             Отбор с помощью предиката.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.SubFieldCollection.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Сохранение в поток
+            </summary>
+        </member>
+        <member name="M:ManagedClient.SubFieldCollection.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Считывание из потока.
             </summary>
         </member>
         <member name="T:ManagedClient.TextWithEncoding">
@@ -12935,13 +13119,24 @@
             Gets the embedded fields.
             </summary>
             <param name="sign">The sign.</param>
-            <returns>RecordField[].</returns>
         </member>
         <member name="M:ManagedClient.RecordField.GetEmbeddedFields">
             <summary>
             Gets the embedded fields.
             </summary>
-            <returns>RecordField[].</returns>
+        </member>
+        <member name="M:ManagedClient.RecordField.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Сохранение в поток.
+            </summary>
+            <param name="writer"></param>
+        </member>
+        <member name="M:ManagedClient.RecordField.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Считывание из потока.
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
         </member>
         <member name="M:ManagedClient.RecordField.ToString">
             <summary>
@@ -13296,6 +13491,14 @@
             <param name="text">Текст ответа сервера</param>
             <returns></returns>
         </member>
+        <member name="M:ManagedClient.ResponseHeader.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/>
+            that represents this instance.
+            </summary>
+            <returns>A <see cref="T:System.String"/>
+            that represents this instance.</returns>
+        </member>
         <member name="P:ManagedClient.ResponseHeader.Command">
             <summary>
             Повторенный код команды
@@ -13559,6 +13762,16 @@
             <param name="subField2">The sub field2.</param>
             <param name="verbose">if set to <c>true</c> [verbose].</param>
             <returns>System.Int32.</returns>
+        </member>
+        <member name="M:ManagedClient.SubField.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Считывание из потока.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.SubField.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Сохранение в поток.
+            </summary>
         </member>
         <member name="M:ManagedClient.SubField.ToString">
             <summary>

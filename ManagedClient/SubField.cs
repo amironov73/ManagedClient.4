@@ -1,11 +1,14 @@
-﻿/* SubField.cs
+﻿/* SubField.cs -- подполе MARC-записи
+ * Ars Magna project, http://arsmagna.ru
  */
 
 #region Using directives
 
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Xml.Serialization;
-
+using JetBrains.Annotations;
 using MoonSharp.Interpreter;
 
 using Newtonsoft.Json;
@@ -20,6 +23,7 @@ namespace ManagedClient
     [Serializable]
     [XmlRoot("subfield")]
     [MoonSharpUserData]
+    [DebuggerDisplay("Code={Code} Text={Text}")]
     public class SubField
     {
         #region Properties
@@ -47,6 +51,10 @@ namespace ManagedClient
                 if (!string.IsNullOrEmpty(value))
                 {
                     Code = value[0];
+                }
+                else
+                {
+                    Code = '\0';
                 }
             }
         }
@@ -150,7 +158,7 @@ namespace ManagedClient
         /// Clones this instance.
         /// </summary>
         /// <returns></returns>
-        public SubField Clone ( )
+        public SubField Clone ()
         {
             SubField result = new SubField
                                   {
@@ -201,6 +209,40 @@ namespace ManagedClient
             }
             return result;
         }
+
+        #region Ручная сериализация
+
+        /// <summary>
+        /// Считывание из потока.
+        /// </summary>
+        [NotNull]
+        public static SubField ReadFromStream
+            (
+                [NotNull] BinaryReader reader
+            )
+        {
+            SubField result = new SubField
+            {
+                CodeString = reader.ReadNullableString(),
+                Text = reader.ReadNullableString()
+            };
+
+            return result;
+        }
+
+        /// <summary>
+        /// Сохранение в поток.
+        /// </summary>
+        public void SaveToStream
+            (
+                [NotNull] BinaryWriter writer
+            )
+        {
+            writer.WriteNullable(CodeString);
+            writer.WriteNullable(Text);
+        }
+
+        #endregion
 
         #endregion
 

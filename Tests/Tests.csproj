@@ -59,6 +59,7 @@
     <Compile Include="RangeTest.cs" />
     <Compile Include="BatchFormatterTest.cs" />
     <Compile Include="IniFileTest.cs" />
+    <Compile Include="SaveToStreamTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ManagedClient\ManagedClient.vs2013.csproj">

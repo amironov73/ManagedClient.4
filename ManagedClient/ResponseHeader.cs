@@ -1,4 +1,5 @@
 ﻿/* ResponseHeader.cs
+ * Ars Magna project, http://arsmagna.ru
  */
 
 #region Using directives
@@ -16,7 +17,7 @@ namespace ManagedClient
     /// Заголовок ответа сервера
     /// </summary>
     [Serializable]
-	public sealed class ResponseHeader
+    public sealed class ResponseHeader
     {
         #region Properties
 
@@ -92,8 +93,8 @@ namespace ManagedClient
                 Debug.WriteLine(ex);
             }
 
-			result.Data = new List<string>();
-			if (lines.Length > 10)
+            result.Data = new List<string>();
+            if (lines.Length > 10)
             {
                 for (int i = 10; i < lines.Length; i++)
                 {
@@ -107,7 +108,7 @@ namespace ManagedClient
             }
             else
             {
-	            result.ReturnCode = -1;
+                result.ReturnCode = -1;
             }
 
             return result;
@@ -117,6 +118,12 @@ namespace ManagedClient
 
         #region Object members
 
+        /// <summary>
+        /// Returns a <see cref="System.String" />
+        /// that represents this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.String" />
+        /// that represents this instance.</returns>
         public override string ToString ( )
         {
             return string.Format 

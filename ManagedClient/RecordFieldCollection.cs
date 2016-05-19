@@ -6,8 +6,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+
+using JetBrains.Annotations;
 
 using MoonSharp.Interpreter;
 
@@ -28,6 +31,9 @@ namespace ManagedClient
     {
         #region Public methods
 
+        /// <summary>
+        /// Добавление нескольких полей.
+        /// </summary>
         public void AddRange
             (
                 IEnumerable<RecordField> fields
@@ -39,6 +45,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Поиск первого вхождения с помощью предиката.
+        /// </summary>
         public RecordField Find
             (
                 Predicate<RecordField> predicate
@@ -48,6 +57,9 @@ namespace ManagedClient
                 .FirstOrDefault(field => predicate (field));
         }
 
+        /// <summary>
+        /// Поиск всех вхождений с помощью предиката.
+        /// </summary>
         public RecordField[] FindAll
             (
                 Predicate<RecordField> predicate
@@ -57,6 +69,43 @@ namespace ManagedClient
                 .Where(field => predicate(field))
                 .ToArray();
         }
+
+        #region Ручная сериализация
+
+        /// <summary>
+        /// Сохранение в поток.
+        /// </summary>
+        public void SaveToStream
+            (
+                [NotNull] BinaryWriter writer
+            )
+        {
+            writer.WritePackedInt32(Count);
+
+            foreach (RecordField field in this)
+            {
+                field.SaveToStream(writer);
+            }
+        }
+
+        /// <summary>
+        /// Считывание из потока.
+        /// </summary>
+        public void ReadFromStream
+            (
+                [NotNull] BinaryReader reader
+            )
+        {
+            int count = reader.ReadPackedInt32();
+
+            for (int i = 0; i < count; i++)
+            {
+                RecordField field = RecordField.ReadFromStream(reader);
+                Add(field);
+            }
+        }
+
+        #endregion
 
         #endregion
 

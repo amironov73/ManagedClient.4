@@ -25,7 +25,8 @@ namespace ManagedClient
     [PublicAPI]
     [MoonSharpUserData]
     public sealed class BatchRecordReader
-        : IEnumerable<IrbisRecord>
+        : IEnumerable<IrbisRecord>,
+        IDisposable
     {
         #region Constants
 
@@ -178,11 +179,32 @@ namespace ManagedClient
         {
         }
 
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <param name="range"></param>
+        public BatchRecordReader
+            (
+                [NotNull] string connectionString,
+                [NotNull] IEnumerable<int> range
+            )
+        {
+            Client = new ManagedClient64();
+            Client.ParseConnectionString(connectionString);
+            Client.Connect();
+            _ownClient = true;
+            BatchSize = DefaultBatchSize;
+            _InitializePackages(range);
+        }
+
         #endregion
 
         #region Private members
 
         private IEnumerable<int[]> _packages;
+
+        private bool _ownClient;
 
         private void _InitializePackages
             (
@@ -265,6 +287,22 @@ namespace ManagedClient
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        #endregion
+
+        #region IDisposable members
+
+        /// <summary>
+        /// Performs application-defined tasks associated
+        /// with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            if (_ownClient)
+            {
+                Client.Dispose();
+            }
         }
 
         #endregion
