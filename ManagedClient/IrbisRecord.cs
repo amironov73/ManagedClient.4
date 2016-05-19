@@ -26,6 +26,7 @@ namespace ManagedClient
     [Serializable]
     [MoonSharpUserData]
     public sealed class IrbisRecord
+        : IHandmadeSerializable
     {
         #region Properties
 
@@ -1030,7 +1031,7 @@ namespace ManagedClient
         /// </summary>
         public void SaveToStream
             (
-                [NotNull] BinaryWriter writer
+                BinaryWriter writer
             )
         {
             writer.WriteNullable(Database);
@@ -1043,22 +1044,6 @@ namespace ManagedClient
         }
 
         /// <summary>
-        /// Сохранение в поток.
-        /// </summary>
-        public static void SaveToStream
-            (
-                [NotNull] BinaryWriter writer,
-                [NotNull][ItemNotNull] IrbisRecord[] records
-            )
-        {
-            writer.WritePackedInt32(records.Length);
-            foreach (IrbisRecord record in records)
-            {
-                record.SaveToStream(writer);
-            }
-        }
-
-        /// <summary>
         /// Сохранение в файл.
         /// </summary>
         public static void SaveToFile
@@ -1067,11 +1052,7 @@ namespace ManagedClient
                 [NotNull][ItemNotNull] IrbisRecord[] records
             )
         {
-            using (Stream stream = File.Create(fileName))
-            using (BinaryWriter writer = new BinaryWriter(stream))
-            {
-                SaveToStream(writer, records);
-            }
+            records.SaveToZipFile(fileName);
         }
 
         /// <summary>
@@ -1106,31 +1087,11 @@ namespace ManagedClient
                 [NotNull] string fileName
             )
         {
-            using (Stream stream = File.OpenRead(fileName))
-            using (BinaryReader reader = new BinaryReader(stream))
-            {
-                return ReadRecordsFromStream(reader);
-            }
-        }
-
-        /// <summary>
-        /// Считывание из потока.
-        /// </summary>
-        [NotNull]
-        [ItemNotNull]
-        public static IrbisRecord[] ReadRecordsFromStream
-            (
-                [NotNull] BinaryReader reader
-            )
-        {
-            int count = reader.ReadPackedInt32();
-            IrbisRecord[] result = new IrbisRecord[count];
-            
-            for (int i = 0; i < count; i++)
-            {
-                IrbisRecord record = ReadFromStream(reader);
-                result[i] = record;
-            }
+            IrbisRecord[] result = IrbisIOUtils.ReadFromZipFile
+                (
+                    fileName,
+                    ReadFromStream
+                );
 
             return result;
         }
@@ -1142,10 +1103,12 @@ namespace ManagedClient
         #region Object members
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// Returns a <see cref="System.String" />
+        /// that represents this instance.
         /// </summary>
         /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
+        /// A <see cref="System.String" />
+        /// that represents this instance.
         /// </returns>
         public override string ToString()
         {

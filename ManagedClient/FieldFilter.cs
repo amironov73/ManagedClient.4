@@ -1,4 +1,5 @@
 ﻿/* FieldFilter.cs
+ * Ars Magna project, http://arsmagna.ru
  */
 
 #region Using directives

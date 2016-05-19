@@ -4,7 +4,6 @@
 #region Using directives
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -33,6 +32,7 @@ namespace ManagedClient.Fields
     [XmlRoot("exemplar")]
     [MoonSharpUserData]
     public sealed class ExemplarInfo
+        : IHandmadeSerializable
     {
         #region Constants
 
@@ -628,100 +628,6 @@ namespace ManagedClient.Fields
                 .WriteNullable(Bbk)
                 .WriteNullable(OrderingData);
             writer.Write(Mfn);
-        }
-
-        /// <summary>
-        /// Save bunch of exemplars to the stream.
-        /// </summary>
-        public static void SaveToStream
-            (
-                [JetBrains.Annotations.NotNull] IEnumerable<ExemplarInfo> exemplars,
-                [JetBrains.Annotations.NotNull] Stream stream
-            )
-        {
-            BinaryWriter writer = new BinaryWriter(stream);
-            foreach (ExemplarInfo exemplar in exemplars)
-            {
-                exemplar.SaveToStream(writer);
-            }
-        }
-
-        /// <summary>
-        /// Save bunch of exemplars to the file.
-        /// </summary>
-        public static void SaveToFile
-            (
-                [JetBrains.Annotations.NotNull] IEnumerable<ExemplarInfo> exemplars,
-                [JetBrains.Annotations.NotNull] string fileName
-            )
-        {
-            using (Stream stream = File.Create(fileName))
-            {
-                SaveToStream(exemplars, stream);
-            }
-        }
-
-        /// <summary>
-        /// Save bunch of exemplars to memory.
-        /// </summary>
-        public static byte[] SaveToMemory
-            (
-                [JetBrains.Annotations.NotNull] IEnumerable<ExemplarInfo> exemplars
-            )
-        {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                SaveToStream(exemplars, stream);
-                return stream.ToArray();
-            }
-        }
-
-        /// <summary>
-        /// Read bunch of exemplars from the stream.
-        /// </summary>
-        public static List<ExemplarInfo> ReadFromStream
-            (
-                [JetBrains.Annotations.NotNull] Stream stream
-            )
-        {
-            BinaryReader reader = new BinaryReader(stream);
-            List<ExemplarInfo> result = new List<ExemplarInfo>();
-            
-            while (reader.PeekChar() >= 0)
-            {
-                ExemplarInfo exemplar = ReadFromStream(reader);
-                result.Add(exemplar);
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Read bunch of exemplars from the stream.
-        /// </summary>
-        public static List<ExemplarInfo> ReadFromMemory
-            (
-                [JetBrains.Annotations.NotNull] byte[] bytes
-            )
-        {
-            using (Stream stream = new MemoryStream(bytes))
-            {
-                return ReadFromStream(stream);
-            }
-        }
-
-        /// <summary>
-        /// Read bunch of exemplars from the file.
-        /// </summary>
-        public static List<ExemplarInfo> ReadFromFile
-            (
-                [JetBrains.Annotations.NotNull] string fileName
-            )
-        {
-            using (Stream stream = File.OpenRead(fileName))
-            {
-                return ReadFromStream(stream);
-            }
         }
 
         #endregion

@@ -12,7 +12,7 @@ namespace Tests
         [TestMethod]
         public void TestSaveToStream()
         {
-            const string fileName = "records.bin";
+            const string fileName = "records.biz";
 
             int[] mfnList = Enumerable.Range(1, 6000).ToArray();
             IrbisRecord[] written;

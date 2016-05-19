@@ -231,7 +231,8 @@ namespace ManagedClient
             EventHandler<ExceptionEventArgs<Exception>> handler = Exception;
             if (handler != null)
             {
-                ExceptionEventArgs<Exception> args = new ExceptionEventArgs<Exception>(ex);
+                ExceptionEventArgs<Exception> args =
+                    new ExceptionEventArgs<Exception>(ex);
                 handler(this, args);
             }
         }

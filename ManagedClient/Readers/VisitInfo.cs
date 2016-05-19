@@ -1,12 +1,16 @@
 ﻿/* VisitInfo.cs -- информация о посещении/выдаче
+ * Ars Magna project, http://arsmagna.ru
  */
 
 #region Using directives
 
 using System;
+using System.IO;
 using System.Text;
 using System.Xml.Serialization;
-using ManagedClient.Readers;
+
+using JetBrains.Annotations;
+
 using MoonSharp.Interpreter;
 
 using Newtonsoft.Json;
@@ -22,12 +26,14 @@ namespace ManagedClient.Readers
     [XmlRoot("visit")]
     [MoonSharpUserData]
     public sealed class VisitInfo
+        : IHandmadeSerializable
     {
         #region Properties
 
         /// <summary>
         /// подполе G, имя БД каталога.
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("database")]
         [JsonProperty("database")]
         public string Database { get; set; }
@@ -35,6 +41,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// подполе A, шифр документа.
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("index")]
         [JsonProperty("index")]
         public string Index { get; set; }
@@ -42,6 +49,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// подполе B, инвентарный номер экземпляра
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("inventory")]
         [JsonProperty("inventory")]
         public string Inventory { get; set; }
@@ -49,6 +57,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// подполе H, штрих-код экземпляра.
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("barcode")]
         [JsonProperty("barcode")]
         public string Barcode { get; set; }
@@ -56,6 +65,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// подполе K, место хранения экземпляра
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("sigla")]
         [JsonProperty("sigla")]
         public string Sigla { get; set; }
@@ -63,6 +73,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// подполе D, дата выдачи
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("date-given")]
         [JsonProperty("date-given")]
         public string DateGivenString { get; set; }
@@ -70,6 +81,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// подполе V, место выдачи
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("department")]
         [JsonProperty("department")]
         public string Department { get; set; }
@@ -77,6 +89,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// подполе E, дата предполагаемого возврата
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("date-expected")]
         [JsonProperty("date-expected")]
         public string DateExpectedString { get; set; }
@@ -84,6 +97,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// подполе F, дата фактического возврата
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("date-returned")]
         [JsonProperty("date-returned")]
         public string DateReturnedString { get; set; }
@@ -91,6 +105,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// подполе L, дата продления
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("date-prolong")]
         [JsonProperty("date-prolong")]
         public string DateProlongString { get; set; }
@@ -100,11 +115,13 @@ namespace ManagedClient.Readers
         /// </summary>
         [XmlAttribute("lost")]
         [JsonProperty("lost")]
+        [CanBeNull]
         public string Lost { get; set; }
 
         /// <summary>
         /// подполе C, краткое библиографическое описание
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("description")]
         [JsonProperty("description")]
         public string Description { get; set; }
@@ -112,6 +129,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// подполе I, ответственное лицо
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("responsible")]
         [JsonProperty("responsible")]
         public string Responsible { get; set; }
@@ -119,6 +137,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// подполе 1, время начала визита в библиотеку
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("time-in")]
         [JsonProperty("time-in")]
         public string TimeIn { get; set; }
@@ -126,6 +145,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// подполе 2, время окончания визита в библиотеку
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("time-out")]
         [JsonProperty("time-out")]
         public string TimeOut { get; set; }
@@ -149,8 +169,15 @@ namespace ManagedClient.Readers
         {
             get
             {
-                return !string.IsNullOrEmpty(DateReturnedString)
-                       && !DateReturnedString.StartsWith("*");
+                if (string.IsNullOrEmpty(DateReturnedString))
+                {
+                    return false;
+                }
+
+                // False positive ReSharper
+                // ReSharper disable PossibleNullReferenceException
+                return !DateReturnedString.StartsWith("*");
+                // ReSharper restore PossibleNullReferenceException
             }
         }
 
@@ -196,6 +223,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// Ссылка на читателя, сделавшего посещение.
         /// </summary>
+        [CanBeNull]
         [XmlIgnore]
         [JsonIgnore]
         public ReaderInfo Reader { get; set; }
@@ -253,13 +281,134 @@ namespace ManagedClient.Readers
         /// Формирование поля 40 
         /// из данных о выдаче/посещении.
         /// </summary>
-        /// <returns></returns>
+        [NotNull]
         public RecordField ToField()
         {
-            //RecordField result = new RecordField("40");
-            throw new NotImplementedException();
-            //return result;
+            RecordField result = new RecordField("40");
+            result.AddNonEmptySubField('g', Database);
+            result.AddNonEmptySubField('a', Index);
+            result.AddNonEmptySubField('b', Inventory);
+            result.AddNonEmptySubField('h', Barcode);
+            result.AddNonEmptySubField('k', Sigla);
+            result.AddNonEmptySubField('d', DateGivenString);
+            result.AddNonEmptySubField('v', Department);
+            result.AddNonEmptySubField('e', DateExpectedString);
+            result.AddNonEmptySubField('f', DateReturnedString);
+            result.AddNonEmptySubField('l', DateProlongString);
+            result.AddNonEmptySubField('u', Lost);
+            result.AddNonEmptySubField('c', Description);
+            result.AddNonEmptySubField('i', Responsible);
+            result.AddNonEmptySubField('1', TimeIn);
+            result.AddNonEmptySubField('2', TimeOut);
+            return result;
         }
+
+        #region Ручная сериализация
+
+        /// <summary>
+        /// Сохранение в поток.
+        /// </summary>
+        public void SaveToStream
+            (
+                BinaryWriter writer
+            )
+        {
+            writer.WriteNullable(Database);
+            writer.WriteNullable(Index);
+            writer.WriteNullable(Inventory);
+            writer.WriteNullable(Barcode);
+            writer.WriteNullable(Sigla);
+            writer.WriteNullable(DateGivenString);
+            writer.WriteNullable(Department);
+            writer.WriteNullable(DateExpectedString);
+            writer.WriteNullable(DateReturnedString);
+            writer.WriteNullable(DateProlongString);
+            writer.WriteNullable(Lost);
+            writer.WriteNullable(Description);
+            writer.WriteNullable(Responsible);
+            writer.WriteNullable(TimeIn);
+            writer.WriteNullable(TimeOut);
+        }
+
+        /// <summary>
+        /// Сохранение в поток.
+        /// </summary>
+        public static void SaveToStream
+            (
+                [NotNull] BinaryWriter writer,
+                [NotNull][ItemNotNull] VisitInfo[] visits
+            )
+        {
+            writer.WritePackedInt32(visits.Length);
+            foreach (VisitInfo visit in visits)
+            {
+                visit.SaveToStream(writer);
+            }
+        }
+
+        /// <summary>
+        /// Сохранение в файл.
+        /// </summary>
+        public static void SaveToFile
+            (
+                [NotNull] string fileName,
+                [NotNull][ItemNotNull] VisitInfo[] visits
+            )
+        {
+            visits.SaveToZipFile(fileName);
+        }
+
+        /// <summary>
+        /// Считывание из потока.
+        /// </summary>
+        [NotNull]
+        public static VisitInfo ReadFromStream
+            (
+                [NotNull] BinaryReader reader
+            )
+        {
+            VisitInfo result = new VisitInfo
+            {
+                Database = reader.ReadNullableString(),
+                Index = reader.ReadNullableString(),
+                Inventory = reader.ReadNullableString(),
+                Barcode = reader.ReadNullableString(),
+                Sigla = reader.ReadNullableString(),
+                DateGivenString = reader.ReadNullableString(),
+                Department = reader.ReadNullableString(),
+                DateExpectedString = reader.ReadNullableString(),
+                DateReturnedString = reader.ReadNullableString(),
+                DateProlongString = reader.ReadNullableString(),
+                Lost = reader.ReadNullableString(),
+                Description = reader.ReadNullableString(),
+                Responsible = reader.ReadNullableString(),
+                TimeIn = reader.ReadNullableString(),
+                TimeOut = reader.ReadNullableString()
+            };
+
+            return result;
+        }
+
+        /// <summary>
+        /// Считывание из файла.
+        /// </summary>
+        [CanBeNull]
+        [ItemNotNull]
+        public static VisitInfo[] ReadFromFile
+            (
+                [NotNull] string fileName
+            )
+        {
+            VisitInfo[] result = IrbisIOUtils.ReadFromZipFile
+                (
+                    fileName,
+                    ReadFromStream
+                );
+
+            return result;
+        }
+
+        #endregion
 
         #endregion
 

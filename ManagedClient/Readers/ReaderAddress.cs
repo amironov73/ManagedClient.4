@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 
@@ -16,7 +17,7 @@ using Newtonsoft.Json;
 
 #endregion
 
-namespace ManagedClient.Fields
+namespace ManagedClient.Readers
 {
     /// <summary>
     /// Адрес читателя: поле 13 в базе RDR.
@@ -26,6 +27,7 @@ namespace ManagedClient.Fields
     [MoonSharpUserData]
     [XmlRoot("address")]
     public sealed class ReaderAddress
+        : IHandmadeSerializable
     {
         #region Constants
 
@@ -190,6 +192,51 @@ namespace ManagedClient.Fields
                     Tag
                 );
         }
+
+        #region Ручная сериализация
+
+        /// <summary>
+        /// Сохранение в поток.
+        /// </summary>
+        public void SaveToStream
+            (
+                BinaryWriter writer
+            )
+        {
+            writer.WriteNullable(Postcode);
+            writer.WriteNullable(Country);
+            writer.WriteNullable(City);
+            writer.WriteNullable(Street);
+            writer.WriteNullable(Building);
+            writer.WriteNullable(Entrance);
+            writer.WriteNullable(Apartment);
+            writer.WriteNullable(AdditionalData);
+        }
+
+        /// <summary>
+        /// Считывание из потока.
+        /// </summary>
+        public static ReaderAddress ReadFromStream
+            (
+                [NotNull] BinaryReader reader
+            )
+        {
+            ReaderAddress result = new ReaderAddress
+            {
+                Postcode = reader.ReadNullableString(),
+                Country = reader.ReadNullableString(),
+                City = reader.ReadNullableString(),
+                Street = reader.ReadNullableString(),
+                Building = reader.ReadNullableString(),
+                Entrance = reader.ReadNullableString(),
+                Apartment = reader.ReadNullableString(),
+                AdditionalData = reader.ReadNullableString()
+            };
+
+            return result;
+        }
+
+        #endregion
 
         #endregion
 

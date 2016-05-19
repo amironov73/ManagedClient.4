@@ -207,6 +207,11 @@
             Save the configuration.
             </summary>
         </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.SaveToFile(System.String)">
+            <summary>
+            Save to the file.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Fields.ExemplarManager.ReadRange(System.String,System.String,System.Object[])">
             <summary>
             Read many.
@@ -215,11 +220,6 @@
         <member name="M:ManagedClient.Fields.ExemplarManager.Remove(System.String)">
             <summary>
             Remove
-            </summary>
-        </member>
-        <member name="M:ManagedClient.Fields.ExemplarManager.SaveToFile(System.String)">
-            <summary>
-            Save to file
             </summary>
         </member>
         <member name="M:ManagedClient.Fields.ExemplarManager.WriteLine(System.String,System.Object[])">
@@ -255,6 +255,16 @@
         <member name="P:ManagedClient.Fields.ExemplarManager.Prefix">
             <summary>
             Prefix.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.IHandmadeSerializable">
+            <summary>
+            Объект умеет сохраняться в поток и восстанавливаться из него.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IHandmadeSerializable.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Просим объект сохранить себя в потоке.
             </summary>
         </member>
         <member name="T:ManagedClient.Output.AbstractOutput">
@@ -766,36 +776,6 @@
         <member name="M:ManagedClient.Fields.ExemplarInfo.SaveToStream(System.IO.BinaryWriter)">
             <summary>
             Save this instance to the given stream.
-            </summary>
-        </member>
-        <member name="M:ManagedClient.Fields.ExemplarInfo.SaveToStream(System.Collections.Generic.IEnumerable{ManagedClient.Fields.ExemplarInfo},System.IO.Stream)">
-            <summary>
-            Save bunch of exemplars to the stream.
-            </summary>
-        </member>
-        <member name="M:ManagedClient.Fields.ExemplarInfo.SaveToFile(System.Collections.Generic.IEnumerable{ManagedClient.Fields.ExemplarInfo},System.String)">
-            <summary>
-            Save bunch of exemplars to the file.
-            </summary>
-        </member>
-        <member name="M:ManagedClient.Fields.ExemplarInfo.SaveToMemory(System.Collections.Generic.IEnumerable{ManagedClient.Fields.ExemplarInfo})">
-            <summary>
-            Save bunch of exemplars to memory.
-            </summary>
-        </member>
-        <member name="M:ManagedClient.Fields.ExemplarInfo.ReadFromStream(System.IO.Stream)">
-            <summary>
-            Read bunch of exemplars from the stream.
-            </summary>
-        </member>
-        <member name="M:ManagedClient.Fields.ExemplarInfo.ReadFromMemory(System.Byte[])">
-            <summary>
-            Read bunch of exemplars from the stream.
-            </summary>
-        </member>
-        <member name="M:ManagedClient.Fields.ExemplarInfo.ReadFromFile(System.String)">
-            <summary>
-            Read bunch of exemplars from the file.
             </summary>
         </member>
         <member name="M:ManagedClient.Fields.ExemplarInfo.ToString">
@@ -1384,32 +1364,42 @@
             Длина записи N01/L01.
             </summary>
         </member>
-        <member name="T:ManagedClient.Fields.ReaderAddress">
+        <member name="T:ManagedClient.Readers.ReaderAddress">
             <summary>
             Адрес читателя: поле 13 в базе RDR.
             </summary>
         </member>
-        <member name="F:ManagedClient.Fields.ReaderAddress.Tag">
+        <member name="F:ManagedClient.Readers.ReaderAddress.Tag">
             <summary>
             Тег поля.
             </summary>
         </member>
-        <member name="M:ManagedClient.Fields.ReaderAddress.Parse(ManagedClient.RecordField)">
+        <member name="M:ManagedClient.Readers.ReaderAddress.Parse(ManagedClient.RecordField)">
             <summary>
             Разбор поля 13.
             </summary>
         </member>
-        <member name="M:ManagedClient.Fields.ReaderAddress.Parse(ManagedClient.IrbisRecord,System.String)">
+        <member name="M:ManagedClient.Readers.ReaderAddress.Parse(ManagedClient.IrbisRecord,System.String)">
             <summary>
             Разбор поля 13.
             </summary>
         </member>
-        <member name="M:ManagedClient.Fields.ReaderAddress.Parse(ManagedClient.IrbisRecord)">
+        <member name="M:ManagedClient.Readers.ReaderAddress.Parse(ManagedClient.IrbisRecord)">
             <summary>
             Разбор поля 13.
             </summary>
         </member>
-        <member name="M:ManagedClient.Fields.ReaderAddress.ToString">
+        <member name="M:ManagedClient.Readers.ReaderAddress.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Сохранение в поток.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderAddress.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Считывание из потока.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderAddress.ToString">
             <summary>
             Returns a <see cref="T:System.String"/>
             that represents this instance.
@@ -1417,47 +1407,47 @@
             <returns>A <see cref="T:System.String"/>
             that represents this instance.</returns>
         </member>
-        <member name="P:ManagedClient.Fields.ReaderAddress.Postcode">
+        <member name="P:ManagedClient.Readers.ReaderAddress.Postcode">
             <summary>
             Почтовый индекс. Подполе A.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.ReaderAddress.Country">
+        <member name="P:ManagedClient.Readers.ReaderAddress.Country">
             <summary>
             Страна/республика. Подполе B.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.ReaderAddress.City">
+        <member name="P:ManagedClient.Readers.ReaderAddress.City">
             <summary>
             Город. Подполе C.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.ReaderAddress.Street">
+        <member name="P:ManagedClient.Readers.ReaderAddress.Street">
             <summary>
             Улица. Подполе D.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.ReaderAddress.Building">
+        <member name="P:ManagedClient.Readers.ReaderAddress.Building">
             <summary>
             Номер дома. Подполе E.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.ReaderAddress.Entrance">
+        <member name="P:ManagedClient.Readers.ReaderAddress.Entrance">
             <summary>
             Номер подъезда. Подполе G.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.ReaderAddress.Apartment">
+        <member name="P:ManagedClient.Readers.ReaderAddress.Apartment">
             <summary>
             Номер квартиры. Подполе H.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.ReaderAddress.AdditionalData">
+        <member name="P:ManagedClient.Readers.ReaderAddress.AdditionalData">
             <summary>
             Дополнительные данные. Подполе F.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.ReaderAddress.UserData">
+        <member name="P:ManagedClient.Readers.ReaderAddress.UserData">
             <summary>
             Произвольные пользовательские данные.
             </summary>
@@ -2388,6 +2378,68 @@
             <remarks>Borrowed from
             http://referencesource.microsoft.com/
             </remarks>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.WriteNullable``1(System.IO.BinaryWriter,``0)">
+            <summary>
+            Сохранение в поток обнуляемого объекта.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadNullable``1(System.IO.BinaryReader,System.Func{System.IO.BinaryReader,``0})">
+            <summary>
+            Считывание из потока обнуляемого объекта.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.SaveToStream``1(``0[],System.IO.BinaryWriter)">
+            <summary>
+            Сохранение в поток массива элементов.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.SaveToFile``1(``0[],System.String)">
+            <summary>
+            Сохранение в файл массива объектов,
+            умеющих сериализоваться вручную.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.SaveToZipFile``1(``0[],System.String)">
+            <summary>
+            Сохранение в файл массива объектов
+            с одновременной упаковкой.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.SaveToMemory``1(``0[])">
+            <summary>
+            Сохранение массива объектов.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.SaveToZipMemory``1(``0[])">
+            <summary>
+            Сохранение массива объектов.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadArray``1(System.IO.BinaryReader,System.Func{System.IO.BinaryReader,``0})">
+            <summary>
+            Считывание массива из потока.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadFromFile``1(System.String,System.Func{System.IO.BinaryReader,``0})">
+            <summary>
+            Считывание массива из файла.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadFromZipFile``1(System.String,System.Func{System.IO.BinaryReader,``0})">
+            <summary>
+            Считывание массива из файла.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadFromMemory``1(System.Byte[],System.Func{System.IO.BinaryReader,``0})">
+            <summary>
+            Считывание массива из памяти.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisIOUtils.ReadFromZipMemory``1(System.Byte[],System.Func{System.IO.BinaryReader,``0})">
+            <summary>
+            Считывание массива из памяти.
+            </summary>
         </member>
         <member name="T:ManagedClient.IrbisLine">
             <summary>
@@ -9543,11 +9595,6 @@
             Сохранение в поток.
             </summary>
         </member>
-        <member name="M:ManagedClient.IrbisRecord.SaveToStream(System.IO.BinaryWriter,ManagedClient.IrbisRecord[])">
-            <summary>
-            Сохранение в поток.
-            </summary>
-        </member>
         <member name="M:ManagedClient.IrbisRecord.SaveToFile(System.String,ManagedClient.IrbisRecord[])">
             <summary>
             Сохранение в файл.
@@ -9563,17 +9610,14 @@
             Считывание из файла.
             </summary>
         </member>
-        <member name="M:ManagedClient.IrbisRecord.ReadRecordsFromStream(System.IO.BinaryReader)">
-            <summary>
-            Считывание из потока.
-            </summary>
-        </member>
         <member name="M:ManagedClient.IrbisRecord.ToString">
             <summary>
-            Returns a <see cref="T:System.String"/> that represents this instance.
+            Returns a <see cref="T:System.String"/>
+            that represents this instance.
             </summary>
             <returns>
-            A <see cref="T:System.String"/> that represents this instance.
+            A <see cref="T:System.String"/>
+            that represents this instance.
             </returns>
         </member>
         <member name="P:ManagedClient.IrbisRecord.Database">
@@ -10627,6 +10671,26 @@
             <param name="client"></param>
             <returns></returns>
         </member>
+        <member name="M:ManagedClient.Readers.ChairInfo.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Сохранение в поток.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ChairInfo.SaveToFile(System.String,ManagedClient.Readers.ChairInfo[])">
+            <summary>
+            Сохранение в файл.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ChairInfo.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Считывание из потока.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ChairInfo.ReadChairsFromFile(System.String)">
+            <summary>
+            Считывание из файла.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Readers.ChairInfo.Code">
             <summary>
             Код.
@@ -10655,6 +10719,26 @@
         <member name="M:ManagedClient.Readers.IriProfile.ParseRecord(ManagedClient.IrbisRecord)">
             <summary>
             Разбор записи.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.IriProfile.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Сохранение в поток.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.IriProfile.SaveToFile(System.String,ManagedClient.Readers.IriProfile[])">
+            <summary>
+            Сохранение в файл.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.IriProfile.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Чтение из потока.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.IriProfile.ReadProfilesFromFile(System.String)">
+            <summary>
+            Считывание из файла.
             </summary>
         </member>
         <member name="P:ManagedClient.Readers.IriProfile.Active">
@@ -10727,6 +10811,16 @@
             Преобразование в поле.
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderRegistration.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Сохранение в поток.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderRegistration.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Считывание из потока.
+            </summary>
         </member>
         <member name="P:ManagedClient.Readers.ReaderRegistration.DateString">
             <summary>
@@ -12535,7 +12629,7 @@
             Информация о читателе.
             </summary>
         </member>
-        <member name="F:ManagedClient.Readers.ReaderInfo.Enrolment">
+        <member name="F:ManagedClient.Readers.ReaderInfo.Enrollment">
             <summary>
             Запись/перерегистрация в библиотеку.
             Поле 51.
@@ -12568,6 +12662,26 @@
             Формирование записи по данным о читателе.
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderInfo.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Сохранение в поток.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderInfo.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Считывание из потока.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderInfo.SaveToFile(System.String,ManagedClient.Readers.ReaderInfo[])">
+            <summary>
+            Сохранение в файле.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.ReaderInfo.ReadFromFile(System.String)">
+            <summary>
+            Считывание из файла.
+            </summary>
         </member>
         <member name="M:ManagedClient.Readers.ReaderInfo.ToString">
             <summary>
@@ -14161,7 +14275,31 @@
             Формирование поля 40 
             из данных о выдаче/посещении.
             </summary>
-            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Readers.VisitInfo.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Сохранение в поток.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.VisitInfo.SaveToStream(System.IO.BinaryWriter,ManagedClient.Readers.VisitInfo[])">
+            <summary>
+            Сохранение в поток.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.VisitInfo.SaveToFile(System.String,ManagedClient.Readers.VisitInfo[])">
+            <summary>
+            Сохранение в файл.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.VisitInfo.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Считывание из потока.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.VisitInfo.ReadFromFile(System.String)">
+            <summary>
+            Считывание из файла.
+            </summary>
         </member>
         <member name="M:ManagedClient.Readers.VisitInfo.ToString">
             <summary>

@@ -1,9 +1,11 @@
 ﻿/* ReaderRegistration.cs -- информация о регистрации/перерегистрации читателя
+ * Ars Magna project, http://arsmagna.ru
  */
 
 #region Using directives
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 
@@ -26,6 +28,7 @@ namespace ManagedClient.Readers
     [MoonSharpUserData]
     [XmlRoot("registration")]
     public sealed class ReaderRegistration
+        : IHandmadeSerializable
     {
         #region Constants
 
@@ -153,7 +156,7 @@ namespace ManagedClient.Readers
             }
             if (string.IsNullOrEmpty(tag))
             {
-                throw new ArgumentNullException(tag);
+                throw new ArgumentNullException("tag");
             }
 
             ReaderRegistration[] result = record.Fields
@@ -181,6 +184,44 @@ namespace ManagedClient.Readers
 
             return result;
         }
+
+        #region Ручная сериализация
+
+        /// <summary>
+        /// Сохранение в поток.
+        /// </summary>
+        public void SaveToStream
+            (
+                BinaryWriter writer
+            )
+        {
+            writer.WriteNullable(DateString);
+            writer.WriteNullable(Chair);
+            writer.WriteNullable(OrderNumber);
+            writer.WriteNullable(Reason);
+        }
+
+        /// <summary>
+        /// Считывание из потока.
+        /// </summary>
+        [NotNull]
+        public static ReaderRegistration ReadFromStream
+            (
+                [NotNull] BinaryReader reader
+            )
+        {
+            ReaderRegistration result = new ReaderRegistration
+            {
+                DateString = reader.ReadNullableString(),
+                Chair = reader.ReadNullableString(),
+                OrderNumber = reader.ReadNullableString(),
+                Reason = reader.ReadNullableString()
+            };
+
+            return result;
+        }
+
+        #endregion
 
         #endregion
     }

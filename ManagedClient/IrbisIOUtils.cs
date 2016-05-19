@@ -5,6 +5,7 @@
 
 using System;
 using System.IO;
+using System.IO.Compression;
 using JetBrains.Annotations;
 
 #endregion
@@ -290,6 +291,263 @@ namespace ManagedClient
             } while ((b & 0x80) != 0);
             return count;
         }
+
+        /// <summary>
+        /// Сохранение в поток обнуляемого объекта.
+        /// </summary>
+        public static BinaryWriter WriteNullable<T>
+            (
+                [NotNull] this BinaryWriter writer,
+                [CanBeNull] T obj
+            )
+            where T: class, IHandmadeSerializable
+        {
+            if (ReferenceEquals(obj, null))
+            {
+                writer.Write(false);
+            }
+            else
+            {
+                writer.Write(true);
+                obj.SaveToStream(writer);
+            }
+
+            return writer;
+        }
+
+        /// <summary>
+        /// Считывание из потока обнуляемого объекта.
+        /// </summary>
+        [CanBeNull]
+        public static T ReadNullable<T>
+            (
+                [NotNull] this BinaryReader reader,
+                [NotNull] Func<BinaryReader,T> func
+            )
+            where T: class
+        {
+            bool isNull = !reader.ReadBoolean();
+            if (isNull)
+            {
+                return null;
+            }
+
+            T result = func(reader);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Сохранение в поток массива элементов.
+        /// </summary>
+        public static void SaveToStream<T>
+            (
+                [CanBeNull][ItemNotNull] this T[] array,
+                [NotNull] BinaryWriter writer
+            )
+            where T : IHandmadeSerializable
+        {
+            if (ReferenceEquals(array, null))
+            {
+                writer.Write(false);
+            }
+            else
+            {
+                writer.Write(true);
+                writer.WritePackedInt32(array.Length);
+                foreach (T item in array)
+                {
+                    item.SaveToStream(writer);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Сохранение в файл массива объектов,
+        /// умеющих сериализоваться вручную.
+        /// </summary>
+        public static void SaveToFile<T>
+            (
+                [NotNull] [ItemNotNull] this T[] array,
+                [NotNull] string fileName
+            )
+            where T: IHandmadeSerializable
+        {
+            using (Stream stream = File.Create(fileName))
+            using (BinaryWriter writer = new BinaryWriter(stream))
+            {
+                array.SaveToStream(writer);
+            }
+        }
+
+        /// <summary>
+        /// Сохранение в файл массива объектов
+        /// с одновременной упаковкой.
+        /// </summary>
+        public static void SaveToZipFile<T>
+            (
+                [NotNull] [ItemNotNull] this T[] array,
+                [NotNull] string fileName
+            )
+            where T : IHandmadeSerializable
+        {
+            using (Stream stream = File.Create(fileName))
+            using (DeflateStream deflate = new DeflateStream
+                (
+                    stream,
+                    CompressionMode.Compress
+                ))
+            using (BinaryWriter writer = new BinaryWriter(deflate))
+            {
+                array.SaveToStream(writer);
+            }
+        }
+
+        /// <summary>
+        /// Сохранение массива объектов.
+        /// </summary>
+        public static byte[] SaveToMemory<T>
+            (
+                [NotNull][ItemNotNull] this T[] array
+            )
+            where T: IHandmadeSerializable
+        {
+            using (MemoryStream stream = new MemoryStream())
+            using (BinaryWriter writer = new BinaryWriter(stream))
+            {
+                array.SaveToStream(writer);
+                return stream.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Сохранение массива объектов.
+        /// </summary>
+        public static byte[] SaveToZipMemory<T>
+            (
+                [NotNull][ItemNotNull] this T[] array
+            )
+            where T : IHandmadeSerializable
+        {
+            using (MemoryStream stream = new MemoryStream())
+            using (DeflateStream deflate = new DeflateStream
+                (
+                    stream,
+                    CompressionMode.Compress
+                ))
+            using (BinaryWriter writer = new BinaryWriter(deflate))
+            {
+                array.SaveToStream(writer);
+                return stream.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Считывание массива из потока.
+        /// </summary>
+        [CanBeNull]
+        [ItemNotNull]
+        public static T[] ReadArray<T>
+            (
+                [NotNull] this BinaryReader reader,
+                [NotNull] Func<BinaryReader, T> func
+            )
+        {
+            bool isNull = !reader.ReadBoolean();
+            if (isNull)
+            {
+                return null;
+            }
+
+            int count = reader.ReadPackedInt32();
+            T[] result = new T[count];
+            for (int i = 0; i < count; i++)
+            {
+                T item = func(reader);
+                result[i] = item;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Считывание массива из файла.
+        /// </summary>
+        [CanBeNull]
+        [ItemNotNull]
+        public static T[] ReadFromFile<T>
+            (
+                [NotNull] string fileName,
+                [NotNull] Func<BinaryReader, T> func
+            )
+        {
+            using (Stream stream = File.OpenRead(fileName))
+            using (BinaryReader reader = new BinaryReader(stream))
+            {
+                return reader.ReadArray(func);
+            }
+        }
+
+        /// <summary>
+        /// Считывание массива из файла.
+        /// </summary>
+        [CanBeNull]
+        [ItemNotNull]
+        public static T[] ReadFromZipFile<T>
+            (
+                [NotNull] string fileName,
+                [NotNull] Func<BinaryReader, T> func
+            )
+        {
+            using (Stream stream = File.OpenRead(fileName))
+            using (DeflateStream deflate = new DeflateStream
+                (
+                    stream,
+                    CompressionMode.Decompress
+                ))
+            using (BinaryReader reader = new BinaryReader(deflate))
+            {
+                return reader.ReadArray(func);
+            }
+        }
+
+        /// <summary>
+        /// Считывание массива из памяти.
+        /// </summary>
+        public static T[] ReadFromMemory<T>
+            (
+                [NotNull] this byte[] array,
+                [NotNull] Func<BinaryReader,T> func
+            )
+        {
+            using (Stream stream = new MemoryStream(array))
+            using (BinaryReader reader = new BinaryReader(stream))
+            {
+                return reader.ReadArray(func);
+            }
+        }
+
+        /// <summary>
+        /// Считывание массива из памяти.
+        /// </summary>
+        public static T[] ReadFromZipMemory<T>
+            (
+                [NotNull] this byte[] array,
+                [NotNull] Func<BinaryReader, T> func
+            )
+        {
+            using (Stream stream = new MemoryStream(array))
+            using (DeflateStream deflate = new DeflateStream
+                (
+                    stream,
+                    CompressionMode.Decompress
+                ))
+            using (BinaryReader reader = new BinaryReader(deflate))
+            {
+                return reader.ReadArray(func);
+            }
+        }
+
 
         #endregion
     }

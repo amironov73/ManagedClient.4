@@ -1,17 +1,17 @@
 ﻿/* ReaderInfo.cs -- информация о читателе.
+ * Ars Magna project, http://arsmagna.ru
  */
 
 #region Using directives
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 
 using BLToolkit.Mapping;
 
 using JetBrains.Annotations;
-
-using ManagedClient.Fields;
 
 using Newtonsoft.Json;
 
@@ -26,6 +26,7 @@ namespace ManagedClient.Readers
     [Serializable]
     [XmlRoot("reader")]
     public sealed class ReaderInfo
+        : IHandmadeSerializable
     {
         #region Properties
 
@@ -174,9 +175,9 @@ namespace ManagedClient.Readers
         /// Запись/перерегистрация в библиотеку.
         /// Поле 51.
         /// </summary>
-        [XmlArray("enrolment")]
-        [JsonProperty("enrolment")]
-        public ReaderRegistration[] Enrolment;
+        [XmlArray("enrollment")]
+        [JsonProperty("enrollment")]
+        public ReaderRegistration[] Enrollment;
 
         /// <summary>
         /// Дата перерегистрации. Поле 52.
@@ -485,7 +486,7 @@ namespace ManagedClient.Readers
                                         Email = record.FM("32"),
                                         HomePhone = record.FM("17"),
                                         RegistrationDateString = record.FM("51"),
-                                        Enrolment = record.Fields
+                                        Enrollment = record.Fields
                                             .GetField("51")
                                             .Select(ReaderRegistration.Parse)
                                             .ToArray(),
@@ -537,6 +538,118 @@ namespace ManagedClient.Readers
         {
             throw new NotImplementedException();
         }
+
+        #region Ручная сериализация
+
+        /// <summary>
+        /// Сохранение в поток.
+        /// </summary>
+        public void SaveToStream
+            (
+                BinaryWriter writer
+            )
+        {
+            writer.WriteNullable(Fio);
+            writer.WriteNullable(FamilyName);
+            writer.WriteNullable(FirstName);
+            writer.WriteNullable(Patronym);
+            writer.WriteNullable(Birthdate);
+            writer.WriteNullable(Ticket);
+            writer.WriteNullable(Gender);
+            writer.WriteNullable(Category);
+            writer.WriteNullable(Address);
+            writer.WriteNullable(Work);
+            writer.WriteNullable(Education);
+            writer.WriteNullable(Email);
+            writer.WriteNullable(HomePhone);
+            writer.WriteNullable(RegistrationDateString);
+            Enrollment.SaveToStream(writer);
+            Registrations.SaveToStream(writer);
+            writer.WriteNullable(EnabledPlaces);
+            writer.WriteNullable(DisabledPlaces);
+            writer.WriteNullable(Rights);
+            writer.WriteNullable(Remarks);
+            writer.WriteNullable(PhotoFile);
+            Visits.SaveToStream(writer);
+            Profiles.SaveToStream(writer);
+            writer.WriteNullable(Description);
+            writer.WritePackedInt32(Mfn);
+        }
+
+        /// <summary>
+        /// Считывание из потока.
+        /// </summary>
+        [JetBrains.Annotations.NotNull]
+        public static ReaderInfo ReadFromStream
+            (
+                [JetBrains.Annotations.NotNull] BinaryReader reader
+            )
+        {
+            ReaderInfo result = new ReaderInfo
+            {
+                Fio = reader.ReadNullableString(),
+                FamilyName = reader.ReadNullableString(),
+                FirstName = reader.ReadNullableString(),
+                Patronym = reader.ReadNullableString(),
+                Birthdate = reader.ReadNullableString(),
+                Ticket = reader.ReadNullableString(),
+                Gender = reader.ReadNullableString(),
+                Category = reader.ReadNullableString(),
+                Address = reader.ReadNullable(ReaderAddress.ReadFromStream),
+                Work = reader.ReadNullableString(),
+                Education = reader.ReadNullableString(),
+                Email = reader.ReadNullableString(),
+                HomePhone = reader.ReadNullableString(),
+                RegistrationDateString = reader.ReadNullableString(),
+                Enrollment = reader.ReadArray(ReaderRegistration.ReadFromStream),
+                Registrations = reader.ReadArray(ReaderRegistration.ReadFromStream),
+                EnabledPlaces = reader.ReadNullableString(),
+                DisabledPlaces = reader.ReadNullableString(),
+                Rights = reader.ReadNullableString(),
+                Remarks = reader.ReadNullableString(),
+                PhotoFile = reader.ReadNullableString(),
+                Visits = reader.ReadArray(VisitInfo.ReadFromStream),
+                Profiles = reader.ReadArray(IriProfile.ReadFromStream),
+                Description = reader.ReadNullableString(),
+                Mfn = reader.ReadPackedInt32()
+            };
+
+            return result;
+        }
+
+        /// <summary>
+        /// Сохранение в файле.
+        /// </summary>
+        public static void SaveToFile
+            (
+                [JetBrains.Annotations.NotNull] string fileName,
+                [JetBrains.Annotations.NotNull]
+                [ItemNotNull] ReaderInfo[] readers
+            )
+        {
+            readers.SaveToZipFile(fileName);
+        }
+
+        /// <summary>
+        /// Считывание из файла.
+        /// </summary>
+        [CanBeNull]
+        [ItemNotNull]
+        public static ReaderInfo[] ReadFromFile
+            (
+                [JetBrains.Annotations.NotNull] string fileName
+            )
+        {
+            ReaderInfo[] result = IrbisIOUtils.ReadFromZipFile
+                (
+                    fileName,
+                    ReadFromStream
+                );
+
+            return result;
+        }
+
+        #endregion
 
         #endregion
 

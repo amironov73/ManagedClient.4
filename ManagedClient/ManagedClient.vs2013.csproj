@@ -78,6 +78,7 @@
     <Compile Include="CharacterClassifier.cs" />
     <Compile Include="ConfigDatabase.cs" />
     <Compile Include="Fields\ExemplarManager.cs" />
+    <Compile Include="IHandmadeSerializable.cs" />
     <Compile Include="Output\AbstractOutput.cs" />
     <Compile Include="AfterQueryEventArgs.cs" />
     <Compile Include="BatchRecordReader.cs" />
@@ -116,7 +117,7 @@
     <Compile Include="IfpRecord.cs" />
     <Compile Include="IniFile.cs" />
     <Compile Include="Direct\InvertedFile64.cs" />
-    <Compile Include="Fields\ReaderAddress.cs" />
+    <Compile Include="Readers\ReaderAddress.cs" />
     <Compile Include="IrbisAlphabetTable.cs" />
     <Compile Include="IrbisAnswerItem.cs" />
     <Compile Include="IrbisAuthenticationEventArgs.cs" />

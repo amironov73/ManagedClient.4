@@ -412,9 +412,10 @@ namespace ManagedClient.Fields
                 [NotNull] string fileName
             )
         {
-            List<ExemplarInfo> loaded = ExemplarInfo.ReadFromFile
+            ExemplarInfo[] loaded = IrbisIOUtils.ReadFromZipFile
                 (
-                    fileName
+                    fileName,
+                    ExemplarInfo.ReadFromStream
                 );
             foreach (ExemplarInfo exemplar in loaded)
             {
@@ -498,6 +499,17 @@ namespace ManagedClient.Fields
         }
 
         /// <summary>
+        /// Save to the file.
+        /// </summary>
+        public void SaveToFile
+            (
+                [NotNull] string fileName
+            )
+        {
+            _list.ToArray().SaveToZipFile(fileName);
+        }
+
+        /// <summary>
         /// Read many.
         /// </summary>
         [NotNull]
@@ -554,21 +566,6 @@ namespace ManagedClient.Fields
             }
 
             return this;
-        }
-
-        /// <summary>
-        /// Save to file
-        /// </summary>
-        public void SaveToFile
-            (
-                [NotNull] string fileName
-            )
-        {
-            ExemplarInfo.SaveToFile
-                (
-                    _list,
-                    fileName
-                );
         }
 
         /// <summary>

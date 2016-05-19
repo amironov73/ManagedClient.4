@@ -60,6 +60,7 @@
     <Compile Include="BatchFormatterTest.cs" />
     <Compile Include="IniFileTest.cs" />
     <Compile Include="SaveToStreamTest.cs" />
+    <Compile Include="ReaderInfoTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ManagedClient\ManagedClient.vs2013.csproj">

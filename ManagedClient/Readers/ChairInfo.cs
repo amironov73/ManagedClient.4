@@ -1,10 +1,13 @@
 ﻿/* ChairInfo.cs -- кафедра обслуживания.
+ * Ars Magna project, http://arsmagna.ru
  */
 
 #region Using directives
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 
@@ -22,7 +25,9 @@ namespace ManagedClient.Readers
     [PublicAPI]
     [Serializable]
     [XmlRoot("chair")]
+    [DebuggerDisplay("Code={Code} Title={Title}")]
     public sealed class ChairInfo
+        : IHandmadeSerializable
     {
         #region Constants
 
@@ -38,6 +43,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// Код.
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("code")]
         [JsonProperty("code")]
         public string Code { get; set; }
@@ -45,6 +51,7 @@ namespace ManagedClient.Readers
         /// <summary>
         /// Название.
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("title")]
         [JsonProperty("title")]
         public string Title { get; set; }
@@ -190,6 +197,71 @@ namespace ManagedClient.Readers
                     ChairMenu
                 );
         }
+
+        #region Ручная сериализация
+
+        /// <summary>
+        /// Сохранение в поток.
+        /// </summary>
+        public void SaveToStream
+            (
+                BinaryWriter writer
+            )
+        {
+            writer.WriteNullable(Code);
+            writer.WriteNullable(Title);
+        }
+
+        /// <summary>
+        /// Сохранение в файл.
+        /// </summary>
+        public static void SaveToFile
+            (
+                [NotNull] string fileName,
+                [NotNull][ItemNotNull] ChairInfo[] chairs
+            )
+        {
+            chairs.SaveToFile(fileName);
+        }
+
+        /// <summary>
+        /// Считывание из потока.
+        /// </summary>
+        [NotNull]
+        public static ChairInfo ReadFromStream
+            (
+                [NotNull] BinaryReader reader
+            )
+        {
+            ChairInfo result = new ChairInfo
+            {
+                Code = reader.ReadNullableString(),
+                Title = reader.ReadNullableString()
+            };
+
+            return result;
+        }
+
+        /// <summary>
+        /// Считывание из файла.
+        /// </summary>
+        [NotNull]
+        [ItemNotNull]
+        public static ChairInfo[] ReadChairsFromFile
+            (
+                [NotNull] string fileName
+            )
+        {
+            ChairInfo[] result = IrbisIOUtils.ReadFromFile
+                (
+                    fileName,
+                    ReadFromStream
+                );
+
+            return result;
+        }
+
+        #endregion
 
         #endregion
 
