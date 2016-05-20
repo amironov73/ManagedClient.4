@@ -27,7 +27,8 @@ namespace ManagedClient
     [MoonSharpUserData]
     [ClassInterface(ClassInterfaceType.None)]
     public sealed class RecordFieldCollection
-        : Collection<RecordField>
+        : Collection<RecordField>,
+        IHandmadeSerializable
     {
         #region Public methods
 
@@ -77,7 +78,7 @@ namespace ManagedClient
         /// </summary>
         public void SaveToStream
             (
-                [NotNull] BinaryWriter writer
+                BinaryWriter writer
             )
         {
             writer.WritePackedInt32(Count);

@@ -30,7 +30,8 @@ namespace ManagedClient
     [ClassInterface(ClassInterfaceType.None)]
     [DebuggerDisplay("Count = {Count}")]
     public sealed class SubFieldCollection
-        : Collection<SubField>
+        : Collection<SubField>,
+        IHandmadeSerializable
     {
         #region Public methods
 
@@ -83,7 +84,7 @@ namespace ManagedClient
         /// </summary>
         public void SaveToStream
             (
-                [NotNull] BinaryWriter writer
+                BinaryWriter writer
             )
         {
             writer.WritePackedInt32(Count);

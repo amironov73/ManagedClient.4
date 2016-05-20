@@ -25,6 +25,7 @@ namespace ManagedClient
     [MoonSharpUserData]
     [DebuggerDisplay("Code={Code} Text={Text}")]
     public class SubField
+        : IHandmadeSerializable
     {
         #region Properties
 
@@ -235,7 +236,7 @@ namespace ManagedClient
         /// </summary>
         public void SaveToStream
             (
-                [NotNull] BinaryWriter writer
+                BinaryWriter writer
             )
         {
             writer.WriteNullable(CodeString);

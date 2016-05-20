@@ -28,6 +28,7 @@ namespace ManagedClient
     [MoonSharpUserData]
     [DebuggerDisplay("Tag={Tag} Text={Text}")]
     public sealed class RecordField
+        : IHandmadeSerializable
     {
         #region Constants
 
@@ -1070,7 +1071,7 @@ namespace ManagedClient
         /// <param name="writer"></param>
         public void SaveToStream
             (
-                [NotNull] BinaryWriter writer
+                BinaryWriter writer
             )
         {
             writer.WriteNullable(Tag);
