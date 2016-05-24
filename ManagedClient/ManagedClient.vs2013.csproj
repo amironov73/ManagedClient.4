@@ -117,6 +117,8 @@
     <Compile Include="IfpRecord.cs" />
     <Compile Include="IniFile.cs" />
     <Compile Include="Direct\InvertedFile64.cs" />
+    <Compile Include="Readers\DebtorInfo.cs" />
+    <Compile Include="Readers\DebtorManager.cs" />
     <Compile Include="Readers\ReaderAddress.cs" />
     <Compile Include="IrbisAlphabetTable.cs" />
     <Compile Include="IrbisAnswerItem.cs" />

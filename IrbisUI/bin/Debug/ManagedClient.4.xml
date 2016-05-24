@@ -1364,6 +1364,136 @@
             Длина записи N01/L01.
             </summary>
         </member>
+        <member name="T:ManagedClient.Readers.DebtorInfo">
+            <summary>
+            Информация о задолжнике
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.DebtorInfo.FromReader(ManagedClient.Readers.ReaderInfo)">
+            <summary>
+            Формирование задолжника из читателя
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.DebtorInfo.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+            Просим объект записаться в поток.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.DebtorInfo.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Восстанавливаем объект из потока.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.Fio">
+            <summary>
+            Фамилия, имя, отчество
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.Birthdate">
+            <summary>
+            Дата рождения
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.Ticket">
+            <summary>
+            Номер читательского билета
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.Gender">
+            <summary>
+            Пол
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.Category">
+            <summary>
+            Категория
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.Address">
+            <summary>
+            Адрес
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.Work">
+            <summary>
+            Место работы
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.Email">
+            <summary>
+            Электронная почта
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.HomePhone">
+            <summary>
+            Домашний телефон
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.Age">
+            <summary>
+            Возраст
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.Remarks">
+            <summary>
+            Примечания
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.Mfn">
+            <summary>
+            MFN записи
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.Description">
+            <summary>
+            Расформатированное описание
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.UserData">
+            <summary>
+            Произвольные данные
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorInfo.Exemplars">
+            <summary>
+            Задолженные экземпляры
+            </summary>
+        </member>
+        <member name="T:ManagedClient.Readers.DebtorManager">
+            <summary>
+            Работа с задолжниками
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.DebtorManager.#ctor(ManagedClient.ManagedClient64)">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Readers.DebtorManager.GetDebtors">
+            <summary>
+            Получение списка задолжников.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorManager.Client">
+            <summary>
+            Клиент.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorManager.Department">
+            <summary>
+            Кафедра обслуживания.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorManager.FromDate">
+            <summary>
+            С какой даты задолженность?
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Readers.DebtorManager.ToDate">
+            <summary>
+            По какую дату задолженность.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Readers.ReaderAddress">
             <summary>
             Адрес читателя: поле 13 в базе RDR.
