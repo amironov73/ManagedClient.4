@@ -143,11 +143,19 @@ namespace ManagedClient.Magazines
                 throw new ArgumentNullException("magazine");
             }
 
-            IrbisRecord[] records = Client.SearchRead
+            int[] mfns = Client.Search
                 (
-                    "\"I={0}/$\"",
-                    magazine.Index
+                        "\"I={0}/$\"",
+                        magazine.Index
                 );
+            BatchRecordReader batch = new BatchRecordReader(Client, mfns);
+            IrbisRecord[] records = batch.ToArray();
+
+//            IrbisRecord[] records = Client.SearchRead
+//                (
+//                    "\"I={0}/$\"",
+//                    magazine.Index
+//                );
 
             MagazineIssueInfo[] result = records
                 .NonNullItems()
