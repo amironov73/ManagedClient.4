@@ -383,6 +383,7 @@
     <Compile Include="SubField.cs" />
     <Compile Include="TermLink.cs" />
     <Compile Include="Transliterator.cs" />
+    <Compile Include="UniversalComparer.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Readers\VisitInfo.cs" />
     <Compile Include="Direct\XrfFile64.cs" />

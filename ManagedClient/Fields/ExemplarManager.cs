@@ -5,7 +5,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -46,9 +46,9 @@ namespace ManagedClient.Fields
         /// List of exemplars.
         /// </summary>
         [NotNull]
-        public ReadOnlyCollection<ExemplarInfo> List
+        public BindingList<ExemplarInfo> ExemplarList
         {
-            get { return _list.AsReadOnly(); }
+            get { return _exemplarList; }
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace ManagedClient.Fields
             _output = output;
             Prefix = "IN=";
             Format = "@brief";
-            _list = new List<ExemplarInfo>();
+            _exemplarList = new BindingList<ExemplarInfo>();
             _newspapers = new Dictionary<string, bool>();
         }
 
@@ -115,7 +115,7 @@ namespace ManagedClient.Fields
 
         private readonly ManagedClient64 _client;
 
-        private readonly List<ExemplarInfo> _list;
+        private readonly BindingList<ExemplarInfo> _exemplarList;
 
         private readonly Dictionary<string, bool> _newspapers;
 
@@ -187,7 +187,7 @@ namespace ManagedClient.Fields
 
             if (Find(exemplar.Number) == null)
             {
-                _list.Add(exemplar);
+                _exemplarList.Add(exemplar);
             }
 
             return this;
@@ -216,7 +216,7 @@ namespace ManagedClient.Fields
         [NotNull]
         public ExemplarManager Clear()
         {
-            _list.Clear();
+            _exemplarList.Clear();
 
             return this;
         }
@@ -231,6 +231,7 @@ namespace ManagedClient.Fields
             )
         {
             string result = record.Description;
+
             if (string.IsNullOrEmpty(result))
             {
                 result = Client.FormatRecord
@@ -316,7 +317,7 @@ namespace ManagedClient.Fields
                 return null;
             }
 
-            return _list.FirstOrDefault
+            return _exemplarList.FirstOrDefault
                 (
                     e => e.Number.SameString(number)
                          || e.Barcode.SameString(number)
@@ -426,7 +427,7 @@ namespace ManagedClient.Fields
                 ExemplarInfo copy = Find(exemplar.Number);
                 if (copy == null)
                 {
-                    _list.Add(exemplar);
+                    _exemplarList.Add(exemplar);
                 }
             }
         }
@@ -449,6 +450,30 @@ namespace ManagedClient.Fields
 
             ExemplarInfo result = records
                 .SelectMany(ExemplarInfo.Parse)
+                .FirstOrDefault();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Reads exemplar for given number.
+        /// </summary>
+        [CanBeNull]
+        public ExemplarInfo ReadExtend
+            (
+                [NotNull] string number
+            )
+        {
+            IrbisRecord[] records = Client.SearchRead
+                (
+                    "\"{0}{1}\"",
+                    Prefix,
+                    number
+                );
+
+            ExemplarInfo result = records
+                .SelectMany(ExemplarInfo.Parse)
+                .Tee(exemplar => Extend(exemplar, exemplar.Record))
                 .FirstOrDefault();
 
             return result;
@@ -506,7 +531,7 @@ namespace ManagedClient.Fields
                 [NotNull] string fileName
             )
         {
-            _list.ToArray().SaveToZipFile(fileName);
+            _exemplarList.ToArray().SaveToZipFile(fileName);
         }
 
         /// <summary>
@@ -562,7 +587,7 @@ namespace ManagedClient.Fields
             ExemplarInfo found = Find(number);
             if (found != null)
             {
-                _list.Remove(found);
+                _exemplarList.Remove(found);
             }
 
             return this;

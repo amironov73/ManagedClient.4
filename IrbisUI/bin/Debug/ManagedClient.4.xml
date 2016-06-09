@@ -197,6 +197,11 @@
             Reads exemplar for given number.
             </summary>
         </member>
+        <member name="M:ManagedClient.Fields.ExemplarManager.ReadExtend(System.String)">
+            <summary>
+            Reads exemplar for given number.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Fields.ExemplarManager.ReadConfiguration(System.String,System.Text.Encoding)">
             <summary>
             Read configuration.
@@ -242,7 +247,7 @@
             Brief format name.
             </summary>
         </member>
-        <member name="P:ManagedClient.Fields.ExemplarManager.List">
+        <member name="P:ManagedClient.Fields.ExemplarManager.ExemplarList">
             <summary>
             List of exemplars.
             </summary>
@@ -946,6 +951,11 @@
             ББК.
             </summary>
         </member>
+        <member name="P:ManagedClient.Fields.ExemplarInfo.Index">
+            <summary>
+            Шифр документа в БД, поле 903.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Fields.ExemplarInfo.SequentialNumber">
             <summary>
             Номер по порядку (для списков).
@@ -954,6 +964,11 @@
         <member name="P:ManagedClient.Fields.ExemplarInfo.OrderingData">
             <summary>
             Информация для упорядочения в списках.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.ExemplarInfo.Record">
+            <summary>
+            Запись, из которой получен экземпляр.
             </summary>
         </member>
         <member name="P:ManagedClient.Fields.ExemplarInfo.UserData">
@@ -14058,6 +14073,26 @@
             Transliterates the specified text.
             </summary>
         </member>
+        <member name="T:ManagedClient.UniversalComparer`1">
+            <summary>
+            Универсальный компаратор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.UniversalComparer`1.#ctor(System.Func{`0,`0,System.Int32})">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.UniversalComparer`1.Compare(`0,`0)">
+            <summary>
+            Compares the specified values.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.UniversalComparer`1.Function">
+            <summary>
+            Используемый для сравнения делегат.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Utilities">
             <summary>
             Несколько утилит, упрощающих код.
@@ -14387,6 +14422,12 @@
             <summary>
             Разбиение массива на (почти) равные части.
             </summary>
+        </member>
+        <member name="M:ManagedClient.Utilities.Tee``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Применяет действие к каждому элементу последовательности
+            </summary>
+            <returns>Ту же самую последовательность.</returns>
         </member>
         <member name="T:ManagedClient.Readers.VisitInfo">
             <summary>

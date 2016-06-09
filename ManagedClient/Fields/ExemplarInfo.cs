@@ -334,6 +334,14 @@ namespace ManagedClient.Fields
         public string Bbk { get; set; }
 
         /// <summary>
+        /// Шифр документа в БД, поле 903.
+        /// </summary>
+        [XmlAttribute("index")]
+        [JsonProperty("index")]
+        [MapIgnore]
+        public string Index { get; set; }
+
+        /// <summary>
         /// Номер по порядку (для списков).
         /// </summary>
         [XmlIgnore]
@@ -344,15 +352,25 @@ namespace ManagedClient.Fields
         /// <summary>
         /// Информация для упорядочения в списках.
         /// </summary>
+        [CanBeNull]
         [XmlIgnore]
         [JsonIgnore]
         [MapIgnore]
-        [CanBeNull]
         public string OrderingData { get; set; }
+
+        /// <summary>
+        /// Запись, из которой получен экземпляр.
+        /// </summary>
+        [CanBeNull]
+        [XmlIgnore]
+        [MapIgnore]
+        [JsonIgnore]
+        public IrbisRecord Record { get; set; }
 
         /// <summary>
         /// Произвольные пользовательские данные.
         /// </summary>
+        [CanBeNull]
         [XmlIgnore]
         [JsonIgnore]
         [MapIgnore]
@@ -453,6 +471,12 @@ namespace ManagedClient.Fields
 
             foreach (ExemplarInfo exemplar in result)
             {
+                exemplar.Record = record;
+                exemplar.Index = record.FM("903");
+                if (string.IsNullOrEmpty(exemplar.ShelfIndex))
+                {
+                    exemplar.ShelfIndex = record.FM("906");
+                }
                 exemplar.Mfn = record.Mfn;
                 exemplar.Description = record.Description;
             }
@@ -581,7 +605,8 @@ namespace ManagedClient.Fields
                 Description = reader.ReadNullableString(),
                 Bbk = reader.ReadNullableString(),
                 OrderingData = reader.ReadNullableString(),
-                Mfn = reader.ReadInt32()
+                Index = reader.ReadNullableString(),
+                Mfn = reader.ReadInt32(),
             };
 
             return result;
@@ -626,7 +651,8 @@ namespace ManagedClient.Fields
                 .WriteNullable(Year)
                 .WriteNullable(Description)
                 .WriteNullable(Bbk)
-                .WriteNullable(OrderingData);
+                .WriteNullable(OrderingData)
+                .WriteNullable(Index);
             writer.Write(Mfn);
         }
 

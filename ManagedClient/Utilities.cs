@@ -880,5 +880,23 @@ namespace ManagedClient
 
             return result.ToArray();
         }
+
+        /// <summary>
+        /// Применяет действие к каждому элементу последовательности
+        /// </summary>
+        /// <returns>Ту же самую последовательность.</returns>
+        [NotNull]
+        public static IEnumerable<T> Tee<T>
+            (
+                [NotNull] this IEnumerable<T> list,
+                [NotNull] Action<T> action
+            )
+        {
+            foreach (T item in list)
+            {
+                action(item);
+                yield return item;
+            }
+        }
     }
 }
