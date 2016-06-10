@@ -185,7 +185,7 @@ namespace ManagedClient.Fields
                 return this;
             }
 
-            if (Find(exemplar.Number) == null)
+            if (Find(exemplar.Barcode) == null)
             {
                 _exemplarList.Add(exemplar);
             }
