@@ -28,6 +28,11 @@ namespace ManagedClient.Fields
         #region Properties
 
         /// <summary>
+        /// Allow duplicates.
+        /// </summary>
+        public bool AllowDuplicates { get; set; }
+
+        /// <summary>
         /// Client.
         /// </summary>
         [NotNull]
@@ -185,7 +190,8 @@ namespace ManagedClient.Fields
                 return this;
             }
 
-            if (Find(exemplar.Barcode) == null)
+            if (AllowDuplicates
+               || (Find(exemplar.Barcode) == null))
             {
                 _exemplarList.Add(exemplar);
             }
@@ -474,7 +480,11 @@ namespace ManagedClient.Fields
             ExemplarInfo result = records
                 .SelectMany(ExemplarInfo.Parse)
                 .Tee(exemplar => Extend(exemplar, exemplar.Record))
-                .FirstOrDefault();
+                .FirstOrDefault
+                (
+                    e => e.Barcode.SameString(number)
+                        || e.Number.SameString(number)
+                );
 
             return result;
         }

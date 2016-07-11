@@ -237,6 +237,11 @@
             Write delimiter.
             </summary>
         </member>
+        <member name="P:ManagedClient.Fields.ExemplarManager.AllowDuplicates">
+            <summary>
+            Allow duplicates.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Fields.ExemplarManager.Client">
             <summary>
             Client.
