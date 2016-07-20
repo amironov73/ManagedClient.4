@@ -368,6 +368,20 @@ namespace ManagedClient.Fields
         public IrbisRecord Record { get; set; }
 
         /// <summary>
+        /// Номер тома (для журналов)
+        /// </summary>
+        [CanBeNull]
+        [MapField("volume")]
+        public string Volume { get; set; }
+
+        /// <summary>
+        /// Номер выпуска (для журналов/газет).
+        /// </summary>
+        [CanBeNull]
+        [MapField("issue")]
+        public string Issue { get; set; }
+
+        /// <summary>
         /// Произвольные пользовательские данные.
         /// </summary>
         [CanBeNull]
@@ -441,6 +455,13 @@ namespace ManagedClient.Fields
                             .IndexOf(char.ToLower(sub.Code)) < 0)
                         .ToArray()
                 };
+
+            if (!string.IsNullOrEmpty(result.Channel)
+                && (result.Channel.Length > 20))
+            {
+                result.Channel = result.Channel.Substring(0, 20).Trim();
+            }
+
             return result;
         }
 
@@ -479,6 +500,12 @@ namespace ManagedClient.Fields
                 }
                 exemplar.Mfn = record.Mfn;
                 exemplar.Description = record.Description;
+                if (string.IsNullOrEmpty(exemplar.Year))
+                {
+                    exemplar.Year = record.FM("934");
+                }
+                exemplar.Volume = record.FM("935");
+                exemplar.Issue = record.FM("936");
             }
 
             return result;

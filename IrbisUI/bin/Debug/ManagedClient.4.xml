@@ -976,6 +976,16 @@
             Запись, из которой получен экземпляр.
             </summary>
         </member>
+        <member name="P:ManagedClient.Fields.ExemplarInfo.Volume">
+            <summary>
+            Номер тома (для журналов)
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Fields.ExemplarInfo.Issue">
+            <summary>
+            Номер выпуска (для журналов/газет).
+            </summary>
+        </member>
         <member name="P:ManagedClient.Fields.ExemplarInfo.UserData">
             <summary>
             Произвольные пользовательские данные.
