@@ -265,6 +265,7 @@ namespace ManagedClient.Quality
                         count++;
                     }
                 }
+                seen.Add(field.Tag);
                 field.Repeat = count;
                 foreach (SubField subField in field.SubFields)
                 {

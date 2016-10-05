@@ -690,7 +690,7 @@ namespace ManagedClient
         }
 
         /// <summary>
-        /// Парсинг текстового проедставления поля
+        /// Парсинг текстового представления поля
         /// </summary>
         /// <param name="tag"></param>
         /// <param name="body"></param>
