@@ -11,9 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-using JetBrains.Annotations;
-
-using CM=System.Configuration.ConfigurationManager;
+using CM = System.Configuration.ConfigurationManager;
 
 #endregion
 
@@ -22,7 +20,6 @@ namespace ManagedClient
     /// <summary>
     /// Несколько утилит, упрощающих код.
     /// </summary>
-    [PublicAPI]
     public static class Utilities
     {
         /// <summary>
@@ -84,7 +81,7 @@ namespace ManagedClient
             (
                 this IEnumerable<T> sequence
             )
-            where T: class
+            where T : class
         {
             return sequence.Where(value => value != null);
         }
@@ -373,8 +370,8 @@ namespace ManagedClient
             {
                 if (String.Equals
                     (
-                        value, 
-                        s, 
+                        value,
+                        s,
                         StringComparison.CurrentCultureIgnoreCase
                     ))
                 {
@@ -651,6 +648,43 @@ namespace ManagedClient
         }
 
         /// <summary>
+        /// Шестнадцатиричный дамп массива байт.
+        /// </summary>
+        public static string DumpBytes
+            (
+                byte[] buffer
+            )
+        {
+            StringBuilder result = new StringBuilder(buffer.Length * 5);
+
+            int offset;
+
+            for (offset = 0; offset < buffer.Length; offset += 16)
+            {
+                result.AppendFormat
+                    (
+                        "{0:X6}:",
+                        offset
+                    );
+
+                int run = Math.Min(buffer.Length - offset, 16);
+
+                for (int i = 0; i < run; i++)
+                {
+                    result.AppendFormat
+                        (
+                            " {0:X2}",
+                            buffer[offset + i]
+                        );
+                }
+
+                result.AppendLine();
+            }
+
+            return result.ToString();
+        }
+
+        /// <summary>
         /// Добавление элемента к массиву.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -712,10 +746,9 @@ namespace ManagedClient
         /// </summary>
         /// <param name="candidates"></param>
         /// <returns></returns>
-        [CanBeNull]
         public static string FindSetting
             (
-                [NotNull] params string[] candidates
+                params string[] candidates
             )
         {
             foreach (string candidate in candidates.NonEmptyLines())
@@ -779,10 +812,9 @@ namespace ManagedClient
         /// строки (настоящих и ирбисных)
         /// </remarks>
         /// <returns></returns>
-        [CanBeNull]
         public static string PrepareFormat
             (
-                [CanBeNull] this string text
+                this string text
             )
         {
             if (string.IsNullOrEmpty(text))
@@ -796,11 +828,11 @@ namespace ManagedClient
                     "/[*].*?[\r\n]",
                     " "
                 )
-                .Replace ( '\r', ' ' )
-                .Replace ( '\n', ' ' )
-                .Replace ( '\t', ' ' )
-                .Replace ( '\x1F', ' ' )
-                .Replace ( '\x1E', ' ' );
+                .Replace('\r', ' ')
+                .Replace('\n', ' ')
+                .Replace('\t', ' ')
+                .Replace('\x1F', ' ')
+                .Replace('\x1E', ' ');
 
             return text;
         }
@@ -809,10 +841,9 @@ namespace ManagedClient
         /// Подготавливает строку запроса,
         /// заменяя запрещённые символы на пробелы.
         /// </summary>
-        [CanBeNull]
         public static string PrepareQuery
             (
-                [CanBeNull] this string text
+                this string text
             )
         {
             if (string.IsNullOrEmpty(text))
@@ -829,10 +860,9 @@ namespace ManagedClient
         /// Превращает строку в видимую.
         /// Пример: "(null)".
         /// </summary>
-        [NotNull]
         public static string MakeVisibleString
             (
-                [CanBeNull] this string text
+                this string text
             )
         {
             if (ReferenceEquals(text, null))
@@ -854,10 +884,9 @@ namespace ManagedClient
         /// <summary>
         /// Разбиение массива на (почти) равные части.
         /// </summary>
-        [NotNull]
         public static T[][] SplitArray<T>
             (
-                [NotNull] T[] array, 
+                T[] array,
                 int partCount
             )
         {
@@ -885,11 +914,10 @@ namespace ManagedClient
         /// Применяет действие к каждому элементу последовательности
         /// </summary>
         /// <returns>Ту же самую последовательность.</returns>
-        [NotNull]
         public static IEnumerable<T> Tee<T>
             (
-                [NotNull] this IEnumerable<T> list,
-                [NotNull] Action<T> action
+                 this IEnumerable<T> list,
+                 Action<T> action
             )
         {
             foreach (T item in list)

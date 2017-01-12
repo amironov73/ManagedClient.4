@@ -278,7 +278,23 @@ namespace ManagedClient
             )
         {
             string[] lines = text.Split ( '\x1F' );
-            return Parse ( lines, skipLines );
+            IrbisRecord result = Parse ( lines, skipLines );
+
+            if (result.Fields.Count == 0)
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(text);
+                string dump = Utilities.DumpBytes(bytes);
+                string message = string.Format
+                    (
+                        "Empty record in IrbisRecord.Parse:{0}{1}",
+                        Environment.NewLine,
+                        dump
+                    );
+
+                throw new ApplicationException(message);
+            }
+
+            return result;
         }
 
         /// <summary>

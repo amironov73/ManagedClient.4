@@ -13325,7 +13325,7 @@
         </member>
         <member name="M:ManagedClient.RecordField.Parse(System.String,System.String)">
             <summary>
-            Парсинг текстового проедставления поля
+            Парсинг текстового представления поля
             </summary>
             <param name="tag"></param>
             <param name="body"></param>
@@ -14360,6 +14360,11 @@
             <param name="buffer">Байты.</param>
             <param name="offset">Начальное смещение.</param>
             <param name="count">Количество байт для дампа.</param>
+        </member>
+        <member name="M:ManagedClient.Utilities.DumpBytes(System.Byte[])">
+            <summary>
+            Шестнадцатиричный дамп массива байт.
+            </summary>
         </member>
         <member name="M:ManagedClient.Utilities.AppendToArray``1(``0[],``0)">
             <summary>

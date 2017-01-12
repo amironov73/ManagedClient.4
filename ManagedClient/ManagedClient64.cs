@@ -3903,7 +3903,7 @@ TryAgain:
                     forEveryRepeat
                 )
                 .Where(_ => !string.IsNullOrEmpty(_))
-                .Select(int.Parse)
+                .Select(_ => int.Parse(_))
                 .ToArray();
         }
 
@@ -3952,7 +3952,7 @@ TryAgain:
                     forEveryRepeat
                 )
                 .Where(_ => !string.IsNullOrEmpty(_))
-                .Select(int.Parse)
+                .Select(_ => int.Parse(_))
                 .ToArray();
         }
 
