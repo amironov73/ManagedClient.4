@@ -23,7 +23,6 @@ using MoonSharp.Interpreter;
 
 #if !PocketPC
 using System.Runtime.Serialization.Formatters.Binary;
-using ManagedClient.Pft;
 #endif
 
 #endregion
@@ -791,7 +790,8 @@ namespace ManagedClient
                 bool cp1251
             )
         {
-            byte[] buffer = _client.GetStream().ReadToEnd();
+            //byte[] buffer = _client.GetStream().ReadToEnd();
+            byte[] buffer = _client.Client.ReadToEnd();
 
             if (AllowHexadecimalDump
                  && (DebugWriter != null))
@@ -1553,8 +1553,8 @@ TryAgain:
             while (list.Count < 10 && !reader.EndOfStream)
                 list.Add(reader.ReadLine());
 
-            //вначала бинарного блока идет строка IRBIS_BINARY_DATA
-            //прочитаем ее            
+            // в начале бинарного блока идет строка IRBIS_BINARY_DATA
+            // прочитаем ее
             char[] headingBuffer = new char[17];
             int read = reader.Read(headingBuffer, 0, headingBuffer.Length);
             string markString = new string(headingBuffer, 0, read);
@@ -1576,6 +1576,9 @@ TryAgain:
 
         }
 
+        /// <summary>
+        /// Чтение бинарного файла с сервера.
+        /// </summary>
         public Stream ReadBinaryFile
             (
                 IrbisPath path,
@@ -1595,7 +1598,7 @@ TryAgain:
                         path,
                         "@" + fileName
                     );
-                _Send(query, combinedPath);
+                _Send(query, true, combinedPath);
                 string answer;
                 Stream stream = _ReceiveBinary(out answer);
                 ResponseHeader response = ResponseHeader.Parse(answer);
@@ -2391,27 +2394,6 @@ TryAgain:
                 _SetBusy(false);
             }
         }
-
-#if !PocketPC
-        /// <summary>
-        /// Расформатирование записи локально,
-        /// по возможности без походов на сервер.
-        /// </summary>
-        /// <param name="format"></param>
-        /// <param name="record"></param>
-        /// <returns></returns>
-        public string FormatLocal
-            (
-                string format,
-                IrbisRecord record
-            )
-        {
-            PftFormatter formatter = new PftFormatter(this);
-            formatter.ParseInput(format);
-            string result = formatter.Format(record);
-            return result;
-        }
-#endif
 
         public string FormatRecord
             (

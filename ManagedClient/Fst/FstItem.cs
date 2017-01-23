@@ -7,14 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ManagedClient.Pft;
 
 #endregion
 
 namespace ManagedClient.Fst
 {
-    using Pft.Ast;
-
     /// <summary>
     /// Строчка из FST-файла.
     /// </summary>
@@ -43,10 +40,10 @@ namespace ManagedClient.Fst
         /// </summary>
         public string Format { get; set; }
 
-        /// <summary>
-        /// Распарсенный формат
-        /// </summary>
-        public PftProgram Program { get; set; }
+        ///// <summary>
+        ///// Распарсенный формат
+        ///// </summary>
+        //public PftProgram Program { get; set; }
 
         #endregion
 
@@ -64,12 +61,12 @@ namespace ManagedClient.Fst
             : this ()
         {
             Format = format;
-            PftFormatter formatter = new PftFormatter
-            {
-                Context = {Client = client}
-            };
-            formatter.ParseInput(format);
-            Program = formatter.Program;
+            //PftFormatter formatter = new PftFormatter
+            //{
+            //    Context = {Client = client}
+            //};
+            //formatter.ParseInput(format);
+            //Program = formatter.Program;
         }
 
         #endregion
@@ -82,49 +79,51 @@ namespace ManagedClient.Fst
 
         public string[] Execute
             (
-                PftContext context
+                //PftContext context
             )
         {
-            string text = context.Evaluate
-                (
-                    Program
-                );
-            if (string.IsNullOrEmpty(text))
-            {
-                return new string[0];
-            }
-            string[] lines = text.SplitLines();
-            string[] result =
-                (
-                    from line in lines
-                    where !string.IsNullOrEmpty(line)
-                    select line.Trim()
-                )
-                .ToArray();
-            return result;
+            return new string[0];
+
+            //string text = context.Evaluate
+            //    (
+            //        Program
+            //    );
+            //if (string.IsNullOrEmpty(text))
+            //{
+            //    return new string[0];
+            //}
+            //string[] lines = text.SplitLines();
+            //string[] result =
+            //    (
+            //        from line in lines
+            //        where !string.IsNullOrEmpty(line)
+            //        select line.Trim()
+            //    )
+            //    .ToArray();
+            //return result;
         }
 
-        public bool Execute
-            (
-                PftContext context,
-                IrbisRecord record
-            )
-        {
-            bool result = false;
-            string[] lines = Execute(context);
-            foreach (string line in lines)
-            {
-                // TODO реализовать разные методы построения поля из результата
-                RecordField field = RecordField.Parse
-                    (
-                        Tag,
-                        line
-                    );
-                record.Fields.Add(field);
-                result = true;
-            }
-            return result;
-        }
+        //public bool Execute
+        //    (
+        //        PftContext context,
+        //        IrbisRecord record
+        //    )
+        //{
+        //    bool result = false;
+        //    string[] lines = Execute(context);
+        //    foreach (string line in lines)
+        //    {
+        //        // TODO реализовать разные методы построения поля из результата
+        //        RecordField field = RecordField.Parse
+        //            (
+        //                Tag,
+        //                line
+        //            );
+        //        record.Fields.Add(field);
+        //        result = true;
+        //    }
+        //    return result;
+        //}
 
         #endregion
     }

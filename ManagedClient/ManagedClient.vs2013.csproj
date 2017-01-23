@@ -157,101 +157,6 @@
     <Compile Include="Output\TeeOutput.cs" />
     <Compile Include="ParallelFormatter.cs" />
     <Compile Include="ParallelRecordReader.cs" />
-    <Compile Include="Pft\Abstraction\PftAbstractionLayer.cs" />
-    <Compile Include="Pft\Ast\PftAstList.cs" />
-    <Compile Include="Pft\Ast\PftCommandC.cs" />
-    <Compile Include="Pft\Ast\PftCommandX.cs" />
-    <Compile Include="Pft\Ast\PftCompositeElement.cs" />
-    <Compile Include="Pft\Ast\PftCompositeElementList.cs" />
-    <Compile Include="Pft\Ast\PftCondition.cs" />
-    <Compile Include="Pft\Ast\PftConditionalLiteral.cs" />
-    <Compile Include="Pft\Ast\PftDebugBreak.cs" />
-    <Compile Include="Pft\Ast\PftDebugStatement.cs" />
-    <Compile Include="Pft\Ast\PftEatFunction.cs" />
-    <Compile Include="Pft\Ast\PftErrorStatement.cs" />
-    <Compile Include="Pft\Ast\PftEscapedLiteral.cs" />
-    <Compile Include="Pft\Ast\PftFatalStatement.cs" />
-    <Compile Include="Pft\Ast\PftFieldReference.cs" />
-    <Compile Include="Pft\Ast\PftGlobalReference.cs" />
-    <Compile Include="Pft\Ast\PftGroupMember.cs" />
-    <Compile Include="Pft\Ast\PftGroupStatement.cs" />
-    <Compile Include="Pft\Ast\PftHashOperator.cs" />
-    <Compile Include="Pft\Ast\PftIffFunction.cs" />
-    <Compile Include="Pft\Ast\PftIncrementFunction.cs" />
-    <Compile Include="Pft\Ast\PftLeftHand.cs" />
-    <Compile Include="Pft\Ast\PftModeSwitch.cs" />
-    <Compile Include="Pft\Ast\PftNlOperator.cs" />
-    <Compile Include="Pft\Ast\PftPercentOperator.cs" />
-    <Compile Include="Pft\Ast\PftRightHand.cs" />
-    <Compile Include="Pft\Ast\PftSimpleFormat.cs" />
-    <Compile Include="Pft\Ast\PftSlashOperator.cs" />
-    <Compile Include="Pft\Ast\PftUnused.cs" />
-    <Compile Include="Pft\Ast\PftRepeatableLiteral.cs" />
-    <Compile Include="Pft\Debugging\PftBreakpoint.cs" />
-    <Compile Include="Pft\Debugging\PftDebugEventArgs.cs" />
-    <Compile Include="Pft\Debugging\PftDebugger.cs" />
-    <Compile Include="Pft\PftArgument.cs" />
-    <Compile Include="Pft\PftAst.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pft\PftBaseListener.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pft\Ast\PftCommaOperator.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pft\PftConditionalStatement.cs" />
-    <Compile Include="Pft\PftContext.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pft\PftDispatcher.cs" />
-    <Compile Include="Pft\PftException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pft\PftFatalException.cs" />
-    <Compile Include="Pft\PftFieldOutputMode.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pft\Ast\PftFormatExit.cs" />
-    <Compile Include="Pft\PftFormatExitManager.cs" />
-    <Compile Include="Pft\PftFormatter.cs" />
-    <Compile Include="Pft\PftGlobalManager.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pft\PftGlobalVariable.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pft\Ast\PftInfoBlock.cs" />
-    <Compile Include="Pft\PftLexer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pft\PftListener.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pft\PftNotConnectedException.cs" />
-    <Compile Include="Pft\PftOutputBuffer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pft\PftOutputFormat.cs" />
-    <Compile Include="Pft\PftParser.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pft\Ast\PftProcedure.cs" />
-    <Compile Include="Pft\PftProcedureManager.cs" />
-    <Compile Include="Pft\Ast\PftProgram.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pft\PftSemanticException.cs" />
-    <Compile Include="Pft\PftSyntaxException.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pft\Ast\PftUnconditionalLiteral.cs" />
-    <Compile Include="Pft\PftUtility.cs" />
-    <Compile Include="Pft\PftVariable.cs" />
-    <Compile Include="Pft\PftVariableManager.cs" />
-    <Compile Include="Pft\PrettyPrinting\PftDefaultStyle.cs" />
-    <Compile Include="Pft\PrettyPrinting\PftPrettyPrinter.cs" />
-    <Compile Include="Pft\PrettyPrinting\PftStyle.cs" />
     <Compile Include="Pooling\IrbisConnectionPool.cs" />
     <Compile Include="Pooling\IrbisPoolGuard.cs" />
     <Compile Include="Pooling\PoolUtilities.cs" />
@@ -400,13 +305,6 @@
     <None Include="Antlr\generate.cmd" />
     <None Include="Antlr\IrbisQuery.g4" />
     <None Include="ArsMagna.private.snk" />
-    <None Include="Pft\repeating_group.docx" />
-    <None Include="Pft\оператор break.docx" />
-    <None Include="Pft\Операторы языка форматирования ИРБИС.docx" />
-    <None Include="Pft\Функции языка форматирования ИРБИС.docx" />
-    <None Include="Pft\Функция f.docx" />
-    <None Include="Pft\Функция val.docx" />
-    <None Include="Pft\Язык форматирования системы ИРБИС.docx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tests\" />

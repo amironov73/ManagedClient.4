@@ -10,8 +10,6 @@ using System.Collections.Generic;
 
 namespace ManagedClient.Gbl
 {
-    using Pft;
-
     /// <summary>
     /// <para>Инструмент для упрощённого построения заданий на
     /// глобальную корректировку.</para>
@@ -147,15 +145,7 @@ namespace ManagedClient.Gbl
             {
                 throw new ArgumentException();
             }
-            if (!ReferenceEquals(Client, null))
-            {
-                PftFormatter formatter = new PftFormatter();
-                formatter.ParseInput(value);
-                if (formatter.HaveError)
-                {
-                    throw new ArgumentException();
-                }
-            }
+
             return value;
         }
 
