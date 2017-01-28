@@ -63,6 +63,23 @@
             Значение задержки по умолчанию.
             </summary>
         </member>
+        <member name="P:IrbisUI.IrbisBusyManager.Busy">
+            <summary>
+            Занят ли сейчас клиент обращением к ИРБИС-серверу.
+            </summary>
+        </member>
+        <member name="P:IrbisUI.IrbisBusyManager.Client">
+            <summary>
+            Ссылка на клиент.
+            </summary>
+        </member>
+        <member name="P:IrbisUI.IrbisBusyManager.Delay">
+            <summary>
+            Задержка между началом запроса к серверу
+            и появлением окна "Ждите", миллисекунды.
+            Нулевое или отрицательное значение - нет задержки.
+            </summary>
+        </member>
         <member name="M:IrbisUI.IrbisBusyManager._ThreadMethod1">
             <summary>
             Выполняется в отдельном потоке.
@@ -80,23 +97,6 @@
         <member name="M:IrbisUI.IrbisBusyManager.SetMessage(System.String)">
             <summary>
             Установка надписи на форме.
-            </summary>
-        </member>
-        <member name="P:IrbisUI.IrbisBusyManager.Busy">
-            <summary>
-            Занят ли сейчас клиент обращением к ИРБИС-серверу.
-            </summary>
-        </member>
-        <member name="P:IrbisUI.IrbisBusyManager.Client">
-            <summary>
-            Ссылка на клиент.
-            </summary>
-        </member>
-        <member name="P:IrbisUI.IrbisBusyManager.Delay">
-            <summary>
-            Задержка между началом запроса к серверу
-            и появлением окна "Ждите", миллисекунды.
-            Нулевое или отрицательное значение - нет задержки.
             </summary>
         </member>
         <member name="F:IrbisUI.IrbisDictionaryPanel.components">
@@ -142,6 +142,16 @@
             Окно с вводом логина и пароля для входа в ИРБИС.
             </summary>
         </member>
+        <member name="P:IrbisUI.IrbisLoginForm.UserName">
+            <summary>
+            Логин.
+            </summary>
+        </member>
+        <member name="P:IrbisUI.IrbisLoginForm.UserPassword">
+            <summary>
+            Пароль.
+            </summary>
+        </member>
         <member name="M:IrbisUI.IrbisLoginForm.#ctor">
             <summary>
             Конструктор по умолчанию.
@@ -164,37 +174,10 @@
             the contents of this method with the code editor.
             </summary>
         </member>
-        <member name="P:IrbisUI.IrbisLoginForm.UserName">
-            <summary>
-            Логин.
-            </summary>
-        </member>
-        <member name="P:IrbisUI.IrbisLoginForm.UserPassword">
-            <summary>
-            Пароль.
-            </summary>
-        </member>
         <member name="T:IrbisUI.IrbisLoginForm2">
             <summary>
             Окно с вводом адреса сервера, логина 
             и пароля для входа в ИРБИС.
-            </summary>
-        </member>
-        <member name="F:IrbisUI.IrbisLoginForm2.components">
-            <summary>
-            Required designer variable.
-            </summary>
-        </member>
-        <member name="M:IrbisUI.IrbisLoginForm2.Dispose(System.Boolean)">
-            <summary>
-            Clean up any resources being used.
-            </summary>
-            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        </member>
-        <member name="M:IrbisUI.IrbisLoginForm2.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
             </summary>
         </member>
         <member name="P:IrbisUI.IrbisLoginForm2.Host">
@@ -215,6 +198,23 @@
         <member name="P:IrbisUI.IrbisLoginForm2.UserPassword">
             <summary>
             Пароль.
+            </summary>
+        </member>
+        <member name="F:IrbisUI.IrbisLoginForm2.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:IrbisUI.IrbisLoginForm2.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:IrbisUI.IrbisLoginForm2.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
             </summary>
         </member>
         <member name="F:IrbisUI.IrbisMenuForm.components">

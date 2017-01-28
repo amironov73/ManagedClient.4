@@ -8,7 +8,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
-using JetBrains.Annotations;
+
 using MoonSharp.Interpreter;
 
 using Newtonsoft.Json;
@@ -84,6 +84,13 @@ namespace ManagedClient
                                 "value"
                             );
                     }
+                    value = Utilities
+                        .ReplaceControlCharacters(value);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        value = value.Trim();
+                    }
+
                     _text = value;
                 }
             }
@@ -216,10 +223,9 @@ namespace ManagedClient
         /// <summary>
         /// Считывание из потока.
         /// </summary>
-        [NotNull]
         public static SubField ReadFromStream
             (
-                [NotNull] BinaryReader reader
+                BinaryReader reader
             )
         {
             SubField result = new SubField

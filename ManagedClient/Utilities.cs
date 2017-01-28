@@ -951,5 +951,58 @@ namespace ManagedClient
                 yield return item;
             }
         }
+
+        /// <summary>
+        /// Replace control characters in the text.
+        /// </summary>
+        public static string ReplaceControlCharacters
+            (
+                string text,
+                char substitute
+            )
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return text;
+            }
+
+            bool needReplace = false;
+            foreach (char c in text)
+            {
+                if (c < ' ')
+                {
+                    needReplace = true;
+                    break;
+                }
+            }
+
+            if (!needReplace)
+            {
+                return text;
+            }
+
+            StringBuilder result = new StringBuilder(text.Length);
+
+            foreach (char c in text)
+            {
+                result.Append
+                    (
+                        c < ' ' ? substitute : c
+                    );
+            }
+
+            return result.ToString();
+        }
+
+        /// <summary>
+        /// Replace control characters in the text.
+        /// </summary>
+        public static string ReplaceControlCharacters
+            (
+                string text
+            )
+        {
+            return ReplaceControlCharacters(text, ' ');
+        }
     }
 }
