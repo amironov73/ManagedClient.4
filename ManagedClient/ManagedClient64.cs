@@ -689,8 +689,8 @@ namespace ManagedClient
 
         private void _AddLine
             (
-            StringBuilder builder,
-            string line
+            	StringBuilder builder,
+            	string line
             )
         {
             builder.Append(line);
