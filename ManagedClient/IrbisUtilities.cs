@@ -107,7 +107,7 @@ namespace ManagedClient
                 {
                     result.AppendFormat
                         (
-                            "%{0:XX}",
+                            "%{0:X2}",
                             b
                         );
                 }
