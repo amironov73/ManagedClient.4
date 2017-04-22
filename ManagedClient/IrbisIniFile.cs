@@ -20,12 +20,24 @@ namespace ManagedClient
     {
         #region Constants
 
+        /// <summary>
+        /// Entry.
+        /// </summary>
         public const string Entry = "ENTRY";
 
+        /// <summary>
+        /// Main.
+        /// </summary>
         public const string Main = "MAIN";
 
+        /// <summary>
+        /// Reader.
+        /// </summary>
         public const string Reader = "READER";
 
+        /// <summary>
+        /// Request.
+        /// </summary>
         public const string Request = "REQUEST";
 
         #endregion
@@ -148,7 +160,7 @@ namespace ManagedClient
         /// <summary>
         /// Имя БД по умолчанию.
         /// </summary>
-        public string DefaultDB
+        public string DefaultDb
         {
             get { return GetString(Main, "DEFAULTDB", string.Empty); }
         }

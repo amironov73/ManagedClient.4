@@ -305,9 +305,7 @@
     <None Include="Antlr\IrbisQuery.g4" />
     <None Include="ArsMagna.private.snk" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tests\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>

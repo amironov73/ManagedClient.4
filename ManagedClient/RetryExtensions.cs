@@ -13,6 +13,8 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient
@@ -32,8 +34,11 @@ namespace ManagedClient
         /// </summary>
         public static int DelayInterval = 300;
 
-        private static void _HandleException(int attempt,
-            Exception exception)
+        private static void _HandleException
+            (
+                int attempt,
+                [NotNull] Exception exception
+            )
         {
             // Log exception here
             Debug.WriteLine("Attempt " + attempt + ", Exception "
@@ -47,7 +52,7 @@ namespace ManagedClient
         /// </summary>
         public static void Try
             (
-                Action action
+                [NotNull] Action action
             )
         {
             for (int attempt = 0; attempt < RetryCount; attempt++)
@@ -71,7 +76,7 @@ namespace ManagedClient
         /// </summary>
         public static void Try<T1>
             (
-                Action<T1> action,
+                [NotNull] Action<T1> action,
                 T1 argument1
             )
         {
@@ -96,7 +101,7 @@ namespace ManagedClient
         /// </summary>
         public static void Try<T1, T2>
             (
-                Action<T1, T2> action,
+                [NotNull] Action<T1, T2> action,
                 T1 argument1,
                 T2 argument2
             )
@@ -122,7 +127,7 @@ namespace ManagedClient
         /// </summary>
         public static void Try<T1, T2, T3>
             (
-                Action<T1, T2, T3> action,
+                [NotNull] Action<T1, T2, T3> action,
                 T1 argument1,
                 T2 argument2,
                 T3 argument3
@@ -149,7 +154,7 @@ namespace ManagedClient
         /// </summary>
         public static TResult Try<TResult>
             (
-                Func<TResult> func
+                [NotNull] Func<TResult> func
             )
         {
             for (int attempt = 0; attempt < RetryCount; attempt++)
@@ -173,7 +178,7 @@ namespace ManagedClient
         /// </summary>
         public static TResult Try<TResult, T1>
             (
-                Func<T1, TResult> func,
+                [NotNull] Func<T1, TResult> func,
                 T1 argument1
             )
         {
@@ -198,7 +203,7 @@ namespace ManagedClient
         /// </summary>
         public static TResult Try<TResult, T1, T2>
             (
-                Func<T1, T2, TResult> func,
+                [NotNull] Func<T1, T2, TResult> func,
                 T1 argument1,
                 T2 argument2
             )
@@ -224,7 +229,7 @@ namespace ManagedClient
         /// </summary>
         public static TResult Try<TResult, T1, T2, T3>
             (
-                Func<T1, T2, T3, TResult> func,
+                [NotNull] Func<T1, T2, T3, TResult> func,
                 T1 argument1,
                 T2 argument2,
                 T3 argument3
@@ -257,7 +262,7 @@ namespace ManagedClient
         /// </summary>
         public static void ConnectRetry
             (
-                this ManagedClient64 client
+                [NotNull] this ManagedClient64 client
             )
         {
             Action action = client.Connect;
@@ -269,7 +274,7 @@ namespace ManagedClient
         /// </summary>
         public static void DisconnectRetry
             (
-                this ManagedClient64 client
+                [NotNull] this ManagedClient64 client
             )
         {
             Try(client.Dispose);
@@ -280,8 +285,8 @@ namespace ManagedClient
         /// </summary>
         public static string FormatRecordRetry
             (
-                this ManagedClient64 client,
-                string format,
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string format,
                 int mfn
             )
         {
@@ -295,9 +300,9 @@ namespace ManagedClient
         /// </summary>
         public static string FormatRecordRetry
             (
-                this ManagedClient64 client,
-                string format,
-                IrbisRecord record
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string format,
+                [NotNull] IrbisRecord record
             )
         {
             Func<string, IrbisRecord, string> func = client.FormatRecord;
@@ -310,7 +315,7 @@ namespace ManagedClient
         /// </summary>
         public static int GetMaxMfnRetry
             (
-                this ManagedClient64 client
+                [NotNull] this ManagedClient64 client
             )
         {
             Func<int> func = client.GetMaxMfn;
@@ -321,10 +326,11 @@ namespace ManagedClient
         /// <summary>
         /// List databases.
         /// </summary>
+        [NotNull]
         public static IrbisDatabaseInfo[] ListDatabasesRetry
             (
-                this ManagedClient64 client,
-                string menuName
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string menuName
             )
         {
             Func<string, IrbisDatabaseInfo[]> func = client.ListDatabases;
@@ -335,10 +341,11 @@ namespace ManagedClient
         /// <summary>
         /// List terms.
         /// </summary>
+        [NotNull]
         public static SearchTermInfo[] ListTermsRetry
             (
-                this ManagedClient64 client,
-                string start,
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string start,
                 int count
             )
         {
@@ -350,10 +357,11 @@ namespace ManagedClient
         /// <summary>
         /// Load menu.
         /// </summary>
+        [NotNull]
         public static IrbisMenu LoadMenuRetry
             (
-                this ManagedClient64 client,
-                string menuName
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string menuName
             )
         {
             Func<ManagedClient64, string, IrbisMenu> func = IrbisMenu.Read;
@@ -364,10 +372,11 @@ namespace ManagedClient
         /// <summary>
         /// Load INI-file.
         /// </summary>
+        [NotNull]
         public static IniFile LoadIniFileRetry
             (
-                this ManagedClient64 client,
-                string fileName
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string fileName
             )
         {
             Func<ManagedClient64, string, IniFile> func
@@ -385,9 +394,9 @@ namespace ManagedClient
         /// <summary>
         /// No operation.
         /// </summary>
-        public static void NopRetry
+        public static void NoOpRetry
             (
-                this ManagedClient64 client
+                [NotNull] this ManagedClient64 client
             )
         {
             Try(client.NoOp);
@@ -396,9 +405,10 @@ namespace ManagedClient
         /// <summary>
         /// Read record from server.
         /// </summary>
+        [NotNull]
         public static IrbisRecord ReadRecordRetry
             (
-                this ManagedClient64 client,
+                [NotNull] this ManagedClient64 client,
                 int mfn
             )
         {
@@ -410,10 +420,11 @@ namespace ManagedClient
         /// <summary>
         /// Read text file.
         /// </summary>
+        [NotNull]
         public static string ReadTextFileRetry
             (
-                this ManagedClient64 client,
-                string specification
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string specification
             )
         {
             Func<string, string> func = client.ReadTextFile;
@@ -424,10 +435,11 @@ namespace ManagedClient
         /// <summary>
         /// Search.
         /// </summary>
+        [NotNull]
         public static int[] SearchRetry
             (
-                this ManagedClient64 client,
-                string expression
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string expression
             )
         {
             Func<string, object[], int[]> func = client.Search;
@@ -440,8 +452,8 @@ namespace ManagedClient
         /// </summary>
         public static void WriteRecordRetry
             (
-                this ManagedClient64 client,
-                IrbisRecord record
+                [NotNull] this ManagedClient64 client,
+                [NotNull] IrbisRecord record
             )
         {
             Action<IrbisRecord, bool, bool> action = client.WriteRecord;

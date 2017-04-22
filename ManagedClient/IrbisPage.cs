@@ -9,6 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient
@@ -21,8 +23,15 @@ namespace ManagedClient
     {
         #region Properties
 
+        /// <summary>
+        /// Name.
+        /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// Lines.
+        /// </summary>
+        [NotNull]
         public List<IrbisLine> Lines { get; private set; }
 
         #endregion
@@ -36,7 +45,7 @@ namespace ManagedClient
         /// <param name="name">The name.</param>
         public IrbisPage
             (
-                string name
+                [NotNull] string name
             )
         {
             Name = name;
@@ -51,9 +60,12 @@ namespace ManagedClient
 
         #region Public methods
 
+        /// <summary>
+        /// Parse the lines.
+        /// </summary>
         public void ParseLines
             (
-                string[] lines
+                [NotNull] string[] lines
             )
         {
             int lineCount = int.Parse(lines[0]);
@@ -68,18 +80,24 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Parse the text.
+        /// </summary>
         public void ParseText
             (
-                string text
+                [NotNull] string text
             )
         {
             string[] lines = text.SplitLines();
             ParseLines(lines);
         }
 
+        /// <summary>
+        /// Parse the file.
+        /// </summary>
         public void ParseFile
             (
-                string fileName
+                [NotNull] string fileName
             )
         {
             Name = Path.GetFileNameWithoutExtension(fileName);
@@ -95,12 +113,7 @@ namespace ManagedClient
 
         #region Object members
 
-        /// <summary>
-        /// Returns a <see cref="System.String" /> 
-        /// that represents this instance.
-        /// </summary>
-        /// <returns>A <see cref="System.String" /> 
-        /// that represents this instance.</returns>
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
         {
             StringBuilder result = new StringBuilder();
@@ -109,6 +122,7 @@ namespace ManagedClient
             {
                 result.AppendLine(line.ToString());
             }
+
             return result.ToString();
         }
 

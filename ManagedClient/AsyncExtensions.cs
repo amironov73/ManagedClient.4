@@ -11,6 +11,8 @@
 
 using System.Threading.Tasks;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient
@@ -25,7 +27,7 @@ namespace ManagedClient
         /// </summary>
         public static Task ConnectAsync
             (
-                this ManagedClient64 client
+                [NotNull] this ManagedClient64 client
             )
         {
             return Task.Factory.StartNew(client.Connect);
@@ -36,7 +38,7 @@ namespace ManagedClient
         /// </summary>
         public static Task DisconnectAsync
             (
-                this ManagedClient64 client
+                [NotNull] this ManagedClient64 client
             )
         {
             return Task.Factory.StartNew(client.Dispose);
@@ -47,8 +49,8 @@ namespace ManagedClient
         /// </summary>
         public static Task<string> FormatRecordAsync
             (
-                this ManagedClient64 client,
-                string format,
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string format,
                 int mfn
             )
         {
@@ -63,9 +65,9 @@ namespace ManagedClient
         /// </summary>
         public static Task<string> FormatRecordAsync
             (
-                this ManagedClient64 client,
-                string format,
-                IrbisRecord record
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string format,
+                [NotNull] IrbisRecord record
             )
         {
             return Task.Factory.StartNew
@@ -79,7 +81,7 @@ namespace ManagedClient
         /// </summary>
         public static Task<int> GetMaxMfnAsync
             (
-                this ManagedClient64 client
+                [NotNull] this ManagedClient64 client
             )
         {
             return Task.Factory.StartNew(client.GetMaxMfn);
@@ -90,8 +92,8 @@ namespace ManagedClient
         /// </summary>
         public static Task<IrbisDatabaseInfo[]> ListDatabasesAsync
             (
-                this ManagedClient64 client,
-                string menuName
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string menuName
             )
         {
             return Task.Factory.StartNew
@@ -105,8 +107,8 @@ namespace ManagedClient
         /// </summary>
         public static Task<SearchTermInfo[]> ListTermsAsync
             (
-                this ManagedClient64 client,
-                string start,
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string start,
                 int count
             )
         {
@@ -121,8 +123,8 @@ namespace ManagedClient
         /// </summary>
         public static Task<IrbisMenu> LoadMenuAsync
             (
-                this ManagedClient64 client,
-                string menuName
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string menuName
             )
         {
             return Task.Factory.StartNew
@@ -136,8 +138,8 @@ namespace ManagedClient
         /// </summary>
         public static Task<IniFile> LoadIniFileAsync
             (
-                this ManagedClient64 client,
-                string fileName
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string fileName
             )
         {
             return Task.Factory.StartNew
@@ -155,9 +157,9 @@ namespace ManagedClient
         /// <summary>
         /// No operation.
         /// </summary>
-        public static Task NopAsync
+        public static Task NoOpAsync
             (
-                this ManagedClient64 client
+                [NotNull] this ManagedClient64 client
             )
         {
             return Task.Factory.StartNew(client.NoOp);
@@ -183,8 +185,8 @@ namespace ManagedClient
         /// </summary>
         public static Task<string> ReadTextFileAsync
             (
-                this ManagedClient64 client,
-                string fileName
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string fileName
             )
         {
             return Task.Factory.StartNew
@@ -198,8 +200,8 @@ namespace ManagedClient
         /// </summary>
         public static Task<int[]> SearchAsync
             (
-                this ManagedClient64 client,
-                string expression
+                [NotNull] this ManagedClient64 client,
+                [NotNull] string expression
             )
         {
             return Task.Factory.StartNew
@@ -213,8 +215,8 @@ namespace ManagedClient
         /// </summary>
         public static Task WriteRecordAsync
             (
-                this ManagedClient64 client,
-                IrbisRecord record
+                [NotNull]this ManagedClient64 client,
+                [NotNull] IrbisRecord record
             )
         {
             return Task.Factory.StartNew

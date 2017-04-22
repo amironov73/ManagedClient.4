@@ -4,9 +4,8 @@
 #region Using directives
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+using JetBrains.Annotations;
 
 #endregion
 
@@ -139,9 +138,12 @@ namespace ManagedClient
 
         #region Public methods
 
+        /// <summary>
+        /// Parse the lines.
+        /// </summary>
         public void ParseLines
             (
-                string[] lines
+                [NotNull] string[] lines
             )
         {
             Tag = lines[0];

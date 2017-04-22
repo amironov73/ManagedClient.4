@@ -1,3 +1,0 @@
-if p(v200) then 'True' else 'False' fi
-/
-if p(v201) then 'True' else 'False' fi

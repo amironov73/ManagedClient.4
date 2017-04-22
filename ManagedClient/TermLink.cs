@@ -12,18 +12,33 @@ using MoonSharp.Interpreter;
 
 namespace ManagedClient
 {
+    /// <summary>
+    /// Term link.
+    /// </summary>
     [Serializable]
     [MoonSharpUserData]
     public sealed class TermLink
     {
         #region Properties
 
+        /// <summary>
+        /// MFN.
+        /// </summary>
         public int Mfn { get; set; }
 
+        /// <summary>
+        /// Tag.
+        /// </summary>
         public int Tag { get; set; }
 
+        /// <summary>
+        /// Occurrence.
+        /// </summary>
         public int Occurrence { get; set; }
 
+        /// <summary>
+        /// Index.
+        /// </summary>
         public int Index { get; set; }
 
         #endregion

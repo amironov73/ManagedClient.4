@@ -6,6 +6,8 @@
 using System;
 using System.Text;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient
@@ -73,8 +75,6 @@ namespace ManagedClient
         /// <summary>
         /// Текст с явно заданной кодировкой.
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="encoding"></param>
         public TextWithEncoding
             (
                 string text,
@@ -129,15 +129,17 @@ namespace ManagedClient
 
         #region Comparison
 
+        /// <inheritdoc cref="IComparable{T}.CompareTo"/>
         public int CompareTo
             (
-                TextWithEncoding other
+                [CanBeNull] TextWithEncoding other
             )
         {
             if (ReferenceEquals(other, null))
             {
                 return 1;
             }
+
             return string.Compare
                 (
                     Text,
@@ -149,9 +151,6 @@ namespace ManagedClient
         /// <summary>
         /// Оператор сравнения двух текстов.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
         public static bool operator ==
             (
                 TextWithEncoding left,
@@ -172,9 +171,6 @@ namespace ManagedClient
         /// <summary>
         /// Оператор сравнения двух текстов.
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
         public static bool operator !=
             (
                 TextWithEncoding left,
@@ -192,12 +188,20 @@ namespace ManagedClient
             return left.Text != right.Text;
         }
 
-        private bool Equals(TextWithEncoding other)
+        /// <inheritdoc cref="IEquatable{T}.Equals(T)"/>
+        private bool Equals
+            (
+                TextWithEncoding other
+            )
         {
             return string.Equals(Text, other.Text);
         }
 
-        public override bool Equals(object obj)
+        /// <inheritdoc cref="object.Equals(object)"/>
+        public override bool Equals
+            (
+                object obj
+            )
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
@@ -205,15 +209,17 @@ namespace ManagedClient
                 && Equals((TextWithEncoding) obj);
         }
 
+        /// <inheritdoc cref="object.GetHashCode"/>
         public override int GetHashCode()
         {
-            return (Text != null ? Text.GetHashCode() : 0);
+            return Text != null ? Text.GetHashCode() : 0;
         }
 
         #endregion
 
         #region Object members
 
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
         {
             return Text;

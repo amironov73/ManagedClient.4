@@ -6,10 +6,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient
 {
+    /// <summary>
+    /// CONFIG database.
+    /// </summary>
     public class ConfigDatabase
     {
         #region Nested classes
@@ -29,9 +34,12 @@ namespace ManagedClient
 
         #region Construction
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public ConfigDatabase
             (
-                ManagedClient64 client
+                [NotNull] ManagedClient64 client
             )
         {
             _lines = new List<ConfigLine>();
@@ -73,6 +81,9 @@ namespace ManagedClient
 
         #region Public methods
 
+        /// <summary>
+        /// Book in processing.
+        /// </summary>
         public bool BookInWork
             (
                 string text

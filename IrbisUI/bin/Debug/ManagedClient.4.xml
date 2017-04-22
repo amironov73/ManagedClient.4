@@ -54,7 +54,7 @@
             Load INI-file.
             </summary>
         </member>
-        <member name="M:ManagedClient.AsyncExtensions.NopAsync(ManagedClient.ManagedClient64)">
+        <member name="M:ManagedClient.AsyncExtensions.NoOpAsync(ManagedClient.ManagedClient64)">
             <summary>
             No operation.
             </summary>
@@ -146,6 +146,9 @@
             Считывает все записи сразу.
             </summary>
         </member>
+        <member name="M:ManagedClient.BatchRecordFormatter.GetEnumerator">
+            <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+        </member>
         <member name="T:ManagedClient.CharacterClass">
             <summary>
             Класс символов Unicode.
@@ -189,6 +192,21 @@
         <member name="M:ManagedClient.CharacterClassifier.IsBothCyrillicAndLatin(ManagedClient.CharacterClass)">
             <summary>
             Смешаны ли в тексте латиница с кириллицей?
+            </summary>
+        </member>
+        <member name="T:ManagedClient.ConfigDatabase">
+            <summary>
+            CONFIG database.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ConfigDatabase.#ctor(ManagedClient.ManagedClient64)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ConfigDatabase.BookInWork(System.String)">
+            <summary>
+            Book in processing.
             </summary>
         </member>
         <member name="T:ManagedClient.Fields.ExemplarManager">
@@ -1222,6 +1240,9 @@
             Считывает все записи сразу.
             </summary>
         </member>
+        <member name="M:ManagedClient.BatchRecordReader.GetEnumerator">
+            <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+        </member>
         <member name="M:ManagedClient.BatchRecordReader.Dispose">
             <summary>
             Performs application-defined tasks associated
@@ -1231,6 +1252,36 @@
         <member name="T:ManagedClient.BeforeQueryEventArgs">
             <summary>
             Трансформация поискового запроса перед отправкой на сервер.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.BeforeQueryEventArgs.Client">
+            <summary>
+            Client.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.BeforeQueryEventArgs.QueryManager">
+            <summary>
+            Query manager.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.BeforeQueryEventArgs.OriginalQuery">
+            <summary>
+            Original query.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.BeforeQueryEventArgs.ProcessedQuery">
+            <summary>
+            Processed query.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.BeforeQueryEventArgs.CancelQuery">
+            <summary>
+            Cancel the query?
+            </summary>
+        </member>
+        <member name="P:ManagedClient.BeforeQueryEventArgs.AuxiliaryData">
+            <summary>
+            Arbitrary user data.
             </summary>
         </member>
         <member name="T:ManagedClient.NumberText">
@@ -3408,6 +3459,26 @@
             
             </summary>
         </member>
+        <member name="F:ManagedClient.IrbisIniFile.Entry">
+            <summary>
+            Entry.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisIniFile.Main">
+            <summary>
+            Main.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisIniFile.Reader">
+            <summary>
+            Reader.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisIniFile.Request">
+            <summary>
+            Request.
+            </summary>
+        </member>
         <member name="P:ManagedClient.IrbisIniFile.AutoinFile">
             <summary>
             Имя файла пакетного задания для АВТОВВОДА.
@@ -3485,7 +3556,7 @@
             Метка поля «количество выдач» в БД ЭК.
             </summary>
         </member>
-        <member name="P:ManagedClient.IrbisIniFile.DefaultDB">
+        <member name="P:ManagedClient.IrbisIniFile.DefaultDb">
             <summary>
             Имя БД по умолчанию.
             </summary>
@@ -4002,6 +4073,11 @@
             <param name="tag">The tag.</param>
             <param name="title">The title.</param>
             <param name="repeatable">if set to <c>true</c> [repeatable].</param>
+        </member>
+        <member name="M:ManagedClient.IrbisLine.ParseLines(System.String[])">
+            <summary>
+            Parse the lines.
+            </summary>
         </member>
         <member name="M:ManagedClient.IrbisLine.ToString">
             <summary>
@@ -6368,7 +6444,7 @@
             Load INI-file.
             </summary>
         </member>
-        <member name="M:ManagedClient.RetryExtensions.NopRetry(ManagedClient.ManagedClient64)">
+        <member name="M:ManagedClient.RetryExtensions.NoOpRetry(ManagedClient.ManagedClient64)">
             <summary>
             No operation.
             </summary>
@@ -6561,6 +6637,16 @@
             Worksheet for RecordField editing
             </summary>
         </member>
+        <member name="P:ManagedClient.IrbisPage.Name">
+            <summary>
+            Name.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisPage.Lines">
+            <summary>
+            Lines.
+            </summary>
+        </member>
         <member name="M:ManagedClient.IrbisPage.#ctor(System.String)">
             <summary>
             Initializes a new instance of the 
@@ -6568,13 +6654,23 @@
             </summary>
             <param name="name">The name.</param>
         </member>
-        <member name="M:ManagedClient.IrbisPage.ToString">
+        <member name="M:ManagedClient.IrbisPage.ParseLines(System.String[])">
             <summary>
-            Returns a <see cref="T:System.String" /> 
-            that represents this instance.
+            Parse the lines.
             </summary>
-            <returns>A <see cref="T:System.String" /> 
-            that represents this instance.</returns>
+        </member>
+        <member name="M:ManagedClient.IrbisPage.ParseText(System.String)">
+            <summary>
+            Parse the text.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisPage.ParseFile(System.String)">
+            <summary>
+            Parse the file.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisPage.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
         </member>
         <member name="T:ManagedClient.IrbisTags">
             <summary>

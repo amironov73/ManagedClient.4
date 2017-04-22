@@ -259,6 +259,7 @@ namespace ManagedClient
 
         #region IEnumerable members
 
+        /// <inheritdoc cref="IEnumerable{T}.GetEnumerator"/>
         public IEnumerator<string> GetEnumerator()
         {
             foreach (int[] package in _packages)
