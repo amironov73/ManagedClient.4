@@ -31,7 +31,6 @@ namespace ManagedClient
 {
     using Gbl;
 #if !PocketPC
-    using Sockets;
     using Transactions;
 #endif
 
@@ -373,13 +372,6 @@ namespace ManagedClient
         public string StageOfWork { get; set; }
 
 #if !PocketPC
-        /// <summary>
-        /// Работа с сокетами.
-        /// </summary>
-        public IrbisSocket Socket
-        {
-            get { return _socket; }
-        }
 
         /// <summary>
         /// Кэш форматов, меню и т. д.
@@ -408,31 +400,14 @@ namespace ManagedClient
         {
             _waitHandle = new ManualResetEvent(true);
 
-#if !PocketPC
-            // По умолчанию создаем простой синхронный сокет.
-            _socket = new IrbisSocket();
-#endif
-
             Host = DefaultHost;
             Port = DefaultPort;
             Database = DefaultDatabase;
-            //Username = DefaultUsername;
-            //Password = DefaultPassword;
             Username = null;
             Password = null;
             Workstation = DefaultWorkstation;
             RetryCount = DefaultRetryCount;
         }
-
-        //protected ManagedClient64
-        //    (
-        //        SerializationInfo info,
-        //        StreamingContext context
-
-        //    )
-        //{
-        //    _waitHandle = new ManualResetEvent(true);
-        //}
 
         #endregion
 
@@ -464,10 +439,6 @@ namespace ManagedClient
 
         private readonly Encoding _utf8 = new UTF8Encoding(false, false);
         private readonly Encoding _cp1251 = Encoding.GetEncoding(1251);
-
-#if !PocketPC
-        private IrbisSocket _socket;
-#endif
 
         private readonly Stack<string> _databaseStack
             = new Stack<string>();

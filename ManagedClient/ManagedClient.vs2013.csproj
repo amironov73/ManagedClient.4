@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncExtensions.cs" />
     <Compile Include="BatchRecordFormatter.cs" />
     <Compile Include="CharacterClass.cs" />
     <Compile Include="CharacterClassifier.cs" />
@@ -219,8 +220,6 @@
     <Compile Include="Schema\SchemaItem.cs" />
     <Compile Include="Scripting\ScriptUtility.cs" />
     <Compile Include="Scripting\IrbisScript.cs" />
-    <Compile Include="Sockets\IrbisAsyncSocket.cs" />
-    <Compile Include="Sockets\IrbisSocket.cs" />
     <Compile Include="IrbisStandardDatabases.cs" />
     <Compile Include="IrbisStopWords.cs" />
     <Compile Include="IrbisPage.cs" />

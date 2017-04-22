@@ -61,9 +61,21 @@ namespace ManagedClient.Quality
 
         #region Private members
 
+        /// <summary>
+        /// Context.
+        /// </summary>
+        [CLSCompliant(false)]
+        // ReSharper disable InconsistentNaming
         protected RuleContext _context;
+        // ReSharper restore InconsistentNaming
 
+        /// <summary>
+        /// Report.
+        /// </summary>
+        [CLSCompliant(false)]
+        // ReSharper disable InconsistentNaming
         protected RuleReport _report;
+        // ReSharper restore InconsistentNaming
 
         protected void AddDefect
             (
