@@ -213,6 +213,7 @@
     <Compile Include="Readers\ReaderRegistration.cs" />
     <Compile Include="Readers\ReaderUtility.cs" />
     <Compile Include="RecordFieldCollection.cs" />
+    <Compile Include="RetryExtensions.cs" />
     <Compile Include="Schema\FieldSchema.cs" />
     <Compile Include="Schema\RecordSchema.cs" />
     <Compile Include="Schema\SchemaValidator.cs" />
@@ -264,7 +265,6 @@
     <Compile Include="Magazines\MagazineIssueInfo.cs" />
     <Compile Include="Magazines\MagazineManager.cs" />
     <Compile Include="OrganizationInfo.cs" />
-    <Compile Include="Parser\IrbisParser.cs" />
     <Compile Include="IrbisSearchEngine.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

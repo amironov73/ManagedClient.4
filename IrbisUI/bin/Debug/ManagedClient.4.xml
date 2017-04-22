@@ -6268,6 +6268,131 @@
             Считывание из потока.
             </summary>
         </member>
+        <member name="T:ManagedClient.RetryExtensions">
+            <summary>
+            Retry command specified number of times.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.RetryExtensions.RetryCount">
+            <summary>
+            Number of retry attempts.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.RetryExtensions.DelayInterval">
+            <summary>
+            Delay between attempts, milliseconds.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.Try(System.Action)">
+            <summary>
+            Try the action.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.Try``1(System.Action{``0},``0)">
+            <summary>
+            Try the action.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.Try``2(System.Action{``0,``1},``0,``1)">
+            <summary>
+            Try the action.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.Try``3(System.Action{``0,``1,``2},``0,``1,``2)">
+            <summary>
+            Try the action.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.Try``1(System.Func{``0})">
+            <summary>
+            Try the function.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.Try``2(System.Func{``1,``0},``1)">
+            <summary>
+            Try the function.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.Try``3(System.Func{``1,``2,``0},``1,``2)">
+            <summary>
+            Try the function.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.Try``4(System.Func{``1,``2,``3,``0},``1,``2,``3)">
+            <summary>
+            Try the function.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.ConnectRetry(ManagedClient.ManagedClient64)">
+            <summary>
+            Connect to the server.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.DisconnectRetry(ManagedClient.ManagedClient64)">
+            <summary>
+            Disconnect.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.FormatRecordRetry(ManagedClient.ManagedClient64,System.String,System.Int32)">
+            <summary>
+            Format the record.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.FormatRecordRetry(ManagedClient.ManagedClient64,System.String,ManagedClient.IrbisRecord)">
+            <summary>
+            Format the record.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.GetMaxMfnRetry(ManagedClient.ManagedClient64)">
+            <summary>
+            Get max MFN.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.ListDatabasesRetry(ManagedClient.ManagedClient64,System.String)">
+            <summary>
+            List databases.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.ListTermsRetry(ManagedClient.ManagedClient64,System.String,System.Int32)">
+            <summary>
+            List terms.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.LoadMenuRetry(ManagedClient.ManagedClient64,System.String)">
+            <summary>
+            Load menu.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.LoadIniFileRetry(ManagedClient.ManagedClient64,System.String)">
+            <summary>
+            Load INI-file.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.NopRetry(ManagedClient.ManagedClient64)">
+            <summary>
+            No operation.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.ReadRecordRetry(ManagedClient.ManagedClient64,System.Int32)">
+            <summary>
+            Read record from server.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.ReadTextFileRetry(ManagedClient.ManagedClient64,System.String)">
+            <summary>
+            Read text file.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.SearchRetry(ManagedClient.ManagedClient64,System.String)">
+            <summary>
+            Search.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RetryExtensions.WriteRecordRetry(ManagedClient.ManagedClient64,ManagedClient.IrbisRecord)">
+            <summary>
+            Write the record.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Schema.FieldSchema">
             <summary>
             
@@ -7475,11 +7600,6 @@
         <member name="P:ManagedClient.OrganizationInfo.Sigla">
             <summary>
             Сигла библиотеки.
-            </summary>
-        </member>
-        <member name="T:ManagedClient.Parser.IrbisParser">
-            <summary>
-            Разбор PFT и FST.
             </summary>
         </member>
         <member name="T:ManagedClient.IrbisSearchEngine">
