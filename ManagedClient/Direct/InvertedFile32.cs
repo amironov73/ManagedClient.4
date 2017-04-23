@@ -17,6 +17,9 @@ using System.Text;
 
 namespace ManagedClient.Direct
 {
+    /// <summary>
+    /// Inverted file for IRBIS32.
+    /// </summary>
     public class InvertedFile32
         : IDisposable
     {
@@ -31,16 +34,34 @@ namespace ManagedClient.Direct
 
         #region Properties
 
+        /// <summary>
+        /// File name.
+        /// </summary>
         public string FileName { get { return _fileName; } }
 
+        /// <summary>
+        /// IFP file.
+        /// </summary>
         public Stream Ifp { get { return _ifp; } }
 
+        /// <summary>
+        /// L01 file.
+        /// </summary>
         public Stream L01 { get { return _l01; } }
 
+        /// <summary>
+        /// L02 file.
+        /// </summary>
         public Stream L02 { get { return _l02; } }
 
+        /// <summary>
+        /// N01 file.
+        /// </summary>
         public Stream N01 { get { return _n01; } }
 
+        /// <summary>
+        /// N02 file.
+        /// </summary>
         public Stream N02 { get { return _n02; } }
 
         #endregion

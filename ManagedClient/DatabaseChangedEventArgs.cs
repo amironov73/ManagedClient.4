@@ -8,10 +8,16 @@
 
 using System;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient
 {
+    /// <summary>
+    /// Arguments for <see cref="ManagedClient64.DatabaseChanged"/>
+    /// event.
+    /// </summary>
     [Serializable]
     public sealed class DatabaseChangedEventArgs
         : EventArgs
@@ -19,13 +25,15 @@ namespace ManagedClient
         #region Properties
 
         /// <summary>
-        /// Старая база.
+        /// Old database name.
         /// </summary>
+        [CanBeNull]
         public string OldDatabase { get; set; }
 
         /// <summary>
-        /// Новая база
+        /// New database name.
         /// </summary>
+        [CanBeNull]
         public string NewDatabase { get; set; }
 
         #endregion
@@ -33,21 +41,19 @@ namespace ManagedClient
         #region Construction
 
         /// <summary>
-        /// Конструктор по умолчанию.
+        /// Constructor.
         /// </summary>
         public DatabaseChangedEventArgs()
         {
         }
 
         /// <summary>
-        /// Удобный конструктор.
+        /// Constructor.
         /// </summary>
-        /// <param name="oldDatabase">Старая база.</param>
-        /// <param name="newDatabase">Новая база.</param>
         public DatabaseChangedEventArgs
             (
-                string oldDatabase, 
-                string newDatabase
+                [CanBeNull] string oldDatabase, 
+                [CanBeNull] string newDatabase
             )
         {
             OldDatabase = oldDatabase;

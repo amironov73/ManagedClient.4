@@ -17,6 +17,9 @@ using ManagedClient;
 
 namespace ManagedClient.Direct
 {
+    /// <summary>
+    /// Record of MST file in IRBIS64.
+    /// </summary>
     [Serializable]
     [DebuggerDisplay("Leader={Leader}")]
     public sealed class MstRecord64
@@ -27,10 +30,19 @@ namespace ManagedClient.Direct
 
         #region Properties
 
+        /// <summary>
+        /// Leader.
+        /// </summary>
         public MstRecordLeader64 Leader { get; set; }
 
+        /// <summary>
+        /// Dictionary.
+        /// </summary>
         public List<MstDictionaryEntry64> Dictionary { get; set; }
 
+        /// <summary>
+        /// Record deleted?
+        /// </summary>
         public bool Deleted
         {
             get { return ((Leader.Status & (int)(RecordStatus.LogicallyDeleted | RecordStatus.PhysicallyDeleted)) != 0); }

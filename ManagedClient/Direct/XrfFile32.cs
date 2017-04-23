@@ -12,6 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient.Direct
@@ -27,22 +29,35 @@ namespace ManagedClient.Direct
     {
         #region Constants
 
+        /// <summary>
+        /// Block size.
+        /// </summary>
         public const int XrfBlockSize = 512;
+
+        /// <summary>
+        /// Block capacity.
+        /// </summary>
         public const int XrfBlockCapacity = 127;
 
         #endregion
 
         #region Properties
 
+        /// <summary>
+        /// File name.
+        /// </summary>
         public string FileName { get; private set; }
 
         #endregion
 
         #region Construction
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public XrfFile32
             (
-                string fileName
+                [NotNull] string fileName
             )
         {
             FileName = fileName;

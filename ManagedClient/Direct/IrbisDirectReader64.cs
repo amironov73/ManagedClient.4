@@ -15,17 +15,32 @@ using System.IO;
 
 namespace ManagedClient.Direct
 {
+    /// <summary>
+    /// Direct access to IRBIS64 databases.
+    /// </summary>
     public sealed class IrbisDirectReader64
         : IDisposable
     {
         #region Properties
 
+        /// <summary>
+        /// MST file.
+        /// </summary>
         public MstFile64 Mst { get; private set; }
 
+        /// <summary>
+        /// XRF file.
+        /// </summary>
         public XrfFile64 Xrf { get; private set; }
 
+        /// <summary>
+        /// Inverted file.
+        /// </summary>
         public InvertedFile64 InvertedFile { get; private set; }
 
+        /// <summary>
+        /// Database name.
+        /// </summary>
         public string Database { get; private set; }
 
         #endregion

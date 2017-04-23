@@ -9,10 +9,15 @@
 using System;
 using System.Runtime.InteropServices;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient
 {
+    /// <summary>
+    /// Arguments for exception event.
+    /// </summary>
     [Serializable]
     [ComVisible(false)]
     public sealed class ExceptionEventArgs<T>
@@ -21,15 +26,21 @@ namespace ManagedClient
     {
         #region Properties
 
+        /// <summary>
+        /// Exception itself.
+        /// </summary>
         public T Exception { get; set; }
 
         #endregion
 
         #region Construction
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public ExceptionEventArgs
             (
-                T exception
+                [NotNull] T exception
             )
         {
             Exception = exception;

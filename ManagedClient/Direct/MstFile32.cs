@@ -26,10 +26,19 @@ namespace ManagedClient.Direct
 
         #region Properties
 
+        /// <summary>
+        /// Preload length.
+        /// </summary>
         public static int PreloadLength = 6 * 1024;
 
+        /// <summary>
+        /// Control record.
+        /// </summary>
         public MstControlRecord32 ControlRecord { get; private set; }
 
+        /// <summary>
+        /// File name.
+        /// </summary>
         public string FileName { get; private set; }
 
         #endregion

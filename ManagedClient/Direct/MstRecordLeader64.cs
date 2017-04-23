@@ -77,7 +77,13 @@ namespace ManagedClient.Direct
 
         #region Public methods
 
-        public static MstRecordLeader64 Read(Stream stream)
+        /// <summary>
+        /// Read record leader from the stream.
+        /// </summary>
+        public static MstRecordLeader64 Read
+            (
+                Stream stream
+            )
         {
             MstRecordLeader64 result = new MstRecordLeader64
             {

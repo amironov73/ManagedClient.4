@@ -16,7 +16,7 @@ using System.Text;
 namespace ManagedClient.Direct
 {
     /// <summary>
-    /// 
+    /// Record of MST file in IRBIS64.
     /// </summary>
     public sealed class MstFile64
         : IDisposable
@@ -26,10 +26,19 @@ namespace ManagedClient.Direct
 
         #region Properties
 
+        /// <summary>
+        /// Preload length.
+        /// </summary>
         public static int PreloadLength = 10*1024;
 
+        /// <summary>
+        /// Control record.
+        /// </summary>
         public MstControlRecord64 ControlRecord { get; private set; }
 
+        /// <summary>
+        /// File name.
+        /// </summary>
         public string FileName { get; private set; }
 
         #endregion

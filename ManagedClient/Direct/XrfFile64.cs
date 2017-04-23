@@ -12,6 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient.Direct
@@ -30,17 +32,26 @@ namespace ManagedClient.Direct
 
         #region Properties
 
+        /// <summary>
+        /// File name.
+        /// </summary>
         public string FileName { get; private set; }
 
+        /// <summary>
+        /// All the data in the memory?
+        /// </summary>
         public bool InMemory { get; private set; }
 
         #endregion
 
         #region Construction
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public XrfFile64
             (
-                string fileName,
+                [NotNull] string fileName,
                 bool inMemory
             )
         {

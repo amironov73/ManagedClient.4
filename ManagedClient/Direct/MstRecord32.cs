@@ -17,6 +17,9 @@ using ManagedClient;
 
 namespace ManagedClient.Direct
 {
+    /// <summary>
+    /// Record of MST file in IRBIS32.
+    /// </summary>
     [Serializable]
     [DebuggerDisplay("Leader={Leader}")]
     public sealed class MstRecord32

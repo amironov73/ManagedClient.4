@@ -1171,6 +1171,41 @@
             Трансформация результатов поискового запроса, полученных от сервера.
             </summary>
         </member>
+        <member name="P:ManagedClient.AfterQueryEventArgs.Client">
+            <summary>
+            Connection.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.AfterQueryEventArgs.QueryManager">
+            <summary>
+            Query manager.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.AfterQueryEventArgs.OriginalQuery">
+            <summary>
+            Original query text.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.AfterQueryEventArgs.ProcessedQuery">
+            <summary>
+            Rewritten query text.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.AfterQueryEventArgs.Answer">
+            <summary>
+            Server answer.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.AfterQueryEventArgs.AuxiliaryData">
+            <summary>
+            Arbitrary user data.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.AfterQueryEventArgs.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
         <member name="T:ManagedClient.BatchRecordReader">
             <summary>
             Считывание записей с сервера большими порциями
@@ -1319,31 +1354,95 @@
             Увеличение последнего сегмента на указанное число.
             </summary>
         </member>
+        <member name="T:ManagedClient.DatabaseChangedEventArgs">
+            <summary>
+            Arguments for <see cref="E:ManagedClient.ManagedClient64.DatabaseChanged"/>
+            event.
+            </summary>
+        </member>
         <member name="P:ManagedClient.DatabaseChangedEventArgs.OldDatabase">
             <summary>
-            Старая база.
+            Old database name.
             </summary>
         </member>
         <member name="P:ManagedClient.DatabaseChangedEventArgs.NewDatabase">
             <summary>
-            Новая база
+            New database name.
             </summary>
         </member>
         <member name="M:ManagedClient.DatabaseChangedEventArgs.#ctor">
             <summary>
-            Конструктор по умолчанию.
+            Constructor.
             </summary>
         </member>
         <member name="M:ManagedClient.DatabaseChangedEventArgs.#ctor(System.String,System.String)">
             <summary>
-            Удобный конструктор.
+            Constructor.
             </summary>
-            <param name="oldDatabase">Старая база.</param>
-            <param name="newDatabase">Новая база.</param>
+        </member>
+        <member name="T:ManagedClient.Direct.InvertedFile32">
+            <summary>
+            Inverted file for IRBIS32.
+            </summary>
         </member>
         <member name="F:ManagedClient.Direct.InvertedFile32.NodeLength">
             <summary>
             Длина записи N01/L01.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.InvertedFile32.FileName">
+            <summary>
+            File name.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.InvertedFile32.Ifp">
+            <summary>
+            IFP file.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.InvertedFile32.L01">
+            <summary>
+            L01 file.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.InvertedFile32.L02">
+            <summary>
+            L02 file.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.InvertedFile32.N01">
+            <summary>
+            N01 file.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.InvertedFile32.N02">
+            <summary>
+            N02 file.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.Direct.IrbisDirectReader32">
+            <summary>
+            Direct access to IRBIS32 databases.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.IrbisDirectReader32.Mst">
+            <summary>
+            MST file.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.IrbisDirectReader32.Xrf">
+            <summary>
+            XRF file.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.IrbisDirectReader32.InvertedFile">
+            <summary>
+            Inverted file.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.IrbisDirectReader32.Database">
+            <summary>
+            Database name.
             </summary>
         </member>
         <member name="T:ManagedClient.Direct.MstControlRecord32">
@@ -1396,6 +1495,34 @@
             Длина элемента справочника MST-файла.
             </summary>
         </member>
+        <member name="P:ManagedClient.Direct.MstDictionaryEntry32.Tag">
+            <summary>
+            Tag.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstDictionaryEntry32.Position">
+            <summary>
+            Position.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstDictionaryEntry32.Length">
+            <summary>
+            Length.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstDictionaryEntry32.Bytes">
+            <summary>
+            Value as array of bytes.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstDictionaryEntry32.Text">
+            <summary>
+            Value as string.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.MstDictionaryEntry32.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
         <member name="T:ManagedClient.Direct.MstRecordLeader32">
             <summary>
             
@@ -1414,6 +1541,16 @@
         <member name="P:ManagedClient.Direct.MstRecordLeader32.Length">
             <summary>
             Длина записи (всегда четное число).
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstRecordLeader32.PreviousBlock">
+            <summary>
+            Number of the previous block.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstRecordLeader32.PreviousOffset">
+            <summary>
+            Offset of the previous block.
             </summary>
         </member>
         <member name="P:ManagedClient.Direct.MstRecordLeader32.Base">
@@ -1439,6 +1576,21 @@
             
             </summary>
         </member>
+        <member name="F:ManagedClient.Direct.MstFile32.PreloadLength">
+            <summary>
+            Preload length.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstFile32.ControlRecord">
+            <summary>
+            Control record.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstFile32.FileName">
+            <summary>
+            File name.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Direct.MstFile32.LockDatabase(System.Boolean)">
             <summary>
             Блокировка базы данных в целом.
@@ -1450,12 +1602,37 @@
             Чтение флага блокировки базы данных в целом.
             </summary>
         </member>
+        <member name="T:ManagedClient.Direct.MstRecord32">
+            <summary>
+            Record of MST file in IRBIS32.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Direct.XrfFile32">
             <summary>
             Файл перекрестных ссылок XRF представляет собой
             таблицу ссылок на записи файла документов.
             Первая ссылка соответствует записи файла документов
             с номером 1, вторая – 2  и тд.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.Direct.XrfFile32.XrfBlockSize">
+            <summary>
+            Block size.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.Direct.XrfFile32.XrfBlockCapacity">
+            <summary>
+            Block capacity.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.XrfFile32.FileName">
+            <summary>
+            File name.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.XrfFile32.#ctor(System.String)">
+            <summary>
+            Constructor.
             </summary>
         </member>
         <member name="T:ManagedClient.Direct.XrfRecord32">
@@ -1468,14 +1645,34 @@
             Fixed record size.
             </summary>
         </member>
+        <member name="P:ManagedClient.Direct.XrfRecord32.AbsoluteOffset">
+            <summary>
+            Absolute offset.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.XrfRecord32.BlockNumber">
+            <summary>
+            Block number.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.XrfRecord32.BlockOffset">
+            <summary>
+            Block offset.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.XrfRecord32.Status">
+            <summary>
+            Status.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Direct.XrfRecord32.Locked">
             <summary>
-            Is the record locked.
+            Is the record locked?
             </summary>
         </member>
         <member name="P:ManagedClient.Direct.XrfRecord32.Deleted">
             <summary>
-            Is the record deleted.
+            Is the record deleted?
             </summary>
         </member>
         <member name="M:ManagedClient.Direct.XrfRecord32.ToString">
@@ -1483,9 +1680,59 @@
             
             </summary>
         </member>
+        <member name="T:ManagedClient.Direct.InvertedFile64">
+            <summary>
+            Inverted file for IRBIS64.
+            </summary>
+        </member>
         <member name="F:ManagedClient.Direct.InvertedFile64.NodeLength">
             <summary>
             Длина записи N01/L01.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.InvertedFile64.FileName">
+            <summary>
+            File name.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.InvertedFile64.Ifp">
+            <summary>
+            IFP file.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.InvertedFile64.L01">
+            <summary>
+            L01 file.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.InvertedFile64.N01">
+            <summary>
+            N01 file.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.Direct.IrbisDirectReader64">
+            <summary>
+            Direct access to IRBIS64 databases.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.IrbisDirectReader64.Mst">
+            <summary>
+            MST file.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.IrbisDirectReader64.Xrf">
+            <summary>
+            XRF file.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.IrbisDirectReader64.InvertedFile">
+            <summary>
+            Inverted file.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.IrbisDirectReader64.Database">
+            <summary>
+            Database name.
             </summary>
         </member>
         <member name="T:ManagedClient.Direct.MstControlRecord64">
@@ -1555,9 +1802,52 @@
             Длина элемента справочника MST-файла.
             </summary>
         </member>
+        <member name="P:ManagedClient.Direct.MstDictionaryEntry64.Tag">
+            <summary>
+            Tag.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstDictionaryEntry64.Position">
+            <summary>
+            Position.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstDictionaryEntry64.Length">
+            <summary>
+            Length.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstDictionaryEntry64.Bytes">
+            <summary>
+            Value as array of bytes.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstDictionaryEntry64.Text">
+            <summary>
+            Value as text string.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.MstDictionaryEntry64.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
         <member name="T:ManagedClient.Direct.MstFile64">
             <summary>
-            
+            Record of MST file in IRBIS64.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.Direct.MstFile64.PreloadLength">
+            <summary>
+            Preload length.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstFile64.ControlRecord">
+            <summary>
+            Control record.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstFile64.FileName">
+            <summary>
+            File name.
             </summary>
         </member>
         <member name="M:ManagedClient.Direct.MstFile64.LockDatabase(System.Boolean)">
@@ -1569,6 +1859,26 @@
         <member name="M:ManagedClient.Direct.MstFile64.ReadDatabaseLockedFlag">
             <summary>
             Чтение флага блокировки базы данных в целом.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.Direct.MstRecord64">
+            <summary>
+            Record of MST file in IRBIS64.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstRecord64.Leader">
+            <summary>
+            Leader.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstRecord64.Dictionary">
+            <summary>
+            Dictionary.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstRecord64.Deleted">
+            <summary>
+            Record deleted?
             </summary>
         </member>
         <member name="T:ManagedClient.Direct.MstRecordLeader64">
@@ -1619,12 +1929,32 @@
             Номер версии записи.
             </summary>
         </member>
+        <member name="M:ManagedClient.Direct.MstRecordLeader64.Read(System.IO.Stream)">
+            <summary>
+            Read record leader from the stream.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Direct.XrfFile64">
             <summary>
             Файл перекрестных ссылок XRF представляет собой
             таблицу ссылок на записи файла документов.
             Первая ссылка соответствует записи файла документов
             с номером 1, вторая – 2  и тд.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.XrfFile64.FileName">
+            <summary>
+            File name.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.XrfFile64.InMemory">
+            <summary>
+            All the data in the memory?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.XrfFile64.#ctor(System.String,System.Boolean)">
+            <summary>
+            Constructor.
             </summary>
         </member>
         <member name="T:ManagedClient.Direct.XrfRecord64">
@@ -1665,6 +1995,21 @@
         <member name="M:ManagedClient.Direct.XrfRecord64.ToString">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:ManagedClient.ExceptionEventArgs`1">
+            <summary>
+            Arguments for exception event.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ExceptionEventArgs`1.Exception">
+            <summary>
+            Exception itself.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ExceptionEventArgs`1.#ctor(`0)">
+            <summary>
+            Constructor.
             </summary>
         </member>
         <member name="M:ManagedClient.FieldReference.ToString">

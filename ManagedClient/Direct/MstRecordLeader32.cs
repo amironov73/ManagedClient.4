@@ -45,8 +45,14 @@ namespace ManagedClient.Direct
         /// </summary>
         public int Length { get; set; }
 
+        /// <summary>
+        /// Number of the previous block.
+        /// </summary>
         public int PreviousBlock { get; set; }
 
+        /// <summary>
+        /// Offset of the previous block.
+        /// </summary>
         public int PreviousOffset { get; set; }
 
         /// <summary>
