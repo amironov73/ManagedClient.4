@@ -1,4 +1,7 @@
-﻿/* SearchPostingInfo.cs -- информация о постинге
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
+/* SearchPostingInfo.cs -- информация о постинге
  */
 
 #region Using directives

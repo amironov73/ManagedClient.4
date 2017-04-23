@@ -1,4 +1,7 @@
-﻿/* BeforeQueryEventArgs.cs
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
+/* BeforeQueryEventArgs.cs
  */
 
 #region Using directives
@@ -16,7 +19,6 @@ namespace ManagedClient
     /// <summary>
     /// Трансформация поискового запроса перед отправкой на сервер.
     /// </summary>
-    [Serializable]
     public sealed class BeforeQueryEventArgs
         : EventArgs
     {

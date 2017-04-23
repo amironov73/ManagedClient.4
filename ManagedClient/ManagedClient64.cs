@@ -1,4 +1,7 @@
-﻿/* ManagedClient64.cs
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
+/* ManagedClient64.cs
  */
 
 #region Using directives
@@ -30,9 +33,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace ManagedClient
 {
     using Gbl;
-#if !PocketPC
-    using Transactions;
-#endif
 
     /// <summary>
     /// Клиент для общения с сервером
@@ -145,10 +145,6 @@ namespace ManagedClient
         // ReSharper disable once EventNeverInvoked
         public event EventHandler<AfterQueryEventArgs> AfterQuery;
 
-        /// <summary>
-        /// Отлавливание транзакции по созданию, модификации или удалению записей.
-        /// </summary>
-        public event EventHandler<IrbisTransactionEventArgs> Transaction;
         #endif
 
         #endregion
@@ -475,8 +471,8 @@ namespace ManagedClient
             {
                 return false;
             }
-            Username = Username;
-            Password = Password;
+            //Username = Username;
+            //Password = Password;
 
             return !string.IsNullOrEmpty(Username)
                    && !string.IsNullOrEmpty(Password);
@@ -855,49 +851,6 @@ namespace ManagedClient
                 }
             }
 #endif
-        }
-
-#if !PocketPC
-        private IrbisTransactionItem OnTransaction
-            (
-                IrbisTransactionAction action,
-                IrbisRecord record
-            )
-        {
-            IrbisTransactionItem result = new IrbisTransactionItem
-            {
-                Moment = DateTime.Now,
-                Action = action,
-                Database = record.Database,
-                Mfn = record.Mfn
-            };
-
-            var handler = Transaction;
-            if (handler != null)
-            {
-                IrbisTransactionEventArgs eventArgs = new IrbisTransactionEventArgs
-                {
-                    Client = this,
-                    Context = null,
-                    Item = result
-                };
-                handler(this, eventArgs);
-            }
-
-            return result;
-        }
-#endif
-
-// ReSharper disable once UnusedMember.Local
-        private bool OnBeforeQuery()
-        {
-            return true;
-        }
-
-// ReSharper disable once UnusedMember.Local
-        private void OnAfterQuery()
-        {
-            
         }
 
         #endregion
@@ -1826,34 +1779,6 @@ TryAgain:
                 _DebugDump(answer);
                 ResponseHeader response = ResponseHeader.Parse(answer);
                 _CheckReturnCode(response);
-#if !PocketPC
-                for (int i = 0; i < records.Length; i++)
-                {
-                    IrbisRecord record = records[i];
-                    IrbisTransactionAction action = (record.Mfn == 0)
-                        ? IrbisTransactionAction.CreateRecord
-                        : IrbisTransactionAction.ModifyRecord;
-                    if (record.Database == null)
-                    {
-                        record.Database = Database;
-                    }
-                    record.Fields.Clear();
-                    List<string> data = new List<string>
-                        (
-                            response.Data[i+1].Split('\x001E')
-                        );
-                    record.MergeParse
-                        (
-                            data.ToArray(),
-                            0
-                        );
-                    OnTransaction
-                        (
-                            action,
-                            record
-                        );
-                }
-#endif
             }
             finally
             {
@@ -1959,32 +1884,6 @@ TryAgain:
                     _DebugDump ( answer );
                     ResponseHeader response = ResponseHeader.Parse ( answer );
                     _CheckReturnCode ( response );
-#if !PocketPC
-                    IrbisTransactionAction action = (record.Mfn == 0)
-                        ? IrbisTransactionAction.CreateRecord 
-                        : (
-                            record.Deleted
-                            ? IrbisTransactionAction.ModifyRecord
-                            : IrbisTransactionAction.DeleteRecord
-                          );
-                    if (record.Database == null)
-                    {
-                        record.Database = Database;
-                    }
-                    record.Fields.Clear();
-                    List<string> data = new List<string> {response.Data[1]};
-                    data.AddRange(response.Data[2].Split('\x001E'));
-                    record.MergeParse
-                        (
-                            data.ToArray(),
-                            0
-                        );
-                    OnTransaction
-                        (
-                            action, 
-                            record
-                        );
-#endif
                 }
                 finally
                 {

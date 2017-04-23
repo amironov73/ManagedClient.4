@@ -1,4 +1,7 @@
-﻿/* AfterQueryEventArgs.cs
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
+/* AfterQueryEventArgs.cs
  */
 
 #region Using directives
@@ -15,7 +18,6 @@ namespace ManagedClient
     /// <summary>
     /// Трансформация результатов поискового запроса, полученных от сервера.
     /// </summary>
-    [Serializable]
     public sealed class AfterQueryEventArgs
         : EventArgs
     {

@@ -101,8 +101,6 @@
     <Compile Include="Fields\CodesInfo.cs" />
     <Compile Include="Fields\ExemplarInfo.cs" />
     <Compile Include="FieldReference.cs" />
-    <Compile Include="Fst\FstItem.cs" />
-    <Compile Include="Fst\FstProcessor.cs" />
     <Compile Include="Gbl\GblCommand.cs" />
     <Compile Include="Gbl\GblBuilder.cs" />
     <Compile Include="Gbl\GblItem.cs" />
@@ -111,10 +109,6 @@
     <Compile Include="Gbl\GblEventArgs.cs" />
     <Compile Include="Gbl\GblFinal.cs" />
     <Compile Include="Gbl\GlobalCorrector.cs" />
-    <Compile Include="Highlight\IrbisHyperTextHighlighter.cs" />
-    <Compile Include="Highlight\IrbisPlainTextHighlighter.cs" />
-    <Compile Include="Highlight\IrbisRichTextHighlighter.cs" />
-    <Compile Include="Highlight\IrbisTextHighlighter.cs" />
     <Compile Include="IfpRecord.cs" />
     <Compile Include="IniFile.cs" />
     <Compile Include="Direct\InvertedFile64.cs" />
@@ -133,7 +127,6 @@
     <Compile Include="IrbisDatabaseInfo.cs" />
     <Compile Include="IrbisDate.cs" />
     <Compile Include="IrbisException.cs" />
-    <Compile Include="IrbisExecutive.cs" />
     <Compile Include="IrbisFst.cs" />
     <Compile Include="IrbisIniFile.cs" />
     <Compile Include="IrbisInputMode.cs" />
@@ -142,7 +135,6 @@
     <Compile Include="IrbisMenu.cs" />
     <Compile Include="IrbisOpt.cs" />
     <Compile Include="IrbisPath.cs" />
-    <Compile Include="IrbisPft.cs" />
     <Compile Include="IrbisProcessInfo.cs" />
     <Compile Include="Direct\IrbisDirectReader64.cs" />
     <Compile Include="IrbisUpperCaseTable.cs" />
@@ -214,11 +206,6 @@
     <Compile Include="Readers\ReaderUtility.cs" />
     <Compile Include="RecordFieldCollection.cs" />
     <Compile Include="RetryExtensions.cs" />
-    <Compile Include="Schema\FieldSchema.cs" />
-    <Compile Include="Schema\RecordSchema.cs" />
-    <Compile Include="Schema\SchemaValidator.cs" />
-    <Compile Include="Schema\SubFieldSchema.cs" />
-    <Compile Include="Schema\SchemaItem.cs" />
     <Compile Include="Scripting\ScriptUtility.cs" />
     <Compile Include="Scripting\IrbisScript.cs" />
     <Compile Include="IrbisStandardDatabases.cs" />
@@ -231,11 +218,6 @@
     <Compile Include="SubBasing\SubBasingSettings.cs" />
     <Compile Include="SubFieldCollection.cs" />
     <Compile Include="TextWithEncoding.cs" />
-    <Compile Include="Transactions\IrbisTransactionAction.cs" />
-    <Compile Include="Transactions\IrbisTransactionContext.cs" />
-    <Compile Include="Transactions\IrbisTransactionEventArgs.cs" />
-    <Compile Include="Transactions\IrbisTransactionItem.cs" />
-    <Compile Include="Transactions\IrbisTransactionManager.cs" />
     <Compile Include="IrbisTree.cs" />
     <Compile Include="IrbisUserInfo.cs" />
     <Compile Include="IrbisUtilities.cs" />
@@ -266,7 +248,6 @@
     <Compile Include="Magazines\MagazineManager.cs" />
     <Compile Include="OrganizationInfo.cs" />
     <Compile Include="IrbisSearchEngine.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryHeader.cs" />
     <Compile Include="Readers\ReaderInfo.cs" />

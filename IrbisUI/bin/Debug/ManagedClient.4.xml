@@ -1675,31 +1675,6 @@
             A <see cref="T:System.String" /> that represents this instance.
             </returns>
         </member>
-        <member name="T:ManagedClient.Fst.FstItem">
-            <summary>
-            Строчка из FST-файла.
-            </summary>
-        </member>
-        <member name="P:ManagedClient.Fst.FstItem.LineNumber">
-            <summary>
-            Номер строки в FST-файле
-            </summary>
-        </member>
-        <member name="P:ManagedClient.Fst.FstItem.Tag">
-            <summary>
-            Тег поля
-            </summary>
-        </member>
-        <member name="P:ManagedClient.Fst.FstItem.Method">
-            <summary>
-            Метод
-            </summary>
-        </member>
-        <member name="P:ManagedClient.Fst.FstItem.Format">
-            <summary>
-            Строка с форматом
-            </summary>
-        </member>
         <member name="T:ManagedClient.Gbl.GblCommand">
             <summary>
             Команды для GBL.
@@ -3439,11 +3414,6 @@
             Текстовое описание ошибки.
             </summary>
         </member>
-        <member name="T:ManagedClient.IrbisExecutive">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:ManagedClient.IrbisFst">
             <summary>
             Файл FST.
@@ -4162,21 +4132,6 @@
         <member name="F:ManagedClient.IrbisPath.InternalResource">
             <summary>
             Внутренний ресурс
-            </summary>
-        </member>
-        <member name="T:ManagedClient.IrbisPft">
-            <summary>
-            Файл PFT.
-            </summary>
-        </member>
-        <member name="T:ManagedClient.IrbisPft.Entry">
-            <summary>
-            Элемент (строка) PFT.
-            </summary>
-        </member>
-        <member name="P:ManagedClient.IrbisPft.Name">
-            <summary>
-            Имя (чисто для идентификации).
             </summary>
         </member>
         <member name="T:ManagedClient.IrbisProcessInfo">
@@ -6469,27 +6424,6 @@
             Write the record.
             </summary>
         </member>
-        <member name="T:ManagedClient.Schema.FieldSchema">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ManagedClient.Schema.RecordSchema">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ManagedClient.Schema.SchemaValidator`1">
-            <summary>
-            
-            </summary>
-            <typeparam name="T"></typeparam>
-        </member>
-        <member name="T:ManagedClient.Schema.SubFieldSchema">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:ManagedClient.Scripting.ScriptUtility">
             <summary>
             Полезные методы расширения для скриптов.
@@ -6922,8 +6856,6 @@
             <summary>
             Текст с явно заданной кодировкой.
             </summary>
-            <param name="text"></param>
-            <param name="encoding"></param>
         </member>
         <member name="M:ManagedClient.TextWithEncoding.ToBytes">
             <summary>
@@ -6939,63 +6871,30 @@
             <param name="text"></param>
             <returns></returns>
         </member>
+        <member name="M:ManagedClient.TextWithEncoding.CompareTo(ManagedClient.TextWithEncoding)">
+            <inheritdoc cref="M:System.IComparable`1.CompareTo(`0)"/>
+        </member>
         <member name="M:ManagedClient.TextWithEncoding.op_Equality(ManagedClient.TextWithEncoding,ManagedClient.TextWithEncoding)">
             <summary>
             Оператор сравнения двух текстов.
             </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.TextWithEncoding.op_Inequality(ManagedClient.TextWithEncoding,ManagedClient.TextWithEncoding)">
             <summary>
             Оператор сравнения двух текстов.
             </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
         </member>
-        <member name="T:ManagedClient.Transactions.IrbisTransactionAction">
-            <summary>
-            Отслеживаемое действие при транзакции.
-            </summary>
+        <member name="M:ManagedClient.TextWithEncoding.Equals(ManagedClient.TextWithEncoding)">
+            <inheritdoc cref="M:System.IEquatable`1.Equals(`0)"/>
         </member>
-        <member name="T:ManagedClient.Transactions.IrbisTransactionItem">
-            <summary>
-            Данные об элементе транзакции.
-            </summary>
+        <member name="M:ManagedClient.TextWithEncoding.Equals(System.Object)">
+            <inheritdoc cref="M:System.Object.Equals(System.Object)"/>
         </member>
-        <member name="P:ManagedClient.Transactions.IrbisTransactionItem.Moment">
-            <summary>
-            Момент времени.
-            </summary>
+        <member name="M:ManagedClient.TextWithEncoding.GetHashCode">
+            <inheritdoc cref="M:System.Object.GetHashCode"/>
         </member>
-        <member name="P:ManagedClient.Transactions.IrbisTransactionItem.Action">
-            <summary>
-            Произведенное действие: создание записи,
-            модификация, удаление.
-            </summary>
-        </member>
-        <member name="P:ManagedClient.Transactions.IrbisTransactionItem.Database">
-            <summary>
-            Имя базы данных, в которой происходило действие.
-            </summary>
-        </member>
-        <member name="P:ManagedClient.Transactions.IrbisTransactionItem.Mfn">
-            <summary>
-            MFN записи, с которой происходило действие.
-            </summary>
-        </member>
-        <member name="T:ManagedClient.Transactions.IrbisTransactionManager">
-            <summary>
-            Менеджер транзакций
-            </summary>
-        </member>
-        <member name="M:ManagedClient.Transactions.IrbisTransactionManager.Dispose">
-            <summary>
-            Performs application-defined tasks associated with freeing, 
-            releasing, or resetting unmanaged resources.
-            </summary>
+        <member name="M:ManagedClient.TextWithEncoding.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
         </member>
         <member name="T:ManagedClient.IrbisTree">
             <summary>
@@ -7281,11 +7180,6 @@
         <member name="E:ManagedClient.ManagedClient64.AfterQuery">
             <summary>
             Трансформация ответа после получения с сервера.
-            </summary>
-        </member>
-        <member name="E:ManagedClient.ManagedClient64.Transaction">
-            <summary>
-            Отлавливание транзакции по созданию, модификации или удалению записей.
             </summary>
         </member>
         <member name="P:ManagedClient.ManagedClient64.Host">
@@ -8692,6 +8586,31 @@
             <returns>
             A <see cref="T:System.String" /> that represents this instance.
             </returns>
+        </member>
+        <member name="T:ManagedClient.TermLink">
+            <summary>
+            Term link.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.TermLink.Mfn">
+            <summary>
+            MFN.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.TermLink.Tag">
+            <summary>
+            Tag.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.TermLink.Occurrence">
+            <summary>
+            Occurrence.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.TermLink.Index">
+            <summary>
+            Index.
+            </summary>
         </member>
         <member name="T:ManagedClient.Transliterator">
             <summary>

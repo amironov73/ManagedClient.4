@@ -1,4 +1,7 @@
-﻿/* LogTextBox.cs -- текстовый контрол для логирования.
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
+/* LogTextBox.cs -- текстовый контрол для логирования.
  */
 
 #region Using directives

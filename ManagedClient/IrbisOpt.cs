@@ -1,4 +1,7 @@
-﻿/* IrbisOpt.cs
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
+/* IrbisOpt.cs
  */
 
 #region Using directives
@@ -15,7 +18,6 @@ namespace ManagedClient
     /// <summary>
     /// Файл OPT.
     /// </summary>
-    [Serializable]
     public sealed class IrbisOpt
     {        
         #region Properties

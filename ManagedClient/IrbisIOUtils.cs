@@ -1,4 +1,7 @@
-﻿/* IrbisIOUtils.cs
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
+/* IrbisIOUtils.cs
  */
 
 #region Using directives
@@ -6,6 +9,7 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+
 using JetBrains.Annotations;
 
 #endregion

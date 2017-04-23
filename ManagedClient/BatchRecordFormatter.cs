@@ -1,4 +1,7 @@
-﻿/* BatchRecordFormatter -- форматирование записей большими порциями.
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
+/* BatchRecordFormatter -- форматирование записей большими порциями.
  */
 
 #region Using directives
