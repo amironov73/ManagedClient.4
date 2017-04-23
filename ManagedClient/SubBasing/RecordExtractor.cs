@@ -351,7 +351,7 @@ namespace ManagedClient.SubBasing
 
             _maxMfn = Client.GetMaxMfn();
 
-            switch (query.SelectionType)
+            switch (query.SelectionType) //-V3002
             {
                 case SelectionType.Mfn:
                     _SearchByMfn

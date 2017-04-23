@@ -6059,6 +6059,9 @@
             Объединение двух диапазонов.
             </summary>
         </member>
+        <member name="M:ManagedClient.Ranges.NumberRange.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
         <member name="T:ManagedClient.Ranges.NumberRangeCollection">
             <summary>
             Набор диапазонов чисел.

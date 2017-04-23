@@ -74,7 +74,12 @@ namespace ManagedClient.Processing
             try
             {
                 Context.Record = record;
-                ProcessingResult result = RecordHandler(Context);
+                RecordHandler recordHandler = RecordHandler;
+                if (ReferenceEquals(recordHandler, null))
+                {
+                    throw new Exception();
+                }
+                ProcessingResult result = recordHandler(Context);
                 if (!string.IsNullOrEmpty(result.Result))
                 {
                     Context.Accumulated.Append(result.Result);

@@ -290,7 +290,7 @@ namespace ManagedClient
                 }
 
                 b = reader.ReadByte();
-                count |= (b & 0x7F) << shift;
+                count |= (b & 0x7F) << shift; //-V3134
                 shift += 7;
             } while ((b & 0x80) != 0);
             return count;

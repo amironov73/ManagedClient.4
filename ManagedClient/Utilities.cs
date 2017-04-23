@@ -609,20 +609,21 @@ namespace ManagedClient
                 this Stream stream
             )
         {
-            MemoryStream result = new MemoryStream();
-
-            while (true)
+            using (MemoryStream result = new MemoryStream())
             {
-                byte[] buffer = new byte[32 * 1024];
-                int read = stream.Read(buffer, 0, buffer.Length);
-                if (read <= 0)
+                while (true)
                 {
-                    break;
+                    byte[] buffer = new byte[32 * 1024];
+                    int read = stream.Read(buffer, 0, buffer.Length);
+                    if (read <= 0)
+                    {
+                        break;
+                    }
+                    result.Write(buffer, 0, read);
                 }
-                result.Write(buffer, 0, read);
-            }
 
-            return result.ToArray();
+                return result.ToArray();
+            }
         }
 
         /// <summary>
@@ -633,20 +634,21 @@ namespace ManagedClient
                 this Socket socket
             )
         {
-            MemoryStream result = new MemoryStream();
-
-            while (true)
+            using (MemoryStream result = new MemoryStream())
             {
-                byte[] buffer = new byte[32 * 1024];
-                int read = socket.Receive(buffer);
-                if (read <= 0)
+                while (true)
                 {
-                    break;
+                    byte[] buffer = new byte[32 * 1024];
+                    int read = socket.Receive(buffer);
+                    if (read <= 0)
+                    {
+                        break;
+                    }
+                    result.Write(buffer, 0, read);
                 }
-                result.Write(buffer, 0, read);
-            }
 
-            return result.ToArray();
+                return result.ToArray();
+            }
         }
 
         /// <summary>

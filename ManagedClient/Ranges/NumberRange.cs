@@ -285,18 +285,19 @@ namespace ManagedClient.Ranges
 
         #region Object members
 
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
         {
             if (ReferenceEquals(Start, null)
-                && ReferenceEquals(Stop, null))
+                && ReferenceEquals(Stop, null)) //-V3125
             {
                 return string.Empty;
             }
             if (ReferenceEquals(Start, null))
             {
-                return Stop.ToString();
+                return Stop.ToString(); //-V3125 //-V3095
             }
-            if (ReferenceEquals(Stop, null))
+            if (ReferenceEquals(Stop, null)) //-V3095
             {
                 return Start.ToString();
             }

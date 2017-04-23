@@ -40,7 +40,7 @@ namespace ManagedClient
     [PublicAPI]
     [Serializable]
     [MoonSharpUserData]
-    public class ManagedClient64
+    public class ManagedClient64 //-V3097
         : IDisposable
     {
         #region Constants
@@ -3495,7 +3495,7 @@ TryAgain:
         {
             List<IrbisRecord> result = new List<IrbisRecord>();
 
-            for (int entry = 1; entry < int.MaxValue; entry++)
+            for (int entry = 1; entry < int.MaxValue; entry++) //-V3022
             {
                 IrbisRecord record = GetRecordHistory
                     (
