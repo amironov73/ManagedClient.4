@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient.Direct
@@ -26,16 +28,19 @@ namespace ManagedClient.Direct
         /// <summary>
         /// MST file.
         /// </summary>
+        [NotNull]
         public MstFile64 Mst { get; private set; }
 
         /// <summary>
         /// XRF file.
         /// </summary>
+        [NotNull]
         public XrfFile64 Xrf { get; private set; }
 
         /// <summary>
         /// Inverted file.
         /// </summary>
+        [NotNull]
         public InvertedFile64 InvertedFile { get; private set; }
 
         /// <summary>
@@ -47,9 +52,12 @@ namespace ManagedClient.Direct
 
         #region Construction
 
-        public IrbisDirectReader64 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public IrbisDirectReader64
             (
-                string masterFile,
+                [NotNull] string masterFile,
                 bool inMemory
             )
         {
@@ -58,7 +66,7 @@ namespace ManagedClient.Direct
                 (
                     Path.ChangeExtension
                         (
-                            masterFile, 
+                            masterFile,
                             ".mst"
                         )
                 );
@@ -66,7 +74,7 @@ namespace ManagedClient.Direct
                 (
                     Path.ChangeExtension
                     (
-                        masterFile, 
+                        masterFile,
                         ".xrf"
                     ),
                     inMemory
@@ -89,27 +97,40 @@ namespace ManagedClient.Direct
 
         #region Public methods
 
+        /// <summary>
+        /// Get maximal MFN.
+        /// </summary>
         public int GetMaxMfn()
         {
             return Mst.ControlRecord.NextMfn - 1;
         }
 
+        /// <summary>
+        /// Read the record.
+        /// </summary>
+        [CanBeNull]
         public IrbisRecord ReadRecord
             (
                 int mfn
             )
         {
             XrfRecord64 xrfRecord = Xrf.ReadRecord(mfn);
-            if ( xrfRecord.Offset == 0 )
+            if (xrfRecord.Offset == 0)
             {
                 return null;
             }
+
             MstRecord64 mstRecord = Mst.ReadRecord2(xrfRecord.Offset);
             IrbisRecord result = mstRecord.DecodeRecord();
             result.Database = Database;
+
             return result;
         }
 
+        /// <summary>
+        /// Read all versions for the record.
+        /// </summary>
+        [NotNull]
         public IrbisRecord[] ReadAllRecordVersions
             (
                 int mfn
@@ -152,7 +173,14 @@ namespace ManagedClient.Direct
         //    return result;
         //}
 
-        public int[] SearchSimple(string key)
+        /// <summary>
+        /// Simple search.
+        /// </summary>
+        [NotNull]
+        public int[] SearchSimple
+            (
+                string key
+            )
         {
             int[] mfns = InvertedFile.SearchSimple(key);
             List<int> result = new List<int>();
@@ -163,10 +191,18 @@ namespace ManagedClient.Direct
                     result.Add(mfn);
                 }
             }
+
             return result.ToArray();
         }
 
-        public IrbisRecord[] SearchReadSimple(string key)
+        /// <summary>
+        /// Search and read the found records.
+        /// </summary>
+        [NotNull]
+        public IrbisRecord[] SearchReadSimple
+            (
+                string key
+            )
         {
             int[] mfns = InvertedFile.SearchSimple(key);
             List<IrbisRecord> result = new List<IrbisRecord>();
@@ -177,10 +213,12 @@ namespace ManagedClient.Direct
                     XrfRecord64 xrfRecord = Xrf.ReadRecord(mfn);
                     if (!xrfRecord.Deleted)
                     {
-                        MstRecord64 mstRecord = Mst.ReadRecord2(xrfRecord.Offset);
+                        MstRecord64 mstRecord
+                            = Mst.ReadRecord2(xrfRecord.Offset);
                         if (!mstRecord.Deleted)
                         {
-                            IrbisRecord irbisRecord = mstRecord.DecodeRecord();
+                            IrbisRecord irbisRecord
+                                = mstRecord.DecodeRecord();
                             irbisRecord.Database = Database;
                             result.Add(irbisRecord);
                         }
@@ -191,6 +229,7 @@ namespace ManagedClient.Direct
                     Debug.WriteLine(ex);
                 }
             }
+
             return result.ToArray();
         }
 
@@ -198,25 +237,15 @@ namespace ManagedClient.Direct
 
         #region IDisposable members
 
-        public void Dispose ()
+        /// <inheritdoc cref="IDisposable.Dispose"/>
+        public void Dispose()
         {
-            if ( Mst != null )
-            {
-                Mst.Dispose ();
-                Mst = null;
-            }
-            if ( Xrf != null )
-            {
-                Xrf.Dispose ();
-                Xrf = null;
-            }
-            if (InvertedFile != null)
-            {
-                InvertedFile.Dispose();
-                InvertedFile = null;
-            }
+            Mst.Dispose();
+            Xrf.Dispose();
+            InvertedFile.Dispose();
         }
-
-        #endregion
     }
+
+    #endregion
 }
+

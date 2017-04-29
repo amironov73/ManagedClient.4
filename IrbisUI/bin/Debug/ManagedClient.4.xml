@@ -1420,6 +1420,54 @@
             N02 file.
             </summary>
         </member>
+        <member name="M:ManagedClient.Direct.InvertedFile32.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile32.ReadNode(System.Int32)">
+            <summary>
+            Read the node.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile32.ReadLeaf(System.Int32)">
+            <summary>
+            Read the leaf node.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile32.ReadNext(ManagedClient.NodeRecord)">
+            <summary>
+            Read next node.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile32.ReadPrevious(ManagedClient.NodeRecord)">
+            <summary>
+            Read previous node.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile32.ReadIfpRecord(System.Int64)">
+            <summary>
+            Read IFP record.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile32.SearchExact(System.String)">
+            <summary>
+            Search for exact term match.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile32.SearchStart(System.String)">
+            <summary>
+            Search for terms that starts with given string.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile32.SearchSimple(System.String)">
+            <summary>
+            Simple search.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile32.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+        </member>
         <member name="T:ManagedClient.Direct.IrbisDirectReader32">
             <summary>
             Direct access to IRBIS32 databases.
@@ -1444,6 +1492,40 @@
             <summary>
             Database name.
             </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IrbisDirectReader32.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IrbisDirectReader32.GetMaxMfn">
+            <summary>
+            Get maximal MFN.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Direct.IrbisDirectReader32.ReadRecord(System.Int32)">
+            <summary>
+            Read the record.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IrbisDirectReader32.ReadAllRecordVersions(System.Int32)">
+            <summary>
+            Read all versions for the record.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IrbisDirectReader32.SearchSimple(System.String)">
+            <summary>
+            Simple search.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IrbisDirectReader32.SearchReadSimple(System.String)">
+            <summary>
+            Search and read found records.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IrbisDirectReader32.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
         </member>
         <member name="T:ManagedClient.Direct.MstControlRecord32">
             <summary>
@@ -1710,6 +1792,54 @@
             N01 file.
             </summary>
         </member>
+        <member name="M:ManagedClient.Direct.InvertedFile64.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile64.ReadNode(System.Int32)">
+            <summary>
+            Read the node.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile64.ReadLeaf(System.Int32)">
+            <summary>
+            Read the leaf node.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile64.ReadNext(ManagedClient.NodeRecord)">
+            <summary>
+            Read next node.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile64.ReadPrevious(ManagedClient.NodeRecord)">
+            <summary>
+            Read previous node.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile64.ReadIfpRecord(System.Int64)">
+            <summary>
+            Read the IFP record.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile64.SearchExact(System.String)">
+            <summary>
+            Search for exact term match.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile64.SearchStart(System.String)">
+            <summary>
+            Search for terms that starts with given string.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile64.SearchSimple(System.String)">
+            <summary>
+            Simple search.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.InvertedFile64.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+        </member>
         <member name="T:ManagedClient.Direct.IrbisDirectReader64">
             <summary>
             Direct access to IRBIS64 databases.
@@ -1734,6 +1864,39 @@
             <summary>
             Database name.
             </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IrbisDirectReader64.#ctor(System.String,System.Boolean)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IrbisDirectReader64.GetMaxMfn">
+            <summary>
+            Get maximal MFN.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IrbisDirectReader64.ReadRecord(System.Int32)">
+            <summary>
+            Read the record.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IrbisDirectReader64.ReadAllRecordVersions(System.Int32)">
+            <summary>
+            Read all versions for the record.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IrbisDirectReader64.SearchSimple(System.String)">
+            <summary>
+            Simple search.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IrbisDirectReader64.SearchReadSimple(System.String)">
+            <summary>
+            Search and read the found records.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IrbisDirectReader64.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
         </member>
         <member name="T:ManagedClient.Direct.MstControlRecord64">
             <summary>

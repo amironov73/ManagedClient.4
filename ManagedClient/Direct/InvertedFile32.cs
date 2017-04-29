@@ -13,6 +13,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient.Direct
@@ -37,38 +39,50 @@ namespace ManagedClient.Direct
         /// <summary>
         /// File name.
         /// </summary>
+        [NotNull]
         public string FileName { get { return _fileName; } }
 
         /// <summary>
         /// IFP file.
         /// </summary>
+        [NotNull]
         public Stream Ifp { get { return _ifp; } }
 
         /// <summary>
         /// L01 file.
         /// </summary>
+        [NotNull]
         public Stream L01 { get { return _l01; } }
 
         /// <summary>
         /// L02 file.
         /// </summary>
+        [NotNull]
         public Stream L02 { get { return _l02; } }
 
         /// <summary>
         /// N01 file.
         /// </summary>
+        [NotNull]
         public Stream N01 { get { return _n01; } }
 
         /// <summary>
         /// N02 file.
         /// </summary>
+        [NotNull]
         public Stream N02 { get { return _n02; } }
 
         #endregion
 
         #region Construction
 
-        public InvertedFile32(string fileName)
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public InvertedFile32
+            (
+                [NotNull] string fileName
+            )
         {
             _encoding = new UTF8Encoding(false, true);
 
@@ -95,7 +109,10 @@ namespace ManagedClient.Direct
 
         private readonly Encoding _encoding;
 
-        private static Stream _OpenStream(string fileName)
+        private static Stream _OpenStream
+            (
+                string fileName
+            )
         {
             return new FileStream
                 (
@@ -106,16 +123,21 @@ namespace ManagedClient.Direct
                 );
         }
 
-        private long _NodeOffset(int nodeNumber)
+        private long _NodeOffset
+            (
+                int nodeNumber
+            )
         {
-            long result = unchecked((((long)nodeNumber) - 1) * NodeLength);
+            long result = unchecked(((long)nodeNumber - 1) * NodeLength);
+
             return result;
         }
 
+        [NotNull]
         private NodeRecord _ReadNode
             (
                 bool isLeaf,
-                Stream stream,
+                [NotNull] Stream stream,
                 long offset
             )
         {
@@ -161,18 +183,38 @@ namespace ManagedClient.Direct
 
         #region Public methods
 
-        public NodeRecord ReadNode(int number)
+        /// <summary>
+        /// Read the node.
+        /// </summary>
+        [NotNull]
+        public NodeRecord ReadNode
+            (
+                int number
+            )
         {
             return _ReadNode(false, _n01, _NodeOffset(number));
         }
 
-        public NodeRecord ReadLeaf(int number)
+        /// <summary>
+        /// Read the leaf node.
+        /// </summary>
+        public NodeRecord ReadLeaf
+            (
+                int number
+            )
         {
             number = Math.Abs(number);
             return _ReadNode(true, _l01, _NodeOffset(number));
         }
 
-        public NodeRecord ReadNext(NodeRecord record)
+        /// <summary>
+        /// Read next node.
+        /// </summary>
+        [CanBeNull]
+        public NodeRecord ReadNext
+            (
+                [NotNull] NodeRecord record
+            )
         {
             int number = record.Leader.Next;
 
@@ -181,10 +223,22 @@ namespace ManagedClient.Direct
                 return null;
             }
 
-            return _ReadNode(record.IsLeaf, record._stream, _NodeOffset(number));
+            return _ReadNode
+                (
+                    record.IsLeaf,
+                    record._stream,
+                    _NodeOffset(number)
+                );
         }
 
-        public NodeRecord ReadPrevious(NodeRecord record)
+        /// <summary>
+        /// Read previous node.
+        /// </summary>
+        [CanBeNull]
+        public NodeRecord ReadPrevious
+            (
+                [NotNull] NodeRecord record
+            )
         {
             int number = record.Leader.Previous;
             if (number < 0)
@@ -192,16 +246,36 @@ namespace ManagedClient.Direct
                 return null;
             }
 
-            return _ReadNode(record.IsLeaf, record._stream, _NodeOffset(number));
+            return _ReadNode
+                (
+                    record.IsLeaf,
+                    record._stream,
+                    _NodeOffset(number)
+                );
         }
 
-        public IfpRecord ReadIfpRecord(long offset)
+        /// <summary>
+        /// Read IFP record.
+        /// </summary>
+        [NotNull]
+        public IfpRecord ReadIfpRecord
+            (
+                long offset
+            )
         {
             IfpRecord result = IfpRecord.Read(Ifp, offset);
+
             return result;
         }
 
-        public TermLink[] SearchExact(string key)
+        /// <summary>
+        /// Search for exact term match.
+        /// </summary>
+        [NotNull]
+        public TermLink[] SearchExact
+            (
+                [CanBeNull] string key
+            )
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -275,7 +349,14 @@ namespace ManagedClient.Direct
             return new TermLink[0];
         }
 
-        public TermLink[] SearchStart(string key)
+        /// <summary>
+        /// Search for terms that starts with given string.
+        /// </summary>
+        [NotNull]
+        public TermLink[] SearchStart
+            (
+                [CanBeNull] string key
+            )
         {
             List<TermLink> result = new List<TermLink>();
 
@@ -375,7 +456,14 @@ namespace ManagedClient.Direct
                 .ToArray();
         }
 
-        public int[] SearchSimple(string key)
+        /// <summary>
+        /// Simple search.
+        /// </summary>
+        [NotNull]
+        public int[] SearchSimple
+            (
+                string key
+            )
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -407,6 +495,7 @@ namespace ManagedClient.Direct
 
         #region IDisposable members
 
+        /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
             if (_ifp != null)
