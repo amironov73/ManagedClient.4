@@ -109,7 +109,7 @@
     <Compile Include="Gbl\GblEventArgs.cs" />
     <Compile Include="Gbl\GblFinal.cs" />
     <Compile Include="Gbl\GlobalCorrector.cs" />
-    <Compile Include="IfpRecord.cs" />
+    <Compile Include="Direct\IfpRecord.cs" />
     <Compile Include="IniFile.cs" />
     <Compile Include="Direct\InvertedFile64.cs" />
     <Compile Include="Readers\DebtorInfo.cs" />

@@ -8,37 +8,55 @@
 
 using System;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient.Mapping
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Serializable]
-    [AttributeUsage(AttributeTargets.Field|AttributeTargets.Property,
-        AllowMultiple = false, Inherited = true)]
-    public class FieldAttribute
+    [PublicAPI]
+    [AttributeUsage(AttributeTargets.Field|AttributeTargets.Property)]
+    public sealed class FieldAttribute
         : Attribute
     {
         #region Properties
 
-        public string Tag { get; set; }
+        /// <summary>
+        /// Tag.
+        /// </summary>
+        [NotNull]
+        public string Tag { get; private set; }
 
+        /// <summary>
+        /// Occurrence.
+        /// </summary>
         public int Occurence { get; set; }
 
         #endregion
 
         #region Construction
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public FieldAttribute 
             (
-                string tag 
+                [NotNull] string tag 
             )
         {
             Tag = tag;
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public FieldAttribute 
             ( 
-                string tag, 
+                [NotNull] string tag, 
                 int occurence 
             )
         {

@@ -8,6 +8,8 @@
 
 using System;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient.Mapping
@@ -16,21 +18,30 @@ namespace ManagedClient.Mapping
     /// Задаёт отображение подполя на свойство.
     /// </summary>
     [Serializable]
-    [AttributeUsage(AttributeTargets.Field|AttributeTargets.Property,
-        AllowMultiple = false, Inherited = true)]
+    [PublicAPI]
+    [AttributeUsage(AttributeTargets.Field|AttributeTargets.Property)]
     public sealed class SubFieldAttribute
         : Attribute
     {
         #region Properties
 
+        /// <summary>
+        /// Code.
+        /// </summary>
         public char Code { get; set; }
 
+        /// <summary>
+        /// Occurrence.
+        /// </summary>
         public int Occurence { get; set; }
 
         #endregion
 
         #region Construction
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public SubFieldAttribute
             (
                 char code
@@ -39,6 +50,9 @@ namespace ManagedClient.Mapping
             Code = code;
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public SubFieldAttribute
             (
                 char code,

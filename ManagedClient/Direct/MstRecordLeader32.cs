@@ -11,6 +11,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient.Direct
@@ -77,9 +79,12 @@ namespace ManagedClient.Direct
 
         #region Public methods
 
+        /// <summary>
+        ///  Read the leader.
+        /// </summary>
         public static MstRecordLeader32 Read
             (
-                Stream stream
+                [NotNull] Stream stream
             )
         {
             MstRecordLeader32 result = new MstRecordLeader32
@@ -103,6 +108,7 @@ namespace ManagedClient.Direct
 
         #region Object members
 
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
         {
             return string.Format

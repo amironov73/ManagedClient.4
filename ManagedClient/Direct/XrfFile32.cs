@@ -7,10 +7,7 @@
 #region Using directives
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 using JetBrains.Annotations;
 
@@ -46,6 +43,7 @@ namespace ManagedClient.Direct
         /// <summary>
         /// File name.
         /// </summary>
+        [NotNull]
         public string FileName { get; private set; }
 
         #endregion
@@ -75,7 +73,8 @@ namespace ManagedClient.Direct
 
         #region Private members
 
-        private Stream _stream;
+        [NotNull]
+        private readonly Stream _stream;
 
         private long _GetOffset
             (
@@ -85,9 +84,9 @@ namespace ManagedClient.Direct
             unchecked
             {
                 int blockNumber = (mfn - 1) / XrfBlockCapacity;
-                int blockOffset = ((mfn - 1) % XrfBlockCapacity) * 4;
+                int blockOffset = (mfn - 1) % XrfBlockCapacity * 4;
                 long result = blockNumber * XrfBlockSize + blockOffset + 4;
-                
+
                 return result;
             }
         }
@@ -96,6 +95,10 @@ namespace ManagedClient.Direct
 
         #region Public methods
 
+        /// <summary>
+        /// Decode the record.
+        /// </summary>
+        [NotNull]
         public XrfRecord32 Decode
             (
                 int value
@@ -113,25 +116,30 @@ namespace ManagedClient.Direct
                     status = RecordStatus.LogicallyDeleted;
                 }
 
-                int blockNumber = (value < 0)
+                int blockNumber = value < 0
                     ? (-(int)(value & 0xFFFFF800) >> 11) - 1
-                    : ((value & 0x7FFFF800) >> 11);
-                int blockOffset = (value < 0)
-                    ? ((-value) & 0x7FF)
-                    : (value & 0x7FF);
+                    : (value & 0x7FFFF800) >> 11;
+                int blockOffset = value < 0
+                    ? -value & 0x7FF
+                    : value & 0x7FF;
 
                 XrfRecord32 result = new XrfRecord32
                 {
                     BlockNumber = blockNumber,
                     BlockOffset = blockOffset,
-                    AbsoluteOffset = MstRecord32.MstBlockSize * (blockNumber - 1) + blockOffset,
+                    AbsoluteOffset = MstRecord32.MstBlockSize * (blockNumber - 1) 
+                        + blockOffset,
                     Status = status
                 };
 
                 return result;
-            }            
+            }
         }
 
+        /// <summary>
+        /// Read the record.
+        /// </summary>
+        [NotNull]
         public XrfRecord32 ReadRecord
             (
                 int mfn
@@ -159,18 +167,20 @@ namespace ManagedClient.Direct
             return Decode(coded);
         }
 
+        /// <summary>
+        /// Write the record.
+        /// </summary>
         public void WriteRecord
             (
-                XrfRecord32 record
+                [NotNull] XrfRecord32 record
             )
         {
-            if (record == null)
-            {
-                throw new ArgumentNullException("record");
-            }
-
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Lock/unlock the record.
+        /// </summary>
         public void LockRecord
             (
                 int mfn,
@@ -188,13 +198,10 @@ namespace ManagedClient.Direct
 
         #region IDisposable members
 
+        /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
-            if (_stream != null)
-            {
-                _stream.Dispose();
-                _stream = null;
-            }
+            _stream.Dispose();
         }
 
         #endregion

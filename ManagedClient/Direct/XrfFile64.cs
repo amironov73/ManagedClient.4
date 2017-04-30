@@ -7,10 +7,7 @@
 #region Using directives
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 using JetBrains.Annotations;
 
@@ -35,6 +32,7 @@ namespace ManagedClient.Direct
         /// <summary>
         /// File name.
         /// </summary>
+        [NotNull]
         public string FileName { get; private set; }
 
         /// <summary>
@@ -80,7 +78,7 @@ namespace ManagedClient.Direct
 
         #region Private members
 
-        private Stream _stream;
+        private readonly Stream _stream;
 
         private long _GetOffset
             (
@@ -95,6 +93,10 @@ namespace ManagedClient.Direct
 
         #region Public methods
 
+        /// <summary>
+        /// Read the record.
+        /// </summary>
+        [NotNull]
         public XrfRecord64 ReadRecord
             (
                 int mfn
@@ -120,27 +122,29 @@ namespace ManagedClient.Direct
             int flags = _stream.ReadInt32Network();
 
             XrfRecord64 result = new XrfRecord64
-                                   {
-                                       Mfn = mfn,
-                                       Offset = ofs,
-                                       Status = (RecordStatus)flags
-                                   };
+            {
+                Mfn = mfn,
+                Offset = ofs,
+                Status = (RecordStatus)flags
+            };
 
             return result;
         }
 
+        /// <summary>
+        /// Write the record.
+        /// </summary>
         public void WriteRecord
             (
-                XrfRecord64 record
+                [NotNull] XrfRecord64 record
             )
         {
-            if (record == null)
-            {
-                throw new ArgumentNullException("record");
-            }
-
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Lock/unlock the record.
+        /// </summary>
         public void LockRecord
             (
                 int mfn,
@@ -158,13 +162,10 @@ namespace ManagedClient.Direct
 
         #region IDisposable members
 
+        /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
-            if (_stream != null)
-            {
-                _stream.Dispose();
-                _stream = null;
-            }
+            _stream.Dispose();
         }
 
         #endregion

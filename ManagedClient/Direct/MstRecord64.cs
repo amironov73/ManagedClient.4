@@ -11,7 +11,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using ManagedClient;
+
+using JetBrains.Annotations;
 
 #endregion
 
@@ -33,11 +34,13 @@ namespace ManagedClient.Direct
         /// <summary>
         /// Leader.
         /// </summary>
+        [CanBeNull]
         public MstRecordLeader64 Leader { get; set; }
 
         /// <summary>
         /// Dictionary.
         /// </summary>
+        [CanBeNull]
         public List<MstDictionaryEntry64> Dictionary { get; set; }
 
         /// <summary>
@@ -45,7 +48,12 @@ namespace ManagedClient.Direct
         /// </summary>
         public bool Deleted
         {
-            get { return ((Leader.Status & (int)(RecordStatus.LogicallyDeleted | RecordStatus.PhysicallyDeleted)) != 0); }
+            get
+            {
+                return (Leader.Status & (int)
+                    (RecordStatus.LogicallyDeleted 
+                    | RecordStatus.PhysicallyDeleted)) != 0;
+            }
         }
 
         #endregion
@@ -68,12 +76,19 @@ namespace ManagedClient.Direct
 
         #region Public methods
 
-        public RecordField DecodeField(MstDictionaryEntry64 entry)
+        /// <summary>
+        /// Decode the field.
+        /// </summary>
+        [NotNull]
+        public RecordField DecodeField
+            (
+                [NotNull] MstDictionaryEntry64 entry
+            )
         {
-            string catenated = string.Format
+            string catenated = string.Concat
                 (
-                    "{0}#{1}",
                     entry.Tag,
+                    "#",
                     entry.Text
                 );
 
@@ -82,6 +97,10 @@ namespace ManagedClient.Direct
             return result;
         }
 
+        /// <summary>
+        /// Decode entire the record.
+        /// </summary>
+        [NotNull]
         public IrbisRecord DecodeRecord()
         {
             IrbisRecord result = new IrbisRecord
@@ -105,6 +124,7 @@ namespace ManagedClient.Direct
 
         #region Object members
 
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString ( )
         {
             return string.Format 

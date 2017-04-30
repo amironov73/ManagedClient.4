@@ -9,13 +9,17 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
+
+using JetBrains.Annotations;
 
 #endregion
 
-namespace ManagedClient
+namespace ManagedClient.Direct
 {
+    /// <summary>
+    /// IFP file record.
+    /// </summary>
     [Serializable]
     public sealed class IfpRecord
     {
@@ -31,16 +35,35 @@ namespace ManagedClient
 
         #region Properties
 
+        /// <summary>
+        /// Low part of the offset.
+        /// </summary>
         public int LowOffset { get; set; }
 
+        /// <summary>
+        /// High part of the offset.
+        /// </summary>
         public int HighOffset { get; set; }
 
+        /// <summary>
+        /// Total link count.
+        /// </summary>
         public int TotalLinkCount { get; set; }
 
+        /// <summary>
+        /// Block link count.
+        /// </summary>
         public int BlockLinkCount { get; set; }
 
+        /// <summary>
+        /// Capacity.
+        /// </summary>
         public int Capacity { get; set; }
 
+        /// <summary>
+        /// Links.
+        /// </summary>
+        [NotNull]
         public List<TermLink> Links { get { return _links; } }
 
         #endregion
@@ -57,9 +80,12 @@ namespace ManagedClient
 
         #region Public methods
 
+        /// <summary>
+        /// Read the record.
+        /// </summary>
         public static IfpRecord Read
             (
-                Stream stream,
+                [NotNull] Stream stream,
                 long offset
             )
         {
@@ -90,6 +116,7 @@ namespace ManagedClient
 
         #region Object members
 
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();

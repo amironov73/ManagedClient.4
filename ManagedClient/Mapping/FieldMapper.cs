@@ -8,23 +8,35 @@
 
 using System;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient.Mapping
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    [PublicAPI]
     public sealed class FieldMapper
     {
         #region Properties
 
+        /// <summary>
+        /// Target <see cref="Type"/>
+        /// </summary>
         public Type TargetType { get; private set; }
 
         #endregion
 
         #region Construction
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public FieldMapper 
             ( 
-                Type targetType 
+                [NotNull] Type targetType 
             )
         {
             TargetType = targetType;
@@ -34,10 +46,14 @@ namespace ManagedClient.Mapping
 
         #region Public methods
 
+        /// <summary>
+        /// Convert <see cref="IrbisRecord"/> to <see cref="object"/>
+        /// </summary>
+        [NotNull]
         public object ToObject
             (
-                IrbisRecord record,
-                object target
+                [NotNull] IrbisRecord record,
+                [NotNull] object target
             )
         {
             if (ReferenceEquals(record, null))
@@ -48,10 +64,10 @@ namespace ManagedClient.Mapping
             {
                 throw new ArgumentNullException("target");
             }
+
             return target;
         }
 
         #endregion
-
     }
 }
