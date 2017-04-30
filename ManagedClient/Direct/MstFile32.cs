@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient.Direct
@@ -34,18 +36,27 @@ namespace ManagedClient.Direct
         /// <summary>
         /// Control record.
         /// </summary>
+        [NotNull]
         public MstControlRecord32 ControlRecord { get; private set; }
 
         /// <summary>
         /// File name.
         /// </summary>
+        [NotNull]
         public string FileName { get; private set; }
 
         #endregion
 
         #region Construction
 
-        public MstFile32(string fileName)
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        // ReSharper disable NotNullMemberIsNotInitialized
+        public MstFile32
+            (
+                [NotNull] string fileName
+            )
         {
             FileName = fileName;
 
@@ -59,11 +70,13 @@ namespace ManagedClient.Direct
 
             _ReadControlRecord();
         }
+        // ReSharper restore NotNullMemberIsNotInitialized
 
         #endregion
 
         #region Private members
 
+        [NotNull]
         private readonly FileStream _stream;
 
         private void _ReadControlRecord()
@@ -73,16 +86,49 @@ namespace ManagedClient.Direct
                 Zero = _stream.ReadInt32Host(),
                 NextMfn = _stream.ReadInt32Host(),
                 NextBlock = _stream.ReadInt32Host(),
-                NextOffset= _stream.ReadInt16Host(),
+                NextOffset = _stream.ReadInt16Host(),
                 Type = _stream.ReadInt16Host()
             };
+        }
+
+        private static void _AppendStream
+            (
+                Stream source,
+                Stream target,
+                int amount
+            )
+        {
+            if (amount <= 0)
+            {
+                throw new IOException();
+            }
+
+            long savedPosition = target.Position;
+            target.Position = target.Length;
+
+            byte[] buffer = new byte[amount];
+            int readed = source.Read(buffer, 0, amount);
+            if (readed <= 0)
+            {
+                throw new IOException();
+            }
+
+            target.Write(buffer, 0, readed);
+            target.Position = savedPosition;
         }
 
         #endregion
 
         #region Public methods
 
-        public MstRecord32 ReadRecord(long offset)
+        /// <summary>
+        /// Read the record from the specified offset.
+        /// </summary>
+        [NotNull]
+        public MstRecord32 ReadRecord
+            (
+                long offset
+            )
         {
             if (_stream.Seek(offset, SeekOrigin.Begin) != offset)
             {
@@ -93,7 +139,6 @@ namespace ManagedClient.Direct
             //    .DumpStream(_stream,offset,64)
             //    .WriteLine();
 
-            //Encoding encoding = new UTF8Encoding(false, true);
             Encoding encoding = Encoding.Default;
 
             MstRecordLeader32 leader = MstRecordLeader32.Read(_stream);
@@ -128,36 +173,15 @@ namespace ManagedClient.Direct
                 Leader = leader,
                 Dictionary = dictionary
             };
+
             return result;
         }
 
-        private static void _AppendStream
-            (
-                Stream source,
-                Stream target,
-                int amount
-            )
-        {
-            if (amount <= 0)
-            {
-                throw new IOException();
-                //return false;
-            }
-            long savedPosition = target.Position;
-            target.Position = target.Length;
 
-            byte[] buffer = new byte[amount];
-            int readed = source.Read(buffer, 0, amount);
-            if (readed <= 0)
-            {
-                throw new IOException();
-                //return false;
-            }
-            target.Write(buffer, 0, readed);
-            target.Position = savedPosition;
-            //return true;
-        }
-
+        /// <summary>
+        /// Read the record from the specified offset.
+        /// </summary>
+        [NotNull]
         public MstRecord32 ReadRecord2
             (
                 long offset
@@ -211,6 +235,7 @@ namespace ManagedClient.Direct
                 Leader = leader,
                 Dictionary = dictionary
             };
+
             return result;
         }
 
@@ -218,12 +243,12 @@ namespace ManagedClient.Direct
         /// <summary>
         /// Блокировка базы данных в целом.
         /// </summary>
-        /// <param name="flag"></param>
         public void LockDatabase
             (
                 bool flag
             )
         {
+            // TODO implement
         }
 
         /// <summary>
@@ -231,6 +256,8 @@ namespace ManagedClient.Direct
         /// </summary>
         public bool ReadDatabaseLockedFlag()
         {
+            // TODO implement
+
             return false;
         }
 
@@ -238,12 +265,10 @@ namespace ManagedClient.Direct
 
         #region IDisposable members
 
+        /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
-            if (_stream != null)
-            {
-                _stream.Dispose();
-            }
+            _stream.Dispose();
         }
 
         #endregion

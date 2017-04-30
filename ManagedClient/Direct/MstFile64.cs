@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient.Direct
@@ -29,27 +31,36 @@ namespace ManagedClient.Direct
         /// <summary>
         /// Preload length.
         /// </summary>
-        public static int PreloadLength = 10*1024;
+        public static int PreloadLength = 10 * 1024;
 
         /// <summary>
         /// Control record.
         /// </summary>
+        [NotNull]
         public MstControlRecord64 ControlRecord { get; private set; }
 
         /// <summary>
         /// File name.
         /// </summary>
+        [NotNull]
         public string FileName { get; private set; }
 
         #endregion
 
         #region Construction
 
-        public MstFile64 ( string fileName )
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        // ReSharper disable NotNullMemberIsNotInitialized
+        public MstFile64
+            (
+                [NotNull] string fileName
+            )
         {
             FileName = fileName;
 
-            _stream = new FileStream 
+            _stream = new FileStream
                 (
                     fileName,
                     FileMode.Open,
@@ -57,8 +68,9 @@ namespace ManagedClient.Direct
                     FileShare.ReadWrite
                 );
 
-            _ReadControlRecord ();
+            _ReadControlRecord();
         }
+        // ReSharper restore NotNullMemberIsNotInitialized
 
         #endregion
 
@@ -66,72 +78,21 @@ namespace ManagedClient.Direct
 
         private bool _lockFlag;
 
+        [NotNull]
         private readonly FileStream _stream;
 
-        private void _ReadControlRecord ()
+        private void _ReadControlRecord()
         {
             ControlRecord = new MstControlRecord64
-                                {
-                                    Reserv1 = _stream.ReadInt32Network (),
-                                    NextMfn = _stream.ReadInt32Network (),
-                                    NextPosition = _stream.ReadInt64Network (),
-                                    Reserv2 = _stream.ReadInt32Network (),
-                                    Reserv3 = _stream.ReadInt32Network (),
-                                    Reserv4 = _stream.ReadInt32Network (),
-                                    Blocked = _stream.ReadInt32Network ()
-                                };
-        }
-
-        #endregion
-
-        #region Public methods
-
-        public MstRecord64 ReadRecord ( long offset )
-        {
-            if ( _stream.Seek ( offset, SeekOrigin.Begin ) != offset )
             {
-                throw new IOException();
-            }
-
-            //new ObjectDumper()
-            //    .DumpStream(_stream,offset,64)
-            //    .WriteLine();
-
-            Encoding encoding = new UTF8Encoding(false,true);
-
-            MstRecordLeader64 leader = MstRecordLeader64.Read(_stream);
-
-            List <MstDictionaryEntry64> dictionary 
-                = new List < MstDictionaryEntry64 > ();
-
-            for ( int i = 0; i < leader.Nvf; i++ )
-            {
-                MstDictionaryEntry64 entry = new MstDictionaryEntry64
-                                               {
-                                                   Tag = _stream.ReadInt32Network (),
-                                                   Position = _stream.ReadInt32Network (),
-                                                   Length = _stream.ReadInt32Network ()
-                                               };
-                dictionary.Add ( entry );
-            }
-
-            foreach ( MstDictionaryEntry64 entry in dictionary )
-            {
-                long endOffset = offset + leader.Base + entry.Position;
-                _stream.Seek ( endOffset, SeekOrigin.Begin );
-                entry.Bytes = _stream.ReadBytes ( entry.Length );
-                if ( entry.Bytes != null )
-                {
-                    entry.Text = encoding.GetString ( entry.Bytes );
-                }
-            }
-
-            MstRecord64 result = new MstRecord64
-                                   {
-                                       Leader = leader,
-                                       Dictionary = dictionary
-                                   };
-            return result;
+                Reserv1 = _stream.ReadInt32Network(),
+                NextMfn = _stream.ReadInt32Network(),
+                NextPosition = _stream.ReadInt64Network(),
+                Reserv2 = _stream.ReadInt32Network(),
+                Reserv3 = _stream.ReadInt32Network(),
+                Reserv4 = _stream.ReadInt32Network(),
+                Blocked = _stream.ReadInt32Network()
+            };
         }
 
         private static void _AppendStream
@@ -144,8 +105,8 @@ namespace ManagedClient.Direct
             if (amount <= 0)
             {
                 throw new IOException();
-                //return false;
             }
+
             long savedPosition = target.Position;
             target.Position = target.Length;
 
@@ -154,13 +115,76 @@ namespace ManagedClient.Direct
             if (readed <= 0)
             {
                 throw new IOException();
-                //return false;
             }
-            target.Write(buffer,0,readed);
+
+            target.Write(buffer, 0, readed);
             target.Position = savedPosition;
-            //return true;
         }
 
+        #endregion
+
+        #region Public methods
+
+        /// <summary>
+        /// Read the record from the specified offset.
+        /// </summary>
+        [NotNull]
+        public MstRecord64 ReadRecord
+            (
+                long offset
+            )
+        {
+            if (_stream.Seek(offset, SeekOrigin.Begin) != offset)
+            {
+                throw new IOException();
+            }
+
+            //new ObjectDumper()
+            //    .DumpStream(_stream,offset,64)
+            //    .WriteLine();
+
+            Encoding encoding = new UTF8Encoding(false, true);
+
+            MstRecordLeader64 leader = MstRecordLeader64.Read(_stream);
+
+            List<MstDictionaryEntry64> dictionary
+                = new List<MstDictionaryEntry64>();
+
+            for (int i = 0; i < leader.Nvf; i++)
+            {
+                MstDictionaryEntry64 entry = new MstDictionaryEntry64
+                {
+                    Tag = _stream.ReadInt32Network(),
+                    Position = _stream.ReadInt32Network(),
+                    Length = _stream.ReadInt32Network()
+                };
+                dictionary.Add(entry);
+            }
+
+            foreach (MstDictionaryEntry64 entry in dictionary)
+            {
+                long endOffset = offset + leader.Base + entry.Position;
+                _stream.Seek(endOffset, SeekOrigin.Begin);
+                entry.Bytes = _stream.ReadBytes(entry.Length);
+                if (entry.Bytes != null)
+                {
+                    entry.Text = encoding.GetString(entry.Bytes);
+                }
+            }
+
+            MstRecord64 result = new MstRecord64
+            {
+                Leader = leader,
+                Dictionary = dictionary
+            };
+
+            return result;
+        }
+
+        /// <summary>
+        /// Read the record from the specified offset.
+        /// </summary>
+        [NotNull]
         public MstRecord64 ReadRecord2
             (
                 long offset
@@ -178,7 +202,7 @@ namespace ManagedClient.Direct
             memory.Position = 0;
 
             MstRecordLeader64 leader = MstRecordLeader64.Read(memory);
-            int amountToRead = (int) (leader.Length - memory.Length);
+            int amountToRead = (int)(leader.Length - memory.Length);
             if (amountToRead > 0)
             {
                 _AppendStream(_stream, memory, amountToRead);
@@ -214,6 +238,7 @@ namespace ManagedClient.Direct
                 Leader = leader,
                 Dictionary = dictionary
             };
+
             return result;
         }
 
@@ -221,7 +246,6 @@ namespace ManagedClient.Direct
         /// <summary>
         /// Блокировка базы данных в целом.
         /// </summary>
-        /// <param name="flag"></param>
         public void LockDatabase
             (
                 bool flag
@@ -253,6 +277,7 @@ namespace ManagedClient.Direct
 
             _stream.Position = MstControlRecord64.LockFlagPosition;
             _stream.Read(buffer, 0, buffer.Length);
+
             return Convert.ToBoolean(BitConverter.ToInt32(buffer, 0));
         }
 
@@ -260,17 +285,15 @@ namespace ManagedClient.Direct
 
         #region IDisposable members
 
-        public void Dispose ()
+        /// <inheritdoc cref="IDisposable.Dispose"/>
+        public void Dispose()
         {
-            if ( _stream != null )
+            if (_lockFlag)
             {
-                if (_lockFlag)
-                {
-                    LockDatabase(false);
-                }
-
-                _stream.Dispose ();
+                LockDatabase(false);
             }
+
+            _stream.Dispose();
         }
 
         #endregion

@@ -11,7 +11,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using ManagedClient;
+
+using JetBrains.Annotations;
 
 #endregion
 
@@ -26,25 +27,43 @@ namespace ManagedClient.Direct
     {
         #region Constants
 
-        //public const int MstBlockSize = 2048;
+        /// <summary>
+        /// Size of MST file block.
+        /// </summary>
         public const int MstBlockSize = 512;
 
         #endregion
 
         #region Properties
 
+        /// <summary>
+        /// Record leader.
+        /// </summary>
+        [NotNull]
+        // ReSharper disable NotNullMemberIsNotInitialized
         public MstRecordLeader32 Leader { get; set; }
+        // ReSharper restore NotNullMemberIsNotInitialized
 
+        /// <summary>
+        /// Dictionary of the fields.
+        /// </summary>
         public List<MstDictionaryEntry32> Dictionary { get; set; }
 
+        /// <summary>
+        /// Whether the record is deleted?
+        /// </summary>
         public bool Deleted
         {
-            get { return ((Leader.Status & 
-                    (int)
+            get
+            {
+                return 
                     (
-                        RecordStatus.LogicallyDeleted 
-                        | RecordStatus.PhysicallyDeleted)) != 0
-                    ); 
+                        Leader.Status & 
+                        (int)
+                        (
+                            RecordStatus.LogicallyDeleted 
+                            | RecordStatus.PhysicallyDeleted)
+                        ) != 0; 
                 }
         }
 
@@ -68,9 +87,12 @@ namespace ManagedClient.Direct
 
         #region Public methods
 
+        /// <summary>
+        /// Decode the field.
+        /// </summary>
         public RecordField DecodeField
             (
-                MstDictionaryEntry32 entry
+                [NotNull] MstDictionaryEntry32 entry
             )
         {
             string catenated = string.Format
@@ -85,6 +107,9 @@ namespace ManagedClient.Direct
             return result;
         }
 
+        /// <summary>
+        /// Decode entire the record.
+        /// </summary>
         public IrbisRecord DecodeRecord()
         {
             IrbisRecord result = new IrbisRecord
@@ -108,6 +133,7 @@ namespace ManagedClient.Direct
 
         #region Object members
 
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
         {
             return string.Format

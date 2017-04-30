@@ -1673,21 +1673,71 @@
             File name.
             </summary>
         </member>
+        <member name="M:ManagedClient.Direct.MstFile32.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.MstFile32.ReadRecord(System.Int64)">
+            <summary>
+            Read the record from the specified offset.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.MstFile32.ReadRecord2(System.Int64)">
+            <summary>
+            Read the record from the specified offset.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Direct.MstFile32.LockDatabase(System.Boolean)">
             <summary>
             Блокировка базы данных в целом.
             </summary>
-            <param name="flag"></param>
         </member>
         <member name="M:ManagedClient.Direct.MstFile32.ReadDatabaseLockedFlag">
             <summary>
             Чтение флага блокировки базы данных в целом.
             </summary>
         </member>
+        <member name="M:ManagedClient.Direct.MstFile32.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+        </member>
         <member name="T:ManagedClient.Direct.MstRecord32">
             <summary>
             Record of MST file in IRBIS32.
             </summary>
+        </member>
+        <member name="F:ManagedClient.Direct.MstRecord32.MstBlockSize">
+            <summary>
+            Size of MST file block.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstRecord32.Leader">
+            <summary>
+            Record leader.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstRecord32.Dictionary">
+            <summary>
+            Dictionary of the fields.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.MstRecord32.Deleted">
+            <summary>
+            Whether the record is deleted?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.MstRecord32.DecodeField(ManagedClient.Direct.MstDictionaryEntry32)">
+            <summary>
+            Decode the field.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.MstRecord32.DecodeRecord">
+            <summary>
+            Decode entire the record.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.MstRecord32.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
         </member>
         <member name="T:ManagedClient.Direct.XrfFile32">
             <summary>
@@ -2013,16 +2063,33 @@
             File name.
             </summary>
         </member>
+        <member name="M:ManagedClient.Direct.MstFile64.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.MstFile64.ReadRecord(System.Int64)">
+            <summary>
+            Read the record from the specified offset.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.MstFile64.ReadRecord2(System.Int64)">
+            <summary>
+            Read the record from the specified offset.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Direct.MstFile64.LockDatabase(System.Boolean)">
             <summary>
             Блокировка базы данных в целом.
             </summary>
-            <param name="flag"></param>
         </member>
         <member name="M:ManagedClient.Direct.MstFile64.ReadDatabaseLockedFlag">
             <summary>
             Чтение флага блокировки базы данных в целом.
             </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.MstFile64.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
         </member>
         <member name="T:ManagedClient.Direct.MstRecord64">
             <summary>
