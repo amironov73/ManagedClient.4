@@ -40,7 +40,7 @@ namespace ManagedClient
         /// </summary>
         public void AddRange
             (
-                IEnumerable<RecordField> fields
+                [NotNull] IEnumerable<RecordField> fields
             )
         {
             foreach (RecordField field in fields)
@@ -52,9 +52,10 @@ namespace ManagedClient
         /// <summary>
         /// Поиск первого вхождения с помощью предиката.
         /// </summary>
+        [CanBeNull]
         public RecordField Find
             (
-                Predicate<RecordField> predicate
+                [NotNull] Predicate<RecordField> predicate
             )
         {
             return this
@@ -64,9 +65,10 @@ namespace ManagedClient
         /// <summary>
         /// Поиск всех вхождений с помощью предиката.
         /// </summary>
+        [NotNull]
         public RecordField[] FindAll
             (
-                Predicate<RecordField> predicate
+                [NotNull] Predicate<RecordField> predicate
             )
         {
             return this
@@ -76,9 +78,7 @@ namespace ManagedClient
 
         #region Ручная сериализация
 
-        /// <summary>
-        /// Сохранение в поток.
-        /// </summary>
+        /// <inheritdoc cref="IHandmadeSerializable.SaveToStream"/>
         public void SaveToStream
             (
                 BinaryWriter writer
@@ -92,19 +92,18 @@ namespace ManagedClient
             }
         }
 
-        /// <summary>
-        /// Считывание из потока.
-        /// </summary>
+        /// <inheritdoc cref="IHandmadeSerializable.ReadFromStream"/>
         public void ReadFromStream
             (
-                [NotNull] BinaryReader reader
+                BinaryReader reader
             )
         {
             int count = reader.ReadPackedInt32();
 
             for (int i = 0; i < count; i++)
             {
-                RecordField field = RecordField.ReadFromStream(reader);
+                RecordField field = new RecordField();
+                field.ReadFromStream(reader);
                 Add(field);
             }
         }
@@ -115,6 +114,7 @@ namespace ManagedClient
 
         #region Collection<T> members
 
+        /// <inheritdoc cref="Collection{T}.InsertItem"/>
         protected override void InsertItem
             (
                 int index, 
@@ -129,6 +129,7 @@ namespace ManagedClient
             base.InsertItem(index, item);
         }
 
+        /// <inheritdoc cref="Collection{T}.SetItem"/>
         protected override void SetItem
             (
                 int index, 

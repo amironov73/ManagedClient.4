@@ -676,14 +676,10 @@
             <returns>System.Int32.</returns>
         </member>
         <member name="M:ManagedClient.Fields.ExemplarInfo.ReadFromStream(System.IO.BinaryReader)">
-            <summary>
-            Read one instance from the given stream.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.ReadFromStream(System.IO.BinaryReader)"/>
         </member>
         <member name="M:ManagedClient.Fields.ExemplarInfo.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-            Save this instance to the given stream.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.SaveToStream(System.IO.BinaryWriter)"/>
         </member>
         <member name="M:ManagedClient.Fields.ExemplarInfo.ToString">
             <summary>
@@ -806,6 +802,11 @@
         <member name="M:ManagedClient.IHandmadeSerializable.SaveToStream(System.IO.BinaryWriter)">
             <summary>
             Просим объект сохранить себя в потоке.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IHandmadeSerializable.ReadFromStream(System.IO.BinaryReader)">
+            <summary>
+            Просим объект восстановить себя из потока.
             </summary>
         </member>
         <member name="T:ManagedClient.Output.AbstractOutput">
@@ -2804,14 +2805,10 @@
             </summary>
         </member>
         <member name="M:ManagedClient.Readers.DebtorInfo.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-            Просим объект записаться в поток.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.SaveToStream(System.IO.BinaryWriter)"/>
         </member>
         <member name="M:ManagedClient.Readers.DebtorInfo.ReadFromStream(System.IO.BinaryReader)">
-            <summary>
-            Восстанавливаем объект из потока.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.ReadFromStream(System.IO.BinaryReader)"/>
         </member>
         <member name="T:ManagedClient.Readers.DebtorManager">
             <summary>
@@ -2919,14 +2916,10 @@
             </summary>
         </member>
         <member name="M:ManagedClient.Readers.ReaderAddress.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-            Сохранение в поток.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.SaveToStream(System.IO.BinaryWriter)"/>
         </member>
         <member name="M:ManagedClient.Readers.ReaderAddress.ReadFromStream(System.IO.BinaryReader)">
-            <summary>
-            Считывание из потока.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.ReadFromStream(System.IO.BinaryReader)"/>
         </member>
         <member name="M:ManagedClient.Readers.ReaderAddress.ToString">
             <summary>
@@ -2995,19 +2988,12 @@
             Сохранение в поток.
             </summary>
         </member>
+        <member name="M:ManagedClient.Readers.ChairInfo.ReadFromStream(System.IO.BinaryReader)">
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.ReadFromStream(System.IO.BinaryReader)"/>
+        </member>
         <member name="M:ManagedClient.Readers.ChairInfo.SaveToFile(System.String,ManagedClient.Readers.ChairInfo[])">
             <summary>
             Сохранение в файл.
-            </summary>
-        </member>
-        <member name="M:ManagedClient.Readers.ChairInfo.ReadFromStream(System.IO.BinaryReader)">
-            <summary>
-            Считывание из потока.
-            </summary>
-        </member>
-        <member name="M:ManagedClient.Readers.ChairInfo.ReadChairsFromFile(System.String)">
-            <summary>
-            Считывание из файла.
             </summary>
         </member>
         <member name="T:ManagedClient.Readers.IriProfile">
@@ -3071,9 +3057,7 @@
             </summary>
         </member>
         <member name="M:ManagedClient.Readers.IriProfile.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-            Сохранение в поток.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.SaveToStream(System.IO.BinaryWriter)"/>
         </member>
         <member name="M:ManagedClient.Readers.IriProfile.SaveToFile(System.String,ManagedClient.Readers.IriProfile[])">
             <summary>
@@ -3081,14 +3065,7 @@
             </summary>
         </member>
         <member name="M:ManagedClient.Readers.IriProfile.ReadFromStream(System.IO.BinaryReader)">
-            <summary>
-            Чтение из потока.
-            </summary>
-        </member>
-        <member name="M:ManagedClient.Readers.IriProfile.ReadProfilesFromFile(System.String)">
-            <summary>
-            Считывание из файла.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.ReadFromStream(System.IO.BinaryReader)"/>
         </member>
         <member name="T:ManagedClient.Readers.ReaderRegistration">
             <summary>
@@ -3153,14 +3130,10 @@
             <returns></returns>
         </member>
         <member name="M:ManagedClient.Readers.ReaderRegistration.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-            Сохранение в поток.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.SaveToStream(System.IO.BinaryWriter)"/>
         </member>
         <member name="M:ManagedClient.Readers.ReaderRegistration.ReadFromStream(System.IO.BinaryReader)">
-            <summary>
-            Считывание из потока.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.ReadFromStream(System.IO.BinaryReader)"/>
         </member>
         <member name="T:ManagedClient.Readers.ReaderUtility">
             <summary>
@@ -3423,14 +3396,10 @@
             <returns></returns>
         </member>
         <member name="M:ManagedClient.Readers.ReaderInfo.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-            Сохранение в поток.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.SaveToStream(System.IO.BinaryWriter)"/>
         </member>
         <member name="M:ManagedClient.Readers.ReaderInfo.ReadFromStream(System.IO.BinaryReader)">
-            <summary>
-            Считывание из потока.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.ReadFromStream(System.IO.BinaryReader)"/>
         </member>
         <member name="M:ManagedClient.Readers.ReaderInfo.SaveToFile(System.String,ManagedClient.Readers.ReaderInfo[])">
             <summary>
@@ -3607,9 +3576,7 @@
             </summary>
         </member>
         <member name="M:ManagedClient.Readers.VisitInfo.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-            Сохранение в поток.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.SaveToStream(System.IO.BinaryWriter)"/>
         </member>
         <member name="M:ManagedClient.Readers.VisitInfo.SaveToStream(System.IO.BinaryWriter,ManagedClient.Readers.VisitInfo[])">
             <summary>
@@ -3622,14 +3589,7 @@
             </summary>
         </member>
         <member name="M:ManagedClient.Readers.VisitInfo.ReadFromStream(System.IO.BinaryReader)">
-            <summary>
-            Считывание из потока.
-            </summary>
-        </member>
-        <member name="M:ManagedClient.Readers.VisitInfo.ReadFromFile(System.String)">
-            <summary>
-            Считывание из файла.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.ReadFromStream(System.IO.BinaryReader)" />
         </member>
         <member name="M:ManagedClient.Readers.VisitInfo.ToString">
             <summary>
@@ -4584,7 +4544,7 @@
             Сохранение в поток обнуляемого объекта.
             </summary>
         </member>
-        <member name="M:ManagedClient.IrbisIOUtils.ReadNullable``1(System.IO.BinaryReader,System.Func{System.IO.BinaryReader,``0})">
+        <member name="M:ManagedClient.IrbisIOUtils.ReadNullable``1(System.IO.BinaryReader)">
             <summary>
             Считывание из потока обнуляемого объекта.
             </summary>
@@ -4616,17 +4576,17 @@
             Сохранение массива объектов.
             </summary>
         </member>
-        <member name="M:ManagedClient.IrbisIOUtils.ReadArray``1(System.IO.BinaryReader,System.Func{System.IO.BinaryReader,``0})">
+        <member name="M:ManagedClient.IrbisIOUtils.ReadArray``1(System.IO.BinaryReader)">
             <summary>
             Считывание массива из потока.
             </summary>
         </member>
-        <member name="M:ManagedClient.IrbisIOUtils.ReadFromFile``1(System.String,System.Func{System.IO.BinaryReader,``0})">
+        <member name="M:ManagedClient.IrbisIOUtils.ReadFromFile``1(System.String)">
             <summary>
             Считывание массива из файла.
             </summary>
         </member>
-        <member name="M:ManagedClient.IrbisIOUtils.ReadFromZipFile``1(System.String,System.Func{System.IO.BinaryReader,``0})">
+        <member name="M:ManagedClient.IrbisIOUtils.ReadFromZipFile``1(System.String)">
             <summary>
             Считывание массива из файла.
             </summary>
@@ -4636,7 +4596,7 @@
             Считывание массива из памяти.
             </summary>
         </member>
-        <member name="M:ManagedClient.IrbisIOUtils.ReadFromZipMemory``1(System.Byte[],System.Func{System.IO.BinaryReader,``0})">
+        <member name="M:ManagedClient.IrbisIOUtils.ReadFromZipMemory``1(System.Byte[])">
             <summary>
             Считывание массива из памяти.
             </summary>
@@ -6181,9 +6141,7 @@
             <returns></returns>
         </member>
         <member name="M:ManagedClient.IrbisRecord.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-            Сохранение в поток.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.SaveToStream(System.IO.BinaryWriter)"/>
         </member>
         <member name="M:ManagedClient.IrbisRecord.SaveToFile(System.String,ManagedClient.IrbisRecord[])">
             <summary>
@@ -6191,9 +6149,7 @@
             </summary>
         </member>
         <member name="M:ManagedClient.IrbisRecord.ReadFromStream(System.IO.BinaryReader)">
-            <summary>
-            Считывание из потока.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.ReadFromStream(System.IO.BinaryReader)"/>
         </member>
         <member name="M:ManagedClient.IrbisRecord.ReadFromFile(System.String)">
             <summary>
@@ -6976,14 +6932,16 @@
             </summary>
         </member>
         <member name="M:ManagedClient.RecordFieldCollection.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-            Сохранение в поток.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.SaveToStream(System.IO.BinaryWriter)"/>
         </member>
         <member name="M:ManagedClient.RecordFieldCollection.ReadFromStream(System.IO.BinaryReader)">
-            <summary>
-            Считывание из потока.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.ReadFromStream(System.IO.BinaryReader)"/>
+        </member>
+        <member name="M:ManagedClient.RecordFieldCollection.InsertItem(System.Int32,ManagedClient.RecordField)">
+            <inheritdoc cref="M:System.Collections.ObjectModel.Collection`1.InsertItem(System.Int32,`0)"/>
+        </member>
+        <member name="M:ManagedClient.RecordFieldCollection.SetItem(System.Int32,ManagedClient.RecordField)">
+            <inheritdoc cref="M:System.Collections.ObjectModel.Collection`1.SetItem(System.Int32,`0)"/>
         </member>
         <member name="T:ManagedClient.RetryExtensions">
             <summary>
@@ -8806,17 +8764,10 @@
             </summary>
         </member>
         <member name="M:ManagedClient.RecordField.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-            Сохранение в поток.
-            </summary>
-            <param name="writer"></param>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.SaveToStream(System.IO.BinaryWriter)"/>
         </member>
         <member name="M:ManagedClient.RecordField.ReadFromStream(System.IO.BinaryReader)">
-            <summary>
-            Считывание из потока.
-            </summary>
-            <param name="reader"></param>
-            <returns></returns>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.ReadFromStream(System.IO.BinaryReader)"/>
         </member>
         <member name="M:ManagedClient.RecordField.ToString">
             <summary>
@@ -9271,6 +9222,9 @@
             Разбор ответа сервера
             </summary>
         </member>
+        <member name="M:ManagedClient.SearchTermInfo.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
         <member name="T:ManagedClient.SubField">
             <summary>
             Подполе MARC-записи.
@@ -9341,14 +9295,10 @@
             <returns>System.Int32.</returns>
         </member>
         <member name="M:ManagedClient.SubField.ReadFromStream(System.IO.BinaryReader)">
-            <summary>
-            Считывание из потока.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.ReadFromStream(System.IO.BinaryReader)"/>
         </member>
         <member name="M:ManagedClient.SubField.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-            Сохранение в поток.
-            </summary>
+            <inheritdoc cref="M:ManagedClient.IHandmadeSerializable.SaveToStream(System.IO.BinaryWriter)"/>
         </member>
         <member name="M:ManagedClient.SubField.ToString">
             <summary>
@@ -9382,6 +9332,24 @@
             <summary>
             Index.
             </summary>
+        </member>
+        <member name="M:ManagedClient.TermLink.Read(System.IO.Stream)">
+            <summary>
+            Read the <see cref="T:ManagedClient.TermLink"/>
+            from the <see cref="T:System.IO.Stream"/>.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TermLink.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
+        <member name="M:ManagedClient.TermLink.Equals(ManagedClient.TermLink)">
+            <inheritdoc cref="M:System.IEquatable`1.Equals(`0)"/>
+        </member>
+        <member name="M:ManagedClient.TermLink.Equals(System.Object)">
+            <inheritdoc cref="M:System.Object.Equals(System.Object)"/>
+        </member>
+        <member name="M:ManagedClient.TermLink.GetHashCode">
+            <inheritdoc cref="M:System.Object.GetHashCode"/>
         </member>
         <member name="T:ManagedClient.Transliterator">
             <summary>

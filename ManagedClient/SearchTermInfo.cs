@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
+using JetBrains.Annotations;
+
 using MoonSharp.Interpreter;
 
 using Newtonsoft.Json;
@@ -39,6 +41,7 @@ namespace ManagedClient
         /// <summary>
         /// Поисковый термин.
         /// </summary>
+        [CanBeNull]
         [XmlAttribute("text")]
         [JsonProperty("text")]
         public string Text { get; set; }
@@ -50,6 +53,7 @@ namespace ManagedClient
         /// <summary>
         /// Разбор ответа сервера
         /// </summary>
+        [NotNull]
         public static SearchTermInfo[] Parse
             (
                 IEnumerable<string> answer
@@ -79,12 +83,13 @@ namespace ManagedClient
 
         #region Object members
 
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
         {
-            return string.Format
+            return string.Concat
                 (
-                    "{0}#{1}",
                     Count,
+                    "#",
                     Text
                 );
         }

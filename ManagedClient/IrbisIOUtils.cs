@@ -28,7 +28,7 @@ namespace ManagedClient
         /// </summary>
         public static void NetworkToHost16
             (
-                byte[] array, 
+                byte[] array,
                 int offset
             )
         {
@@ -42,7 +42,7 @@ namespace ManagedClient
         /// </summary>
         public static void NetworkToHost32
             (
-                byte[] array, 
+                byte[] array,
                 int offset
             )
         {
@@ -59,12 +59,12 @@ namespace ManagedClient
         /// </summary>
         public static void NetworkToHost64
             (
-                byte[] array, 
+                byte[] array,
                 int offset
             )
         {
-            NetworkToHost32(array,offset);
-            NetworkToHost32(array,offset+4);
+            NetworkToHost32(array, offset);
+            NetworkToHost32(array, offset + 4);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace ManagedClient
             {
                 throw new IOException();
             }
-            NetworkToHost16(buffer,0);
+            NetworkToHost16(buffer, 0);
             short result = BitConverter.ToInt16(buffer, 0);
             return result;
         }
@@ -109,20 +109,20 @@ namespace ManagedClient
         /// <summary>
         /// Reads network-ordered integer from the stream.
         /// </summary>
-        public static int ReadInt32Network 
-            ( 
-                this Stream stream 
+        public static int ReadInt32Network
+            (
+                this Stream stream
             )
         {
             byte[] buffer = new byte[4];
 
-            int readed = stream.Read ( buffer, 0, 4 );
-            if ( readed != 4 )
+            int readed = stream.Read(buffer, 0, 4);
+            if (readed != 4)
             {
                 throw new IOException();
             }
-            NetworkToHost32(buffer,0);
-            int result = BitConverter.ToInt32 ( buffer, 0 );
+            NetworkToHost32(buffer, 0);
+            int result = BitConverter.ToInt32(buffer, 0);
             return result;
         }
 
@@ -149,20 +149,20 @@ namespace ManagedClient
         /// <summary>
         /// Reads network-ordered integer from the stream.
         /// </summary>
-        public static long ReadInt64Network 
-            ( 
-                this Stream stream 
+        public static long ReadInt64Network
+            (
+                this Stream stream
             )
         {
             byte[] buffer = new byte[8];
 
-            int readed = stream.Read ( buffer, 0, 8 );
-            if ( readed != 8 )
+            int readed = stream.Read(buffer, 0, 8);
+            if (readed != 8)
             {
                 throw new IOException();
             }
             NetworkToHost64(buffer, 0);
-            long result = BitConverter.ToInt64(buffer,0);
+            long result = BitConverter.ToInt64(buffer, 0);
             return result;
         }
 
@@ -181,28 +181,28 @@ namespace ManagedClient
             {
                 throw new IOException();
             }
-            long result = BitConverter.ToInt64(buffer,0);
+            long result = BitConverter.ToInt64(buffer, 0);
             return result;
         }
 
         /// <summary>
         /// Read some bytes from the stream.
         /// </summary>
-        public static byte[] ReadBytes 
-            ( 
-                this Stream stream, 
-                int count 
+        public static byte[] ReadBytes
+            (
+                this Stream stream,
+                int count
             )
         {
             byte[] result = new byte[count];
-            int read = stream.Read ( result, 0, count );
-            if ( read <= 0 )
+            int read = stream.Read(result, 0, count);
+            if (read <= 0)
             {
                 return null;
             }
-            if ( read != count )
+            if (read != count)
             {
-                Array.Resize ( ref result, read );
+                Array.Resize(ref result, read);
             }
             return result;
         }
@@ -304,7 +304,7 @@ namespace ManagedClient
                 [NotNull] this BinaryWriter writer,
                 [CanBeNull] T obj
             )
-            where T: class, IHandmadeSerializable
+            where T : class, IHandmadeSerializable
         {
             if (ReferenceEquals(obj, null))
             {
@@ -325,10 +325,9 @@ namespace ManagedClient
         [CanBeNull]
         public static T ReadNullable<T>
             (
-                [NotNull] this BinaryReader reader,
-                [NotNull] Func<BinaryReader,T> func
+                [NotNull] this BinaryReader reader
             )
-            where T: class
+            where T : class, IHandmadeSerializable, new()
         {
             bool isNull = !reader.ReadBoolean();
             if (isNull)
@@ -336,7 +335,8 @@ namespace ManagedClient
                 return null;
             }
 
-            T result = func(reader);
+            T result = new T();
+            result.ReadFromStream(reader);
 
             return result;
         }
@@ -375,7 +375,7 @@ namespace ManagedClient
                 [NotNull] [ItemNotNull] this T[] array,
                 [NotNull] string fileName
             )
-            where T: IHandmadeSerializable
+            where T : IHandmadeSerializable
         {
             using (Stream stream = File.Create(fileName))
             using (BinaryWriter writer = new BinaryWriter(stream))
@@ -414,7 +414,7 @@ namespace ManagedClient
             (
                 [NotNull][ItemNotNull] this T[] array
             )
-            where T: IHandmadeSerializable
+            where T : IHandmadeSerializable
         {
             using (MemoryStream stream = new MemoryStream())
             using (BinaryWriter writer = new BinaryWriter(stream))
@@ -453,9 +453,9 @@ namespace ManagedClient
         [ItemNotNull]
         public static T[] ReadArray<T>
             (
-                [NotNull] this BinaryReader reader,
-                [NotNull] Func<BinaryReader, T> func
+                [NotNull] this BinaryReader reader
             )
+            where T : class, IHandmadeSerializable, new()
         {
             bool isNull = !reader.ReadBoolean();
             if (isNull)
@@ -467,7 +467,8 @@ namespace ManagedClient
             T[] result = new T[count];
             for (int i = 0; i < count; i++)
             {
-                T item = func(reader);
+                T item = new T();
+                item.ReadFromStream(reader);
                 result[i] = item;
             }
 
@@ -481,27 +482,27 @@ namespace ManagedClient
         [ItemNotNull]
         public static T[] ReadFromFile<T>
             (
-                [NotNull] string fileName,
-                [NotNull] Func<BinaryReader, T> func
+                [NotNull] string fileName
             )
+            where T : class, IHandmadeSerializable, new()
         {
             using (Stream stream = File.OpenRead(fileName))
             using (BinaryReader reader = new BinaryReader(stream))
             {
-                return reader.ReadArray(func);
+                return reader.ReadArray<T>();
             }
         }
 
         /// <summary>
         /// Считывание массива из файла.
         /// </summary>
-        [CanBeNull]
+        [NotNull]
         [ItemNotNull]
         public static T[] ReadFromZipFile<T>
             (
-                [NotNull] string fileName,
-                [NotNull] Func<BinaryReader, T> func
+                [NotNull] string fileName
             )
+            where T : class, IHandmadeSerializable, new()
         {
             using (Stream stream = File.OpenRead(fileName))
             using (DeflateStream deflate = new DeflateStream
@@ -511,7 +512,7 @@ namespace ManagedClient
                 ))
             using (BinaryReader reader = new BinaryReader(deflate))
             {
-                return reader.ReadArray(func);
+                return reader.ReadArray<T>();
             }
         }
 
@@ -521,13 +522,14 @@ namespace ManagedClient
         public static T[] ReadFromMemory<T>
             (
                 [NotNull] this byte[] array,
-                [NotNull] Func<BinaryReader,T> func
+                [NotNull] Func<BinaryReader, T> func
             )
+            where T : class, IHandmadeSerializable, new()
         {
             using (Stream stream = new MemoryStream(array))
             using (BinaryReader reader = new BinaryReader(stream))
             {
-                return reader.ReadArray(func);
+                return reader.ReadArray<T>();
             }
         }
 
@@ -536,9 +538,9 @@ namespace ManagedClient
         /// </summary>
         public static T[] ReadFromZipMemory<T>
             (
-                [NotNull] this byte[] array,
-                [NotNull] Func<BinaryReader, T> func
+                [NotNull] this byte[] array
             )
+            where T: class, IHandmadeSerializable, new()
         {
             using (Stream stream = new MemoryStream(array))
             using (DeflateStream deflate = new DeflateStream
@@ -548,7 +550,7 @@ namespace ManagedClient
                 ))
             using (BinaryReader reader = new BinaryReader(deflate))
             {
-                return reader.ReadArray(func);
+                return reader.ReadArray<T>();
             }
         }
 

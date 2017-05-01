@@ -190,9 +190,7 @@ namespace ManagedClient.Readers
 
         #region Ручная сериализация
 
-        /// <summary>
-        /// Сохранение в поток.
-        /// </summary>
+        /// <inheritdoc cref="IHandmadeSerializable.SaveToStream"/>
         public void SaveToStream
             (
                 BinaryWriter writer
@@ -204,24 +202,16 @@ namespace ManagedClient.Readers
             writer.WriteNullable(Reason);
         }
 
-        /// <summary>
-        /// Считывание из потока.
-        /// </summary>
-        [NotNull]
-        public static ReaderRegistration ReadFromStream
+        /// <inheritdoc cref="IHandmadeSerializable.ReadFromStream"/>
+        public void ReadFromStream
             (
-                [NotNull] BinaryReader reader
+                BinaryReader reader
             )
         {
-            ReaderRegistration result = new ReaderRegistration
-            {
-                DateString = reader.ReadNullableString(),
-                Chair = reader.ReadNullableString(),
-                OrderNumber = reader.ReadNullableString(),
-                Reason = reader.ReadNullableString()
-            };
-
-            return result;
+            DateString = reader.ReadNullableString();
+            Chair = reader.ReadNullableString();
+            OrderNumber = reader.ReadNullableString();
+            Reason = reader.ReadNullableString();
         }
 
         #endregion

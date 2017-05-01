@@ -308,9 +308,7 @@ namespace ManagedClient.Readers
 
         #region Ручная сериализация
 
-        /// <summary>
-        /// Сохранение в поток.
-        /// </summary>
+        /// <inheritdoc cref="IHandmadeSerializable.SaveToStream"/>
         public void SaveToStream
             (
                 BinaryWriter writer
@@ -361,54 +359,27 @@ namespace ManagedClient.Readers
             visits.SaveToZipFile(fileName);
         }
 
-        /// <summary>
-        /// Считывание из потока.
-        /// </summary>
-        [NotNull]
-        public static VisitInfo ReadFromStream
+        /// <inheritdoc cref="IHandmadeSerializable.ReadFromStream" />
+        public void ReadFromStream
             (
-                [NotNull] BinaryReader reader
+                BinaryReader reader
             )
         {
-            VisitInfo result = new VisitInfo
-            {
-                Database = reader.ReadNullableString(),
-                Index = reader.ReadNullableString(),
-                Inventory = reader.ReadNullableString(),
-                Barcode = reader.ReadNullableString(),
-                Sigla = reader.ReadNullableString(),
-                DateGivenString = reader.ReadNullableString(),
-                Department = reader.ReadNullableString(),
-                DateExpectedString = reader.ReadNullableString(),
-                DateReturnedString = reader.ReadNullableString(),
-                DateProlongString = reader.ReadNullableString(),
-                Lost = reader.ReadNullableString(),
-                Description = reader.ReadNullableString(),
-                Responsible = reader.ReadNullableString(),
-                TimeIn = reader.ReadNullableString(),
-                TimeOut = reader.ReadNullableString()
-            };
-
-            return result;
-        }
-
-        /// <summary>
-        /// Считывание из файла.
-        /// </summary>
-        [CanBeNull]
-        [ItemNotNull]
-        public static VisitInfo[] ReadFromFile
-            (
-                [NotNull] string fileName
-            )
-        {
-            VisitInfo[] result = IrbisIOUtils.ReadFromZipFile
-                (
-                    fileName,
-                    ReadFromStream
-                );
-
-            return result;
+            Database = reader.ReadNullableString();
+            Index = reader.ReadNullableString();
+            Inventory = reader.ReadNullableString();
+            Barcode = reader.ReadNullableString();
+            Sigla = reader.ReadNullableString();
+            DateGivenString = reader.ReadNullableString();
+            Department = reader.ReadNullableString();
+            DateExpectedString = reader.ReadNullableString();
+            DateReturnedString = reader.ReadNullableString();
+            DateProlongString = reader.ReadNullableString();
+            Lost = reader.ReadNullableString();
+            Description = reader.ReadNullableString();
+            Responsible = reader.ReadNullableString();
+            TimeIn = reader.ReadNullableString();
+            TimeOut = reader.ReadNullableString();
         }
 
         #endregion

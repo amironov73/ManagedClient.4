@@ -1045,9 +1045,7 @@ namespace ManagedClient
 
         #region Ручная сериализация
 
-        /// <summary>
-        /// Сохранение в поток.
-        /// </summary>
+        /// <inheritdoc cref="IHandmadeSerializable.SaveToStream"/>
         public void SaveToStream
             (
                 BinaryWriter writer
@@ -1074,28 +1072,19 @@ namespace ManagedClient
             records.SaveToZipFile(fileName);
         }
 
-        /// <summary>
-        /// Считывание из потока.
-        /// </summary>
-        [NotNull]
-        [ItemNotNull]
-        public static IrbisRecord ReadFromStream
+        /// <inheritdoc cref="IHandmadeSerializable.ReadFromStream"/>
+        public void ReadFromStream
             (
-                [NotNull] BinaryReader reader
+                BinaryReader reader
             )
         {
-            IrbisRecord result = new IrbisRecord
-            {
-                Database = reader.ReadNullableString(),
-                Mfn = reader.ReadPackedInt32(),
-                Status = (RecordStatus) reader.ReadByte(),
-                Version = reader.ReadPackedInt32(),
-                Description = reader.ReadNullableString(),
-                SortKey = reader.ReadNullableString()
-            };
-            result.Fields.ReadFromStream(reader);
-
-            return result;
+            Database = reader.ReadNullableString();
+            Mfn = reader.ReadPackedInt32();
+            Status = (RecordStatus) reader.ReadByte();
+            Version = reader.ReadPackedInt32();
+            Description = reader.ReadNullableString();
+            SortKey = reader.ReadNullableString();
+            Fields.ReadFromStream(reader);
         }
 
         /// <summary>
@@ -1106,10 +1095,9 @@ namespace ManagedClient
                 [NotNull] string fileName
             )
         {
-            IrbisRecord[] result = IrbisIOUtils.ReadFromZipFile
+            IrbisRecord[] result = IrbisIOUtils.ReadFromZipFile<IrbisRecord>
                 (
-                    fileName,
-                    ReadFromStream
+                    fileName
                 );
 
             return result;

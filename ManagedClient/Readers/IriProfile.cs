@@ -159,9 +159,7 @@ namespace ManagedClient.Readers
 
         #region Ручная сериализация
 
-        /// <summary>
-        /// Сохранение в поток.
-        /// </summary>
+        /// <inheritdoc cref="IHandmadeSerializable.SaveToStream"/>
         public void SaveToStream
             (
                 BinaryWriter writer
@@ -188,45 +186,19 @@ namespace ManagedClient.Readers
             profiles.SaveToFile(fileName);
         }
         
-        /// <summary>
-        /// Чтение из потока.
-        /// </summary>
-        public static IriProfile ReadFromStream
+        /// <inheritdoc cref="IHandmadeSerializable.ReadFromStream"/>
+        public void ReadFromStream
             (
-                [NotNull] BinaryReader reader
+                BinaryReader reader
             )
         {
-            IriProfile result = new IriProfile
-            {
-                Active = reader.ReadBoolean(),
-                ID = reader.ReadNullableString(),
-                Title = reader.ReadNullableString(),
-                Query = reader.ReadNullableString(),
-                Periodicity = reader.ReadPackedInt32(),
-                LastServed = reader.ReadNullableString(),
-                Database = reader.ReadNullableString()
-            };
-
-            return result;
-        }
-
-        /// <summary>
-        /// Считывание из файла.
-        /// </summary>
-        [NotNull]
-        [ItemNotNull]
-        public static IriProfile[] ReadProfilesFromFile
-            (
-                [NotNull] string fileName
-            )
-        {
-            IriProfile[] result = IrbisIOUtils.ReadFromFile
-                (
-                    fileName,
-                    ReadFromStream
-                );
-
-            return result;
+            Active = reader.ReadBoolean();
+            ID = reader.ReadNullableString();
+            Title = reader.ReadNullableString();
+            Query = reader.ReadNullableString();
+            Periodicity = reader.ReadPackedInt32();
+            LastServed = reader.ReadNullableString();
+            Database = reader.ReadNullableString();
         }
 
         #endregion

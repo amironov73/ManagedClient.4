@@ -198,9 +198,7 @@ namespace ManagedClient.Readers
 
         #region Ручная сериализация
 
-        /// <summary>
-        /// Сохранение в поток.
-        /// </summary>
+        /// <inheritdoc cref="IHandmadeSerializable.SaveToStream"/>
         public void SaveToStream
             (
                 BinaryWriter writer
@@ -216,27 +214,20 @@ namespace ManagedClient.Readers
             writer.WriteNullable(AdditionalData);
         }
 
-        /// <summary>
-        /// Считывание из потока.
-        /// </summary>
-        public static ReaderAddress ReadFromStream
+        /// <inheritdoc cref="IHandmadeSerializable.ReadFromStream"/>
+        public void ReadFromStream
             (
-                [NotNull] BinaryReader reader
+                BinaryReader reader
             )
         {
-            ReaderAddress result = new ReaderAddress
-            {
-                Postcode = reader.ReadNullableString(),
-                Country = reader.ReadNullableString(),
-                City = reader.ReadNullableString(),
-                Street = reader.ReadNullableString(),
-                Building = reader.ReadNullableString(),
-                Entrance = reader.ReadNullableString(),
-                Apartment = reader.ReadNullableString(),
-                AdditionalData = reader.ReadNullableString()
-            };
-
-            return result;
+            Postcode = reader.ReadNullableString();
+            Country = reader.ReadNullableString();
+            City = reader.ReadNullableString();
+            Street = reader.ReadNullableString();
+            Building = reader.ReadNullableString();
+            Entrance = reader.ReadNullableString();
+            Apartment = reader.ReadNullableString();
+            AdditionalData = reader.ReadNullableString();
         }
 
         #endregion

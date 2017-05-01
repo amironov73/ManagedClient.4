@@ -544,9 +544,7 @@ namespace ManagedClient.Readers
 
         #region Ручная сериализация
 
-        /// <summary>
-        /// Сохранение в поток.
-        /// </summary>
+        /// <inheritdoc cref="IHandmadeSerializable.SaveToStream"/>
         public void SaveToStream
             (
                 BinaryWriter writer
@@ -579,45 +577,36 @@ namespace ManagedClient.Readers
             writer.WritePackedInt32(Mfn);
         }
 
-        /// <summary>
-        /// Считывание из потока.
-        /// </summary>
-        [JetBrains.Annotations.NotNull]
-        public static ReaderInfo ReadFromStream
+        /// <inheritdoc cref="IHandmadeSerializable.ReadFromStream"/>
+        public void ReadFromStream
             (
-                [JetBrains.Annotations.NotNull] BinaryReader reader
+                BinaryReader reader
             )
         {
-            ReaderInfo result = new ReaderInfo
-            {
-                Fio = reader.ReadNullableString(),
-                FamilyName = reader.ReadNullableString(),
-                FirstName = reader.ReadNullableString(),
-                Patronym = reader.ReadNullableString(),
-                Birthdate = reader.ReadNullableString(),
-                Ticket = reader.ReadNullableString(),
-                Gender = reader.ReadNullableString(),
-                Category = reader.ReadNullableString(),
-                Address = reader.ReadNullable(ReaderAddress.ReadFromStream),
-                Work = reader.ReadNullableString(),
-                Education = reader.ReadNullableString(),
-                Email = reader.ReadNullableString(),
-                HomePhone = reader.ReadNullableString(),
-                RegistrationDateString = reader.ReadNullableString(),
-                Enrollment = reader.ReadArray(ReaderRegistration.ReadFromStream),
-                Registrations = reader.ReadArray(ReaderRegistration.ReadFromStream),
-                EnabledPlaces = reader.ReadNullableString(),
-                DisabledPlaces = reader.ReadNullableString(),
-                Rights = reader.ReadNullableString(),
-                Remarks = reader.ReadNullableString(),
-                PhotoFile = reader.ReadNullableString(),
-                Visits = reader.ReadArray(VisitInfo.ReadFromStream),
-                Profiles = reader.ReadArray(IriProfile.ReadFromStream),
-                Description = reader.ReadNullableString(),
-                Mfn = reader.ReadPackedInt32()
-            };
-
-            return result;
+            Fio = reader.ReadNullableString();
+            FamilyName = reader.ReadNullableString();
+            FirstName = reader.ReadNullableString();
+            Patronym = reader.ReadNullableString();
+            Birthdate = reader.ReadNullableString();
+            Ticket = reader.ReadNullableString();
+            Gender = reader.ReadNullableString();
+            Category = reader.ReadNullableString();
+            Address = reader.ReadNullable<ReaderAddress>();
+            Work = reader.ReadNullableString();
+            Education = reader.ReadNullableString();
+            Email = reader.ReadNullableString();
+            HomePhone = reader.ReadNullableString();
+            RegistrationDateString = reader.ReadNullableString();
+            Enrollment = reader.ReadArray<ReaderRegistration>();
+            Registrations = reader.ReadArray<ReaderRegistration>();
+            EnabledPlaces = reader.ReadNullableString();
+            DisabledPlaces = reader.ReadNullableString();
+            Rights = reader.ReadNullableString();
+            Remarks = reader.ReadNullableString();
+            PhotoFile = reader.ReadNullableString();
+            Visits = reader.ReadArray<VisitInfo>();
+            Profiles = reader.ReadArray<IriProfile>();
+            Description = reader.ReadNullableString();
         }
 
         /// <summary>
@@ -643,10 +632,9 @@ namespace ManagedClient.Readers
                 [JetBrains.Annotations.NotNull] string fileName
             )
         {
-            ReaderInfo[] result = IrbisIOUtils.ReadFromZipFile
+            ReaderInfo[] result = IrbisIOUtils.ReadFromZipFile<ReaderInfo>
                 (
-                    fileName,
-                    ReadFromStream
+                    fileName
                 );
 
             return result;

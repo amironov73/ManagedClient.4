@@ -109,7 +109,8 @@ namespace ManagedClient
             int count = reader.ReadPackedInt32();
             for (int i = 0; i < count; i++)
             {
-                SubField subField = SubField.ReadFromStream(reader);
+                SubField subField = new SubField();
+                subField.ReadFromStream(reader);
                 Add(subField);
             }
         }

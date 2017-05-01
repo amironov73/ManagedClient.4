@@ -422,10 +422,9 @@ namespace ManagedClient.Fields
                 [NotNull] string fileName
             )
         {
-            ExemplarInfo[] loaded = IrbisIOUtils.ReadFromZipFile
+            ExemplarInfo[] loaded = IrbisIOUtils.ReadFromZipFile<ExemplarInfo>
                 (
-                    fileName,
-                    ExemplarInfo.ReadFromStream
+                    fileName
                 );
             foreach (ExemplarInfo exemplar in loaded)
             {

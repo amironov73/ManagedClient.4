@@ -27,5 +27,13 @@ namespace ManagedClient
             (
                 [NotNull] BinaryWriter writer
             );
+
+        /// <summary>
+        /// Просим объект восстановить себя из потока.
+        /// </summary>
+        void ReadFromStream
+            (
+                [NotNull] BinaryReader reader
+            );
     }
 }

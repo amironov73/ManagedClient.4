@@ -594,57 +594,48 @@ namespace ManagedClient.Fields
             return one.CompareTo(two);
         }
 
-        /// <summary>
-        /// Read one instance from the given stream.
-        /// </summary>
-        public static ExemplarInfo ReadFromStream
+        /// <inheritdoc cref="IHandmadeSerializable.ReadFromStream"/>
+        public void ReadFromStream
             (
                 BinaryReader reader
             )
         {
-            ExemplarInfo result = new ExemplarInfo
-            {
-                Status = reader.ReadNullableString(),
-                Number = reader.ReadNullableString(),
-                Date = reader.ReadNullableString(),
-                Place = reader.ReadNullableString(),
-                Collection = reader.ReadNullableString(),
-                ShelfIndex = reader.ReadNullableString(),
-                Price = reader.ReadNullableString(),
-                Barcode = reader.ReadNullableString(),
-                Amount = reader.ReadNullableString(),
-                Purpose = reader.ReadNullableString(),
-                Coefficient = reader.ReadNullableString(),
-                OffBalance = reader.ReadNullableString(),
-                KsuNumber1 = reader.ReadNullableString(),
-                ActNumber1 = reader.ReadNullableString(),
-                Channel = reader.ReadNullableString(),
-                OnHand = reader.ReadNullableString(),
-                ActNumber2 = reader.ReadNullableString(),
-                WriteOff = reader.ReadNullableString(),
-                Completion = reader.ReadNullableString(),
-                ActNumber3 = reader.ReadNullableString(),
-                Moving = reader.ReadNullableString(),
-                NewPlace = reader.ReadNullableString(),
-                CheckedDate = reader.ReadNullableString(),
-                CheckedAmount = reader.ReadNullableString(),
-                RealPlace = reader.ReadNullableString(),
-                BindingIndex = reader.ReadNullableString(),
-                BindingNumber = reader.ReadNullableString(),
-                Year = reader.ReadNullableString(),
-                Description = reader.ReadNullableString(),
-                Bbk = reader.ReadNullableString(),
-                OrderingData = reader.ReadNullableString(),
-                Index = reader.ReadNullableString(),
-                Mfn = reader.ReadInt32(),
-            };
-
-            return result;
+            Status = reader.ReadNullableString();
+            Number = reader.ReadNullableString();
+            Date = reader.ReadNullableString();
+            Place = reader.ReadNullableString();
+            Collection = reader.ReadNullableString();
+            ShelfIndex = reader.ReadNullableString();
+            Price = reader.ReadNullableString();
+            Barcode = reader.ReadNullableString();
+            Amount = reader.ReadNullableString();
+            Purpose = reader.ReadNullableString();
+            Coefficient = reader.ReadNullableString();
+            OffBalance = reader.ReadNullableString();
+            KsuNumber1 = reader.ReadNullableString();
+            ActNumber1 = reader.ReadNullableString();
+            Channel = reader.ReadNullableString();
+            OnHand = reader.ReadNullableString();
+            ActNumber2 = reader.ReadNullableString();
+            WriteOff = reader.ReadNullableString();
+            Completion = reader.ReadNullableString();
+            ActNumber3 = reader.ReadNullableString();
+            Moving = reader.ReadNullableString();
+            NewPlace = reader.ReadNullableString();
+            CheckedDate = reader.ReadNullableString();
+            CheckedAmount = reader.ReadNullableString();
+            RealPlace = reader.ReadNullableString();
+            BindingIndex = reader.ReadNullableString();
+            BindingNumber = reader.ReadNullableString();
+            Year = reader.ReadNullableString();
+            Description = reader.ReadNullableString();
+            Bbk = reader.ReadNullableString();
+            OrderingData = reader.ReadNullableString();
+            Index = reader.ReadNullableString();
+            Mfn = reader.ReadInt32();
         }
 
-        /// <summary>
-        /// Save this instance to the given stream.
-        /// </summary>
+        /// <inheritdoc cref="IHandmadeSerializable.SaveToStream"/>
         public void SaveToStream
             (
                 BinaryWriter writer

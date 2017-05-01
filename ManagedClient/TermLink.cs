@@ -9,6 +9,8 @@
 using System;
 using System.IO;
 
+using JetBrains.Annotations;
+
 using MoonSharp.Interpreter;
 
 #endregion
@@ -48,7 +50,15 @@ namespace ManagedClient
 
         #region Public methods
 
-        public static TermLink Read(Stream stream)
+        /// <summary>
+        /// Read the <see cref="TermLink"/>
+        /// from the <see cref="Stream"/>.
+        /// </summary>
+        [NotNull]
+        public static TermLink Read
+            (
+                [NotNull] Stream stream
+            )
         {
             TermLink result = new TermLink
             {
@@ -57,6 +67,7 @@ namespace ManagedClient
                 Occurrence = stream.ReadInt32Network(),
                 Index = stream.ReadInt32Network()
             };
+
             return result;
         }
 
@@ -64,43 +75,61 @@ namespace ManagedClient
 
         #region Object members
 
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
         {
             return string.Format
                 (
                     "Mfn: {0}, Tag: {1}, "
-                    + "Occurrence: {2}, Index: {3}", 
-                    Mfn, 
-                    Tag, 
-                    Occurrence, 
+                    + "Occurrence: {2}, Index: {3}",
+                    Mfn,
+                    Tag,
+                    Occurrence,
                     Index
                 );
         }
 
-        private bool Equals(TermLink other)
+        /// <inheritdoc cref="IEquatable{T}.Equals(T)"/>
+        private bool Equals
+            (
+                [NotNull] TermLink other
+            )
         {
-            return (Mfn == other.Mfn) 
-                && (Tag == other.Tag) 
-                && (Occurrence == other.Occurrence) 
-                && (Index == other.Index);
+            return Mfn == other.Mfn
+                && Tag == other.Tag
+                && Occurrence == other.Occurrence
+                && Index == other.Index;
         }
 
-        public override bool Equals(object obj)
+        /// <inheritdoc cref="object.Equals(object)"/>
+        public override bool Equals
+            (
+                object obj
+            )
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            return (obj is TermLink) 
-                && Equals((TermLink) obj);
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            return obj is TermLink
+                && Equals((TermLink)obj);
         }
 
+        /// <inheritdoc cref="object.GetHashCode"/>
         public override int GetHashCode()
         {
             unchecked
             {
+                // ReSharper disable NonReadonlyMemberInGetHashCode
+
                 int hashCode = Mfn;
-                hashCode = (hashCode*397) ^ Tag;
-                hashCode = (hashCode*397) ^ Occurrence;
-                hashCode = (hashCode*397) ^ Index;
+                hashCode = (hashCode * 397) ^ Tag;
+                hashCode = (hashCode * 397) ^ Occurrence;
+                hashCode = (hashCode * 397) ^ Index;
+
+                // ReSharper restore NonReadonlyMemberInGetHashCode
+
                 return hashCode;
             }
         }

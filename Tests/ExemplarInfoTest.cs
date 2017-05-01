@@ -45,10 +45,9 @@ namespace Tests
             //        "exemplars.bin",
             //        ExemplarInfo.ReadFromStream
             //    );
-            ExemplarInfo[] exemplars = IrbisIOUtils.ReadFromZipFile
+            ExemplarInfo[] exemplars = IrbisIOUtils.ReadFromZipFile<ExemplarInfo>
                 (
-                    "exemplars.biz",
-                    ExemplarInfo.ReadFromStream
+                    "exemplars.biz"
                 );
             Assert.IsTrue(exemplars.Length > 0);
         }

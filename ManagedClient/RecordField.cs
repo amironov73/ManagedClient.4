@@ -680,7 +680,7 @@ namespace ManagedClient
             {
                 result.Append(Text);
             }
-            foreach (SubField subField 
+            foreach (SubField subField
                 in SubFields.OrderBy(sf => sf.CodeString.ToUpperInvariant()))
             {
                 string subText = string.Format
@@ -908,10 +908,10 @@ namespace ManagedClient
         public RecordField Clone()
         {
             RecordField result = new RecordField
-                                     {
-                                         Tag = Tag,
-                                         Text = Text
-                                     };
+            {
+                Tag = Tag,
+                Text = Text
+            };
 
             result.SubFields.AddRange
                 (
@@ -1074,10 +1074,7 @@ namespace ManagedClient
 
         #region Ручная сериализация
 
-        /// <summary>
-        /// Сохранение в поток.
-        /// </summary>
-        /// <param name="writer"></param>
+        /// <inheritdoc cref="IHandmadeSerializable.SaveToStream"/>
         public void SaveToStream
             (
                 BinaryWriter writer
@@ -1088,25 +1085,15 @@ namespace ManagedClient
             SubFields.SaveToStream(writer);
         }
 
-        /// <summary>
-        /// Считывание из потока.
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <returns></returns>
-        [NotNull]
-        public static RecordField ReadFromStream
+        /// <inheritdoc cref="IHandmadeSerializable.ReadFromStream"/>
+        public void ReadFromStream
             (
-                [NotNull] BinaryReader reader
+                BinaryReader reader
             )
         {
-            RecordField result = new RecordField
-            {
-                Tag = reader.ReadNullableString(),
-                Text = reader.ReadNullableString()
-            };
-            result.SubFields.ReadFromStream(reader);
-
-            return result;
+            Tag = reader.ReadNullableString();
+            Text = reader.ReadNullableString();
+            SubFields.ReadFromStream(reader);
         }
 
         #endregion

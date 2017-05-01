@@ -223,26 +223,17 @@ namespace ManagedClient
 
         #region Ручная сериализация
 
-        /// <summary>
-        /// Считывание из потока.
-        /// </summary>
-        public static SubField ReadFromStream
+        /// <inheritdoc cref="IHandmadeSerializable.ReadFromStream"/>
+        public void ReadFromStream
             (
                 BinaryReader reader
             )
         {
-            SubField result = new SubField
-            {
-                CodeString = reader.ReadNullableString(),
-                Text = reader.ReadNullableString()
-            };
-
-            return result;
+            CodeString = reader.ReadNullableString();
+            Text = reader.ReadNullableString();
         }
 
-        /// <summary>
-        /// Сохранение в поток.
-        /// </summary>
+        /// <inheritdoc cref="IHandmadeSerializable.SaveToStream"/>
         public void SaveToStream
             (
                 BinaryWriter writer

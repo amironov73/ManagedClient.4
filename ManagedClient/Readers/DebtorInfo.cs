@@ -162,9 +162,7 @@ namespace ManagedClient.Readers
 
         #region IHandmadeSerializable members
 
-        /// <summary>
-        /// Просим объект записаться в поток.
-        /// </summary>
+        /// <inheritdoc cref="IHandmadeSerializable.SaveToStream"/>
         public void SaveToStream
             (
                 BinaryWriter writer
@@ -187,33 +185,26 @@ namespace ManagedClient.Readers
             Exemplars.SaveToStream(writer);
         }
 
-        /// <summary>
-        /// Восстанавливаем объект из потока.
-        /// </summary>
-        public static DebtorInfo ReadFromStream
+        /// <inheritdoc cref="IHandmadeSerializable.ReadFromStream"/>
+        public void ReadFromStream
             (
-                [NotNull] BinaryReader reader
+                BinaryReader reader
             )
         {
-            DebtorInfo result = new DebtorInfo
-            {
-                Fio = reader.ReadNullableString(),
-                Birthdate = reader.ReadNullableString(),
-                Ticket = reader.ReadNullableString(),
-                Gender = reader.ReadNullableString(),
-                Category = reader.ReadNullableString(),
-                Address = reader.ReadNullableString(),
-                Work = reader.ReadNullableString(),
-                Email = reader.ReadNullableString(),
-                HomePhone = reader.ReadNullableString(),
-                Age = reader.ReadPackedInt32(),
-                Remarks = reader.ReadNullableString(),
-                Mfn = reader.ReadPackedInt32(),
-                Description = reader.ReadNullableString(),
-                Exemplars = reader.ReadArray(ExemplarInfo.ReadFromStream)
-            };
-
-            return result;
+            Fio = reader.ReadNullableString();
+            Birthdate = reader.ReadNullableString();
+            Ticket = reader.ReadNullableString();
+            Gender = reader.ReadNullableString();
+            Category = reader.ReadNullableString();
+            Address = reader.ReadNullableString();
+            Work = reader.ReadNullableString();
+            Email = reader.ReadNullableString();
+            HomePhone = reader.ReadNullableString();
+            Age = reader.ReadPackedInt32();
+            Remarks = reader.ReadNullableString();
+            Mfn = reader.ReadPackedInt32();
+            Description = reader.ReadNullableString();
+            Exemplars = reader.ReadArray<ExemplarInfo>();
         }
 
         #endregion

@@ -215,6 +215,16 @@ namespace ManagedClient.Readers
             writer.WriteNullable(Title);
         }
 
+        /// <inheritdoc cref="IHandmadeSerializable.ReadFromStream"/>
+        public void ReadFromStream
+            (
+                BinaryReader reader
+            )
+        {
+            Code = reader.ReadNullableString();
+            Title = reader.ReadNullableString();
+        }
+
         /// <summary>
         /// Сохранение в файл.
         /// </summary>
@@ -225,43 +235,6 @@ namespace ManagedClient.Readers
             )
         {
             chairs.SaveToFile(fileName);
-        }
-
-        /// <summary>
-        /// Считывание из потока.
-        /// </summary>
-        [NotNull]
-        public static ChairInfo ReadFromStream
-            (
-                [NotNull] BinaryReader reader
-            )
-        {
-            ChairInfo result = new ChairInfo
-            {
-                Code = reader.ReadNullableString(),
-                Title = reader.ReadNullableString()
-            };
-
-            return result;
-        }
-
-        /// <summary>
-        /// Считывание из файла.
-        /// </summary>
-        [NotNull]
-        [ItemNotNull]
-        public static ChairInfo[] ReadChairsFromFile
-            (
-                [NotNull] string fileName
-            )
-        {
-            ChairInfo[] result = IrbisIOUtils.ReadFromFile
-                (
-                    fileName,
-                    ReadFromStream
-                );
-
-            return result;
         }
 
         #endregion
