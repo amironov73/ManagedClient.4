@@ -789,15 +789,33 @@ namespace ManagedClient
             try
             {
                 address = IPAddress.Parse(Host);
+                if (address.AddressFamily != AddressFamily.InterNetwork)
+                {
+                    throw new IrbisException("Address must be IPv4 only!");
+                }
             }
             catch
             {
-                //IPAddress[] addresses = Dns.GetHostAddresses(Host);
-                //address = addresses[0];
-
                 IPHostEntry ipHostEntry = Dns.GetHostEntry(Host);
-                address = ipHostEntry.AddressList[0];
+                IPAddress[] addresses = ipHostEntry.AddressList.Where
+                    (
+                        // IPv4 only
+                        a => a.AddressFamily == AddressFamily.InterNetwork
+                    )
+                    .ToArray();
+                if (addresses.Length == 0)
+                {
+                    throw new IrbisException
+                        (
+                            "Can't resolve host " + Host
+                        );
+                }
+
+                address = addresses.Length == 1
+                    ? addresses[0]
+                    : addresses[new Random().Next(addresses.Length)];
             }
+
             _client = new TcpClient();
             _client.Connect(address, Port);
         }
