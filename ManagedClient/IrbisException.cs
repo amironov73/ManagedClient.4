@@ -273,6 +273,7 @@ namespace ManagedClient
 
         #region Object members
 
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
         {
             return string.Format

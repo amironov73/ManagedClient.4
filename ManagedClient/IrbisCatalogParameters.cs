@@ -11,6 +11,8 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient
@@ -131,10 +133,14 @@ namespace ManagedClient
 
         #region Public methods
 
+        /// <summary>
+        /// Parse the text lines.
+        /// </summary>
+        [NotNull]
         public static IrbisCatalogParameters ParseLines
             (
-                string name,
-                string[] lines
+                [NotNull] string name,
+                [NotNull] string[] lines
             )
         {
             Regex regex = new Regex
@@ -200,10 +206,14 @@ namespace ManagedClient
             return result;
         }
 
+        /// <summary>
+        /// Parse the text.
+        /// </summary>
+        [NotNull]
         public static IrbisCatalogParameters ParseText
             (
-                string name,
-                string text
+                [NotNull] string name,
+                [NotNull] string text
             )
         {
             string[] lines = text.SplitLines();
@@ -214,9 +224,13 @@ namespace ManagedClient
                 );
         }
 
+        /// <summary>
+        /// Parse the file.
+        /// </summary>
+        [NotNull]
         public static IrbisCatalogParameters ParseFile
             (
-                string fileName
+                [NotNull] string fileName
             )
         {
             string name = Path.GetFileNameWithoutExtension(fileName);

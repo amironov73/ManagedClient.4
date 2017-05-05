@@ -7,11 +7,10 @@
 #region Using directives
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
+
+using JetBrains.Annotations;
 
 #endregion
 
@@ -58,7 +57,14 @@ namespace ManagedClient
 
         #region Public methods
 
-        public static NodeLeader Read(Stream stream)
+        /// <summary>
+        /// Read the node from the stream.
+        /// </summary>
+        [NotNull]
+        public static NodeLeader Read
+            (
+                [NotNull] Stream stream
+            )
         {
             NodeLeader result = new NodeLeader
                 {
@@ -76,6 +82,7 @@ namespace ManagedClient
 
         #region Object members
 
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
         {
             return string.Format

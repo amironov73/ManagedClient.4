@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
+using JetBrains.Annotations;
+
 using MoonSharp.Interpreter;
 
 using Newtonsoft.Json;
@@ -150,6 +152,10 @@ namespace ManagedClient
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Encode the <see cref="IrbisUserInfo"/>.
+        /// </summary>
+        [NotNull]
         public string Encode()
         {
             return string.Format
@@ -170,6 +176,7 @@ namespace ManagedClient
 
         #region Object members
 
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
         {
             return string.Format

@@ -1355,6 +1355,9 @@
             Увеличение последнего сегмента на указанное число.
             </summary>
         </member>
+        <member name="M:ManagedClient.NumberText.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
         <member name="T:ManagedClient.DatabaseChangedEventArgs">
             <summary>
             Arguments for <see cref="E:ManagedClient.ManagedClient64.DatabaseChanged"/>
@@ -3735,6 +3738,21 @@
             <param name="name">The name.</param>
             <exception cref="T:System.ArgumentNullException">name</exception>
         </member>
+        <member name="M:ManagedClient.IrbisCatalogParameters.ParseLines(System.String,System.String[])">
+            <summary>
+            Parse the text lines.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisCatalogParameters.ParseText(System.String,System.String)">
+            <summary>
+            Parse the text.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisCatalogParameters.ParseFile(System.String)">
+            <summary>
+            Parse the file.
+            </summary>
+        </member>
         <member name="T:ManagedClient.IrbisClientInfo">
             <summary>
             Информация о клиенте, подключенном к серверу ИРБИС
@@ -3790,6 +3808,9 @@
             <summary>
             Номер последней команды
             </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisClientInfo.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
         </member>
         <member name="T:ManagedClient.IrbisClientSettings">
             <summary>
@@ -3945,6 +3966,9 @@
             Разбор файла меню
             </summary>
         </member>
+        <member name="M:ManagedClient.IrbisDatabaseInfo.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
         <member name="T:ManagedClient.IrbisDate">
             <summary>
             Строка с ИРБИС-датой yyyyMMdd.
@@ -4010,6 +4034,9 @@
             Неявное преобразование
             </summary>
         </member>
+        <member name="M:ManagedClient.IrbisDate.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
         <member name="T:ManagedClient.IrbisException">
             <summary>
             Исключения, специфичные для библиотеки
@@ -4056,6 +4083,9 @@
             <summary>
             Текстовое описание ошибки.
             </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisException.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
         </member>
         <member name="T:ManagedClient.IrbisFst">
             <summary>
@@ -7545,10 +7575,123 @@
             Дерево (иерархический справочник).
             </summary>
         </member>
-        <member name="P:ManagedClient.IrbisTree.Name">
+        <member name="F:ManagedClient.IrbisTree.Indent">
             <summary>
-            Имя (чисто для идентификации).
+            Tabulation
             </summary>
+        </member>
+        <member name="T:ManagedClient.IrbisTree.Item">
+            <summary>
+            Tree item
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisTree.Item.Children">
+            <summary>
+            Children.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisTree.Item.Delimiter">
+            <summary>
+            Delimiter.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisTree.Item.Prefix">
+            <summary>
+            Prefix.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisTree.Item.Suffix">
+            <summary>
+            Suffix.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisTree.Item.Value">
+            <summary>
+            Value.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.Item.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.Item.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.Item.AddChild(System.String)">
+            <summary>
+            Add child.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.Item.SetDelimiter(System.String)">
+            <summary>
+            Set the delimiter.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.Item.SetValue(System.String)">
+            <summary>
+            Set the value.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.Item.Verify(System.Boolean)">
+            <summary>
+            Verify the item.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisTree.FileName">
+            <summary>
+            File name.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisTree.Roots">
+            <summary>
+            Root items.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.CountIndent(System.String)">
+            <summary>
+            Determines indent level of the string.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.AddRoot(System.String)">
+            <summary>
+            Add root item.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.ParseStream(System.IO.TextReader)">
+            <summary>
+            Parse specified stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.ReadLocalFile(System.String,System.Text.Encoding)">
+            <summary>
+            Read local file.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.Save(System.IO.TextWriter)">
+            <summary>
+            Save to text stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.SaveToLocalFile(System.String,System.Text.Encoding)">
+            <summary>
+            Save to local file.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.Verify(System.Boolean)">
+            <summary>
+            Verify the tree.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisTree.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
         </member>
         <member name="T:ManagedClient.IrbisUserInfo">
             <summary>
@@ -7608,6 +7751,14 @@
             <param name="text"></param>
             <returns></returns>
         </member>
+        <member name="M:ManagedClient.IrbisUserInfo.Encode">
+            <summary>
+            Encode the <see cref="T:ManagedClient.IrbisUserInfo"/>.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUserInfo.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
         <member name="M:ManagedClient.IrbisUtilities.StandardConnectionStrings">
             <summary>
             Стандартные наименования для ключа строки подключения
@@ -7662,6 +7813,9 @@
             </summary>
             <param name="lines"></param>
             <returns></returns>
+        </member>
+        <member name="M:ManagedClient.IrbisVersion.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
         </member>
         <member name="T:ManagedClient.IrbisWorkSheet">
             <summary>
@@ -8224,10 +8378,23 @@
             Старшее слово смещения
             </summary>
         </member>
+        <member name="P:ManagedClient.NodeItem.FullOffset">
+            <summary>
+            Full offset.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.NodeItem.RefersToLeaf">
+            <summary>
+            Refers to leaf node?
+            </summary>
+        </member>
         <member name="P:ManagedClient.NodeItem.Text">
             <summary>
             Текстовое значение ключа
             </summary>
+        </member>
+        <member name="M:ManagedClient.NodeItem.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
         </member>
         <member name="T:ManagedClient.NodeLeader">
             <summary>
@@ -8261,10 +8428,26 @@
             (от начала записи)
             </summary>
         </member>
+        <member name="M:ManagedClient.NodeLeader.Read(System.IO.Stream)">
+            <summary>
+            Read the node from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.NodeLeader.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
+        <member name="T:ManagedClient.NodeRecord">
+            <summary>
+            Node record.
+            </summary>
+        </member>
         <member name="F:ManagedClient.NodeRecord.RecordSize">
             <summary>
             Длина записи в текущей реализации.
             </summary>
+        </member>
+        <member name="M:ManagedClient.NodeRecord.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
         </member>
         <member name="T:ManagedClient.OrganizationInfo">
             <summary>

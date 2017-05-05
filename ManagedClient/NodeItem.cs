@@ -7,10 +7,7 @@
 #region Using directives
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 #endregion
 
@@ -48,11 +45,17 @@ namespace ManagedClient
         /// </summary>
         public int HighOffset { get; set; }
 
+        /// <summary>
+        /// Full offset.
+        /// </summary>
         public long FullOffset
         {
             get { return unchecked ((((long) HighOffset) << 32) + LowOffset); }
         }
 
+        /// <summary>
+        /// Refers to leaf node?
+        /// </summary>
         public bool RefersToLeaf
         {
             get { return (LowOffset < 0); }
@@ -67,6 +70,7 @@ namespace ManagedClient
 
         #region Object members
 
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
         {
             return string.Format

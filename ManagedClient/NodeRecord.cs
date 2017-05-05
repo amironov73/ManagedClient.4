@@ -16,6 +16,9 @@ using System.Text;
 
 namespace ManagedClient
 {
+    /// <summary>
+    /// Node record.
+    /// </summary>
     [Serializable]
     [DebuggerDisplay("Leader={Leader}")]
     public sealed class NodeRecord
@@ -65,6 +68,7 @@ namespace ManagedClient
 
         #region Object members
 
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
         {
             StringBuilder items = new StringBuilder();
@@ -75,8 +79,8 @@ namespace ManagedClient
 
             return string.Format
                 (
-                    "Leader: {0}, Items: {1}", 
-                    Leader, 
+                    "Leader: {0}, Items: {1}",
+                    Leader,
                     items
                 );
         }
