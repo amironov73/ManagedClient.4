@@ -9,6 +9,8 @@
 using System.IO;
 using System.Text;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient
@@ -74,6 +76,9 @@ namespace ManagedClient
 
         #region Construction
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public OrganizationInfo()
         {
             CountryCode = "RU";
@@ -92,9 +97,12 @@ namespace ManagedClient
 
         #region Public methods
 
+        /// <summary>
+        /// Parse the lines of text.
+        /// </summary>
         public void ParseLines
             (
-                string[] lines
+                [NotNull] string[] lines
             )
         {
             int len = lines.Length - 1;
@@ -142,17 +150,23 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Parse the text.
+        /// </summary>
         public void ParseText
             (
-                string text
+                [NotNull] string text
             )
         {
             ParseLines(text.SplitLines());
         }
 
+        /// <summary>
+        /// Parse the text file.
+        /// </summary>
         public void ParseFile
             (
-                string fileName
+                [NotNull] string fileName
             )
         {
             string[] lines = File.ReadAllLines
@@ -163,9 +177,12 @@ namespace ManagedClient
             ParseLines(lines);
         }
 
+        /// <summary>
+        /// Load information from the server.
+        /// </summary>
         public void LoadFromServer
             (
-                ManagedClient64 client
+                [NotNull] ManagedClient64 client
             )
         {
             string text = client.ReadTextFile

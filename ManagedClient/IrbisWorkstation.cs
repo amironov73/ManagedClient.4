@@ -9,21 +9,48 @@ namespace ManagedClient
     /// <summary>
     /// Коды АРМов ИРБИС.
     /// </summary>
-	public enum IrbisWorkstation : byte
-	{
-		Administrator = (byte) 'A',
+    public enum IrbisWorkstation
+        : byte
+    {
+        /// <summary>
+        /// Не задан.
+        /// </summary>
+        None = 0,
 
-		Cataloger = (byte)'C',
+        /// <summary>
+        /// АРМ "Администратор"
+        /// </summary>
+        Administrator = (byte) 'A',
 
-		Acquisitions = (byte)'M',
+        /// <summary>
+        /// АРМ "Каталогизатор"
+        /// </summary>
+        Cataloger = (byte)'C',
 
-		Reader = (byte) 'R',
+        /// <summary>
+        /// АРМ "Комплектатор"
+        /// </summary>
+        Acquisitions = (byte)'M',
 
-		Circulation = (byte) 'B',
+        /// <summary>
+        /// АРМ "Читатель"
+        /// </summary>
+        Reader = (byte) 'R',
 
-		Bookland = (byte) 'B',
+        /// <summary>
+        /// АРМ "Книговыдача"
+        /// </summary>
+        Circulation = (byte) 'B',
 
-		Provision = (byte) 'K'
+        /// <summary>
+        /// АРМ "Книговыдача"
+        /// </summary>
+        Bookland = (byte) 'B',
 
-	}
+        /// <summary>
+        /// АРМ "Книгообеспеченность"
+        /// </summary>
+        Provision = (byte) 'K'
+
+    }
 }

@@ -9,6 +9,8 @@
 using System;
 using System.Collections.Generic;
 
+using JetBrains.Annotations;
+
 using MoonSharp.Interpreter;
 
 #endregion
@@ -18,12 +20,16 @@ namespace ManagedClient
     /// <summary>
     /// Накапливает записи и отправляет их на сервер пакетами.
     /// </summary>
+    [PublicAPI]
     [MoonSharpUserData]
     public sealed class RecordBuffer
         : IDisposable
     {
         #region Events
 
+        /// <summary>
+        /// Raised on batch record write.
+        /// </summary>
         public event EventHandler BatchWrite;
 
         #endregion
@@ -77,20 +83,22 @@ namespace ManagedClient
         #region Construction
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecordBuffer" /> class.
+        /// Constructor.
         /// </summary>
-        /// <param name="client">The client.</param>
         public RecordBuffer
             (
-                ManagedClient64 client
+                [NotNull] ManagedClient64 client
             )
             : this(client, 10)
         {
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public RecordBuffer
             (
-                ManagedClient64 client,
+                [NotNull] ManagedClient64 client,
                 int capacity
             )
         {
@@ -123,7 +131,7 @@ namespace ManagedClient
         private void _OnBatchWrite()
         {
             EventHandler handler = BatchWrite;
-            if (handler != null)
+            if (!ReferenceEquals(handler, null))
             {
                 handler(this, EventArgs.Empty);
             }
@@ -140,10 +148,10 @@ namespace ManagedClient
         /// <exception cref="System.ArgumentNullException">record</exception>
         public void Append
             (
-                IrbisRecord record
+                [NotNull] IrbisRecord record
             )
         {
-            if (record == null)
+            if (ReferenceEquals(record, null))
             {
                 throw new ArgumentNullException("record");
             }
@@ -198,10 +206,7 @@ namespace ManagedClient
 
         #region IDisposable members
 
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, 
-        /// releasing, or resetting unmanaged resources.
-        /// </summary>
+        /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
             Flush();

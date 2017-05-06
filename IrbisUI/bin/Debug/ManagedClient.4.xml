@@ -5224,17 +5224,17 @@
         </member>
         <member name="M:ManagedClient.ParallelRecordReader.#ctor">
             <summary>
-            Конструктор.
+            Constructor.
             </summary>
         </member>
         <member name="M:ManagedClient.ParallelRecordReader.#ctor(System.Int32)">
             <summary>
-            Конструктор.
+            Constructor.
             </summary>
         </member>
         <member name="M:ManagedClient.ParallelRecordReader.#ctor(System.Int32,System.String)">
             <summary>
-            Конструктор.
+            Constructor.
             </summary>
         </member>
         <member name="M:ManagedClient.ParallelRecordReader.#ctor(System.Int32,System.String,System.Int32[])">
@@ -5247,10 +5247,16 @@
             Ожидание окончания.
             </summary>
         </member>
+        <member name="M:ManagedClient.ParallelRecordReader.GetEnumerator">
+            <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+        </member>
         <member name="M:ManagedClient.ParallelRecordReader.ReadAll">
             <summary>
             Считываем все записи.
             </summary>
+        </member>
+        <member name="M:ManagedClient.ParallelRecordReader.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
         </member>
         <member name="T:ManagedClient.Pooling.IrbisConnectionPool">
             <summary>
@@ -7493,6 +7499,12 @@
             Считывание из потока.
             </summary>
         </member>
+        <member name="M:ManagedClient.SubFieldCollection.InsertItem(System.Int32,ManagedClient.SubField)">
+            <inheritdoc cref="M:System.Collections.ObjectModel.Collection`1.InsertItem(System.Int32,`0)"/>
+        </member>
+        <member name="M:ManagedClient.SubFieldCollection.SetItem(System.Int32,ManagedClient.SubField)">
+            <inheritdoc cref="M:System.Collections.ObjectModel.Collection`1.SetItem(System.Int32,`0)"/>
+        </member>
         <member name="T:ManagedClient.TextWithEncoding">
             <summary>
             Текст с заданной кодировкой.
@@ -7759,24 +7771,51 @@
         <member name="M:ManagedClient.IrbisUserInfo.ToString">
             <inheritdoc cref="M:System.Object.ToString"/>
         </member>
+        <member name="T:ManagedClient.IrbisUtilities">
+            <summary>
+            General purpose utility routines.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUtilities.ParseIrbisDate(System.String)">
+            <summary>
+            Parse the date in IRBIS format.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUtilities.Slice``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
+            <summary>
+            Slice the sequence into pieces with given size.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUtilities.EncodePercentString(System.Byte[])">
+            <summary>
+            Encode byte array into %31%32%33.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUtilities.DecodePercentString(System.String)">
+            <summary>
+            Decode %31%32%33.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUtilities.GatherSubfields(ManagedClient.IrbisRecord,System.String,System.String,System.Char[])">
+            <summary>
+            Gather subfields with given codes.
+            </summary>
+        </member>
         <member name="M:ManagedClient.IrbisUtilities.StandardConnectionStrings">
             <summary>
             Стандартные наименования для ключа строки подключения
             к серверу ИРБИС64.
             </summary>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.IrbisUtilities.GetConnectionString">
             <summary>
             Получаем строку подключения в app.settings.
             </summary>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.IrbisUtilities.GetClient">
             <summary>
             Получаем уже подключенного клиента.
             </summary>
-            <returns></returns>
             <exception cref="T:System.ApplicationException">
             Если строка подключения в app.settings не найдена.
             </exception>
@@ -7868,6 +7907,46 @@
         <member name="T:ManagedClient.IrbisWorkstation">
             <summary>
             Коды АРМов ИРБИС.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisWorkstation.None">
+            <summary>
+            Не задан.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisWorkstation.Administrator">
+            <summary>
+            АРМ "Администратор"
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisWorkstation.Cataloger">
+            <summary>
+            АРМ "Каталогизатор"
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisWorkstation.Acquisitions">
+            <summary>
+            АРМ "Комплектатор"
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisWorkstation.Reader">
+            <summary>
+            АРМ "Читатель"
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisWorkstation.Circulation">
+            <summary>
+            АРМ "Книговыдача"
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisWorkstation.Bookland">
+            <summary>
+            АРМ "Книговыдача"
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisWorkstation.Provision">
+            <summary>
+            АРМ "Книгообеспеченность"
             </summary>
         </member>
         <member name="T:ManagedClient.IrbisXml">
@@ -8504,6 +8583,31 @@
             Сигла библиотеки.
             </summary>
         </member>
+        <member name="M:ManagedClient.OrganizationInfo.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.OrganizationInfo.ParseLines(System.String[])">
+            <summary>
+            Parse the lines of text.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.OrganizationInfo.ParseText(System.String)">
+            <summary>
+            Parse the text.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.OrganizationInfo.ParseFile(System.String)">
+            <summary>
+            Parse the text file.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.OrganizationInfo.LoadFromServer(ManagedClient.ManagedClient64)">
+            <summary>
+            Load information from the server.
+            </summary>
+        </member>
         <member name="T:ManagedClient.IrbisSearchEngine">
             <summary>
             Параметры и операции, связанные с поисковыми сценариями
@@ -8561,9 +8665,17 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ManagedClient.QueryHeader.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
         <member name="T:ManagedClient.RecordBuffer">
             <summary>
             Накапливает записи и отправляет их на сервер пакетами.
+            </summary>
+        </member>
+        <member name="E:ManagedClient.RecordBuffer.BatchWrite">
+            <summary>
+            Raised on batch record write.
             </summary>
         </member>
         <member name="P:ManagedClient.RecordBuffer.Capacity">
@@ -8600,9 +8712,13 @@
         </member>
         <member name="M:ManagedClient.RecordBuffer.#ctor(ManagedClient.ManagedClient64)">
             <summary>
-            Initializes a new instance of the <see cref="T:ManagedClient.RecordBuffer" /> class.
+            Constructor.
             </summary>
-            <param name="client">The client.</param>
+        </member>
+        <member name="M:ManagedClient.RecordBuffer.#ctor(ManagedClient.ManagedClient64,System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
         </member>
         <member name="M:ManagedClient.RecordBuffer.Append(ManagedClient.IrbisRecord)">
             <summary>
@@ -8617,10 +8733,7 @@
             </summary>
         </member>
         <member name="M:ManagedClient.RecordBuffer.Dispose">
-            <summary>
-            Performs application-defined tasks associated with freeing, 
-            releasing, or resetting unmanaged resources.
-            </summary>
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
         </member>
         <member name="T:ManagedClient.RecordField">
             <summary>

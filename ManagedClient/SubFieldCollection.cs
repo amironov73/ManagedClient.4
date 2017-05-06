@@ -121,6 +121,7 @@ namespace ManagedClient
 
         #region Collection<T> members
 
+        /// <inheritdoc cref="Collection{T}.InsertItem"/>
         protected override void InsertItem
             (
                 int index,
@@ -135,6 +136,7 @@ namespace ManagedClient
             base.InsertItem(index, item);
         }
 
+        /// <inheritdoc cref="Collection{T}.SetItem"/>
         protected override void SetItem
             (
                 int index,

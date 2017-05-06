@@ -13,17 +13,25 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using JetBrains.Annotations;
+
 #endregion
 
 namespace ManagedClient
 {
+    /// <summary>
+    /// General purpose utility routines.
+    /// </summary>
     public static class IrbisUtilities
     {
         #region Public methods
 
+        /// <summary>
+        /// Parse the date in IRBIS format.
+        /// </summary>
         public static DateTime ParseIrbisDate
             (
-                this string text
+                [CanBeNull] this string text
             )
         {
 #if PocketPC
@@ -48,13 +56,18 @@ namespace ManagedClient
                     DateTimeStyles.None,
                     out result
                 );
+
             return result;
 #endif
         }
 
+        /// <summary>
+        /// Slice the sequence into pieces with given size.
+        /// </summary>
+        [NotNull]
         public static IEnumerable<T[]> Slice<T>
             (
-                this IEnumerable<T> sequence,
+                [NotNull] this IEnumerable<T> sequence,
                 int pieceSize
             )
         {
@@ -84,13 +97,17 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Encode byte array into %31%32%33.
+        /// </summary>
+        [NotNull]
         public static string EncodePercentString
             (
-                byte[] array
+                [CanBeNull] byte[] array
             )
         {
             if (ReferenceEquals(array, null)
-                || (array.Length == 0))
+                || array.Length == 0)
             {
                 return string.Empty;
             }
@@ -99,9 +116,9 @@ namespace ManagedClient
 
             foreach (byte b in array)
             {
-                if (((b >= 'A') && (b <= 'Z'))
-                    || ((b >= 'a') && (b <= 'z'))
-                    || ((b >= '0') && (b <= '9'))
+                if (b >= 'A' && b <= 'Z'
+                    || b >= 'a' && b <= 'z'
+                    || b >= '0' && b <= '9'
                     )
                 {
                     result.Append((char) b);
@@ -119,9 +136,13 @@ namespace ManagedClient
             return result.ToString();
         }
 
+        /// <summary>
+        /// Decode %31%32%33.
+        /// </summary>
+        [NotNull]
         public static byte[] DecodePercentString
             (
-                string text
+                [CanBeNull] string text
             )
         {
             if (string.IsNullOrEmpty(text))
@@ -140,7 +161,7 @@ namespace ManagedClient
                     }
                     else
                     {
-                        if (i >= (text.Length - 2))
+                        if (i >= text.Length - 2)
                         {
                             throw new FormatException("text");
                         }
@@ -158,11 +179,15 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Gather subfields with given codes.
+        /// </summary>
+        [CanBeNull]
         public static string GatherSubfields
             (
-                this IrbisRecord record,
-                string tag,
-                string separator,
+                [NotNull] this IrbisRecord record,
+                [NotNull] string tag,
+                [NotNull] string separator,
                 params char[] codes
             )
         {
@@ -174,6 +199,7 @@ namespace ManagedClient
             {
                 return null;
             }
+
             List<string> list = new List<string>();
 
             foreach (char code in codes)
@@ -200,7 +226,7 @@ namespace ManagedClient
         /// Стандартные наименования для ключа строки подключения
         /// к серверу ИРБИС64.
         /// </summary>
-        /// <returns></returns>
+        [NotNull]
         public static string[] StandardConnectionStrings()
         {
             return new[]
@@ -216,7 +242,7 @@ namespace ManagedClient
         /// <summary>
         /// Получаем строку подключения в app.settings.
         /// </summary>
-        /// <returns></returns>
+        [NotNull]
         public static string GetConnectionString()
         {
             return Utilities.FindSetting
@@ -228,10 +254,10 @@ namespace ManagedClient
         /// <summary>
         /// Получаем уже подключенного клиента.
         /// </summary>
-        /// <returns></returns>
         /// <exception cref="ApplicationException">
         /// Если строка подключения в app.settings не найдена.
         /// </exception>
+        [NotNull]
         public static ManagedClient64 GetClient()
         {
             string connectionString = GetConnectionString();

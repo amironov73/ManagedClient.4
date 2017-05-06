@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
 using JetBrains.Annotations;
 
 using MoonSharp.Interpreter;
@@ -42,6 +43,7 @@ namespace ManagedClient
         /// <summary>
         /// Строка подключения.
         /// </summary>
+        [CanBeNull]
         public string ConnectionString { get; private set; }
 
         /// <summary>
@@ -54,7 +56,7 @@ namespace ManagedClient
         #region Construction
 
         /// <summary>
-        /// Конструктор.
+        /// Constructor.
         /// </summary>
         public ParallelRecordReader ()
         {
@@ -71,7 +73,7 @@ namespace ManagedClient
         }
 
         /// <summary>
-        /// Конструктор.
+        /// Constructor.
         /// </summary>
         public ParallelRecordReader
             (
@@ -90,12 +92,12 @@ namespace ManagedClient
         }
 
         /// <summary>
-        /// Конструктор.
+        /// Constructor.
         /// </summary>
         public ParallelRecordReader
             (
                 int parallelism,
-                string connectionString
+                [NotNull] string connectionString
             )
         {
             int[] mfnList = _GetMfnList(connectionString);
@@ -113,7 +115,7 @@ namespace ManagedClient
         public ParallelRecordReader
             (
                 int parallelism,
-                string connectionString,
+                [NotNull] string connectionString,
                 int[] mfnList
             )
         {
@@ -130,8 +132,6 @@ namespace ManagedClient
         #region Private members
 
         private Task[] _tasks;
-
-        private int[] _mfnList;
 
         private ConcurrentQueue<IrbisRecord> _queue;
 
@@ -220,12 +220,6 @@ namespace ManagedClient
             )
         {
             int[] chunk = (int[]) state;
-            //foreach (int mfn in chunk)
-            //{
-            //    IrbisRecord record = new IrbisRecord{Mfn = mfn};
-            //    _PutRecord(record);
-            //}
-            //_event.Set();
 
             using (ManagedClient64 client = new ManagedClient64())
             {
@@ -275,6 +269,7 @@ namespace ManagedClient
 
         #region IEnumerable<T> members
 
+        /// <inheritdoc cref="IEnumerable{T}.GetEnumerator"/>
         public IEnumerator<IrbisRecord> GetEnumerator()
         {
             while (true)
@@ -321,6 +316,7 @@ namespace ManagedClient
 
         #region IDisposable members
 
+        /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
             _event.Dispose();
