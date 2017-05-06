@@ -809,6 +809,52 @@
             Просим объект восстановить себя из потока.
             </summary>
         </member>
+        <member name="T:ManagedClient.IrbisEncoding">
+            <summary>
+            Encoding used by IRBIS
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisEncoding.Ansi">
+            <summary>
+            Default single-byte encoding.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisEncoding.Oem">
+            <summary>
+            OEM encoding.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisEncoding.Utf8">
+            <summary>
+            UTF8 encoding.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisEncoding.ByName(System.String)">
+            <summary>
+            Get encoding by name.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisEncoding.FromConfig(System.String)">
+            <summary>
+            Get encoding from config file.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisEncoding.RelaxUtf8">
+            <summary>
+            Relax UTF-8 decoder, do not throw exceptions
+            on invalid bytes.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisEncoding.SetAnsiEncoding(System.Text.Encoding)">
+            <summary>
+            Override default single-byte encoding.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisEncoding.SetOemEncoding(System.Text.Encoding)">
+            <summary>
+            Override OEM encoding.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Output.AbstractOutput">
             <summary>
             Абстрактный объект текстового вывода. 
@@ -3603,6 +3649,89 @@
         <member name="T:ManagedClient.IrbisAlphabetTable">
             <summary>
             ISISAC.TAB
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisAlphabetTable.FileName">
+            <summary>
+            Имя файла таблицы по умолчанию.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisAlphabetTable.Characters">
+            <summary>
+            Собственно таблица.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisAlphabetTable.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisAlphabetTable.#ctor(System.Text.Encoding,System.Byte[])">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisAlphabetTable.#ctor(ManagedClient.ManagedClient64,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisAlphabetTable.#ctor(ManagedClient.ManagedClient64)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisAlphabetTable.GetInstance(ManagedClient.ManagedClient64)">
+            <summary>
+            Get global instance of the
+            <see cref="T:ManagedClient.IrbisAlphabetTable"/>.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisAlphabetTable.IsAlpha(System.Char)">
+            <summary>
+            Determines whether the specified character is alpha
+            according to table.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisAlphabetTable.ParseLocalFile(System.String)">
+            <summary>
+            Парсим локальный файл.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisAlphabetTable.ParseText(System.IO.TextReader)">
+            <summary>
+            Парсим таблицу из текстового представления.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisAlphabetTable.ResetInstance">
+            <summary>
+            Free global instance of
+            <see cref="T:ManagedClient.IrbisAlphabetTable"/>.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisAlphabetTable.SplitWords(System.String)">
+            <summary>
+            Разбиваем текст на слова.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisAlphabetTable.ToSourceCode(System.IO.TextWriter)">
+            <summary>
+            Формируем исходный код с определением таблицы.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisAlphabetTable.TrimText(System.String)">
+            <summary>
+            Trim the text.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisAlphabetTable.WriteLocalFile(System.String)">
+            <summary>
+            Записываемся в файл.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisAlphabetTable.WriteTable(System.IO.TextWriter)">
+            <summary>
+            Записываемся в поток.
             </summary>
         </member>
         <member name="T:ManagedClient.IrbisAnswerItem">
@@ -7587,6 +7716,411 @@
         </member>
         <member name="M:ManagedClient.SubFieldCollection.SetItem(System.Int32,ManagedClient.SubField)">
             <inheritdoc cref="M:System.Collections.ObjectModel.Collection`1.SetItem(System.Int32,`0)"/>
+        </member>
+        <member name="T:ManagedClient.TextNavigator">
+            <summary>
+            Навигатор по тексту.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.TextNavigator.EOF">
+            <summary>
+            Признак конца текста.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.TextNavigator.Column">
+            <summary>
+            Текущая колонка текста. Нумерация с 1.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.TextNavigator.IsEOF">
+            <summary>
+            Текст закончился?
+            </summary>
+        </member>
+        <member name="P:ManagedClient.TextNavigator.Length">
+            <summary>
+            Длина текста.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.TextNavigator.Line">
+            <summary>
+            Текущая строка текста. Нумерация с 1.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.TextNavigator.Position">
+            <summary>
+            Текущая позиция.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.TextNavigator.Text">
+            <summary>
+            Обрабатываемый текст.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.#ctor(System.String)">
+            <summary>
+            Конструктор.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.Clone">
+            <summary>
+            Clone the navigator.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.FromFile(System.String,System.Text.Encoding)">
+            <summary>
+            Навигатор по текстовому файлу.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.FromFile(System.String)">
+            <summary>
+            Навигатор по текстовому файлу.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.GetRemainingText">
+            <summary>
+            Выдать остаток текста.
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.IsControl">
+            <summary>
+            Управляющий символ?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.IsDigit">
+            <summary>
+            Цифра?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.IsLetter">
+            <summary>
+            Буква?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.IsLetterOrDigit">
+            <summary>
+            Буква или цифра?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.IsNumber">
+            <summary>
+            Часть числа?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.IsPunctuation">
+            <summary>
+            Знак пунктуации?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.IsSeparator">
+            <summary>
+            Разделитель?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.IsSurrogate">
+            <summary>
+            Суррогат?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.IsSymbol">
+            <summary>
+            Символ?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.IsWhiteSpace">
+            <summary>
+            Пробельный символ?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.LookAhead">
+            <summary>
+            Заглядывание вперёд на 1 позицию.
+            </summary>
+            <remarks>Это на 1 позицию дальше,
+            чем <see cref="M:ManagedClient.TextNavigator.PeekChar"/>
+            </remarks>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.LookAhead(System.Int32)">
+            <summary>
+            Заглядывание вперёд.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.LookBehind">
+            <summary>
+            Заглядывание назад.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.LookBehind(System.Int32)">
+            <summary>
+            Заглядывание назад.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.Move(System.Int32)">
+            <summary>
+            Смещение указателя.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.PeekChar">
+            <summary>
+            Подглядывание текущего символа.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.PeekString(System.Int32)">
+            <summary>
+            Подглядывание строки вплоть до указанной длины.
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.PeekTo(System.Char)">
+            <summary>
+            Подглядывание вплоть до указанного символа
+            (включая его).
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.PeekTo(System.Char[])">
+            <summary>
+            Подглядывание вплоть до указанных символов
+            (включая их).
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.PeekUntil(System.Char)">
+            <summary>
+            Подглядывание вплоть до указанного символа.
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.PeekUntil(System.Char[])">
+            <summary>
+            Подглядывание вплоть до указанных символов.
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadChar">
+            <summary>
+            Считывание символа.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadEscapedUntil(System.Char,System.Char)">
+            <summary>
+            Считывание экранированной строки вплоть до разделителя
+            (не включая его).
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadFrom(System.Char,System.Char)">
+            <summary>
+            Считывание начиная с открывающего символа
+            до закрывающего (включая их).
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            Пустая строка, если нет открывающего
+            или закрывающего символа.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadFrom(System.Char[],System.Char[])">
+            <summary>
+            Считывание начиная с открывающего символа
+            до закрывающего (включая их).
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            Пустая строка, если нет открывающего
+            или закрывающего символа.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadInteger">
+            <summary>
+            Чтение беззнакового целого.
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            Пустую строку, если не число.</returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadLine">
+            <summary>
+            Чтение до конца строки.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadString(System.Int32)">
+            <summary>
+            Чтение строки вплоть до указанной длины.
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadTo(System.Char)">
+            <summary>
+            Считывание вплоть до указанного символа
+            (включая его).
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadTo(System.String)">
+            <summary>
+            Считывание вплоть до указанного разделителя
+            (разделитель не помещается в возвращаемое значение,
+            однако, считывается).
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadTo(System.Char[])">
+            <summary>
+            Считывание вплоть до указанного символа
+            (включая один из них).
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadUntil(System.Char)">
+            <summary>
+            Считывание вплоть до указанного символа
+            (не включая его).
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadUntil(System.Char[])">
+            <summary>
+            Считывание вплоть до указанных символов
+            (не включая их).
+            </summary>
+            <remarks><c>null</c>, если достигнут конец текста.
+            </remarks>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadUntil(System.Char[],System.Char[],System.Char[])">
+            <summary>
+            Считывание вплоть до указанных символов
+            (не включая их).
+            </summary>
+            <remarks><c>null</c>, если достигнут конец текста.
+            </remarks>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadUntilWhiteSpace">
+            <summary>
+            Считывание строки, пока не будет
+            встречен пробельный символ или конец текста.
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadWhile(System.Char)">
+            <summary>
+            Считывание, пока встречается указанный символ.
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ReadWhile(System.Char[])">
+            <summary>
+            Считывание, пока встречается указанные символы.
+            </summary>
+            <returns><c>null</c>, если достигнут конец текста.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.RestorePosition(ManagedClient.TextPosition)">
+            <summary>
+            Restore previously saved position.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.SavePosition">
+            <summary>
+            Save current position.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.SkipChar(System.Char)">
+            <summary>
+            Пропускает один символ, если он совпадает с указанным.
+            </summary>
+            <returns><c>true</c>, если символ был съеден успешно
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.SkipChar(System.Char[])">
+            <summary>
+            Пропускает один символ, если он совпадает с любым
+            из указанных.
+            </summary>
+            <returns><c>true</c>, если символ был съеден успешно
+            </returns>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.SkipControl">
+            <summary>
+            Пропускаем управляющие символы.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.SkipPunctuation">
+            <summary>
+            Пропускаем пунктуацию.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.SkipRange(System.Char,System.Char)">
+            <summary>
+            Пропускаем произвольное количество символов
+            из указанного диапазона.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.SkipWhile(System.Char)">
+            <summary>
+            Пропустить указанный символ.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.SkipWhile(System.Char[])">
+            <summary>
+            Пропустить указанные символы.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.SkipWhitespace">
+            <summary>
+            Пропускаем пробельные символы.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.SkipWhitespaceAndPunctuation">
+            <summary>
+            Пропускаем пробельные символы и пунктуацию.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.Substring(System.Int32,System.Int32)">
+            <summary>
+            Get substring.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextNavigator.ToString">
+            <inheritdoc cref="M:System.Object.ToString" />
+        </member>
+        <member name="T:ManagedClient.TextPosition">
+            <summary>
+            Position in <see cref="T:ManagedClient.TextNavigator"/>.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.TextPosition.Column">
+            <summary>
+            Column number.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.TextPosition.Line">
+            <summary>
+            Line number.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.TextPosition.Position">
+            <summary>
+            Absolute position.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextPosition.#ctor(ManagedClient.TextNavigator)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.TextPosition.ToString">
+            <inheritdoc cref="M:System.Object.ToString" />
         </member>
         <member name="T:ManagedClient.TextWithEncoding">
             <summary>

@@ -80,6 +80,7 @@
     <Compile Include="ConfigDatabase.cs" />
     <Compile Include="Fields\ExemplarManager.cs" />
     <Compile Include="IHandmadeSerializable.cs" />
+    <Compile Include="IrbisEncoding.cs" />
     <Compile Include="Output\AbstractOutput.cs" />
     <Compile Include="AfterQueryEventArgs.cs" />
     <Compile Include="BatchRecordReader.cs" />
@@ -217,6 +218,8 @@
     <Compile Include="SubBasing\SelectionType.cs" />
     <Compile Include="SubBasing\SubBasingSettings.cs" />
     <Compile Include="SubFieldCollection.cs" />
+    <Compile Include="TextNavigator.cs" />
+    <Compile Include="TextPosition.cs" />
     <Compile Include="TextWithEncoding.cs" />
     <Compile Include="IrbisTree.cs" />
     <Compile Include="IrbisUserInfo.cs" />

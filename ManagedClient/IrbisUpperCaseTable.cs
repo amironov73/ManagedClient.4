@@ -78,7 +78,7 @@ namespace ManagedClient
         /// </summary>
         public IrbisUpperCaseTable()
         {
-            _encoding = Encoding.GetEncoding(1251);
+            _encoding = IrbisEncoding.Ansi;
             _table = new byte[]
             {
                 000, 001, 002, 003, 004, 005, 006, 007,
@@ -236,7 +236,7 @@ namespace ManagedClient
 
             IrbisUpperCaseTable result = ParseText
                 (
-                    Encoding.GetEncoding(1251),
+                    IrbisEncoding.Ansi,
                     text
                 );
 
@@ -256,14 +256,14 @@ namespace ManagedClient
                 = new StreamReader
                     (
                         File.OpenRead(fileName),
-                        Encoding.GetEncoding(1251)
+                        IrbisEncoding.Ansi
                     ))
             {
                 string text = reader.ReadToEnd();
 
                 return ParseText
                     (
-                        Encoding.GetEncoding(1251),
+                        IrbisEncoding.Ansi,
                         text
                     );
             }
@@ -393,7 +393,7 @@ namespace ManagedClient
             using (StreamWriter writer = new StreamWriter
                 (
                     File.Create(fileName),
-                    Encoding.GetEncoding(1251)
+                    IrbisEncoding.Ansi
                 ))
             {
                 WriteTable(writer);
