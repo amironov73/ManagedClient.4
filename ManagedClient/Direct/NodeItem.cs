@@ -9,6 +9,10 @@
 using System;
 using System.Diagnostics;
 
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient
@@ -19,7 +23,9 @@ namespace ManagedClient
     /// есть в записи, представлен в справочнике одним входом,
     /// формат которого описывает следующая структура
     /// </summary>
+    [PublicAPI]
     [Serializable]
+    [MoonSharpUserData]
     [DebuggerDisplay("Length={Length}, KeyOffset={KeyOffset}, Text={Text}")]
     public sealed class NodeItem
     {

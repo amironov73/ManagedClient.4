@@ -4875,6 +4875,83 @@
             <returns>A <see cref="T:System.String" /> 
             that represents this instance.</returns>
         </member>
+        <member name="T:ManagedClient.IrbisUpperCaseTable">
+            <summary>
+            Table for uppercase character conversion.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisUpperCaseTable.FileName">
+            <summary>
+            Имя файла таблицы по умолчанию.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisUpperCaseTable.Mapping">
+            <summary>
+            Собственно таблица.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUpperCaseTable.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUpperCaseTable.#ctor(System.Text.Encoding,System.Byte[])">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUpperCaseTable.GetInstance(ManagedClient.ManagedClient64)">
+            <summary>
+            Get global instance of the
+            <see cref="T:ManagedClient.IrbisUpperCaseTable"/>.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUpperCaseTable.FromServer(ManagedClient.ManagedClient64,System.String)">
+            <summary>
+            Load the table from specified server file.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUpperCaseTable.ParseLocalFile(System.String)">
+            <summary>
+            Парсим локальный файл.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUpperCaseTable.ParseText(System.Text.Encoding,System.String)">
+            <summary>
+            Parse text and build upper-case table.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUpperCaseTable.ResetInstance">
+            <summary>
+            Free global instance of
+            <see cref="T:ManagedClient.IrbisUpperCaseTable"/>.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUpperCaseTable.ToSourceCode(System.IO.TextWriter)">
+            <summary>
+            Формируем исходный код с определением таблицы.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUpperCaseTable.ToUpper(System.Char)">
+            <summary>
+            Converts specified character to uppercase.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUpperCaseTable.ToUpper(System.String)">
+            <summary>
+            Converts specified string to uppercase.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUpperCaseTable.WriteLocalFile(System.String)">
+            <summary>
+            Записываемся в файл.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisUpperCaseTable.WriteTable(System.IO.TextWriter)">
+            <summary>
+            Записываемся в поток.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Magazines.MagazineCumulation">
             <summary>
             Данные о кумуляции номеров. Поле 909.
@@ -5193,13 +5270,19 @@
         </member>
         <member name="M:ManagedClient.ParallelFormatter.#ctor(System.Int32,System.String,System.Int32[],System.String)">
             <summary>
-            Конструктор.
+            Constructor.
             </summary>
         </member>
         <member name="M:ManagedClient.ParallelFormatter.FormatAll">
             <summary>
             Форматирование всех записей.
             </summary>
+        </member>
+        <member name="M:ManagedClient.ParallelFormatter.GetEnumerator">
+            <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+        </member>
+        <member name="M:ManagedClient.ParallelFormatter.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
         </member>
         <member name="T:ManagedClient.ParallelRecordReader">
             <summary>
@@ -7954,6 +8037,41 @@
             MarcXml import/export
             </summary>
         </member>
+        <member name="M:ManagedClient.IrbisXml.ExportRecords(System.Collections.Generic.IEnumerable{ManagedClient.IrbisRecord})">
+            <summary>
+            Export records to XML.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisXml.ExportRecords(System.Xml.XmlWriter,System.Collections.Generic.IEnumerable{ManagedClient.IrbisRecord})">
+            <summary>
+            Export the records.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisXml.ExportRecord(System.Xml.XmlWriter,ManagedClient.IrbisRecord)">
+            <summary>
+            Export the record.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisXml.ExportMarker(System.Xml.XmlWriter,ManagedClient.IrbisRecord)">
+            <summary>
+            Export the record marker.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisXml.ExportField(System.Xml.XmlWriter,ManagedClient.RecordField)">
+            <summary>
+            Export the field.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisXml.ExportText(System.Xml.XmlWriter,ManagedClient.RecordField)">
+            <summary>
+            Export the field text.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisXml.ExportSubField(System.Xml.XmlWriter,ManagedClient.SubField)">
+            <summary>
+            Export the subfield.
+            </summary>
+        </member>
         <member name="T:ManagedClient.IrbisWorkSheets">
             <summary>
             Некоторые хорошо известные рабочие листы.
@@ -8524,6 +8642,32 @@
             <summary>
             Длина записи в текущей реализации.
             </summary>
+        </member>
+        <member name="P:ManagedClient.NodeRecord.IsLeaf">
+            <summary>
+            Is leaf record?
+            </summary>
+        </member>
+        <member name="P:ManagedClient.NodeRecord.Leader">
+            <summary>
+            Node leader.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.NodeRecord.Items">
+            <summary>
+            Node items.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.NodeRecord.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.NodeRecord.#ctor(System.Boolean)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="isLeaf"></param>
         </member>
         <member name="M:ManagedClient.NodeRecord.ToString">
             <inheritdoc cref="M:System.Object.ToString"/>

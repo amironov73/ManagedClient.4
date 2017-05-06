@@ -12,6 +12,8 @@ using System.IO;
 
 using JetBrains.Annotations;
 
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient
@@ -19,7 +21,9 @@ namespace ManagedClient
     /// <summary>
     /// Лидер записи в N01, L01
     /// </summary>
+    [PublicAPI]
     [Serializable]
+    [MoonSharpUserData]
     [DebuggerDisplay("Number={Number}, Previous={Previous}, Next={Next}, "
         + "TermCount={TermCount}, FreeOffset={FreeOffset}")]
     public sealed class NodeLeader

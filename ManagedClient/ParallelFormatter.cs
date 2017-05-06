@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 
 using JetBrains.Annotations;
 
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient
@@ -24,6 +26,7 @@ namespace ManagedClient
     /// Форматирование записей в несколько потоков.
     /// </summary>
     [PublicAPI]
+    [MoonSharpUserData]
     public class ParallelFormatter
         : IEnumerable<string>,
         IDisposable
@@ -55,14 +58,14 @@ namespace ManagedClient
         #region Construction
 
         /// <summary>
-        /// Конструктор.
+        /// Constructor.
         /// </summary>
         public ParallelFormatter
             (
                 int parallelism,
-                string connectionString,
-                int[] mfnList,
-                string format
+                [NotNull] string connectionString,
+                [NotNull] int[] mfnList,
+                [NotNull] string format
             )
         {
         }
@@ -72,8 +75,6 @@ namespace ManagedClient
         #region Private members
 
         private Task[] _tasks;
-
-        private int[] _mfnList;
 
         private ConcurrentQueue<string> _queue;
 
@@ -222,6 +223,7 @@ namespace ManagedClient
 
         #region IEnumerable<T> members
 
+        /// <inheritdoc cref="IEnumerable{T}.GetEnumerator"/>
         public IEnumerator<string> GetEnumerator()
         {
             while (true)
@@ -251,6 +253,7 @@ namespace ManagedClient
 
         #region IDisposable members
 
+        /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
             _event.Dispose();

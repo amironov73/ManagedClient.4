@@ -12,6 +12,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient
@@ -19,7 +23,9 @@ namespace ManagedClient
     /// <summary>
     /// Node record.
     /// </summary>
+    [PublicAPI]
     [Serializable]
+    [MoonSharpUserData]
     [DebuggerDisplay("Leader={Leader}")]
     public sealed class NodeRecord
     {
@@ -34,22 +40,38 @@ namespace ManagedClient
 
         #region Properties
 
+        /// <summary>
+        /// Is leaf record?
+        /// </summary>
         public bool IsLeaf { get; private set; }
 
+        /// <summary>
+        /// Node leader.
+        /// </summary>
         public NodeLeader Leader { get; set; }
 
+        /// <summary>
+        /// Node items.
+        /// </summary>
         public List<NodeItem> Items { get { return _items; } }
 
         #endregion
 
         #region Construction
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public NodeRecord()
         {
             Leader = new NodeLeader();
             _items = new List<NodeItem>();
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="isLeaf"></param>
         public NodeRecord(bool isLeaf)
             : this()
         {

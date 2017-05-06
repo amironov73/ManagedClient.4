@@ -9,9 +9,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Xml;
+
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
@@ -20,7 +22,9 @@ namespace ManagedClient
     /// <summary>
     /// MarcXml import/export
     /// </summary>
-    public sealed class IrbisXml
+    [PublicAPI]
+    [MoonSharpUserData]
+    public static class IrbisXml
     {
         #region Properties
 
@@ -36,9 +40,13 @@ namespace ManagedClient
 
         #region Public methods
 
-        public string ExportRecords
+        /// <summary>
+        /// Export records to XML.
+        /// </summary>
+        [NotNull]
+        public static string ExportRecords
             (
-                IEnumerable<IrbisRecord> records
+                [NotNull] IEnumerable<IrbisRecord> records
             )
         {
             StringWriter result = new StringWriter();
@@ -64,10 +72,13 @@ namespace ManagedClient
             return result.ToString();
         }
 
-        public void ExportRecords
+        /// <summary>
+        /// Export the records.
+        /// </summary>
+        public static void ExportRecords
             (
-                XmlWriter writer,
-                IEnumerable<IrbisRecord> records
+                [NotNull] XmlWriter writer,
+                [NotNull] IEnumerable<IrbisRecord> records
             )
         {
             foreach (IrbisRecord record in records)
@@ -80,10 +91,13 @@ namespace ManagedClient
             }
         }
 
-        public void ExportRecord
+        /// <summary>
+        /// Export the record.
+        /// </summary>
+        public static void ExportRecord
             (
-                XmlWriter writer, 
-                IrbisRecord record
+                [NotNull] XmlWriter writer, 
+                [NotNull] IrbisRecord record
             )
         {
             writer.WriteStartElement("record");
@@ -103,10 +117,13 @@ namespace ManagedClient
             writer.WriteEndElement();
         }
 
-        public void ExportMarker
+        /// <summary>
+        /// Export the record marker.
+        /// </summary>
+        public static void ExportMarker
             (
-                XmlWriter writer,
-                IrbisRecord record
+                [NotNull] XmlWriter writer,
+                [NotNull] IrbisRecord record
             )
         {
             writer.WriteRaw
@@ -129,10 +146,13 @@ namespace ManagedClient
                 );
         }
 
-        public void ExportField
+        /// <summary>
+        /// Export the field.
+        /// </summary>
+        public static void ExportField
             (
-                XmlWriter writer, 
-                RecordField field
+                [NotNull] XmlWriter writer, 
+                [NotNull] RecordField field
             )
         {
             string localName = "FIELD." + field.Tag.ToUpper();
@@ -149,10 +169,13 @@ namespace ManagedClient
             writer.WriteEndElement();
         }
 
-        public void ExportText
+        /// <summary>
+        /// Export the field text.
+        /// </summary>
+        public static void ExportText
             (
-                XmlWriter writer, 
-                RecordField field
+                [NotNull] XmlWriter writer, 
+                [NotNull] RecordField field
             )
         {
             if (!string.IsNullOrEmpty(field.Text))
@@ -161,7 +184,10 @@ namespace ManagedClient
             }
         }
 
-        public void ExportSubField
+        /// <summary>
+        /// Export the subfield.
+        /// </summary>
+        public static void ExportSubField
             (
                 XmlWriter writer, 
                 SubField subField
