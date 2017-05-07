@@ -1904,6 +1904,34 @@
             используется специальный блок ссылок.
             </summary>
         </member>
+        <member name="T:ManagedClient.Direct.IfpRecord.SpecialPostingBlockEntry">
+            <summary>
+            ibatrak структура с описанием спец блока
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.IfpRecord.SpecialPostingBlockEntry.Posting">
+            <summary>
+            1-я ссылка из записи обыкновенного формата
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.IfpRecord.SpecialPostingBlockEntry.Low">
+            <summary>
+            младшее слово смещения на следующую запись (если нет 0)
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.IfpRecord.SpecialPostingBlockEntry.High">
+            <summary>
+            старшее слово смещения на следующую запись (если нет 0)
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.IfpRecord.SpecialPostingBlockEntry.Offset">
+            <summary>
+            Offset.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IfpRecord.SpecialPostingBlockEntry.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
         <member name="P:ManagedClient.Direct.IfpRecord.LowOffset">
             <summary>
             Low part of the offset.
@@ -1912,6 +1940,11 @@
         <member name="P:ManagedClient.Direct.IfpRecord.HighOffset">
             <summary>
             High part of the offset.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.IfpRecord.FullOffset">
+            <summary>
+            ibatrak ссылка на следующую запись
             </summary>
         </member>
         <member name="P:ManagedClient.Direct.IfpRecord.TotalLinkCount">
@@ -1932,6 +1965,11 @@
         <member name="P:ManagedClient.Direct.IfpRecord.Links">
             <summary>
             Links.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.IfpRecord.ReadLeader(System.IO.Stream,System.Int64)">
+            <summary>
+            ibatrak чтение заголовка записи IFP (для подсчета количества ссылок)
             </summary>
         </member>
         <member name="M:ManagedClient.Direct.IfpRecord.Read(System.IO.Stream,System.Int64)">
