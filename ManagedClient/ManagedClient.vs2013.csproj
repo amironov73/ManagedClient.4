@@ -105,7 +105,6 @@
     <Compile Include="Gbl\GblCommand.cs" />
     <Compile Include="Gbl\GblBuilder.cs" />
     <Compile Include="Gbl\GblItem.cs" />
-    <Compile Include="Gbl\GblMaker.cs" />
     <Compile Include="Gbl\GblResult.cs" />
     <Compile Include="Gbl\GblEventArgs.cs" />
     <Compile Include="Gbl\GblFinal.cs" />

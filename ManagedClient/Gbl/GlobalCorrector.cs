@@ -10,6 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient.Gbl
@@ -18,6 +22,8 @@ namespace ManagedClient.Gbl
     /// Обёртка для облегчения выполнения глобальной корректировки
     /// порциями (например, по 100 записей за раз).
     /// </summary>
+    [PublicAPI]
+    [MoonSharpUserData]
     public sealed class GlobalCorrector
     {
         #region Events
@@ -27,13 +33,21 @@ namespace ManagedClient.Gbl
         /// и в конце общей обработки.
         /// </summary>
         public event EventHandler<GblEventArgs> PortionProcessed;
-		 
-	    #endregion
+
+        #endregion
 
         #region Properties
 
+        /// <summary>
+        /// Client connection.
+        /// </summary>
+        [CanBeNull]
         public ManagedClient64 Client { get; set; }
 
+        /// <summary>
+        /// Database name.
+        /// </summary>
+        [CanBeNull]
         public string Database { get; set; }
 
         /// <summary>
@@ -88,6 +102,9 @@ namespace ManagedClient.Gbl
 
         #region Construction
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public GlobalCorrector()
         {
             ChunkSize = DefaultChunkSize;
@@ -96,15 +113,21 @@ namespace ManagedClient.Gbl
             Flc = false;
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public GlobalCorrector
             (
-                ManagedClient64 client
+                [NotNull] ManagedClient64 client
             )
             : this ()
         {
             Client = client;
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public GlobalCorrector
             (
                 int chunkSize
@@ -114,19 +137,25 @@ namespace ManagedClient.Gbl
             ChunkSize = chunkSize;
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public GlobalCorrector
             (
-                string database
+                [NotNull] string database
             )
             : this ()
         {
             Database = database;
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public GlobalCorrector
             (
-                ManagedClient64 client, 
-                string database
+                [NotNull] ManagedClient64 client, 
+                [NotNull] string database
             )
             : this()
         {
@@ -154,6 +183,7 @@ namespace ManagedClient.Gbl
             }
         }
 
+        [NotNull]
         private GblFinal _CreateTotal()
         {
             GblFinal result = new GblFinal
@@ -167,12 +197,13 @@ namespace ManagedClient.Gbl
 
         private bool _Update
             (
-                GblFinal final,
-                IEnumerable<GblResult> results
+                [NotNull] GblFinal final,
+                [CanBeNull] IEnumerable<GblResult> results
             )
         {
             final.TimeElapsed = DateTime.Now - final.TimeStarted;
-            if (results != null)
+
+            if (!ReferenceEquals(results, null))
             {
                 foreach (GblResult result in results)
                 {
@@ -188,8 +219,9 @@ namespace ManagedClient.Gbl
                     final.Results.Add(result);
                 }
             }
+
             EventHandler<GblEventArgs> handler = PortionProcessed;
-            if (handler != null)
+            if (!ReferenceEquals(handler, null))
             {
                 GblEventArgs args = new GblEventArgs
                 {
@@ -203,6 +235,7 @@ namespace ManagedClient.Gbl
                 if (args.Cancel)
                 {
                     final.Canceled = true;
+
                     return true;
                 }
             }
@@ -217,15 +250,16 @@ namespace ManagedClient.Gbl
         /// <summary>
         /// Обработать базу данных в целом.
         /// </summary>
-        /// <param name="gbl"></param>
-        /// <returns></returns>
+        [NotNull]
         public GblFinal ProcessWholeDatabase
             (
-                GblItem[] gbl
+                [NotNull] GblItem[] gbl
             )
         {
             _VerifyPreconditions();
-            int maxMfn = Client.GetMaxMfn() - 1;
+            int maxMfn = Client.ThrowIfNull("Client")
+                .GetMaxMfn() - 1;
+
             return ProcessInterval
                 (
                     1,
@@ -237,14 +271,17 @@ namespace ManagedClient.Gbl
         /// <summary>
         /// Обработать результат поиска.
         /// </summary>
+        [NotNull]
         public GblFinal ProcessSearchResult
             (
-                string searchExpression,
-                GblItem[] gbl
+                [NotNull] string searchExpression,
+                [NotNull] GblItem[] gbl
             )
         {
             _VerifyPreconditions();
-            int[] mfns = Client.Search(searchExpression);
+            int[] mfns = Client.ThrowIfNull("Client")
+                .Search(searchExpression);
+
             return ProcessRecordset
                 (
                     mfns, 
@@ -255,22 +292,24 @@ namespace ManagedClient.Gbl
         /// <summary>
         /// Обработать интервал записей.
         /// </summary>
+        [NotNull]
         public GblFinal ProcessInterval
             (
                 int fromMfn,
                 int toMfn,
-                GblItem[] gbl
+                [NotNull] GblItem[] gbl
             )
         {
-            if ((fromMfn <= 0)
-                || (fromMfn > toMfn))
+            if (fromMfn <= 0
+                || fromMfn > toMfn)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             _VerifyPreconditions();
 
-            int maxMfn = Client.GetMaxMfn() - 1;
+            int maxMfn = Client.ThrowIfNull("Client")
+                .GetMaxMfn() - 1;
             toMfn = Math.Min(maxMfn, toMfn);
 
             GblFinal finalResult = _CreateTotal();
@@ -289,7 +328,9 @@ namespace ManagedClient.Gbl
 
                 try
                 {
-                    GblResult[] intermediateResult = Client.GlobalAdjustment
+                    GblResult[] intermediateResult = Client
+                        .ThrowIfNull("Client")
+                        .GlobalAdjustment
                         (
                             null,
                             0,
@@ -321,16 +362,18 @@ namespace ManagedClient.Gbl
             }
 
             _Update(finalResult, null);
+
             return finalResult;
         }
 
         /// <summary>
         /// Обработать явно (вручную) заданное множество записей.
         /// </summary>
+        [NotNull]
         public GblFinal ProcessRecordset
             (
-                IEnumerable<int> recordset,
-                GblItem[] gbl
+                [NotNull] IEnumerable<int> recordset,
+                [NotNull] GblItem[] gbl
             )
         {
             _VerifyPreconditions();
@@ -344,7 +387,9 @@ namespace ManagedClient.Gbl
                 list = list.Skip(ChunkSize).ToList();
                 try
                 {
-                    GblResult[] intermediateResult = Client.GlobalAdjustment
+                    GblResult[] intermediateResult = Client
+                        .ThrowIfNull("Client")
+                        .GlobalAdjustment
                         (
                             null,
                             0,
@@ -374,6 +419,7 @@ namespace ManagedClient.Gbl
             }
             
             _Update(finalResult, null);
+
             return finalResult;
         }
 

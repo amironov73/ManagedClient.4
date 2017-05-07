@@ -9,6 +9,10 @@
 using System;
 using System.Collections.Generic;
 
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient.Gbl
@@ -16,7 +20,9 @@ namespace ManagedClient.Gbl
     /// <summary>
     /// Результат выполнения GBL для одной записи.
     /// </summary>
+    [PublicAPI]
     [Serializable]
+    [MoonSharpUserData]
     public sealed class GblResult
     {
         #region Properties
@@ -41,8 +47,14 @@ namespace ManagedClient.Gbl
         /// </summary>
         public string Autoin { get; set; }
 
+        /// <summary>
+        /// Update result.
+        /// </summary>
         public string Update { get; set; }
 
+        /// <summary>
+        /// Status.
+        /// </summary>
         public string Status { get; set; }
 
         /// <summary>
@@ -50,6 +62,9 @@ namespace ManagedClient.Gbl
         /// </summary>
         public string Error { get; set; }
 
+        /// <summary>
+        /// Update flag.
+        /// </summary>
         public string UpdUf { get; set; }
 
         /// <summary>
@@ -71,9 +86,14 @@ namespace ManagedClient.Gbl
         // Типичная строка с отрицательным результатом
         // DBN=IBIS#MFN=4#GBL_ERROR=-605
 
+
+        /// <summary>
+        /// Parse text line for result.
+        /// </summary>
+        [CanBeNull]
         public static GblResult Parse
             (
-                string line
+                [CanBeNull] string line
             )
         {
             if (string.IsNullOrEmpty(line))
@@ -92,11 +112,7 @@ namespace ManagedClient.Gbl
                 string[] p = part.Split('=');
                 if (p.Length > 0)
                 {
-#if PocketPC
-                    string name = p[0].ToUpper();
-#else
                     string name = p[0].ToUpperInvariant();
-#endif
                     string value = string.Empty;
                     if (p.Length > 1)
                     {
@@ -107,21 +123,27 @@ namespace ManagedClient.Gbl
                         case "DBN":
                             result.Database = value;
                             break;
+
                         case "MFN":
                             result.Mfn = value.SafeParseInt32();
                             break;
+
                         case "AUTOIN":
                             result.Autoin = value;
                             break;
+
                         case "UPDATE":
                             result.Update = value;
                             break;
+
                         case "STATUS":
                             result.Status = value;
                             break;
+
                         case "UPDUF":
                             result.UpdUf = value;
                             break;
+
                         case "GBL_ERROR":
                             result.Error = value;
                             result.Success = false;
@@ -132,9 +154,13 @@ namespace ManagedClient.Gbl
             return result;
         }
 
+        /// <summary>
+        /// Parse the lines of text for result.
+        /// </summary>
+        [NotNull]
         public static GblResult[] Parse
             (
-                IEnumerable<string> lines
+                [NotNull] IEnumerable<string> lines
             )
         {
             List<GblResult> result = new List<GblResult>();
@@ -154,6 +180,7 @@ namespace ManagedClient.Gbl
 
         #region Object members
 
+        /// <inheritdoc cref="object.ToString"/>
         public override string ToString()
         {
             return Text;

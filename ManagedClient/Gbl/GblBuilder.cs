@@ -9,6 +9,10 @@
 using System;
 using System.Collections.Generic;
 
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient.Gbl
@@ -29,36 +33,55 @@ namespace ManagedClient.Gbl
     /// }
     /// </code>
     /// </summary>
+    [PublicAPI]
+    [MoonSharpUserData]
     public sealed class GblBuilder
     {
         #region Properties
 
+        /// <summary>
+        /// Client connection.
+        /// </summary>
+        [CanBeNull]
         public ManagedClient64 Client { get; set; }
 
+        /// <summary>
+        /// Database name.
+        /// </summary>
+        [CanBeNull]
         public string Database { get; set; }
 
         #endregion
 
         #region Construction
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public GblBuilder()
         {
             _commands = new List<GblItem>();
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public GblBuilder
             (
-                ManagedClient64 client
+                [NotNull] ManagedClient64 client
             )
             : this ()
         {
             Client = client;
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public GblBuilder
             (
-                ManagedClient64 client, 
-                string database
+                [NotNull] ManagedClient64 client, 
+                [NotNull] string database
             )
             : this ()
         {
@@ -79,9 +102,13 @@ namespace ManagedClient.Gbl
 
         #region Public methods
 
+        /// <summary>
+        /// Add arbitrary command.
+        /// </summary>
+        [NotNull]
         public GblBuilder AddCommand
             (
-                string command,
+                [NotNull] string command,
                 string parameter1,
                 string parameter2,
                 string format1,
@@ -97,24 +124,34 @@ namespace ManagedClient.Gbl
                 Format2 = format2
             };
             _commands.Add(item);
+
             return this;
         }
 
+        /// <summary>
+        /// Verify the command.
+        /// </summary>
+        [NotNull]
         public string VerifyCommand
             (
-                string command
+                [NotNull] string command
             )
         {
             if (string.IsNullOrEmpty(command))
             {
                 throw new ArgumentException();
             }
+
             return command;
         }
 
+        /// <summary>
+        /// Verify the field.
+        /// </summary>
+        [NotNull]
         public string VerifyField
             (
-                string field
+                [NotNull] string field
             )
         {
             if (string.IsNullOrEmpty(field))
@@ -131,17 +168,27 @@ namespace ManagedClient.Gbl
             return field;
         }
 
+        /// <summary>
+        /// Verify the repeat index.
+        /// </summary>
+        [CanBeNull]
         public string VerifyRepeat
             (
-                string repeat
+                [CanBeNull] string repeat
             )
         {
+            // TODO do something?
+
             return repeat;
         }
 
+        /// <summary>
+        /// Verify the value.
+        /// </summary>
+        [NotNull]
         public string VerifyValue
             (
-                string value
+                [NotNull] string value
             )
         {
             if (string.IsNullOrEmpty(value))
@@ -152,10 +199,14 @@ namespace ManagedClient.Gbl
             return value;
         }
 
+        /// <summary>
+        /// ADD command.
+        /// </summary>
+        [NotNull]
         public GblBuilder Add
             (
-                string field,
-                string value
+                [NotNull] string field,
+                [NotNull] string value
             )
         {
             return AddCommand
@@ -168,11 +219,15 @@ namespace ManagedClient.Gbl
                 );
         }
 
+        /// <summary>
+        /// ADD command.
+        /// </summary>
+        [NotNull]
         public GblBuilder Add
             (
-                string field,
-                string repeat,
-                string value
+                [NotNull] string field,
+                [NotNull] string repeat,
+                [NotNull] string value
             )
         {
             return AddCommand
@@ -185,11 +240,14 @@ namespace ManagedClient.Gbl
                 );
         }
 
+        /// <summary>
+        /// CHA command.
+        /// </summary>
         public GblBuilder Change
             (
-                string field,
-                string fromValue,
-                string toValue
+                [NotNull] string field,
+                [NotNull] string fromValue,
+                [NotNull] string toValue
             )
         {
             return AddCommand
@@ -202,12 +260,16 @@ namespace ManagedClient.Gbl
                 );
         }
 
+        /// <summary>
+        /// CHA command.
+        /// </summary>
+        [NotNull]
         public GblBuilder Change
             (
-                string field,
-                string repeat,
-                string fromValue,
-                string toValue
+                [NotNull] string field,
+                [NotNull] string repeat,
+                [NotNull] string fromValue,
+                [NotNull] string toValue
             )
         {
             return AddCommand
@@ -220,10 +282,13 @@ namespace ManagedClient.Gbl
                 );
         }
 
+        /// <summary>
+        /// DEL command.
+        /// </summary>
         public GblBuilder Delete
             (
-                string field,
-                string repeat
+                [NotNull] string field,
+                [NotNull] string repeat
             )
         {
             return AddCommand
@@ -236,9 +301,13 @@ namespace ManagedClient.Gbl
                 );
         }
 
+        /// <summary>
+        /// DEL command.
+        /// </summary>
+        [NotNull]
         public GblBuilder Delete
             (
-                string field
+                [NotNull] string field
             )
         {
             return AddCommand
@@ -251,6 +320,10 @@ namespace ManagedClient.Gbl
                 );
         }
 
+        /// <summary>
+        /// FI command.
+        /// </summary>
+        [NotNull]
         public GblBuilder Fi()
         {
             return AddCommand
@@ -263,9 +336,13 @@ namespace ManagedClient.Gbl
                 );
         }
 
+        /// <summary>
+        /// IF command.
+        /// </summary>
+        [NotNull]
         public GblBuilder If
             (
-                string condition
+                [NotNull] string condition
             )
         {
             return AddCommand
@@ -278,11 +355,15 @@ namespace ManagedClient.Gbl
                 );
         }
 
+        /// <summary>
+        /// REP command.
+        /// </summary>
+        [NotNull]
         public GblBuilder Replace
             (
-                string field,
-                string repeat,
-                string toValue
+                [NotNull] string field,
+                [NotNull] string repeat,
+                [NotNull] string toValue
             )
         {
             return AddCommand
@@ -295,10 +376,14 @@ namespace ManagedClient.Gbl
                 );
         }
 
+        /// <summary>
+        /// REP command.
+        /// </summary>
+        [NotNull]
         public GblBuilder Replace
             (
-                string field,
-                string toValue
+                [NotNull] string field,
+                [NotNull] string toValue
             )
         {
             return AddCommand
@@ -311,37 +396,58 @@ namespace ManagedClient.Gbl
                 );
         }
 
+        /// <summary>
+        /// Set client connection.
+        /// </summary>
+        [NotNull]
         public GblBuilder SetClient
             (
-                ManagedClient64 client
+                [NotNull] ManagedClient64 client
             )
         {
             if (ReferenceEquals(client,null))
             {
                 throw new ArgumentException();
             }
+
             Client = client;
+
             return this;
         }
 
+        /// <summary>
+        /// Set the database name.
+        /// </summary>
+        [NotNull]
         public GblBuilder SetDatabase
             (
-                string database
+                [NotNull] string database
             )
         {
             if (string.IsNullOrEmpty(database))
             {
                 throw new ArgumentException();
             }
+
             Database = database;
+
             return this;
         }
 
+        /// <summary>
+        /// Convert the <see cref="GblBuilder"/>
+        /// to the array of <see cref="GblItem"/>.
+        /// </summary>
+        [NotNull]
         public GblItem[] ToCommands()
         {
             return _commands.ToArray();
         }
 
+        /// <summary>
+        /// Execute the global correction on the entire database.
+        /// </summary>
+        [NotNull]
         public GblFinal Execute ()
         {
             return new GlobalCorrector
@@ -355,9 +461,13 @@ namespace ManagedClient.Gbl
                 );
         }
 
+        /// <summary>
+        /// Execute the global correction on the found records.
+        /// </summary>
+        [NotNull]
         public GblFinal Execute
             (
-                string searchExpression
+                [NotNull] string searchExpression
             )
         {
             return new GlobalCorrector
@@ -372,6 +482,11 @@ namespace ManagedClient.Gbl
                 );
         }
 
+        /// <summary>
+        /// Execute the global correction on the interval
+        /// of records.
+        /// </summary>
+        [NotNull]
         public GblFinal Execute
             (
                 int fromMfn,
@@ -391,9 +506,13 @@ namespace ManagedClient.Gbl
                 );
         }
 
+        /// <summary>
+        /// Execute the global correction on specified recordset.
+        /// </summary>
+        [NotNull]
         public GblFinal Execute
             (
-                IEnumerable<int> recordset
+                [NotNull] IEnumerable<int> recordset
             )
         {
             return new GlobalCorrector

@@ -2551,6 +2551,143 @@
             </code>
             </summary>
         </member>
+        <member name="P:ManagedClient.Gbl.GblBuilder.Client">
+            <summary>
+            Client connection.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Gbl.GblBuilder.Database">
+            <summary>
+            Database name.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.#ctor(ManagedClient.ManagedClient64)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.#ctor(ManagedClient.ManagedClient64,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.AddCommand(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Add arbitrary command.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.VerifyCommand(System.String)">
+            <summary>
+            Verify the command.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.VerifyField(System.String)">
+            <summary>
+            Verify the field.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.VerifyRepeat(System.String)">
+            <summary>
+            Verify the repeat index.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.VerifyValue(System.String)">
+            <summary>
+            Verify the value.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.Add(System.String,System.String)">
+            <summary>
+            ADD command.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.Add(System.String,System.String,System.String)">
+            <summary>
+            ADD command.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.Change(System.String,System.String,System.String)">
+            <summary>
+            CHA command.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.Change(System.String,System.String,System.String,System.String)">
+            <summary>
+            CHA command.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.Delete(System.String,System.String)">
+            <summary>
+            DEL command.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.Delete(System.String)">
+            <summary>
+            DEL command.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.Fi">
+            <summary>
+            FI command.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.If(System.String)">
+            <summary>
+            IF command.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.Replace(System.String,System.String,System.String)">
+            <summary>
+            REP command.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.Replace(System.String,System.String)">
+            <summary>
+            REP command.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.SetClient(ManagedClient.ManagedClient64)">
+            <summary>
+            Set client connection.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.SetDatabase(System.String)">
+            <summary>
+            Set the database name.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.ToCommands">
+            <summary>
+            Convert the <see cref="T:ManagedClient.Gbl.GblBuilder"/>
+            to the array of <see cref="T:ManagedClient.Gbl.GblItem"/>.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.Execute">
+            <summary>
+            Execute the global correction on the entire database.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.Execute(System.String)">
+            <summary>
+            Execute the global correction on the found records.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.Execute(System.Int32,System.Int32)">
+            <summary>
+            Execute the global correction on the interval
+            of records.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblBuilder.Execute(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            Execute the global correction on specified recordset.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Gbl.GblItem">
             <summary>
             Элемент глобальной корректировки.
@@ -2617,14 +2754,77 @@
             Результат Autoin.gbl
             </summary>
         </member>
+        <member name="P:ManagedClient.Gbl.GblResult.Update">
+            <summary>
+            Update result.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Gbl.GblResult.Status">
+            <summary>
+            Status.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Gbl.GblResult.Error">
             <summary>
             Код ошибки, если есть
             </summary>
         </member>
+        <member name="P:ManagedClient.Gbl.GblResult.UpdUf">
+            <summary>
+            Update flag.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Gbl.GblResult.Text">
             <summary>
             Исходный текст (до парсинга)
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblResult.Parse(System.String)">
+            <summary>
+            Parse text line for result.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblResult.Parse(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parse the lines of text for result.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GblResult.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
+        <member name="T:ManagedClient.Gbl.GblEventArgs">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Gbl.GblEventArgs.TimeStarted">
+            <summary>
+            When GBL started.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Gbl.GblEventArgs.TimeElapsed">
+            <summary>
+            Elapsed time.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Gbl.GblEventArgs.RecordsProcessed">
+            <summary>
+            Number of processed records.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Gbl.GblEventArgs.RecordsSucceeded">
+            <summary>
+            Number of succeeded records.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Gbl.GblEventArgs.RecordsFailed">
+            <summary>
+            Number of failed records.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Gbl.GblEventArgs.Cancel">
+            <summary>
+            Whether the GBL was failed?
             </summary>
         </member>
         <member name="T:ManagedClient.Gbl.GblFinal">
@@ -2695,6 +2895,16 @@
             и в конце общей обработки.
             </summary>
         </member>
+        <member name="P:ManagedClient.Gbl.GlobalCorrector.Client">
+            <summary>
+            Client connection.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Gbl.GlobalCorrector.Database">
+            <summary>
+            Database name.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Gbl.GlobalCorrector.ChunkSize">
             <summary>
             Размер порции. По умолчанию 100 шт.
@@ -2721,12 +2931,35 @@
             Выполнять ли формально-логический контроль.
             </summary>
         </member>
+        <member name="M:ManagedClient.Gbl.GlobalCorrector.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GlobalCorrector.#ctor(ManagedClient.ManagedClient64)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GlobalCorrector.#ctor(System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GlobalCorrector.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Gbl.GlobalCorrector.#ctor(ManagedClient.ManagedClient64,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Gbl.GlobalCorrector.ProcessWholeDatabase(ManagedClient.Gbl.GblItem[])">
             <summary>
             Обработать базу данных в целом.
             </summary>
-            <param name="gbl"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Gbl.GlobalCorrector.ProcessSearchResult(System.String,ManagedClient.Gbl.GblItem[])">
             <summary>
@@ -10364,43 +10597,27 @@
             <summary>
             Выборка элемента из массива.
             </summary>
-            <typeparam name="T"></typeparam>
-            <param name="array"></param>
-            <param name="occurrence"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.GetOccurrence``1(System.Collections.Generic.IList{``0},System.Int32)">
             <summary>
             Выборка элемента из списка.
             </summary>
-            <typeparam name="T"></typeparam>
-            <param name="list"></param>
-            <param name="occurrence"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.NonNullItems``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
             Отбирает из последовательности только
             ненулевые элементы.
             </summary>
-            <typeparam name="T"></typeparam>
-            <param name="sequence"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.NonEmptyLines(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             Отбирает из последовательности только непустые строки.
             </summary>
-            <param name="sequence"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.SplitFirst(System.String,System.Char)">
             <summary>
             Разбивает строку по указанному разделителю.
             </summary>
-            <param name="line"></param>
-            <param name="delimiter"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.SameString(System.String,System.String)">
             <summary>
@@ -10414,9 +10631,6 @@
             <summary>
             Сравнивает строки.
             </summary>
-            <param name="one"></param>
-            <param name="two"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.OneOf(System.String,System.Collections.Generic.IEnumerable{System.String})">
             <summary>
@@ -10466,19 +10680,12 @@
             <summary>
             Представляет ли строка положительное целое число.
             </summary>
-            <param name="text"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.SafeToInt32(System.String,System.Int32,System.Int32,System.Int32)">
             <summary>
             Безопасное преобразование строки
             в целое.
             </summary>
-            <param name="text"></param>
-            <param name="defaultValue"></param>
-            <param name="minValue"></param>
-            <param name="maxValue"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.SafeParseInt32(System.String,System.Int32)">
             <summary>
@@ -10486,54 +10693,41 @@
             </summary>
             <param name="text">Строка, подлежащая парсингу.</param>
             <param name="defaultValue">Значение по умолчанию.</param>
-            <returns>Разобранное целое число или значение по умолчанию.</returns>
+            <returns>Разобранное целое число или значение по умолчанию.
+            </returns>
         </member>
         <member name="M:ManagedClient.Utilities.SafeParseInt32(System.String)">
             <summary>
             Безопасный парсинг целого числа.
             </summary>
             <param name="text">Строка, подлежащая парсингу.</param>
-            <returns>Разобранное целое число или значение по умолчанию.</returns>
+            <returns>Разобранное целое число или значение по умолчанию.
+            </returns>
         </member>
         <member name="M:ManagedClient.Utilities.SafeCompare(System.String,System.String)">
             <summary>
             Сравнение строк.
             </summary>
-            <param name="s1"></param>
-            <param name="s2"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.SafeCompare(System.String,System.String[])">
             <summary>
             Сравнение строки с массивом.
             </summary>
-            <param name="value"></param>
-            <param name="list"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.SafeContains(System.String,System.String)">
             <summary>
             Поиск подстроки.
             </summary>
-            <param name="s1"></param>
-            <param name="s2"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.SafeContains(System.String,System.String[])">
             <summary>
             Поиск подстроки.
             </summary>
-            <param name="value"></param>
-            <param name="list"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.SafeStarts(System.String,System.String)">
             <summary>
             Поиск начала строки.
             </summary>
-            <param name="text"></param>
-            <param name="begin"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.ToInvariantString(System.Int32)">
             <summary>
@@ -10622,61 +10816,45 @@
             <summary>
             Добавление элемента к массиву.
             </summary>
-            <typeparam name="T"></typeparam>
-            <param name="sourceArray"></param>
-            <param name="item"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.AppendToArray``1(``0[],System.Collections.Generic.IEnumerable{``0})">
             <summary>
             Добавление элементов к массиву.
             </summary>
-            <typeparam name="T"></typeparam>
-            <param name="sourceArray"></param>
-            <param name="items"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.AppendToArray``1(``0[],``0[])">
             <summary>
             Добавление элементов к массиву.
             </summary>
-            <typeparam name="T"></typeparam>
-            <param name="sourceArray"></param>
-            <param name="items"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.FindSetting(System.String[])">
             <summary>
             Получаем сеттинг из возможных кандидатов.
             </summary>
-            <param name="candidates"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.ContainsAnySymbol(System.String,System.Char[])">
             <summary>
             Содержит ли строка любой из перечисленных символов.
             </summary>
-            <param name="text"></param>
-            <param name="symbols"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.ContainsWhitespace(System.String)">
             <summary>
             Строка содержит пробельные символы?
             </summary>
-            <param name="text"></param>
-            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Utilities.RemoveComments(System.String)">
+            <summary>
+            Remove comments from the format.
+            </summary>
         </member>
         <member name="M:ManagedClient.Utilities.PrepareFormat(System.String)">
             <summary>
-            Подготавливает строку запроса
+            Подготавливает строку запроса.
             </summary>
-            <param name="text"></param>
             <remarks>Строка формата не должна
             содержать комментариев и переводов
-            строки (настоящих и ирбисных)
+            строки (настоящих и ирбисных).
             </remarks>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Utilities.PrepareQuery(System.String)">
             <summary>
@@ -10710,6 +10888,57 @@
             <summary>
             Replace control characters in the text.
             </summary>
+        </member>
+        <member name="M:ManagedClient.Utilities.ThrowIfNull``1(``0)">
+            <summary>
+            Throw <see cref="T:System.ArgumentNullException"/>
+            if given value is <c>null</c>.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Utilities.ThrowIfNull``2(``0)">
+            <summary>
+            Throw <see cref="T:System.ArgumentNullException"/>
+            if given value is <c>null</c>.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Utilities.ThrowIfNull``1(``0,System.String)">
+            <summary>
+            Throw <see cref="T:System.ArgumentNullException"/>
+            if given value is <c>null</c>.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Utilities.ToVisibleString``1(``0)">
+            <summary>
+            Преобразование любого значения в строку.
+            </summary>
+            <returns>Для <c>null</c> возвращается "(null)".
+            </returns>
+        </member>
+        <member name="M:ManagedClient.Utilities.NotDefault``1(``0)">
+            <summary>
+            Determines whether given object
+            is default value.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Utilities.NotDefault``1(``0,``0)">
+            <summary>
+            Returns given value instead of
+            default(T) if happens.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Utilities.NullableToString``1(``0)">
+            <summary>
+            Преобразование любого значения в строку.
+            </summary>
+            <returns>Для <c>null</c> возвращается <c>null</c>.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.Utilities.NullableToVisibleString``1(``0)">
+            <summary>
+            Преобразование любого значения в строку.
+            </summary>
+            <returns>Для <c>null</c> возвращается "(null)".
+            </returns>
         </member>
     </members>
 </doc>
