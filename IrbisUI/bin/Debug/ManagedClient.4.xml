@@ -5643,6 +5643,165 @@
             Создание журнала в базе по описанию.
             </summary>
         </member>
+        <member name="T:ManagedClient.Morphology.IrbisMorphologyProvider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Morphology.IrbisMorphologyProvider.Client">
+            <summary>
+            Client connection.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Morphology.IrbisMorphologyProvider.Prefix">
+            <summary>
+            Search prefix.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Morphology.IrbisMorphologyProvider.Database">
+            <summary>
+            Database name.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.IrbisMorphologyProvider.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.IrbisMorphologyProvider.#ctor(ManagedClient.ManagedClient64)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.IrbisMorphologyProvider.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.IrbisMorphologyProvider.#ctor(System.String,System.String,ManagedClient.ManagedClient64)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.IrbisMorphologyProvider.FindWord(System.String)">
+            <inheritdoc cref="M:ManagedClient.Morphology.MorphologyProvider.FindWord(System.String)"/>
+        </member>
+        <member name="M:ManagedClient.Morphology.IrbisMorphologyProvider.RewriteQuery(System.String)">
+            <inheritdoc cref="M:ManagedClient.Morphology.MorphologyProvider.RewriteQuery(System.String)"/>
+        </member>
+        <member name="T:ManagedClient.Morphology.MorphologyEngine">
+            <summary>
+            Morphology engine.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Morphology.MorphologyEngine.Client">
+            <summary>
+            Client connection.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Morphology.MorphologyEngine.Provider">
+            <summary>
+            Morphology provider.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.MorphologyEngine.#ctor(ManagedClient.ManagedClient64)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.MorphologyEngine.#ctor(ManagedClient.ManagedClient64,ManagedClient.Morphology.MorphologyProvider)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.MorphologyEngine.#ctor(ManagedClient.ManagedClient64,System.String,System.String)">
+            <summary>
+            Contructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.MorphologyEngine.#ctor(ManagedClient.Morphology.MorphologyProvider)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.MorphologyEngine.RewriteQuery(System.String)">
+            <summary>
+            Rewrite the query.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.MorphologyEngine.Search(System.String,System.Object[])">
+            <summary>
+            Search with query rewritting.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.MorphologyEngine.SearchRead(System.String,System.Object[])">
+            <summary>
+            Search and read records with query rewritting.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.MorphologyEngine.SearchReadOneRecord(System.String,System.Object[])">
+            <summary>
+            Search and read first found record using query rewritting.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.MorphologyEngine.SearchFormat(System.String,System.String)">
+            <summary>
+            Search and format found records using query rewritting.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.Morphology.MorphologyEntry">
+            <summary>
+            Entry of the morphology database.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Morphology.MorphologyEntry.MainTerm">
+            <summary>
+            Main term. Field 10.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Morphology.MorphologyEntry.Dictionary">
+            <summary>
+            Dictionary term. Field 11.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Morphology.MorphologyEntry.Language">
+            <summary>
+            Language name. Field 12.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Morphology.MorphologyEntry.Forms">
+            <summary>
+            Forms of the word. Repeatable field 20.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.MorphologyEntry.Parse(ManagedClient.IrbisRecord)">
+            <summary>
+            Parse the record.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.MorphologyEntry.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
+        <member name="T:ManagedClient.Morphology.MorphologyProvider">
+            <summary>
+            Base morphology provider.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.MorphologyProvider.Flatten(System.String,ManagedClient.Morphology.MorphologyEntry[])">
+            <summary>
+            Flatten the query.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.MorphologyProvider.FindWord(System.String)">
+            <summary>
+            Find the word in the morphology database.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Morphology.MorphologyProvider.RewriteQuery(System.String)">
+            <summary>
+            Rewrite the query using morphology.
+            </summary>
+        </member>
         <member name="T:ManagedClient.ParallelFormatter">
             <summary>
             Форматирование записей в несколько потоков.

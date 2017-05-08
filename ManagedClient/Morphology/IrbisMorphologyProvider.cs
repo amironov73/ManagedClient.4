@@ -6,32 +6,50 @@
 
 #region Using directives
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using JetBrains.Annotations;
+
+using ManagedClient.Query;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
 namespace ManagedClient.Morphology
 {
-    using Query;
-
+    /// <summary>
+    /// 
+    /// </summary>
+    [PublicAPI]
+    [MoonSharpUserData]
     public sealed class IrbisMorphologyProvider
         : MorphologyProvider
     {
         #region Properties
 
-        public ManagedClient64 Client
-        {
-            get { return _client; }
-            set { _client = value; }
-        }
+        /// <summary>
+        /// Client connection.
+        /// </summary>
+        [CanBeNull]
+        public ManagedClient64 Client { get; set; }
 
+        /// <summary>
+        /// Search prefix.
+        /// </summary>
+        [CanBeNull]
         public string Prefix
         {
             get { return _prefix; }
             set { _prefix = value; }
         }
 
+        /// <summary>
+        /// Database name.
+        /// </summary>
+        [CanBeNull]
         public string Database
         {
             get { return _database; }
@@ -42,38 +60,77 @@ namespace ManagedClient.Morphology
 
         #region Construction
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public IrbisMorphologyProvider()
         {
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public IrbisMorphologyProvider
             (
-                ManagedClient64 client
+                [NotNull] ManagedClient64 client
             )
         {
-            _client = client;
+            if (ReferenceEquals(client, null))
+            {
+                throw new ArgumentNullException("client");
+            }
+
+            Client = client;
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public IrbisMorphologyProvider
             (
-                string prefix, 
-                string database
+                [NotNull] string prefix, 
+                [NotNull] string database
             )
         {
+            if (string.IsNullOrEmpty(prefix))
+            {
+                throw new ArgumentNullException("prefix");
+            }
+            if (string.IsNullOrEmpty(database))
+            {
+                throw new ArgumentNullException("database");
+            }
+
             _prefix = prefix;
             _database = database;
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public IrbisMorphologyProvider
             (
-                string prefix, 
-                string database, 
-                ManagedClient64 client
+                [NotNull] string prefix, 
+                [NotNull] string database, 
+                [NotNull] ManagedClient64 client
             )
         {
+            if (string.IsNullOrEmpty(prefix))
+            {
+                throw new ArgumentNullException("prefix");
+            }
+            if (string.IsNullOrEmpty(database))
+            {
+                throw new ArgumentNullException("database");
+            }
+            if (ReferenceEquals(client, null))
+            {
+                throw new ArgumentNullException("client");
+            }
+
             _prefix = prefix;
             _database = database;
-            _client = client;
+            Client = client;
         }
 
         #endregion
@@ -84,12 +141,10 @@ namespace ManagedClient.Morphology
 
         private string _database = "MORPH";
 
-        private ManagedClient64 _client;
-
         private QAst _MakeAst
             (
-                string[] array,
-                IEnumerable<string> tags
+                [NotNull] string[] array,
+                [NotNull] IEnumerable<string> tags
             )
         {
             if (array.Length == 1)
@@ -115,26 +170,29 @@ namespace ManagedClient.Morphology
             };
             result.Children.Add(result.LeftOperand);
             result.Children.Add(result.RightOperand);
+
             return result;
         }
 
         private bool _QueryWalker
             (
-                QAst ast
+                [NotNull] QAst ast
             )
         {
+            string prefix = Prefix.ThrowIfNull("Prefix");
+
             for (int i = 0; i < ast.Children.Count; i++)
             {
                 QAst child = ast.Children[i];
                 QAstEntry entry = child as QAstEntry;
                 if (entry != null)
                 {
-                    if (entry.Expression.StartsWith(Prefix)
+                    if (entry.Expression.StartsWith(prefix)
                         && entry.Ending == EndingKind.NoTrim)
                     {
-                        string word = string.IsNullOrEmpty(Prefix)
+                        string word = string.IsNullOrEmpty(prefix)
                             ? entry.Expression
-                            : entry.Expression.Substring(Prefix.Length);
+                            : entry.Expression.Substring(prefix.Length);
                         MorphologyEntry[] entries = FindWord(word);
                         string[] flatten = Flatten(word, entries);
                         if (flatten.Length > 1)
@@ -143,11 +201,13 @@ namespace ManagedClient.Morphology
                             QAst newAst = _MakeAst(flatten, entry.Tags);
                             paren.Children.Add(newAst);
                             ast.Children[i] = paren;
+
                             return false;
                         }
                     }
                 }
             }
+
             return true;
         }
 
@@ -155,15 +215,20 @@ namespace ManagedClient.Morphology
 
         #region MorphologyProvider members
 
+        /// <inheritdoc cref="MorphologyProvider.FindWord"/>
         public override MorphologyEntry[] FindWord
             (
                 string word
             )
         {
+            ManagedClient64 client = Client.ThrowIfNull("Client");
+            string database = Database.ThrowIfNull("Database");
+
+
+            client.PushDatabase(database);
             try
             {
-                _client.PushDatabase(Database);
-                IrbisRecord[] records = _client.SearchRead
+                IrbisRecord[] records = client.SearchRead
                     (
                         "\"K={0}\"",
                         word
@@ -171,14 +236,16 @@ namespace ManagedClient.Morphology
                 MorphologyEntry[] result = records
                     .Select(r => MorphologyEntry.Parse(r))
                     .ToArray();
+
                 return result;
             }
             finally
             {
-                _client.PopDatabase();
+                client.PopDatabase();
             }
         }
 
+        /// <inheritdoc cref="MorphologyProvider.RewriteQuery"/>
         public override string RewriteQuery
             (
                 string queryExpression
@@ -187,7 +254,9 @@ namespace ManagedClient.Morphology
             QueryManager manager = new QueryManager();
             QAst ast = manager.ParseQuery(queryExpression);
             ast.Walk(_QueryWalker);
+
             string result = manager.SerializeAst(ast);
+
             return result;
         }
 

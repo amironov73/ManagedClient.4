@@ -9,10 +9,17 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient.Morphology
 {
+    /// <summary>
+    /// Base morphology provider.
+    /// </summary>
     public class MorphologyProvider
     {
         #region Properties
@@ -29,10 +36,14 @@ namespace ManagedClient.Morphology
 
         #region Public methods
 
+        /// <summary>
+        /// Flatten the query.
+        /// </summary>
+        [NotNull]
         public string[] Flatten
             (
-                string word,
-                MorphologyEntry[] entries
+                [NotNull] string word,
+                [NotNull] MorphologyEntry[] entries
             )
         {
             List<string> result = new List<string>
@@ -51,17 +62,25 @@ namespace ManagedClient.Morphology
                 .ToArray();
         }
 
+        /// <summary>
+        /// Find the word in the morphology database.
+        /// </summary>
+        [NotNull]
         public virtual MorphologyEntry[] FindWord
             (
-                string word
+                [NotNull] string word
             )
         {
             return new MorphologyEntry[0];
         }
 
+        /// <summary>
+        /// Rewrite the query using morphology.
+        /// </summary>
+        [NotNull]
         public virtual string RewriteQuery
             (
-                string queryExpression
+                [NotNull] string queryExpression
             )
         {
             return queryExpression;

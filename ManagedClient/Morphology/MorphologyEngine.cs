@@ -6,21 +6,37 @@
 
 #region Using directives
 
-// No usings
+using System;
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
 namespace ManagedClient.Morphology
 {
+    /// <summary>
+    /// Morphology engine.
+    /// </summary>
+    [PublicAPI]
+    [MoonSharpUserData]
     public sealed class MorphologyEngine
     {
         #region Properties
 
+        /// <summary>
+        /// Client connection.
+        /// </summary>
+        [NotNull]
         public ManagedClient64 Client
         {
             get { return _client; }
         }
 
+        /// <summary>
+        /// Morphology provider.
+        /// </summary>
+        [NotNull]
         public MorphologyProvider Provider
         {
             get { return _provider; }
@@ -30,11 +46,19 @@ namespace ManagedClient.Morphology
 
         #region Construction
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MorphologyEngine
             (
-                ManagedClient64 client
+                [NotNull] ManagedClient64 client
             )
         {
+            if (ReferenceEquals(client, null))
+            {
+                throw new ArgumentNullException("client");
+            }
+
             _client = client;
             _provider = new IrbisMorphologyProvider
                 (
@@ -42,23 +66,51 @@ namespace ManagedClient.Morphology
                 );
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MorphologyEngine
             (
-                ManagedClient64 client,
-                MorphologyProvider provider
+                [NotNull] ManagedClient64 client,
+                [NotNull] MorphologyProvider provider
             )
         {
+            if (ReferenceEquals(client, null))
+            {
+                throw new ArgumentNullException("client");
+            }
+            if (ReferenceEquals(provider, null))
+            {
+                throw new ArgumentNullException("provider");
+            }
+
             _client = client;
             _provider = provider;
         }
 
+        /// <summary>
+        /// Contructor.
+        /// </summary>
         public MorphologyEngine
             (
-                ManagedClient64 client,
-                string prefix,
-                string database
+                [NotNull] ManagedClient64 client,
+                [NotNull] string prefix,
+                [NotNull] string database
             )
         {
+            if (ReferenceEquals(client, null))
+            {
+                throw new ArgumentNullException("client");
+            }
+            if (string.IsNullOrEmpty(prefix))
+            {
+                throw new ArgumentNullException("prefix");
+            }
+            if (string.IsNullOrEmpty(database))
+            {
+                throw new ArgumentNullException("database");
+            }
+
             _client = client;
             _provider = new IrbisMorphologyProvider
                 (
@@ -68,11 +120,19 @@ namespace ManagedClient.Morphology
                 );
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MorphologyEngine
             (
-                MorphologyProvider provider
+                [NotNull] MorphologyProvider provider
             )
         {
+            if (ReferenceEquals(provider, null))
+            {
+                throw new ArgumentNullException("provider");
+            }
+
             _provider = provider;
         }
 
@@ -88,55 +148,118 @@ namespace ManagedClient.Morphology
 
         #region Public methods
 
+        /// <summary>
+        /// Rewrite the query.
+        /// </summary>
+        [NotNull]
         public string RewriteQuery
             (
-                string queryText
+                [NotNull] string queryText
             )
         {
-            return Provider.RewriteQuery(queryText);
+            if (string.IsNullOrEmpty(queryText))
+            {
+                throw new ArgumentNullException("queryText");
+            }
+
+            MorphologyProvider provider = Provider.ThrowIfNull("Provider");
+
+            return provider.RewriteQuery(queryText);
         }
 
+        /// <summary>
+        /// Search with query rewritting.
+        /// </summary>
+        [NotNull]
         public int[] Search
             (
-                string format,
+                [NotNull] string format,
                 params object[] args
             )
         {
+            if (string.IsNullOrEmpty(format))
+            {
+                throw new ArgumentNullException("format");
+            }
+
             string original = string.Format(format, args);
             string rewritten = RewriteQuery(original);
-            return _client.Search(rewritten);
+
+            ManagedClient64 client = Client.ThrowIfNull("Client");
+
+            return client.Search(rewritten);
         }
 
+        /// <summary>
+        /// Search and read records with query rewritting.
+        /// </summary>
+        [NotNull]
         public IrbisRecord[] SearchRead
             (
-                string format,
+                [NotNull] string format,
                 params object[] args
             )
         {
+            if (string.IsNullOrEmpty(format))
+            {
+                throw new ArgumentNullException("format");
+            }
+
             string original = string.Format(format, args);
             string rewritten = RewriteQuery(original);
-            return _client.SearchRead(rewritten);
+
+            ManagedClient64 client = Client.ThrowIfNull("Client");
+
+            return client.SearchRead(rewritten);
         }
 
+        /// <summary>
+        /// Search and read first found record using query rewritting.
+        /// </summary>
+        [NotNull]
         public IrbisRecord SearchReadOneRecord
             (
-                string format,
+                [NotNull] string format,
                 params object[] args
             )
         {
+            if (string.IsNullOrEmpty(format))
+            {
+                throw new ArgumentNullException("format");
+            }
+
             string original = string.Format(format, args);
             string rewritten = RewriteQuery(original);
-            return _client.SearchReadOneRecord(rewritten);
+
+            ManagedClient64 client = Client.ThrowIfNull("Client");
+
+            return client.SearchReadOneRecord(rewritten);
         }
 
+        /// <summary>
+        /// Search and format found records using query rewritting.
+        /// </summary>
+        [NotNull]
         public string[] SearchFormat
             (
-                string expression,
-                string format
+                [NotNull] string expression,
+                [NotNull] string format
             )
         {
+            if (string.IsNullOrEmpty(expression))
+            {
+                throw new ArgumentNullException("expression");
+            }
+            if (string.IsNullOrEmpty(format))
+            {
+                throw new ArgumentNullException("format");
+            }
+
             string rewritten = RewriteQuery(expression);
-            return _client.SearchFormat(rewritten, format);
+
+            ManagedClient64 client = Client.ThrowIfNull("Client");
+
+            return client.SearchFormat(rewritten, format);
         }
 
         #endregion
