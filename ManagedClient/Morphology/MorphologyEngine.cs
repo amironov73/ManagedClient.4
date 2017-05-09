@@ -216,7 +216,7 @@ namespace ManagedClient.Morphology
         /// <summary>
         /// Search and read first found record using query rewritting.
         /// </summary>
-        [NotNull]
+        [CanBeNull]
         public IrbisRecord SearchReadOneRecord
             (
                 [NotNull] string format,

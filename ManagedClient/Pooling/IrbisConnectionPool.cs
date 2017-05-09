@@ -12,6 +12,8 @@ using System.Threading;
 
 using JetBrains.Annotations;
 
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient.Pooling
@@ -20,6 +22,7 @@ namespace ManagedClient.Pooling
     /// Пул соединений с сервером.
     /// </summary>
     [PublicAPI]
+    [MoonSharpUserData]
     public class IrbisConnectionPool
         : IDisposable
     {
@@ -151,8 +154,10 @@ namespace ManagedClient.Pooling
             {
                 return null;
             }
+
             ManagedClient64 result = _idleConnections[0];
             _idleConnections.RemoveAt(0);
+
             return result;
         }
 
@@ -165,6 +170,7 @@ namespace ManagedClient.Pooling
                 {
                     throw new ApplicationException("WaitOne failed");
                 }
+
                 lock (_syncRoot)
                 {
                     ManagedClient64 result = _GetIdleClient();
@@ -194,17 +200,18 @@ namespace ManagedClient.Pooling
             {
                 result = _GetIdleClient() ?? _GetNewClient();
             }
+
             if (ReferenceEquals(result, null))
             {
                 result = _WaitForClient();
             }
+
             return result;
         }
 
         /// <summary>
         /// Исполнение некоторых действий на подключении из пула.
         /// </summary>
-        /// <param name="action"></param>
         public void Execute
             (
                 [NotNull] Action<ManagedClient64> action
@@ -266,6 +273,7 @@ namespace ManagedClient.Pooling
                         guard,
                         userData
                     );
+
                 return result;
             }
         }
@@ -339,6 +347,7 @@ namespace ManagedClient.Pooling
 
         #region IDisposable members
 
+        /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
             lock (_syncRoot)

@@ -10,6 +10,8 @@ using System;
 
 using JetBrains.Annotations;
 
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient.Pooling
@@ -18,6 +20,7 @@ namespace ManagedClient.Pooling
     /// Следит за своевременным возвращением соединения в пул.
     /// </summary>
     [PublicAPI]
+    [MoonSharpUserData]
     public sealed class IrbisPoolGuard
         : IDisposable
     {
@@ -75,6 +78,7 @@ namespace ManagedClient.Pooling
 
         #region IDisposable members
 
+        /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
             Pool.ReleaseConnection(Connection);

@@ -9,6 +9,10 @@
 using System;
 using System.Collections.Generic;
 
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient
@@ -16,7 +20,9 @@ namespace ManagedClient
     /// <summary>
     /// Простой кэш для форматов, меню и т. д.
     /// </summary>
+    [PublicAPI]
     [Serializable]
+    [MoonSharpUserData]
     public sealed class IrbisCache
     {
         #region Events
@@ -25,20 +31,30 @@ namespace ManagedClient
 
         #region Properties
 
+        /// <summary>
+        /// Client connection.
+        /// </summary>
+        [CanBeNull]
         public ManagedClient64 Client { get; set; }
 
         #endregion
 
         #region Construction
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public IrbisCache()
         {
             _dictionary = new Dictionary<string, string>();
+            _lockRoot = new object();
         }
 
         #endregion
 
         #region Private members
+
+        private readonly object _lockRoot;
 
         private readonly Dictionary<string, string> _dictionary;
 
@@ -46,27 +62,52 @@ namespace ManagedClient
 
         #region Public methods
 
+        /// <summary>
+        /// Clear the cache.
+        /// </summary>
         public void Clear()
         {
-            _dictionary.Clear();
+            lock (_lockRoot)
+            {
+                _dictionary.Clear();
+            }
         }
 
+        /// <summary>
+        /// Delete specified item.
+        /// </summary>
         public void Delete
             (
-                string name
+                [NotNull] string name
             )
         {
-            _dictionary.Remove(name);
+            lock (_lockRoot)
+            {
+                _dictionary.Remove(name);
+            }
         }
 
+        /// <summary>
+        /// Whether the cache have specified item?
+        /// </summary>
         public bool Have
             (
-                string name
+                [NotNull] string name
             )
         {
-            return _dictionary.ContainsKey(name);
+            bool result;
+
+            lock (_lockRoot)
+            {
+                result = _dictionary.ContainsKey(name);
+            }
+
+            return result;
         }
 
+        /// <summary>
+        /// Get specified item (may use client connection).
+        /// </summary>
         public string Get
             (
                 string name
@@ -75,51 +116,65 @@ namespace ManagedClient
             return Get(name, Client);
         }
 
+        /// <summary>
+        /// Get specified item (may use client connection);
+        /// </summary>
+        [CanBeNull]
         public string Get
             (
-                string name,
-                ManagedClient64 client
+                [NotNull] string name,
+                [CanBeNull] ManagedClient64 client
             )
         {
             string result;
-            if (!_dictionary.TryGetValue(name, out result))
+
+            lock (_lockRoot)
             {
-                if (client != null)
+                if (!_dictionary.TryGetValue(name, out result))
                 {
-                    result = client.ReadTextFile(name);
+                    if (!ReferenceEquals(client, null))
+                    {
+                        result = client.ReadTextFile(name);
+                    }
                 }
-            }
 
-            if (string.IsNullOrEmpty(result))
-            {
-                result = null;
-            }
+                if (string.IsNullOrEmpty(result))
+                {
+                    result = null;
+                }
 
-            if (result == null)
-            {
-                _dictionary.Remove(name);
-            }
-            else
-            {
-                _dictionary[name] = result;
+                if (ReferenceEquals(result, null))
+                {
+                    _dictionary.Remove(name);
+                }
+                else
+                {
+                    _dictionary[name] = result;
+                }
             }
 
             return result;
         }
 
+        /// <summary>
+        /// Set specified item.
+        /// </summary>
         public void Set
             (
-                string name,
-                string value
+                [NotNull] string name,
+                [NotNull] string value
             )
         {
-            if (string.IsNullOrEmpty(value))
+            lock (_lockRoot)
             {
-                _dictionary.Remove(name);
-            }
-            else
-            {
-                _dictionary[name] = value;
+                if (string.IsNullOrEmpty(value))
+                {
+                    _dictionary.Remove(name);
+                }
+                else
+                {
+                    _dictionary[name] = value;
+                }
             }
         }
 

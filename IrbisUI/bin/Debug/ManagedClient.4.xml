@@ -4065,6 +4065,46 @@
             Простой кэш для форматов, меню и т. д.
             </summary>
         </member>
+        <member name="P:ManagedClient.IrbisCache.Client">
+            <summary>
+            Client connection.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisCache.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisCache.Clear">
+            <summary>
+            Clear the cache.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisCache.Delete(System.String)">
+            <summary>
+            Delete specified item.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisCache.Have(System.String)">
+            <summary>
+            Whether the cache have specified item?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisCache.Get(System.String)">
+            <summary>
+            Get specified item (may use client connection).
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisCache.Get(System.String,ManagedClient.ManagedClient64)">
+            <summary>
+            Get specified item (may use client connection);
+            </summary>
+        </member>
+        <member name="M:ManagedClient.IrbisCache.Set(System.String,System.String)">
+            <summary>
+            Set specified item.
+            </summary>
+        </member>
         <member name="T:ManagedClient.IrbisCatalogParameters">
             <summary>
             Wrapper for PAR file.
@@ -4217,25 +4257,115 @@
             
             </summary>
         </member>
+        <member name="F:ManagedClient.IrbisClientSettings.Main">
+            <summary>
+            Main section.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisClientSettings.Desktop">
+            <summary>
+            Desktop section.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisClientSettings.Context">
+            <summary>
+            Context section.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisClientSettings.Private">
+            <summary>
+            Private section.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisClientSettings.User">
+            <summary>
+            User name.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisClientSettings.ServerIP">
+            <summary>
+            Server IP address.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisClientSettings.ServerPort">
+            <summary>
+            Server IP port number.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisClientSettings.FontName">
+            <summary>
+            UI font name.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisClientSettings.FontCharSet">
+            <summary>
+            UI font charset.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisClientSettings.FontSize">
+            <summary>
+            UI font size.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisClientSettings.Scalable">
+            <summary>
+            Whether the UI is scalable?
+            </summary>
+        </member>
+        <member name="T:ManagedClient.IrbisCommadEventArgs">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisCommadEventArgs.Client">
+            <summary>
+            Client connection.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisCommadEventArgs.Exception">
+            <summary>
+            Exception (if any).
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisCommadEventArgs.QueryHeader">
+            <summary>
+            Client query header.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisCommadEventArgs.Response">
+            <summary>
+            Response header.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisCommadEventArgs.RetryCount">
+            <summary>
+            Retry count.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.IrbisCommadEventArgs.StopExecution">
+            <summary>
+            Stop flag.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.IrbisCommadEventArgs.EmptyArgs">
+            <summary>
+            Empty args.
+            </summary>
+        </member>
         <member name="M:ManagedClient.IrbisCommadEventArgs.#ctor">
             <summary>
-            Default constructor.
+            Constructor.
             </summary>
         </member>
         <member name="M:ManagedClient.IrbisCommadEventArgs.#ctor(ManagedClient.ManagedClient64)">
             <summary>
-            Initializes a new instance of the 
-            <see cref="T:ManagedClient.IrbisCommadEventArgs" /> class.
+            Constructor.
             </summary>
-            <param name="client">The client.</param>
         </member>
         <member name="M:ManagedClient.IrbisCommadEventArgs.#ctor(ManagedClient.ManagedClient64,ManagedClient.IrbisException)">
             <summary>
-            Initializes a new instance of the 
-            <see cref="T:ManagedClient.IrbisCommadEventArgs" /> class.
+            Constructor.
             </summary>
-            <param name="client">The client.</param>
-            <param name="exception">The exception.</param>
         </member>
         <member name="T:ManagedClient.IrbisContextSaver">
             <summary>
@@ -5956,7 +6086,6 @@
             <summary>
             Исполнение некоторых действий на подключении из пула.
             </summary>
-            <param name="action"></param>
         </member>
         <member name="M:ManagedClient.Pooling.IrbisConnectionPool.Execute``1(System.Action{ManagedClient.ManagedClient64,``0},``0)">
             <summary>
@@ -5983,6 +6112,9 @@
             Ожидание закрытия всех активных подключений.
             </summary>
         </member>
+        <member name="M:ManagedClient.Pooling.IrbisConnectionPool.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+        </member>
         <member name="T:ManagedClient.Pooling.IrbisPoolGuard">
             <summary>
             Следит за своевременным возвращением соединения в пул.
@@ -6008,6 +6140,9 @@
             Неявное преобразование.
             </summary>
         </member>
+        <member name="M:ManagedClient.Pooling.IrbisPoolGuard.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+        </member>
         <member name="T:ManagedClient.Pooling.PoolUtilities">
             <summary>
             Утилиты для работы пулом соединений.
@@ -6026,6 +6161,119 @@
         <member name="M:ManagedClient.Pooling.PoolUtilities.WriteRecord(ManagedClient.Pooling.IrbisConnectionPool,ManagedClient.IrbisRecord)">
             <summary>
             Сохранение записей с помощью пула.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.Processing.ProcessingContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Processing.ProcessingContext.Client">
+            <summary>
+            Client connection.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Processing.ProcessingContext.Record">
+            <summary>
+            Current processing record.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Processing.ProcessingContext.Accumulated">
+            <summary>
+            Accumulated text.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Processing.ProcessingContext.Protocol">
+            <summary>
+            Protocol.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Processing.ProcessingContext.UserData">
+            <summary>
+            Arbitrary user data.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Processing.ProcessingContext.#ctor(ManagedClient.ManagedClient64)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="client"></param>
+        </member>
+        <member name="T:ManagedClient.Processing.ProcessingResult">
+            <summary>
+            Result of record processing.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Processing.ProcessingResult.Cancel">
+            <summary>
+            Whether the processing is cancelled?
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Processing.ProcessingResult.Result">
+            <summary>
+            Accumulated text.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.Processing.RecordHandler">
+            <summary>
+            Record handler delegate.
+            </summary>
+            <param name="context">Processing context.</param>
+            <returns>Result of the record processing.</returns>
+        </member>
+        <member name="T:ManagedClient.Processing.RecordProcessor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="E:ManagedClient.Processing.RecordProcessor.ExceptionHandler">
+            <summary>
+            Raised on exception.
+            </summary>
+        </member>
+        <member name="E:ManagedClient.Processing.RecordProcessor.RecordHandler">
+            <summary>
+            Handles the records.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Processing.RecordProcessor.Context">
+            <summary>
+            Context.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Processing.RecordProcessor.#ctor(ManagedClient.ManagedClient64)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Processing.RecordProcessor.Clear">
+            <summary>
+            Clear accumulated text.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Processing.RecordProcessor.ProcessRecord(ManagedClient.IrbisRecord)">
+            <summary>
+            Process one record.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Processing.RecordProcessor.ProcessRecords(System.Collections.Generic.IEnumerable{ManagedClient.IrbisRecord})">
+            <summary>
+            Process the sequence of records.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Processing.RecordProcessor.ProcessRecords(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            Process the sequence of records.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Processing.RecordProcessor.ProcessRecords">
+            <summary>
+            Process all the records in the server database.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Processing.RecordProcessor.SetProtocol(System.IO.TextWriter)">
+            <summary>
+            Setup protocol stream.
             </summary>
         </member>
         <member name="T:ManagedClient.Quality.CheckBadCharacters">

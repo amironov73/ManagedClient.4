@@ -20,6 +20,8 @@ namespace ManagedClient.Morphology
     /// <summary>
     /// Base morphology provider.
     /// </summary>
+    [PublicAPI]
+    [MoonSharpUserData]
     public class MorphologyProvider
     {
         #region Properties

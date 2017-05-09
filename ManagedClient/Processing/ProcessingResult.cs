@@ -7,21 +7,33 @@
 #region Using directives
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
 namespace ManagedClient.Processing
 {
+    /// <summary>
+    /// Result of record processing.
+    /// </summary>
+    [PublicAPI]
     [Serializable]
+    [MoonSharpUserData]
     public sealed class ProcessingResult
     {
         #region Properties
 
+        /// <summary>
+        /// Whether the processing is cancelled?
+        /// </summary>
         public bool Cancel { get; set; }
 
+        /// <summary>
+        /// Accumulated text.
+        /// </summary>
         public string Result { get; set; }
 
         #endregion

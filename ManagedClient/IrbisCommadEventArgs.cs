@@ -8,29 +8,64 @@
 
 using System;
 
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    [PublicAPI]
     [Serializable]
+    [MoonSharpUserData]
     public sealed class IrbisCommadEventArgs
         : EventArgs
     {
         #region Properties
 
+        /// <summary>
+        /// Client connection.
+        /// </summary>
+        [CanBeNull]
         public ManagedClient64 Client { get; set; }
 
+        /// <summary>
+        /// Exception (if any).
+        /// </summary>
+        [CanBeNull]
         public IrbisException Exception { get; set; }
 
+        /// <summary>
+        /// Client query header.
+        /// </summary>
+        [CanBeNull]
         public QueryHeader QueryHeader { get; set; }
 
+        /// <summary>
+        /// Response header.
+        /// </summary>
+        [CanBeNull]
         public ResponseHeader Response { get; set; }
 
+        /// <summary>
+        /// Retry count.
+        /// </summary>
         public int RetryCount { get; set; }
 
+        /// <summary>
+        /// Stop flag.
+        /// </summary>
         public bool StopExecution { get; set; }
 
-        public static IrbisCommadEventArgs EmptyArgs 
+        /// <summary>
+        /// Empty args.
+        /// </summary>
+        [NotNull]
+        public static readonly IrbisCommadEventArgs EmptyArgs
             = new IrbisCommadEventArgs();
 
         #endregion
@@ -38,38 +73,47 @@ namespace ManagedClient
         #region Construction
 
         /// <summary>
-        /// Default constructor.
+        /// Constructor.
         /// </summary>
-        public IrbisCommadEventArgs ()
+        public IrbisCommadEventArgs()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the 
-        /// <see cref="IrbisCommadEventArgs" /> class.
+        /// Constructor.
         /// </summary>
-        /// <param name="client">The client.</param>
-        public IrbisCommadEventArgs 
-            ( 
-                ManagedClient64 client 
+        public IrbisCommadEventArgs
+            (
+                [NotNull] ManagedClient64 client
             )
         {
+            if (ReferenceEquals(client, null))
+            {
+                throw new ArgumentNullException("client");
+            }
+
             Client = client;
             RetryCount = client.RetryCount;
         }
 
         /// <summary>
-        /// Initializes a new instance of the 
-        /// <see cref="IrbisCommadEventArgs" /> class.
+        /// Constructor.
         /// </summary>
-        /// <param name="client">The client.</param>
-        /// <param name="exception">The exception.</param>
-        public IrbisCommadEventArgs 
-            ( 
-                ManagedClient64 client, 
-                IrbisException exception 
+        public IrbisCommadEventArgs
+            (
+                [NotNull] ManagedClient64 client,
+                [NotNull] IrbisException exception
             )
         {
+            if (ReferenceEquals(client, null))
+            {
+                throw new ArgumentNullException("client");
+            }
+            if (ReferenceEquals(exception, null))
+            {
+                throw new ArgumentNullException("exception");
+            }
+
             Client = client;
             RetryCount = client.RetryCount;
             Exception = exception;
