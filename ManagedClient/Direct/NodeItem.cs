@@ -15,7 +15,7 @@ using MoonSharp.Interpreter;
 
 #endregion
 
-namespace ManagedClient
+namespace ManagedClient.Direct
 {
     /// <summary>
     /// Справочник в N01/L01 является таблицей, определяющей

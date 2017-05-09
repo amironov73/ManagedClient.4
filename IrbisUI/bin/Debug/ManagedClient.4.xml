@@ -1485,12 +1485,12 @@
             Read the leaf node.
             </summary>
         </member>
-        <member name="M:ManagedClient.Direct.InvertedFile32.ReadNext(ManagedClient.NodeRecord)">
+        <member name="M:ManagedClient.Direct.InvertedFile32.ReadNext(ManagedClient.Direct.NodeRecord)">
             <summary>
             Read next node.
             </summary>
         </member>
-        <member name="M:ManagedClient.Direct.InvertedFile32.ReadPrevious(ManagedClient.NodeRecord)">
+        <member name="M:ManagedClient.Direct.InvertedFile32.ReadPrevious(ManagedClient.Direct.NodeRecord)">
             <summary>
             Read previous node.
             </summary>
@@ -2025,12 +2025,12 @@
             Read the leaf node.
             </summary>
         </member>
-        <member name="M:ManagedClient.Direct.InvertedFile64.ReadNext(ManagedClient.NodeRecord)">
+        <member name="M:ManagedClient.Direct.InvertedFile64.ReadNext(ManagedClient.Direct.NodeRecord)">
             <summary>
             Read next node.
             </summary>
         </member>
-        <member name="M:ManagedClient.Direct.InvertedFile64.ReadPrevious(ManagedClient.NodeRecord)">
+        <member name="M:ManagedClient.Direct.InvertedFile64.ReadPrevious(ManagedClient.Direct.NodeRecord)">
             <summary>
             Read previous node.
             </summary>
@@ -2346,6 +2346,131 @@
             </summary>
         </member>
         <member name="M:ManagedClient.Direct.MstRecordLeader64.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
+        <member name="T:ManagedClient.Direct.NodeItem">
+            <summary>
+            Справочник в N01/L01 является таблицей, определяющей
+            поисковый термин. Каждый ключ переменной длины, который
+            есть в записи, представлен в справочнике одним входом,
+            формат которого описывает следующая структура
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeItem.Length">
+            <summary>
+            Длина ключа
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeItem.KeyOffset">
+            <summary>
+            Смещение ключа от начала записи
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeItem.LowOffset">
+            <summary>
+            Младшее слово смещения
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeItem.HighOffset">
+            <summary>
+            Старшее слово смещения
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeItem.FullOffset">
+            <summary>
+            Full offset.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeItem.RefersToLeaf">
+            <summary>
+            Refers to leaf node?
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeItem.Text">
+            <summary>
+            Текстовое значение ключа
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.NodeItem.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
+        <member name="T:ManagedClient.Direct.NodeLeader">
+            <summary>
+            Лидер записи в N01, L01
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeLeader.Number">
+            <summary>
+            Номер записи (начиная с 1; в N01 номер первой записи
+            равен номеру корневой записи дерева
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeLeader.Previous">
+            <summary>
+            Номер предыдущей записи (-1, если нет)
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeLeader.Next">
+            <summary>
+            Номер следующей записи (-1, если нет)
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeLeader.TermCount">
+            <summary>
+            Число ключей в записи
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeLeader.FreeOffset">
+            <summary>
+            Смещение на свободную позицию в записи
+            (от начала записи)
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.NodeLeader.Read(System.IO.Stream)">
+            <summary>
+            Read the node from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.NodeLeader.ToString">
+            <inheritdoc cref="M:System.Object.ToString"/>
+        </member>
+        <member name="T:ManagedClient.Direct.NodeRecord">
+            <summary>
+            Node record.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.Direct.NodeRecord.RecordSize">
+            <summary>
+            Длина записи в текущей реализации.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeRecord.IsLeaf">
+            <summary>
+            Is leaf record?
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeRecord.Leader">
+            <summary>
+            Node leader.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Direct.NodeRecord.Items">
+            <summary>
+            Node items.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.NodeRecord.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Direct.NodeRecord.#ctor(System.Boolean)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="isLeaf"></param>
+        </member>
+        <member name="M:ManagedClient.Direct.NodeRecord.ToString">
             <inheritdoc cref="M:System.Object.ToString"/>
         </member>
         <member name="T:ManagedClient.Direct.XrfFile64">
@@ -9758,131 +9883,6 @@
             <summary>
             Добавлять, только если нет такого поля.
             </summary>
-        </member>
-        <member name="T:ManagedClient.NodeItem">
-            <summary>
-            Справочник в N01/L01 является таблицей, определяющей
-            поисковый термин. Каждый ключ переменной длины, который
-            есть в записи, представлен в справочнике одним входом,
-            формат которого описывает следующая структура
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeItem.Length">
-            <summary>
-            Длина ключа
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeItem.KeyOffset">
-            <summary>
-            Смещение ключа от начала записи
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeItem.LowOffset">
-            <summary>
-            Младшее слово смещения
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeItem.HighOffset">
-            <summary>
-            Старшее слово смещения
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeItem.FullOffset">
-            <summary>
-            Full offset.
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeItem.RefersToLeaf">
-            <summary>
-            Refers to leaf node?
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeItem.Text">
-            <summary>
-            Текстовое значение ключа
-            </summary>
-        </member>
-        <member name="M:ManagedClient.NodeItem.ToString">
-            <inheritdoc cref="M:System.Object.ToString"/>
-        </member>
-        <member name="T:ManagedClient.NodeLeader">
-            <summary>
-            Лидер записи в N01, L01
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeLeader.Number">
-            <summary>
-            Номер записи (начиная с 1; в N01 номер первой записи
-            равен номеру корневой записи дерева
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeLeader.Previous">
-            <summary>
-            Номер предыдущей записи (-1, если нет)
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeLeader.Next">
-            <summary>
-            Номер следующей записи (-1, если нет)
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeLeader.TermCount">
-            <summary>
-            Число ключей в записи
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeLeader.FreeOffset">
-            <summary>
-            Смещение на свободную позицию в записи
-            (от начала записи)
-            </summary>
-        </member>
-        <member name="M:ManagedClient.NodeLeader.Read(System.IO.Stream)">
-            <summary>
-            Read the node from the stream.
-            </summary>
-        </member>
-        <member name="M:ManagedClient.NodeLeader.ToString">
-            <inheritdoc cref="M:System.Object.ToString"/>
-        </member>
-        <member name="T:ManagedClient.NodeRecord">
-            <summary>
-            Node record.
-            </summary>
-        </member>
-        <member name="F:ManagedClient.NodeRecord.RecordSize">
-            <summary>
-            Длина записи в текущей реализации.
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeRecord.IsLeaf">
-            <summary>
-            Is leaf record?
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeRecord.Leader">
-            <summary>
-            Node leader.
-            </summary>
-        </member>
-        <member name="P:ManagedClient.NodeRecord.Items">
-            <summary>
-            Node items.
-            </summary>
-        </member>
-        <member name="M:ManagedClient.NodeRecord.#ctor">
-            <summary>
-            Constructor.
-            </summary>
-        </member>
-        <member name="M:ManagedClient.NodeRecord.#ctor(System.Boolean)">
-            <summary>
-            Constructor.
-            </summary>
-            <param name="isLeaf"></param>
-        </member>
-        <member name="M:ManagedClient.NodeRecord.ToString">
-            <inheritdoc cref="M:System.Object.ToString"/>
         </member>
         <member name="T:ManagedClient.OrganizationInfo">
             <summary>

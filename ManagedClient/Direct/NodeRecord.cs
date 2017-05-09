@@ -18,7 +18,7 @@ using MoonSharp.Interpreter;
 
 #endregion
 
-namespace ManagedClient
+namespace ManagedClient.Direct
 {
     //
     // Extract from official documentation:

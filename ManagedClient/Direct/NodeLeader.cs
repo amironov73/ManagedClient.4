@@ -16,7 +16,7 @@ using MoonSharp.Interpreter;
 
 #endregion
 
-namespace ManagedClient
+namespace ManagedClient.Direct
 {
     /// <summary>
     /// Лидер записи в N01, L01
