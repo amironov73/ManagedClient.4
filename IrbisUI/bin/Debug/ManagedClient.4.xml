@@ -6406,6 +6406,12 @@
             Проверка на плохие символы.
             </summary>
         </member>
+        <member name="P:ManagedClient.Quality.CheckBadCharacters.FieldSpec">
+            <inheritdoc cref="P:ManagedClient.Quality.IrbisRule.FieldSpec"/>
+        </member>
+        <member name="M:ManagedClient.Quality.CheckBadCharacters.CheckRecord(ManagedClient.Quality.RuleContext)">
+            <inheritdoc cref="M:ManagedClient.Quality.IrbisRule.CheckRecord(ManagedClient.Quality.RuleContext)"/>
+        </member>
         <member name="T:ManagedClient.Quality.Rules.CheckMixedCharacters">
             <summary>
             Проверка на смешение символов.
@@ -6526,7 +6532,7 @@
         </member>
         <member name="P:ManagedClient.Quality.IrbisRule.Client">
             <summary>
-            Клиент.
+            Client connection.
             </summary>
         </member>
         <member name="P:ManagedClient.Quality.IrbisRule.Context">
@@ -6559,12 +6565,152 @@
             Report.
             </summary>
         </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.AddDefect(System.String,System.Int32,System.String,System.Object[])">
+            <summary>
+            Add the detected defect.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.AddDefect(ManagedClient.RecordField,System.Int32,System.String,System.Object[])">
+            <summary>
+            Add the detected defect.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.AddDefect(ManagedClient.RecordField,ManagedClient.SubField,System.Int32,System.String,System.Object[])">
+            <summary>
+            Add the detected defect.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.BeginCheck(ManagedClient.Quality.RuleContext)">
+            <summary>
+            Begin the record checking.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.CacheMenu(System.String,ManagedClient.IrbisMenu)">
+            <summary>
+            Cache the menu for later using.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.CheckForMenu(ManagedClient.IrbisMenu,System.String)">
+            <summary>
+            Check the value against the menu.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.GetTextAtPosition(System.String,System.Int32)">
+            <summary>
+            Get text from specified position of the string.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.ShowDoubleWhiteSpace(System.String)">
+            <summary>
+            Show double whitespace in the text.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.CheckWhitespace(ManagedClient.RecordField,ManagedClient.SubField)">
+            <summary>
+            Check whether the subfield is whitespace.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.CheckWhitespace(ManagedClient.RecordField)">
+            <summary>
+            Check whether the field is whitespace.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.EndCheck">
+            <summary>
+            End the record checking.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.IsAsp">
+            <summary>
+            Whether the working list is ASP?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.IsBook">
+            <summary>
+            Whether the working list means book?
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.IsPazk">
+            <summary>
+            Whether the working list is PAZK?
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.IsSpec">
+            <summary>
+            Whether the working list is SPEC.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.GetFields">
+            <summary>
+            Get fields from the record by the specification.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.MustNotContainSubfields(ManagedClient.RecordField)">
+            <summary>
+            Asserts that the field must not contains subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.MustNotContainText(ManagedClient.RecordField)">
+            <summary>
+            Asserts that the field must not contains text.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.MustNotRepeatSubfields(ManagedClient.RecordField)">
+            <summary>
+            Asserts that the field must not contain repeatable subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.MustBeUniqueField(ManagedClient.RecordField[])">
+            <summary>
+            Asserts that the specified fields must have unique values.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.MustBeNonEmptySubfield(ManagedClient.RecordField,System.Char)">
+            <summary>
+            Subfield of the field mus be non-empty.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.MustBeUniqueSubfield(ManagedClient.RecordField[],System.Char)">
+            <summary>
+            Subfields of the fields must be unique.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.MustBeUniqueSubfield(ManagedClient.RecordField[],System.Char[])">
+            <summary>
+            Subfields of the field must be unique.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.MustNotContainWhitespace(ManagedClient.RecordField)">
+            <summary>
+            The field must not contain whitespace.
+            </summary>
+            <param name="field"></param>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.MustNotContainWhitespace(ManagedClient.RecordField,ManagedClient.SubField)">
+            <summary>
+            The subfield must not contain whitespace.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.MustNotContainWhitespace(ManagedClient.RecordField,System.Char[])">
+            <summary>
+            Subfields of the field must not contain bad characters.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.MustNotContainBadCharacters(ManagedClient.RecordField)">
+            <summary>
+            The field must not contain bad characters.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.IrbisRule.MustNotContainBadCharacters(ManagedClient.RecordField,ManagedClient.SubField)">
+            <summary>
+            The subfield must not contain bad characters.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Quality.IrbisRule.CheckRecord(ManagedClient.Quality.RuleContext)">
             <summary>
             Проверка записи.
             </summary>
-            <param name="context"></param>
-            <returns></returns>
         </member>
         <member name="T:ManagedClient.Quality.RecordReport">
             <summary>
@@ -6601,9 +6747,14 @@
             Конструктор по умолчанию.
             </summary>
         </member>
+        <member name="T:ManagedClient.Quality.RuleContext">
+            <summary>
+            Context for the <see cref="T:ManagedClient.Quality.IrbisRule"/>.
+            </summary>
+        </member>
         <member name="P:ManagedClient.Quality.RuleContext.Client">
             <summary>
-            Клиент.
+            Client connection.
             </summary>
         </member>
         <member name="P:ManagedClient.Quality.RuleContext.Record">
@@ -6656,43 +6807,45 @@
             Правила, входящие в набор.
             </summary>
         </member>
+        <member name="M:ManagedClient.Quality.RuleSet.MergeReport(ManagedClient.Quality.RecordReport,ManagedClient.Quality.RecordReport)">
+            <summary>
+            Merge two reports into the new one.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Quality.RuleSet.CheckRecord(ManagedClient.Quality.RuleContext)">
             <summary>
             Проверка одной записи
             </summary>
-            <param name="context"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Quality.RuleSet.GetRule(System.String)">
             <summary>
             Получаем правило по его имени.
             </summary>
-            <param name="name"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Quality.RuleSet.LoadJson(System.String)">
             <summary>
-            
+            Load set of rules from the specified file.
             </summary>
-            <param name="fileName"></param>
-            <returns></returns>
         </member>
         <member name="M:ManagedClient.Quality.RuleSet.RegisterAssembly(System.Reflection.Assembly)">
             <summary>
             Регистрируем все правила из указанной сборки.
             </summary>
-            <param name="assembly"></param>
         </member>
         <member name="M:ManagedClient.Quality.RuleSet.RegisterBuiltinRules">
             <summary>
             Регистрация встроенных правил.
             </summary>
         </member>
+        <member name="M:ManagedClient.Quality.RuleSet.RegisterRule(System.Type)">
+            <summary>
+            Register the rule type.
+            </summary>
+        </member>
         <member name="M:ManagedClient.Quality.RuleSet.UnregisterRule(System.String)">
             <summary>
             Отменяем регистрацию правила с указанным именем.
             </summary>
-            <param name="name"></param>
         </member>
         <member name="T:ManagedClient.Quality.RuleUtility">
             <summary>
@@ -6704,6 +6857,12 @@
             Плохие символы, которые не должны встречаться в записях.
             </summary>
         </member>
+        <member name="M:ManagedClient.Quality.RuleUtility.GetFieldBySpec(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String)">
+            <summary>
+            Get fields from the sequence by the specification.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ManagedClient.Quality.RuleUtility.IsBadCharacter(System.Char)">
             <summary>
             Плохой символ?
@@ -6712,6 +6871,16 @@
         <member name="M:ManagedClient.Quality.RuleUtility.BadCharacterPosition(System.String)">
             <summary>
             Индекс первого найденного плохого символа в строке
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.RuleUtility.RenumberFields(ManagedClient.IrbisRecord)">
+            <summary>
+            Renumber fields in the record.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.Quality.RuleUtility.RenumberFields(ManagedClient.IrbisRecord,System.Collections.Generic.IEnumerable{ManagedClient.RecordField})">
+            <summary>
+            Renumber the fields in the record.
             </summary>
         </member>
         <member name="T:ManagedClient.Query.QueryManager">

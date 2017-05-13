@@ -13,6 +13,10 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Serialization;
 
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -23,8 +27,10 @@ namespace ManagedClient.Quality
     /// <summary>
     /// Набор правил.
     /// </summary>
+    [PublicAPI]
     [Serializable]
     [XmlRoot("ruleset")]
+    [MoonSharpUserData]
     public sealed class RuleSet
     {
         #region Properties
@@ -46,10 +52,14 @@ namespace ManagedClient.Quality
 
         #region Public methods
 
+        /// <summary>
+        /// Merge two reports into the new one.
+        /// </summary>
+        [NotNull]
         public static RecordReport MergeReport
             (
-                RecordReport first,
-                RecordReport second
+                [NotNull] RecordReport first,
+                [NotNull] RecordReport second
             )
         {
             RecordReport result = new RecordReport
@@ -69,11 +79,10 @@ namespace ManagedClient.Quality
         /// <summary>
         /// Проверка одной записи
         /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
+        [NotNull]
         public RecordReport CheckRecord
             (
-                RuleContext context
+                [NotNull] RuleContext context
             )
         {
             RecordReport result = new RecordReport
@@ -86,6 +95,7 @@ namespace ManagedClient.Quality
                 Index = context.Record.FM("903"),
                 Mfn = context.Record.Mfn
             };
+
             RuleUtility.RenumberFields
                 (
                     context.Record
@@ -113,11 +123,10 @@ namespace ManagedClient.Quality
         /// <summary>
         /// Получаем правило по его имени.
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        [CanBeNull]
         public static IrbisRule GetRule
             (
-                string name
+                [NotNull] string name
             )
         {
             Type ruleType;
@@ -129,21 +138,22 @@ namespace ManagedClient.Quality
             {
                 return null;
             }
+
             IrbisRule result = (IrbisRule)Activator.CreateInstance
                 (
                     ruleType
                 );
+
             return result;
         }
 
         /// <summary>
-        /// 
+        /// Load set of rules from the specified file.
         /// </summary>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
+        [NotNull]
         public static RuleSet LoadJson
             (
-                string fileName
+                [NotNull] string fileName
             )
         {
             string text = File.ReadAllText(fileName);
@@ -170,10 +180,9 @@ namespace ManagedClient.Quality
         /// <summary>
         /// Регистрируем все правила из указанной сборки.
         /// </summary>
-        /// <param name="assembly"></param>
         public static void RegisterAssembly
             (
-                Assembly assembly
+                [NotNull] Assembly assembly
             )
         {
             Type[] types = assembly
@@ -182,6 +191,7 @@ namespace ManagedClient.Quality
                 .Where(t => !t.IsAbstract)
                 .Where(t => t.IsSubclassOf(typeof(IrbisRule)))
                 .ToArray();
+
             foreach (Type ruleType in types)
             {
                 RegisterRule(ruleType);
@@ -196,9 +206,12 @@ namespace ManagedClient.Quality
             RegisterAssembly(Assembly.GetExecutingAssembly());
         }
 
+        /// <summary>
+        /// Register the rule type.
+        /// </summary>
         public static void RegisterRule
             (
-                Type ruleType
+                [NotNull] Type ruleType
             )
         {
             string ruleName = ruleType.Name;
@@ -213,10 +226,9 @@ namespace ManagedClient.Quality
         /// <summary>
         /// Отменяем регистрацию правила с указанным именем.
         /// </summary>
-        /// <param name="name"></param>
         public static void UnregisterRule
             (
-                string name
+                [NotNull] string name
             )
         {
             if (_registeredRules.ContainsKey(name))

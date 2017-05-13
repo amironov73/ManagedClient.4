@@ -10,6 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient.Quality
@@ -17,6 +21,8 @@ namespace ManagedClient.Quality
     /// <summary>
     /// Утилиты для правил.
     /// </summary>
+    [PublicAPI]
+    [MoonSharpUserData]
     public static class RuleUtility
     {
         #region Public fields
@@ -124,6 +130,7 @@ namespace ManagedClient.Quality
             {
                 oneSpec = oneSpec.Replace("X", "[0-9]");
             }
+
             return oneSpec.Contains('[')
                 ? fields.GetFieldRegex(oneSpec)
                 : fields.GetField(oneSpec);
@@ -154,10 +161,14 @@ namespace ManagedClient.Quality
 
         #region Public methods
 
+        /// <summary>
+        /// Get fields from the sequence by the specification.
+        /// </summary>
+        /// <returns></returns>
         public static RecordField[] GetFieldBySpec
             (
-                this IEnumerable<RecordField> fields,
-                string allSpec
+                [NotNull] this IEnumerable<RecordField> fields,
+                [CanBeNull] string allSpec
             )
         {
             if (string.IsNullOrEmpty(allSpec))
@@ -222,7 +233,7 @@ namespace ManagedClient.Quality
         /// </summary>
         public static int BadCharacterPosition
             (
-                string text
+                [NotNull] string text
             )
         {
             for (int i = 0; i < text.Length; i++)
@@ -233,12 +244,17 @@ namespace ManagedClient.Quality
                     return i;
                 }
             }
+
             return -1;
         }
 
+        /// <summary>
+        /// Renumber fields in the record.
+        /// </summary>
+        [NotNull]
         public static IrbisRecord RenumberFields
             (
-                IrbisRecord record
+                [NotNull] IrbisRecord record
             )
         {
             RenumberFields
@@ -246,13 +262,17 @@ namespace ManagedClient.Quality
                     record,
                     record.Fields
                 );
+
             return record;
         }
 
+        /// <summary>
+        /// Renumber the fields in the record.
+        /// </summary>
         public static void RenumberFields
             (
-                IrbisRecord record,
-                IEnumerable<RecordField> fields
+                [NotNull] IrbisRecord record,
+                [NotNull] IEnumerable<RecordField> fields
             )
         {
             List<string> seen = new List<string>();
@@ -275,7 +295,6 @@ namespace ManagedClient.Quality
                     subField.Field = field;
                 }
             }
-
         }
 
         #endregion

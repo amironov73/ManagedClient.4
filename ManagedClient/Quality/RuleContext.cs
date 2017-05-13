@@ -7,21 +7,27 @@
 #region Using directives
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
 namespace ManagedClient.Quality
 {
+    /// <summary>
+    /// Context for the <see cref="IrbisRule"/>.
+    /// </summary>
+    [PublicAPI]
     [Serializable]
+    [MoonSharpUserData]
     public sealed class RuleContext
     {
         #region Properties
 
         /// <summary>
-        /// Клиент.
+        /// Client connection.
         /// </summary>
         public ManagedClient64 Client { get; set; }
 

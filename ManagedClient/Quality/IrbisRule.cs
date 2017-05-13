@@ -7,9 +7,11 @@
 #region Using directives
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
@@ -18,6 +20,8 @@ namespace ManagedClient.Quality
     /// <summary>
     /// Абстрактный базовый класс для правил.
     /// </summary>
+    [PublicAPI]
+    [MoonSharpUserData]
     public abstract class IrbisRule
     {
         #region Properties
@@ -30,31 +34,37 @@ namespace ManagedClient.Quality
         /// <summary>
         /// Затрагиваемые поля.
         /// </summary>
+        [CanBeNull]
         public abstract string FieldSpec { get; }
 
         /// <summary>
-        /// Клиент.
+        /// Client connection.
         /// </summary>
+        [NotNull]
         public ManagedClient64 Client { get { return _context.Client; } }
 
         /// <summary>
         /// Текущий контекст.
         /// </summary>
+        [NotNull]
         public RuleContext Context { get { return _context; } }
 
         /// <summary>
         /// Текущая проверяемая запись.
         /// </summary>
+        [NotNull]
         public IrbisRecord Record { get { return _context.Record; } }
 
         /// <summary>
         /// Накопленный отчёт.
         /// </summary>
+        [NotNull]
         public RuleReport Report { get { return _report; } }
 
         /// <summary>
         /// Рабочий лист.
         /// </summary>
+        [CanBeNull]
         public string Worksheet
         {
             get { return Record.FM("920"); }
@@ -80,11 +90,14 @@ namespace ManagedClient.Quality
         protected RuleReport _report;
         // ReSharper restore InconsistentNaming
 
+        /// <summary>
+        /// Add the detected defect.
+        /// </summary>
         protected void AddDefect
             (
-                string tag,
+                [NotNull] string tag,
                 int damage,
-                string format,
+                [NotNull] string format,
                 params object[] args
             )
         {
@@ -97,11 +110,14 @@ namespace ManagedClient.Quality
             Report.Defects.Add(defect);
         }
 
+        /// <summary>
+        /// Add the detected defect.
+        /// </summary>
         protected void AddDefect
             (
-                RecordField field,
+                [NotNull] RecordField field,
                 int damage,
-                string format,
+                [NotNull] string format,
                 params object[] args
             )
         {
@@ -116,12 +132,15 @@ namespace ManagedClient.Quality
             Report.Defects.Add(defect);
         }
 
+        /// <summary>
+        /// Add the detected defect.
+        /// </summary>
         protected void AddDefect
             (
-                RecordField field,
-                SubField subfield,
+                [NotNull] RecordField field,
+                [NotNull] SubField subfield,
                 int damage,
-                string format,
+                [NotNull] string format,
                 params object[] args
             )
         {
@@ -137,32 +156,43 @@ namespace ManagedClient.Quality
             Report.Defects.Add(defect);
         }
 
+        /// <summary>
+        /// Begin the record checking.
+        /// </summary>
         protected void BeginCheck
             (
-                RuleContext context
+                [NotNull] RuleContext context
             )
         {
             _context = context;
             _report = new RuleReport();
         }
 
+        /// <summary>
+        /// Cache the menu for later using.
+        /// </summary>
+        [NotNull]
         protected IrbisMenu CacheMenu
             (
-                string name,
-                IrbisMenu menu
+                [NotNull] string name,
+                [CanBeNull] IrbisMenu menu
             )
         {
             menu = menu ?? IrbisMenu.Read(Client, name);
+
             return menu;
         }
 
+        /// <summary>
+        /// Check the value against the menu.
+        /// </summary>
         protected bool CheckForMenu
             (
-                IrbisMenu menu,
-                string value
+                [CanBeNull] IrbisMenu menu,
+                [CanBeNull] string value
             )
         {
-            if (menu == null)
+            if (ReferenceEquals(menu, null))
             {
                 return true;
             }
@@ -170,50 +200,67 @@ namespace ManagedClient.Quality
             {
                 return true;
             }
+
             IrbisMenu.Entry entry = menu.GetEntrySensitive(value);
-            return (entry != null);
+
+            return entry != null;
         }
 
+        /// <summary>
+        /// Get text from specified position of the string.
+        /// </summary>
+        [NotNull]
         protected static string GetTextAtPosition
             (
-                string text,
+                [NotNull] string text,
                 int position
             )
         {
             int length = text.Length;
             int start = Math.Max(0, position - 1);
             int stop = Math.Min(length - 1, position + 2);
-            while ((start >= 0) && (text[start] == ' '))
+            while (start >= 0 && text[start] == ' ')
             {
                 start--;
             }
-            while ((start >= 0) && (text[start] != ' '))
+            while (start >= 0 && text[start] != ' ')
             {
                 start--;
             }
             start = Math.Max(0, start);
-            while ((stop < length) && (text[stop] == ' '))
+            while (stop < length && text[stop] == ' ')
             {
                 stop++;
             }
-            while ((stop < length) && (text[stop] != ' '))
+            while (stop < length && text[stop] != ' ')
             {
                 stop++;
             }
             stop = Math.Min(length - 1, stop);
+
             return text.Substring
             (
                 start,
                 stop - start + 1
-            ).Trim();
+            )
+            .Trim();
         }
 
+        /// <summary>
+        /// Show double whitespace in the text.
+        /// </summary>
+        [NotNull]
         protected static string ShowDoubleWhiteSpace
             (
-                string text
+                [NotNull] string text
             )
         {
-            int position = text.IndexOf("  ");
+            int position = text.IndexOf
+                (
+                    "  ",
+                    StringComparison.Ordinal
+                );
+
             return GetTextAtPosition
                 (
                     text,
@@ -221,14 +268,17 @@ namespace ManagedClient.Quality
                 );
         }
 
+        /// <summary>
+        /// Check whether the subfield is whitespace.
+        /// </summary>
         protected void CheckWhitespace
             (
-                RecordField field,
-                SubField subfield
+                [NotNull] RecordField field,
+                [NotNull] SubField subfield
             )
         {
             string text = subfield.Text;
-            
+
             if (string.IsNullOrEmpty(text))
             {
                 AddDefect
@@ -240,6 +290,7 @@ namespace ManagedClient.Quality
                         field.Tag,
                         subfield.Code
                     );
+
                 return;
             }
 
@@ -284,9 +335,12 @@ namespace ManagedClient.Quality
             }
         }
 
+        /// <summary>
+        /// Check whether the field is whitespace.
+        /// </summary>
         protected void CheckWhitespace
             (
-                RecordField field
+                [NotNull] RecordField field
             )
         {
             string text = field.Text;
@@ -335,45 +389,68 @@ namespace ManagedClient.Quality
             }
         }
 
+        /// <summary>
+        /// End the record checking.
+        /// </summary>
         protected RuleReport EndCheck()
         {
             Report.Damage = Report.Defects
                 .Sum(defect => defect.Damage);
+
             return Report;
         }
 
+        /// <summary>
+        /// Whether the working list is ASP?
+        /// </summary>
         protected bool IsAsp()
         {
             return Worksheet.SameString("ASP");
         }
 
+        /// <summary>
+        /// Whether the working list means book?
+        /// </summary>
+        /// <returns></returns>
         protected bool IsBook()
         {
             string worksheet = Worksheet;
-            return (worksheet.SameString("PAZK")
-                    || worksheet.SameString("SPEC")
-                    || worksheet.SameString("PVK"));
+            return worksheet.SameString("PAZK")
+                   || worksheet.SameString("SPEC")
+                   || worksheet.SameString("PVK");
         }
 
+        /// <summary>
+        /// Whether the working list is PAZK?
+        /// </summary>
         protected bool IsPazk()
         {
             return Worksheet.SameString("PAZK");
         }
 
+        /// <summary>
+        /// Whether the working list is SPEC.
+        /// </summary>
         protected bool IsSpec()
         {
             return Worksheet.SameString("SPEC");
         }
 
+        /// <summary>
+        /// Get fields from the record by the specification.
+        /// </summary>
         protected RecordField[] GetFields()
         {
             return Record.Fields
                 .GetFieldBySpec(FieldSpec);
         }
 
+        /// <summary>
+        /// Asserts that the field must not contains subfields.
+        /// </summary>
         protected void MustNotContainSubfields
             (
-                RecordField field
+                [NotNull] RecordField field
             )
         {
             if (field.SubFields.Count != 0)
@@ -388,9 +465,12 @@ namespace ManagedClient.Quality
             }
         }
 
+        /// <summary>
+        /// Asserts that the field must not contains text.
+        /// </summary>
         protected void MustNotContainText
             (
-                RecordField field
+                [NotNull] RecordField field
             )
         {
             if (!string.IsNullOrEmpty(field.Text))
@@ -405,9 +485,12 @@ namespace ManagedClient.Quality
             }
         }
 
+        /// <summary>
+        /// Asserts that the field must not contain repeatable subfields.
+        /// </summary>
         protected void MustNotRepeatSubfields
             (
-                RecordField field
+                [NotNull] RecordField field
             )
         {
             var grouped = field.SubFields
@@ -428,13 +511,20 @@ namespace ManagedClient.Quality
             }
         }
 
+        /// <summary>
+        /// Asserts that the specified fields must have unique values.
+        /// </summary>
         protected void MustBeUniqueField
             (
-                RecordField[] fields
+                [NotNull] RecordField[] fields
             )
         {
-            var grouped = fields
-                .GroupBy(f => f.Text.ToLowerInvariant());
+            var grouped = fields.GroupBy
+                (
+                    f => f.Text
+                        .ThrowIfNull("field.Text")
+                        .ToLowerInvariant()
+                );
             foreach (var grp in grouped)
             {
                 if (grp.Count() != 1)
@@ -451,14 +541,17 @@ namespace ManagedClient.Quality
             }
         }
 
+        /// <summary>
+        /// Subfield of the field mus be non-empty.
+        /// </summary>
         protected void MustBeNonEmptySubfield
             (
-                RecordField field,
+                [NotNull] RecordField field,
                 char code
             )
         {
             var selected = field.SubFields
-                .GetSubField(new[] {code})
+                .GetSubField(new[] { code })
                 .Where(sf => string.IsNullOrEmpty(sf.Text));
             foreach (SubField subField in selected)
             {
@@ -474,15 +567,18 @@ namespace ManagedClient.Quality
             }
         }
 
+        /// <summary>
+        /// Subfields of the fields must be unique.
+        /// </summary>
         protected void MustBeUniqueSubfield
             (
-                RecordField[] fields,
+                [NotNull] RecordField[] fields,
                 char code
             )
         {
             var grouped = fields
                 .SelectMany(f => f.SubFields)
-                .GetSubField(new[] {code})
+                .GetSubField(new[] { code })
                 .GroupBy(sf => sf.Text.ToLowerInvariant());
             foreach (var grp in grouped)
             {
@@ -493,7 +589,8 @@ namespace ManagedClient.Quality
                             fields[0],
                             grp.First(),
                             5,
-                            "Подполе {0}^{1} содержит неуникальное значение {2}",
+                            "Подполе {0}^{1} содержит"
+                            + " неуникальное значение {2}",
                             fields[0].Tag,
                             grp.First().Code,
                             grp.Key
@@ -502,9 +599,12 @@ namespace ManagedClient.Quality
             }
         }
 
+        /// <summary>
+        /// Subfields of the field must be unique.
+        /// </summary>
         protected void MustBeUniqueSubfield
             (
-                RecordField[] fields,
+                [NotNull] RecordField[] fields,
                 params char[] codes
             )
         {
@@ -518,9 +618,13 @@ namespace ManagedClient.Quality
             }
         }
 
+        /// <summary>
+        /// The field must not contain whitespace.
+        /// </summary>
+        /// <param name="field"></param>
         protected void MustNotContainWhitespace
             (
-                RecordField field
+                [NotNull] RecordField field
             )
         {
             string text = field.Text;
@@ -537,10 +641,13 @@ namespace ManagedClient.Quality
             }
         }
 
+        /// <summary>
+        /// The subfield must not contain whitespace.
+        /// </summary>
         protected void MustNotContainWhitespace
             (
-                RecordField field,
-                SubField subField
+                [NotNull] RecordField field,
+                [NotNull] SubField subField
             )
         {
             string text = subField.Text;
@@ -559,9 +666,12 @@ namespace ManagedClient.Quality
             }
         }
 
+        /// <summary>
+        /// Subfields of the field must not contain bad characters.
+        /// </summary>
         protected void MustNotContainWhitespace
             (
-                RecordField field,
+                [NotNull] RecordField field,
                 params char[] codes
             )
         {
@@ -579,9 +689,12 @@ namespace ManagedClient.Quality
             }
         }
 
+        /// <summary>
+        /// The field must not contain bad characters.
+        /// </summary>
         protected void MustNotContainBadCharacters
             (
-                RecordField field
+                [NotNull] RecordField field
             )
         {
             string text = field.Text;
@@ -601,10 +714,13 @@ namespace ManagedClient.Quality
             }
         }
 
+        /// <summary>
+        /// The subfield must not contain bad characters.
+        /// </summary>
         protected void MustNotContainBadCharacters
             (
-                RecordField field,
-                SubField subField
+                [NotNull] RecordField field,
+                [NotNull] SubField subField
             )
         {
             string text = subField.Text;
@@ -618,7 +734,8 @@ namespace ManagedClient.Quality
                             field,
                             subField,
                             3,
-                            "Подполе {0}^{1} содержит запрещённые символы: {2}",
+                            "Подполе {0}^{1} содержит"
+                            + "запрещённые символы: {2}",
                             field.Tag,
                             subField.Code,
                             GetTextAtPosition(text, position)
@@ -634,11 +751,10 @@ namespace ManagedClient.Quality
         /// <summary>
         /// Проверка записи.
         /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
+        [NotNull]
         public abstract RuleReport CheckRecord
             (
-                RuleContext context
+                [NotNull] RuleContext context
             );
 
         #endregion
