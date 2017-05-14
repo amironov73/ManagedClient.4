@@ -6,10 +6,9 @@
 
 #region Using directives
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
@@ -18,6 +17,8 @@ namespace ManagedClient.Quality.Rules
     /// <summary>
     /// Язык основного текста.
     /// </summary>
+    [PublicAPI]
+    [MoonSharpUserData]
     public sealed class Require101
         : IrbisRule
     {
@@ -27,7 +28,7 @@ namespace ManagedClient.Quality.Rules
 
         private void CheckField
             (
-                RecordField field
+                [NotNull] RecordField field
             )
         {
             MustNotContainSubfields
@@ -49,17 +50,10 @@ namespace ManagedClient.Quality.Rules
 
         #region IrbisRule members
 
-        /// <summary>
-        /// Затрагиваемые поля.
-        /// </summary>
-        /// <value>The field spec.</value>
+        /// <inheritdoc cref="IrbisRule.FieldSpec"/>
         public override string FieldSpec { get { return "101"; } }
 
-        /// <summary>
-        /// Проверка записи.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <returns>RuleReport.</returns>
+        /// <inheritdoc cref="IrbisRule.CheckRecord"/>
         public override RuleReport CheckRecord
             (
                 RuleContext context

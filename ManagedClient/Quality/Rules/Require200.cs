@@ -6,15 +6,19 @@
 
 #region Using directives
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
 namespace ManagedClient.Quality.Rules
 {
+    /// <summary>
+    /// Область заглавия.
+    /// </summary>
+    [PublicAPI]
+    [MoonSharpUserData]
     public sealed class Require200
         : IrbisRule
     {
@@ -24,11 +28,13 @@ namespace ManagedClient.Quality.Rules
 
         #region IrbisRule members
 
+        /// <inheritdoc cref="IrbisRule.FieldSpec"/>
         public override string FieldSpec
         {
             get { return "200"; }
         }
 
+        /// <inheritdoc cref="IrbisRule.CheckRecord"/>
         public override RuleReport CheckRecord
             (
                 RuleContext context
@@ -66,7 +72,8 @@ namespace ManagedClient.Quality.Rules
                             (
                                 field,
                                 10,
-                                "Отсутутсвует подполе 200^v: Обозначение и номер тома"
+                                "Отсутствует подполе 200^v: "
+                                + "Обозначение и номер тома"
                             );
                     }
                 }
@@ -78,7 +85,8 @@ namespace ManagedClient.Quality.Rules
                             (
                                 field,
                                 10,
-                                "Присутствует подполе 200^v: Обозначение и номер тома"                                
+                                "Присутствует подполе 200^v: "
+                                + "Обозначение и номер тома"                                
                             );
                     }
                     if (field.HaveNotSubField('a'))
@@ -87,7 +95,7 @@ namespace ManagedClient.Quality.Rules
                             (
                                 field,
                                 10,
-                                "Отсутутсвует подполе 200^a: Заглавие"
+                                "Отсутстсвует подполе 200^a: Заглавие"
                             );
                     }
                 }

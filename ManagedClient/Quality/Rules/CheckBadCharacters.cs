@@ -12,7 +12,7 @@ using MoonSharp.Interpreter;
 
 #endregion
 
-namespace ManagedClient.Quality
+namespace ManagedClient.Quality.Rules
 {
     /// <summary>
     /// Проверка на плохие символы.

@@ -21,6 +21,21 @@
             the contents of this method with the code editor.
             </summary>
         </member>
+        <member name="T:IrbisUI.FormUtility">
+            <summary>
+            Utility for <see cref="T:System.Windows.Forms.Form"/>.
+            </summary>
+        </member>
+        <member name="M:IrbisUI.FormUtility.ShowVersionInfoInTitle(System.Windows.Forms.Form)">
+            <summary>
+            Show version information in form title.
+            </summary>
+        </member>
+        <member name="M:IrbisUI.FormUtility.PrintSystemInformation(ManagedClient.Output.AbstractOutput)">
+            <summary>
+            Print system information in abstract output.
+            </summary>
+        </member>
         <member name="F:IrbisUI.IrbisBusyForm.components">
             <summary>
             Required designer variable.

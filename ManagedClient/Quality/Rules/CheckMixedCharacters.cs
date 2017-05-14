@@ -9,6 +9,10 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
+
 #endregion
 
 namespace ManagedClient.Quality.Rules
@@ -16,6 +20,8 @@ namespace ManagedClient.Quality.Rules
     /// <summary>
     /// Проверка на смешение символов.
     /// </summary>
+    [PublicAPI]
+    [MoonSharpUserData]
     public sealed class CheckMixedCharacters
         : IrbisRule
     {
@@ -23,9 +29,10 @@ namespace ManagedClient.Quality.Rules
 
         private readonly Regex _mixRegex = new Regex(@"\w+");
 
+        [NotNull]
         private List<string> CheckText
             (
-                string text
+                [CanBeNull] string text
             )
         {
             List<string> result = new List<string>();
@@ -50,9 +57,10 @@ namespace ManagedClient.Quality.Rules
             return result;
         }
 
+        [NotNull]
         private static string FormatDefect
             (
-                List<string> list
+                [NotNull] List<string> list
             )
         {
             string word = list.Count == 1
@@ -68,7 +76,7 @@ namespace ManagedClient.Quality.Rules
 
         private void CheckField
             (
-                RecordField field
+                [NotNull] RecordField field
             )
         {
             List<string> result = CheckText(field.Text);
@@ -85,8 +93,8 @@ namespace ManagedClient.Quality.Rules
 
         private void CheckSubField
             (
-                RecordField field,
-                SubField subField
+                [NotNull] RecordField field,
+                [NotNull] SubField subField
             )
         {
             List<string> result = CheckText(subField.Text);
@@ -106,11 +114,13 @@ namespace ManagedClient.Quality.Rules
 
         #region IrbisRule members
 
+        /// <inheritdoc cref="IrbisRule.FieldSpec"/>
         public override string FieldSpec
         {
             get { return "*"; }
         }
 
+        /// <inheritdoc cref="IrbisRule.CheckRecord"/>
         public override RuleReport CheckRecord
             (
                 RuleContext context

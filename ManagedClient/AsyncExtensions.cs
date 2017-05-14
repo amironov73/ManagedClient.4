@@ -15,6 +15,8 @@ using JetBrains.Annotations;
 
 #endregion
 
+// ReSharper disable ConvertClosureToMethodGroup
+
 namespace ManagedClient
 {
     /// <summary>
@@ -23,6 +25,43 @@ namespace ManagedClient
     public static class AsyncExtensions
     {
         /// <summary>
+        /// ConfigureAwait(false).
+        /// </summary>
+        [NotNull]
+        public static Task SafeConfigure
+            (
+                [NotNull] this Task task
+            )
+        {
+#if (FW45 || FW46) && !FW4 && !FW35
+
+            task.ConfigureAwait(false);
+
+#endif
+
+            return task;
+        }
+
+        /// <summary>
+        /// ConfigureAwait(false).
+        /// </summary>
+        [NotNull]
+        public static Task<T> SafeConfigure<T>
+        (
+            [NotNull] this Task<T> task
+        )
+        {
+#if (FW45 || FW46) && !FW4 && !FW35
+
+            task.ConfigureAwait(false);
+
+#endif
+
+            return task;
+        }
+
+
+        /// <summary>
         /// Connect.
         /// </summary>
         public static Task ConnectAsync
@@ -30,7 +69,8 @@ namespace ManagedClient
                 [NotNull] this ManagedClient64 client
             )
         {
-            return Task.Factory.StartNew(client.Connect);
+            return Task.Factory.StartNew(client.Connect)
+                .SafeConfigure();
         }
 
         /// <summary>
@@ -41,7 +81,8 @@ namespace ManagedClient
                 [NotNull] this ManagedClient64 client
             )
         {
-            return Task.Factory.StartNew(client.Dispose);
+            return Task.Factory.StartNew(client.Dispose)
+                .SafeConfigure();
         }
 
         /// <summary>
@@ -57,7 +98,8 @@ namespace ManagedClient
             return Task.Factory.StartNew
                 (
                     () => client.FormatRecord(format, mfn)
-                );
+                )
+                .SafeConfigure();
         }
 
         /// <summary>
@@ -73,7 +115,8 @@ namespace ManagedClient
             return Task.Factory.StartNew
                 (
                     () => client.FormatRecord(format, record)
-                );
+                )
+                .SafeConfigure();
         }
 
         /// <summary>
@@ -84,7 +127,11 @@ namespace ManagedClient
                 [NotNull] this ManagedClient64 client
             )
         {
-            return Task.Factory.StartNew(client.GetMaxMfn);
+            return Task.Factory.StartNew
+                (
+                    () => client.GetMaxMfn()
+                )
+                .SafeConfigure();
         }
 
         /// <summary>
@@ -99,7 +146,8 @@ namespace ManagedClient
             return Task.Factory.StartNew
                 (
                     () => client.ListDatabases(menuName)
-                );
+                )
+                .SafeConfigure();
         }
 
         /// <summary>
@@ -115,7 +163,8 @@ namespace ManagedClient
             return Task.Factory.StartNew
                 (
                     () => client.GetSearchTerms(start, count)
-                );
+                )
+                .SafeConfigure();
         }
 
         /// <summary>
@@ -130,7 +179,8 @@ namespace ManagedClient
             return Task.Factory.StartNew
                 (
                     () => IrbisMenu.Read(client, menuName)
-                );
+                )
+                .SafeConfigure();
         }
 
         /// <summary>
@@ -151,7 +201,8 @@ namespace ManagedClient
 
                         return result;
                     }
-                );
+                )
+                .SafeConfigure();
         }
 
         /// <summary>
@@ -162,7 +213,8 @@ namespace ManagedClient
                 [NotNull] this ManagedClient64 client
             )
         {
-            return Task.Factory.StartNew(client.NoOp);
+            return Task.Factory.StartNew(client.NoOp)
+                .SafeConfigure();
         }
 
         /// <summary>
@@ -170,14 +222,15 @@ namespace ManagedClient
         /// </summary>
         public static Task<IrbisRecord> ReadRecordAsync
             (
-                this ManagedClient64 client,
+                [NotNull] this ManagedClient64 client,
                 int mfn
             )
         {
             return Task.Factory.StartNew
                 (
                     () => client.ReadRecord(mfn)
-                );
+                )
+                .SafeConfigure();
         }
 
         /// <summary>
@@ -192,7 +245,8 @@ namespace ManagedClient
             return Task.Factory.StartNew
                 (
                     () => client.ReadTextFile(fileName)
-                );
+                )
+                .SafeConfigure();
         }
 
         /// <summary>
@@ -207,7 +261,8 @@ namespace ManagedClient
             return Task.Factory.StartNew
                 (
                     () => client.Search(expression)
-                );
+                )
+                .SafeConfigure();
         }
 
         /// <summary>
@@ -215,14 +270,15 @@ namespace ManagedClient
         /// </summary>
         public static Task WriteRecordAsync
             (
-                [NotNull]this ManagedClient64 client,
+                [NotNull] this ManagedClient64 client,
                 [NotNull] IrbisRecord record
             )
         {
             return Task.Factory.StartNew
                 (
                     () => client.WriteRecord(record, false, true)
-                );
+                )
+                .SafeConfigure();
         }
     }
 }

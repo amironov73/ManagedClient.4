@@ -6,15 +6,19 @@
 
 #region Using directives
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using JetBrains.Annotations;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
 namespace ManagedClient.Quality.Rules
 {
+    /// <summary>
+    /// Рабочий лист.
+    /// </summary>
+    [PublicAPI]
+    [MoonSharpUserData]
     public sealed class Require920
         : IrbisRule
     {
@@ -35,11 +39,13 @@ namespace ManagedClient.Quality.Rules
 
         #region IrbisRule members
 
+        /// <inheritdoc cref="IrbisRule.FieldSpec"/>
         public override string FieldSpec
         {
             get { return "920"; }
         }
 
+        /// <inheritdoc cref="IrbisRule.CheckRecord"/>
         public override RuleReport CheckRecord
             (
                 RuleContext context

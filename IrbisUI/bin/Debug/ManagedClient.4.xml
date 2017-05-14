@@ -9,6 +9,16 @@
             Extension for async/Tasks.
             </summary>
         </member>
+        <member name="M:ManagedClient.AsyncExtensions.SafeConfigure(System.Threading.Tasks.Task)">
+            <summary>
+            ConfigureAwait(false).
+            </summary>
+        </member>
+        <member name="M:ManagedClient.AsyncExtensions.SafeConfigure``1(System.Threading.Tasks.Task{``0})">
+            <summary>
+            ConfigureAwait(false).
+            </summary>
+        </member>
         <member name="M:ManagedClient.AsyncExtensions.ConnectAsync(ManagedClient.ManagedClient64)">
             <summary>
             Connect.
@@ -6401,15 +6411,15 @@
             Setup protocol stream.
             </summary>
         </member>
-        <member name="T:ManagedClient.Quality.CheckBadCharacters">
+        <member name="T:ManagedClient.Quality.Rules.CheckBadCharacters">
             <summary>
             Проверка на плохие символы.
             </summary>
         </member>
-        <member name="P:ManagedClient.Quality.CheckBadCharacters.FieldSpec">
+        <member name="P:ManagedClient.Quality.Rules.CheckBadCharacters.FieldSpec">
             <inheritdoc cref="P:ManagedClient.Quality.IrbisRule.FieldSpec"/>
         </member>
-        <member name="M:ManagedClient.Quality.CheckBadCharacters.CheckRecord(ManagedClient.Quality.RuleContext)">
+        <member name="M:ManagedClient.Quality.Rules.CheckBadCharacters.CheckRecord(ManagedClient.Quality.RuleContext)">
             <inheritdoc cref="M:ManagedClient.Quality.IrbisRule.CheckRecord(ManagedClient.Quality.RuleContext)"/>
         </member>
         <member name="T:ManagedClient.Quality.Rules.CheckMixedCharacters">
@@ -6417,30 +6427,66 @@
             Проверка на смешение символов.
             </summary>
         </member>
+        <member name="P:ManagedClient.Quality.Rules.CheckMixedCharacters.FieldSpec">
+            <inheritdoc cref="P:ManagedClient.Quality.IrbisRule.FieldSpec"/>
+        </member>
+        <member name="M:ManagedClient.Quality.Rules.CheckMixedCharacters.CheckRecord(ManagedClient.Quality.RuleContext)">
+            <inheritdoc cref="M:ManagedClient.Quality.IrbisRule.CheckRecord(ManagedClient.Quality.RuleContext)"/>
+        </member>
         <member name="T:ManagedClient.Quality.Rules.Check10">
             <summary>
             ISBN и цена.
             </summary>
+        </member>
+        <member name="P:ManagedClient.Quality.Rules.Check10.FieldSpec">
+            <inheritdoc cref="P:ManagedClient.Quality.IrbisRule.FieldSpec"/>
+        </member>
+        <member name="M:ManagedClient.Quality.Rules.Check10.CheckRecord(ManagedClient.Quality.RuleContext)">
+            <inheritdoc cref="M:ManagedClient.Quality.IrbisRule.CheckRecord(ManagedClient.Quality.RuleContext)"/>
         </member>
         <member name="T:ManagedClient.Quality.Rules.Check610">
             <summary>
             Ключевые слова.
             </summary>
         </member>
+        <member name="P:ManagedClient.Quality.Rules.Check610.FieldSpec">
+            <inheritdoc cref="P:ManagedClient.Quality.IrbisRule.FieldSpec"/>
+        </member>
+        <member name="M:ManagedClient.Quality.Rules.Check610.CheckRecord(ManagedClient.Quality.RuleContext)">
+            <inheritdoc cref="M:ManagedClient.Quality.IrbisRule.CheckRecord(ManagedClient.Quality.RuleContext)"/>
+        </member>
         <member name="T:ManagedClient.Quality.Rules.Check908">
             <summary>
             Авторский знак
             </summary>
+        </member>
+        <member name="P:ManagedClient.Quality.Rules.Check908.FieldSpec">
+            <inheritdoc cref="P:ManagedClient.Quality.IrbisRule.FieldSpec"/>
+        </member>
+        <member name="M:ManagedClient.Quality.Rules.Check908.CheckRecord(ManagedClient.Quality.RuleContext)">
+            <inheritdoc cref="M:ManagedClient.Quality.IrbisRule.CheckRecord(ManagedClient.Quality.RuleContext)"/>
         </member>
         <member name="T:ManagedClient.Quality.Rules.CheckEmptySubfields">
             <summary>
             Обнаружение пустых подполей
             </summary>
         </member>
+        <member name="P:ManagedClient.Quality.Rules.CheckEmptySubfields.FieldSpec">
+            <inheritdoc cref="P:ManagedClient.Quality.IrbisRule.FieldSpec"/>
+        </member>
+        <member name="M:ManagedClient.Quality.Rules.CheckEmptySubfields.CheckRecord(ManagedClient.Quality.RuleContext)">
+            <inheritdoc cref="M:ManagedClient.Quality.IrbisRule.CheckRecord(ManagedClient.Quality.RuleContext)"/>
+        </member>
         <member name="T:ManagedClient.Quality.Rules.CheckWhitespace">
             <summary>
             Проверка употребления пробелов в полях/подполях
             </summary>
+        </member>
+        <member name="P:ManagedClient.Quality.Rules.CheckWhitespace.FieldSpec">
+            <inheritdoc cref="P:ManagedClient.Quality.IrbisRule.FieldSpec"/>
+        </member>
+        <member name="M:ManagedClient.Quality.Rules.CheckWhitespace.CheckRecord(ManagedClient.Quality.RuleContext)">
+            <inheritdoc cref="M:ManagedClient.Quality.IrbisRule.CheckRecord(ManagedClient.Quality.RuleContext)"/>
         </member>
         <member name="T:ManagedClient.Quality.Rules.Require210">
             <summary>
@@ -6457,28 +6503,55 @@
             Сведения об экземплярах.
             </summary>
         </member>
+        <member name="P:ManagedClient.Quality.Rules.Require910.FieldSpec">
+            <inheritdoc cref="P:ManagedClient.Quality.IrbisRule.FieldSpec"/>
+        </member>
+        <member name="M:ManagedClient.Quality.Rules.Require910.CheckRecord(ManagedClient.Quality.RuleContext)">
+            <inheritdoc cref="M:ManagedClient.Quality.IrbisRule.CheckRecord(ManagedClient.Quality.RuleContext)"/>
+        </member>
+        <member name="T:ManagedClient.Quality.Rules.Require920">
+            <summary>
+            Рабочий лист.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Quality.Rules.Require920.FieldSpec">
+            <inheritdoc cref="P:ManagedClient.Quality.IrbisRule.FieldSpec"/>
+        </member>
+        <member name="M:ManagedClient.Quality.Rules.Require920.CheckRecord(ManagedClient.Quality.RuleContext)">
+            <inheritdoc cref="M:ManagedClient.Quality.IrbisRule.CheckRecord(ManagedClient.Quality.RuleContext)"/>
+        </member>
         <member name="T:ManagedClient.Quality.Rules.Require101">
             <summary>
             Язык основного текста.
             </summary>
         </member>
         <member name="P:ManagedClient.Quality.Rules.Require101.FieldSpec">
-            <summary>
-            Затрагиваемые поля.
-            </summary>
-            <value>The field spec.</value>
+            <inheritdoc cref="P:ManagedClient.Quality.IrbisRule.FieldSpec"/>
         </member>
         <member name="M:ManagedClient.Quality.Rules.Require101.CheckRecord(ManagedClient.Quality.RuleContext)">
-            <summary>
-            Проверка записи.
-            </summary>
-            <param name="context">The context.</param>
-            <returns>RuleReport.</returns>
+            <inheritdoc cref="M:ManagedClient.Quality.IrbisRule.CheckRecord(ManagedClient.Quality.RuleContext)"/>
         </member>
         <member name="T:ManagedClient.Quality.Rules.Require102">
             <summary>
             Страна.
             </summary>
+        </member>
+        <member name="P:ManagedClient.Quality.Rules.Require102.FieldSpec">
+            <inheritdoc cref="P:ManagedClient.Quality.IrbisRule.FieldSpec"/>
+        </member>
+        <member name="M:ManagedClient.Quality.Rules.Require102.CheckRecord(ManagedClient.Quality.RuleContext)">
+            <inheritdoc cref="M:ManagedClient.Quality.IrbisRule.CheckRecord(ManagedClient.Quality.RuleContext)"/>
+        </member>
+        <member name="T:ManagedClient.Quality.Rules.Require200">
+            <summary>
+            Область заглавия.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.Quality.Rules.Require200.FieldSpec">
+            <inheritdoc cref="P:ManagedClient.Quality.IrbisRule.FieldSpec"/>
+        </member>
+        <member name="M:ManagedClient.Quality.Rules.Require200.CheckRecord(ManagedClient.Quality.RuleContext)">
+            <inheritdoc cref="M:ManagedClient.Quality.IrbisRule.CheckRecord(ManagedClient.Quality.RuleContext)"/>
         </member>
         <member name="T:ManagedClient.Quality.Rules.Require700">
             <summary>

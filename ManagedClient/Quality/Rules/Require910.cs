@@ -6,7 +6,11 @@
 
 #region Using directives
 
+using JetBrains.Annotations;
+
 using ManagedClient.Fields;
+
+using MoonSharp.Interpreter;
 
 #endregion
 
@@ -15,6 +19,8 @@ namespace ManagedClient.Quality.Rules
     /// <summary>
     /// Сведения об экземплярах.
     /// </summary>
+    [PublicAPI]
+    [MoonSharpUserData]
     public sealed class Require910
         : IrbisRule
     {
@@ -25,7 +31,7 @@ namespace ManagedClient.Quality.Rules
 
         private void CheckField
             (
-                RecordField field
+                [NotNull] RecordField field
             )
         {
             ExemplarInfo exemplar = ExemplarInfo.Parse(field);
@@ -63,11 +69,13 @@ namespace ManagedClient.Quality.Rules
 
         #region IrbisRule members
 
+        /// <inheritdoc cref="IrbisRule.FieldSpec"/>
         public override string FieldSpec
         {
             get { return "910"; }
         }
 
+        /// <inheritdoc cref="IrbisRule.CheckRecord"/>
         public override RuleReport CheckRecord
             (
                 RuleContext context
