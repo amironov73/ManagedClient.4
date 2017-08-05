@@ -2579,6 +2579,211 @@
             Constructor.
             </summary>
         </member>
+        <member name="T:ManagedClient.FieldFilter">
+            <summary>
+            Filters fields and subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.AllSubFields(System.Collections.Generic.IEnumerable{ManagedClient.RecordField})">
+            <summary>
+            Get all subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String)">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(ManagedClient.RecordFieldCollection,System.String)">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String,System.Int32)">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(ManagedClient.RecordFieldCollection,System.String,System.Int32)">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String[])">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(ManagedClient.RecordFieldCollection,System.String[])">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String[],System.Int32)">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(ManagedClient.RecordFieldCollection,System.String[],System.Int32)">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.Func{ManagedClient.RecordField,System.Boolean})">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.Func{ManagedClient.SubField,System.Boolean})">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.Char[],System.Func{ManagedClient.SubField,System.Boolean})">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.Char[],System.String[])">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.Char,System.String)">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String[],System.Char[],System.String[])">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.Func{ManagedClient.RecordField,System.Boolean},System.Func{ManagedClient.SubField,System.Boolean})">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetFieldRegex(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String)">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetFieldRegex(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String,System.Int32)">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetFieldRegex(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String[],System.String)">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetFieldRegex(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String[],System.String,System.Int32)">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetFieldRegex(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String[],System.Char[],System.String)">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetFieldRegex(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String[],System.Char[],System.String,System.Int32)">
+            <summary>
+            Filter fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetFieldText(ManagedClient.RecordFieldCollection)">
+            <summary>
+            Get field text.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetFieldText(ManagedClient.RecordField)">
+            <summary>
+            Get field text.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetFieldText(System.Collections.Generic.IEnumerable{ManagedClient.RecordField})">
+            <summary>
+            Get field text.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubField(System.Collections.Generic.IEnumerable{ManagedClient.SubField},System.Char[])">
+            <summary>
+            Filter subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubField(ManagedClient.SubFieldCollection,System.Char[])">
+            <summary>
+            Filter subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.Char[])">
+            <summary>
+            Filter subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String,System.Char)">
+            <summary>
+            Filter subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String,System.Int32,System.Char,System.Int32)">
+            <summary>
+            Filter subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String,System.Char,System.Int32)">
+            <summary>
+            Filter subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.Char)">
+            <summary>
+            Filter subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.Func{ManagedClient.RecordField,System.Boolean},System.Func{ManagedClient.SubField,System.Boolean})">
+            <summary>
+            Filter subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubField(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String[],System.Char[])">
+            <summary>
+            Filter subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubFieldRegex(System.Collections.Generic.IEnumerable{ManagedClient.SubField},System.String)">
+            <summary>
+            Filter subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubFieldRegex(System.Collections.Generic.IEnumerable{ManagedClient.SubField},System.Char[],System.String)">
+            <summary>
+            Filter subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubFieldRegex(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String[],System.Char[],System.String)">
+            <summary>
+            Filter subfields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubFieldText(ManagedClient.SubField)">
+            <summary>
+            Get subfield text.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubFieldText(System.Collections.Generic.IEnumerable{ManagedClient.SubField})">
+            <summary>
+            Get subfield text.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FieldFilter.GetSubFieldText(System.Collections.Generic.IEnumerable{ManagedClient.RecordField},System.String,System.Char)">
+            <summary>
+            Filter subfields.
+            </summary>
+        </member>
         <member name="M:ManagedClient.FieldReference.ToString">
             <summary>
             Returns a <see cref="T:System.String" /> that represents this instance.
