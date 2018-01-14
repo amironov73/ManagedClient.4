@@ -108,7 +108,8 @@ namespace ManagedClient.Direct
 
         private long _NodeOffset(int nodeNumber)
         {
-            long result = unchecked(((long)nodeNumber - 1) * NodeLength);
+            long result = (nodeNumber - 1) * (long)NodeLength;
+
             return result;
         }
 
