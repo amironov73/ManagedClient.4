@@ -15,122 +15,122 @@ using System.Text.RegularExpressions;
 
 namespace ManagedClient
 {
-	internal sealed class NumberFilter
-	{
-		#region Nested classes
+    internal sealed class NumberFilter
+    {
+        #region Nested classes
 
-		public class Range
-		{
-			#region Properties
+        public class Range
+        {
+            #region Properties
 
-			public bool All { get; set; }
+            public bool All { get; set; }
 
-			public int Low { get; set; }
+            public int Low { get; set; }
 
-			public int High { get; set; }
+            public int High { get; set; }
 
-			#endregion
+            #endregion
 
-			#region Private members
+            #region Private members
 
-			private static readonly Regex _regex
-				= new Regex(@"^\s*(?<low>\d+)\s*(?:-\s*(?<high>\d+))?\s*$");
+            private static readonly Regex _regex
+                = new Regex(@"^\s*(?<low>\d+)\s*(?:-\s*(?<high>\d+))?\s*$");
 
-			#endregion
+            #endregion
 
-			#region Public methods
+            #region Public methods
 
-			public bool CheckNumber(int n)
-			{
-				return All
-				       || ((n >= Low) && (n <= High));
-			}
+            public bool CheckNumber(int n)
+            {
+                return All
+                       || ((n >= Low) && (n <= High));
+            }
 
-			public static Range Parse(string text)
-			{
-				if (text.Contains("*"))
-				{
-					return new Range{All = true};
-				}
-				Match match = _regex.Match(text);
-				if (!match.Success)
-				{
-					return null;
-				}
-				int low = int.Parse(match.Groups["low"].Value);
-				int high = low;
-				Group highGroup = match.Groups["high"];
-				if (highGroup.Success)
-				{
-					high = int.Parse(highGroup.Value);
-				}
-				Range result = new Range
-					               {
-									   Low = low,
-									   High = high
-					               };
-				return result;
-			}
+            public static Range Parse(string text)
+            {
+                if (text.Contains("*"))
+                {
+                    return new Range { All = true };
+                }
+                Match match = _regex.Match(text);
+                if (!match.Success)
+                {
+                    return null;
+                }
+                int low = int.Parse(match.Groups["low"].Value);
+                int high = low;
+                Group highGroup = match.Groups["high"];
+                if (highGroup.Success)
+                {
+                    high = int.Parse(highGroup.Value);
+                }
+                Range result = new Range
+                {
+                    Low = low,
+                    High = high
+                };
+                return result;
+            }
 
-			#endregion
-		}
+            #endregion
+        }
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		public string Specification { get; private set; }
+        public string Specification { get; private set; }
 
-		public Range[] Ranges { get; private set; }
+        public Range[] Ranges { get; private set; }
 
-		#endregion
+        #endregion
 
-		#region Construction
+        #region Construction
 
-		public NumberFilter(string specification)
-		{
-			Specification = specification;
-			Ranges = new Range[0];
-		}
+        public NumberFilter(string specification)
+        {
+            Specification = specification;
+            Ranges = new Range[0];
+        }
 
-		#endregion
+        #endregion
 
-		#region Public methods
+        #region Public methods
 
-		public bool CheckNumber(string number)
-		{
-			if (!number.IsPositiveInteger())
-			{
-				return true;
-			}
-			int n = int.Parse(number);
-			return Ranges
-				.Any(range => range.CheckNumber(n));
-		}
+        public bool CheckNumber(string number)
+        {
+            if (!number.IsPositiveInteger())
+            {
+                return true;
+            }
+            int n = int.Parse(number);
+            return Ranges
+                .Any(range => range.CheckNumber(n));
+        }
 
-		public string[] FilterNumbers
-			(
-				string[] numbers
-			)
-		{
-			return numbers
-				.Where(CheckNumber)
-				.ToArray();
-		}
+        public string[] FilterNumbers
+            (
+                string[] numbers
+            )
+        {
+            return numbers
+                .Where(CheckNumber)
+                .ToArray();
+        }
 
-		public static NumberFilter ParseNumbers(string specification)
-		{
-			string[] parts = specification.Split(',', ';');
-			NumberFilter result = new NumberFilter(specification)
-				{
-					Ranges = parts
-					.Select(part => Range.Parse(part))
-					.Where(range => range != null)
-					.ToArray()
-				};
-			return result;
-		}
+        public static NumberFilter ParseNumbers(string specification)
+        {
+            string[] parts = specification.Split(',', ';');
+            NumberFilter result = new NumberFilter(specification)
+            {
+                Ranges = parts
+                    .Select(part => Range.Parse(part))
+                    .Where(range => range != null)
+                    .ToArray()
+            };
+            return result;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

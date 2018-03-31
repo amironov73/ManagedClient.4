@@ -245,14 +245,14 @@ namespace ManagedClient
         {
             StringBuilder result = new StringBuilder();
 
-            Append3031 
+            Append3031
                 (
                     result,
                     "{0}#{1}",
                     mfn,
                     status
                 );
-            Append3031 
+            Append3031
                 (
                     result,
                     "0#{0}",
@@ -274,8 +274,8 @@ namespace ManagedClient
         /// <summary>
         /// Разбор записи в клиентском представлении.
         /// </summary>
-        public static IrbisRecord Parse 
-            ( 
+        public static IrbisRecord Parse
+            (
                 string text,
                 int skipLines
             )
@@ -319,15 +319,15 @@ namespace ManagedClient
             {
                 Regex regex = new Regex(@"^(-?\d+)\#(\d*)?");
                 Match match = regex.Match(text[0]);
-                Mfn = Math.Abs(int.Parse(match.Groups[1].Value));
+                Mfn = Math.Abs(FastNumber.ParseInt32(match.Groups[1].Value));
                 if (match.Groups[2].Length > 0)
                 {
-                    Status = (RecordStatus)int.Parse(match.Groups[2].Value);
+                    Status = (RecordStatus)FastNumber.ParseInt32(match.Groups[2].Value);
                 }
                 match = regex.Match(text[1]);
                 if (match.Groups[2].Length > 0)
                 {
-                    Version = int.Parse(match.Groups[2].Value);
+                    Version = FastNumber.ParseInt32(match.Groups[2].Value);
                 }
             }
 
@@ -365,7 +365,7 @@ namespace ManagedClient
         }
 
         /// <summary>
-        /// Добавление поля (в конец списка полей) 
+        /// Добавление поля (в конец списка полей)
         /// с указанными меткой и текстом.
         /// </summary>
         /// <param name="tag">Метка поля.</param>
@@ -429,15 +429,15 @@ namespace ManagedClient
             RecordField field = Fields
                 .GetField ( tag )
                 .FirstOrDefault ();
-            
+
             if ( field == null )
             {
                 field = new RecordField(tag);
                 Fields.Add ( field );
             }
-            
+
             field.Text = text;
-            
+
             return this;
         }
 
@@ -454,7 +454,7 @@ namespace ManagedClient
             RecordField field = Fields
                 .GetField(tag)
                 .GetOccurrence(occurrence);
-            
+
             if (!ReferenceEquals(field, null))
             {
                 field.Text = newText;
@@ -594,9 +594,9 @@ namespace ManagedClient
         {
             IrbisRecord result = new IrbisRecord ();
 
-            result.Fields.AddRange 
+            result.Fields.AddRange
                 (
-                    from field in Fields 
+                    from field in Fields
                     select field.Clone ()
                 );
 
@@ -753,7 +753,7 @@ namespace ManagedClient
                     {
                         JProperty subProperty = new JProperty
                             (
-                                subField.CodeString, 
+                                subField.CodeString,
                                 subField.Text
                             );
                         repeatProperty.Add(subProperty);

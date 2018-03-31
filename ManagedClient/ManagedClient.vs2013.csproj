@@ -33,6 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\ManagedClient.4.xml</DocumentationFile>
+    <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -78,6 +79,7 @@
     <Compile Include="CharacterClass.cs" />
     <Compile Include="CharacterClassifier.cs" />
     <Compile Include="ConfigDatabase.cs" />
+    <Compile Include="FastNumber.cs" />
     <Compile Include="Fields\ExemplarManager.cs" />
     <Compile Include="IHandmadeSerializable.cs" />
     <Compile Include="IrbisEncoding.cs" />

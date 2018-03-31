@@ -56,38 +56,38 @@ namespace ManagedClient
         public const string ResponseLineDelimiter = "";
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public const int MaxPostings = 32758;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public const string DefaultHost = "127.0.0.1";
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public const string DefaultDatabase = "IBIS";
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public const IrbisWorkstation DefaultWorkstation
             = IrbisWorkstation.Cataloger;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public const int DefaultPort = 6666;
 
         ///// <summary>
-        ///// 
+        /////
         ///// </summary>
         //public const string DefaultUsername = "1";
 
         ///// <summary>
-        ///// 
+        /////
         ///// </summary>
         //public const string DefaultPassword = "1";
 
@@ -108,9 +108,9 @@ namespace ManagedClient
         /// <summary>
         /// Вызывается при возникновении ошибки.
         /// </summary>
-        #if !PocketPC
+#if !PocketPC
         public event EventHandler<IrbisCommadEventArgs> ErrorHandler;
-        #endif
+#endif
 
         /// <summary>
         /// Вызывается, когда меняется состояние Busy;
@@ -122,7 +122,7 @@ namespace ManagedClient
         /// </summary>
         public event EventHandler Disposing;
 
-        #if !PocketPC
+#if !PocketPC
         /// <summary>
         /// Вызывается при отсутствии логина/пароля для входа на сервер.
         /// </summary>
@@ -145,7 +145,7 @@ namespace ManagedClient
         // ReSharper disable once EventNeverInvoked
         public event EventHandler<AfterQueryEventArgs> AfterQuery;
 
-        #endif
+#endif
 
         #endregion
 
@@ -192,11 +192,11 @@ namespace ManagedClient
         /// </summary>
         /// <value>Служебное имя базы данных (например, "IBIS").</value>
         [DefaultValue(DefaultDatabase)]
-        public string Database 
-        { 
+        public string Database
+        {
             get { return _database; }
-            set 
-            { 
+            set
+            {
                 OnDatabaseChanged
                 (
                     _database,
@@ -244,7 +244,7 @@ namespace ManagedClient
         /// <summary>
         /// Поток для вывода отладочной информации.
         /// </summary>
-        /// <remarks><para><c>null</c> означает, что вывод отладочной 
+        /// <remarks><para><c>null</c> означает, что вывод отладочной
         /// информации не нужен.</para>
         /// <para>Обратите внимание, что <see cref="DebugWriter"/>
         /// не сериализуется, т. к. большинство потоков не умеют
@@ -281,7 +281,7 @@ namespace ManagedClient
         [DefaultValue(false)]
         public bool Interrupted { get; set; }
 
-        #if !PocketPC
+#if !PocketPC
         public IrbisIniFile Settings
         {
             get
@@ -294,22 +294,22 @@ namespace ManagedClient
                 return _settings;
             }
         }
-        #endif
+#endif
 
         /// <summary>
         /// Флаг, устанавливающий необходимость парсинга поискового запроса с выделением ключевых слов
         /// </summary>
-        
+
         [DefaultValue(false)]
         public bool NeedParseRequest { get; set; }
 
-        #if !PocketPC
+#if !PocketPC
         public IrbisOpt OptFileRecord;
 
         /// <summary>
         /// Минимальное необходимое количество символов для выделения термина
         /// </summary>
-        
+
         public int MinCharsCountForSelect
         {
             get
@@ -322,18 +322,18 @@ namespace ManagedClient
             set
             {
                 if (SearchEngine != null)
-                    SearchEngine.MinLKWLight = value;                
+                    SearchEngine.MinLKWLight = value;
             }
         }
 
-        public IrbisSearchEngine.SearchScenario [] SearchScenarios
+        public IrbisSearchEngine.SearchScenario[] SearchScenarios
         {
             get
             {
                 if (SearchEngine != null)
                     return SearchEngine.SearchScenarios;
-                return new IrbisSearchEngine.SearchScenario [0];
-            }            
+                return new IrbisSearchEngine.SearchScenario[0];
+            }
         }
 
         public IrbisSearchEngine.SearchQualifier[] SearchQualifiers
@@ -348,16 +348,16 @@ namespace ManagedClient
 
         /// <summary>
         /// Имя файла оптимизации с расширением PFT
-        /// </summary>        
+        /// </summary>
 
         public string PftOptFile { get; private set; }
-        #endif
+#endif
 
 
         /// <summary>
         /// Произвольные пользовательские данные
         /// </summary>
-#if !PocketPC 
+#if !PocketPC
         [Browsable(false)]
 #endif
         public object UserData { get; set; }
@@ -484,7 +484,7 @@ namespace ManagedClient
                 ResponseHeader response,
                 // ReSharper disable UnusedParameter.Local
                 params int[] allowed
-                // ReSharper restore UnusedParameter.Local
+            // ReSharper restore UnusedParameter.Local
             )
         {
             if ((response.ReturnCode < 0)
@@ -536,7 +536,7 @@ namespace ManagedClient
                 {
                     handler
                         (
-                            this, 
+                            this,
                             EventArgs.Empty
                         );
                 }
@@ -557,14 +557,14 @@ namespace ManagedClient
         private QueryHeader _CreateQuery(char command)
         {
             QueryHeader result = new QueryHeader
-                                     {
-                                         Command = command,
-                                         Workstation = (char)Workstation,
-                                         Password = Password,
-                                         UserName = Username,
-                                         QueryID = ++_queryID,
-                                         ClientID = _userID
-                                     };
+            {
+                Command = command,
+                Workstation = (char)Workstation,
+                Password = Password,
+                UserName = Username,
+                QueryID = ++_queryID,
+                ClientID = _userID
+            };
             return result;
         }
 
@@ -656,8 +656,8 @@ namespace ManagedClient
 
         private void _AddLine
             (
-            	StringBuilder builder,
-            	string line
+                StringBuilder builder,
+                string line
             )
         {
             builder.Append(line);
@@ -863,7 +863,7 @@ namespace ManagedClient
 
                     handler
                         (
-                            this, 
+                            this,
                             eventArgs
                         );
                 }
@@ -988,6 +988,9 @@ namespace ManagedClient
             return result;
         }
 
+        /// <summary>
+        /// Перекодирование переводов строки в представление ИРБИС.
+        /// </summary>
         public static string EncodeNewLines
             (
                 string text
@@ -1001,6 +1004,11 @@ namespace ManagedClient
             return result;
         }
 
+        /// <summary>
+        /// Декодирование переводов строки из представления ИРБИС.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static string DecodeNewLines
             (
                 string text
@@ -1038,14 +1046,14 @@ namespace ManagedClient
             _CheckBusy();
             int returnCode = 0;
 
-TryAgain:
+            TryAgain:
             if (!_OkToConnect(returnCode))
             {
                 throw new ApplicationException("Can't connect");
             }
 
             _userID = _random.Next(1000000, 9999999);
-            _queryID = 0;            
+            _queryID = 0;
 
             try
             {
@@ -1159,7 +1167,7 @@ TryAgain:
                 string answer = _Receive(true);
                 _DebugDump(answer);
                 eventArgs.Response = ResponseHeader.Parse(answer);
-                _CheckReturnCode(eventArgs.Response,-1,
+                _CheckReturnCode(eventArgs.Response, -1,
                     (int)IrbisReturnCode.ClientNotInList,
                     (int)IrbisReturnCode.WrongClientIdentifier);
 #if !PocketPC
@@ -1219,7 +1227,7 @@ TryAgain:
             finally
             {
                 _CloseSocket();
-                _SetBusy(false);                
+                _SetBusy(false);
             }
 
             return null;
@@ -1449,7 +1457,7 @@ TryAgain:
 
         private int _GetPosition
             (
-                string markString, 
+                string markString,
                 byte[] buffer
             )
         {
@@ -1506,11 +1514,11 @@ TryAgain:
             list.Add(markString);
             result = String.Join
                 (
-                    Environment.NewLine, 
-                    list.ToArray ()
+                    Environment.NewLine,
+                    list.ToArray()
                 );
             list.Clear();
-            int position = _GetPosition(markString, buffer) 
+            int position = _GetPosition(markString, buffer)
                 + _Encoding(true).GetByteCount(markString);
 
             MemoryStream ms = new MemoryStream(buffer, position, buffer.Length - position, false);
@@ -1652,7 +1660,7 @@ TryAgain:
             )
         {
             string[] text = ReadRawRecord(mfn, false);
-            IrbisRecord result = IrbisRecord.Parse(text,0);
+            IrbisRecord result = IrbisRecord.Parse(text, 0);
             result.Database = Database;
             return result;
         }
@@ -1663,10 +1671,10 @@ TryAgain:
                 int mfn
             )
         {
-            using ( new IrbisContextSaver (this) )
+            using (new IrbisContextSaver(this))
             {
                 Database = database;
-                return ReadRecord ( mfn );
+                return ReadRecord(mfn);
             }
         }
 
@@ -1710,10 +1718,10 @@ TryAgain:
                 string database
             )
         {
-            using ( new IrbisContextSaver (this) )
+            using (new IrbisContextSaver(this))
             {
                 Database = database;
-                return GetMaxMfn ();
+                return GetMaxMfn();
             }
         }
 
@@ -1734,12 +1742,12 @@ TryAgain:
                 case 0:
                     return new IrbisRecord[0];
                 case 1:
-                    return new[] {ReadRecord(array[0])};
+                    return new[] { ReadRecord(array[0]) };
             }
 
             string[] lines = ReadRawRecords(array);
             IrbisRecord[] result = lines
-                .Select(text => IrbisRecord.Parse(text,1))
+                .Select(text => IrbisRecord.Parse(text, 1))
                 .ToArray();
 
             foreach (IrbisRecord record in result)
@@ -1774,8 +1782,8 @@ TryAgain:
                         encoded.Append("\x0D\x0A");
                     }
                     string database = record.Database ?? Database;
-                    string one = database 
-                        + "\x001E\x001F" 
+                    string one = database
+                        + "\x001E\x001F"
                         + IrbisRecord.EncodeRecord
                         (
                             record,
@@ -1871,9 +1879,9 @@ TryAgain:
             _CheckConnected();
             _CheckBusy();
 
-            using ( new IrbisContextSaver ( this ) )
+            using (new IrbisContextSaver(this))
             {
-                if ( !string.IsNullOrEmpty ( record.Database ) )
+                if (!string.IsNullOrEmpty(record.Database))
                 {
                     Database = record.Database;
                 }
@@ -1881,31 +1889,31 @@ TryAgain:
                 try
                 {
                     _SetBusy(true);
-                    _OpenSocket ();
-                    QueryHeader query = _CreateQuery ( 'D' );
+                    _OpenSocket();
+                    QueryHeader query = _CreateQuery('D');
                     string encoded = IrbisRecord.EncodeRecord
                         (
                             record,
                             record.Mfn,
-                            (int) record.Status,
+                            (int)record.Status,
                             record.Version
                         );
                     _Send
                         (
                             query,
                             Database,
-                            _BoolToString ( needLock ),
-                            _BoolToString ( ifUpdate ),
+                            _BoolToString(needLock),
+                            _BoolToString(ifUpdate),
                             encoded
                         );
-                    string answer = _Receive ( false );
-                    _DebugDump ( answer );
-                    ResponseHeader response = ResponseHeader.Parse ( answer );
-                    _CheckReturnCode ( response );
+                    string answer = _Receive(false);
+                    _DebugDump(answer);
+                    ResponseHeader response = ResponseHeader.Parse(answer);
+                    _CheckReturnCode(response);
                 }
                 finally
                 {
-                    _CloseSocket ();
+                    _CloseSocket();
                     _SetBusy(false);
                 }
             }
@@ -1919,10 +1927,10 @@ TryAgain:
                 bool ifUpdate
             )
         {
-            IrbisRecord clone = record.Clone ();
+            IrbisRecord clone = record.Clone();
             clone.Database = database;
 
-            WriteRecord ( clone, needLock, ifUpdate );
+            WriteRecord(clone, needLock, ifUpdate);
         }
 
         public string[] RawSearch
@@ -1975,7 +1983,7 @@ TryAgain:
                 (
                     format,
                     args
-                );            
+                );
 
             List<int> result = new List<int>();
 
@@ -2083,10 +2091,10 @@ TryAgain:
                 params object[] args
             )
         {
-            using ( new IrbisContextSaver (this) )
+            using (new IrbisContextSaver(this))
             {
                 Database = database;
-                return Search ( format, args );
+                return Search(format, args);
             }
         }
 
@@ -2096,7 +2104,7 @@ TryAgain:
                 params object[] args
             )
         {
-            expression = string.Format(expression, args);            
+            expression = string.Format(expression, args);
 
             int total;
 
@@ -2111,7 +2119,7 @@ TryAgain:
 
             IrbisRecord[] result = found
                 .Where(_ => !string.IsNullOrEmpty(_))
-                .Select(text => IrbisRecord.Parse(text,1))
+                .Select(text => IrbisRecord.Parse(text, 1))
                 .ToArray();
 
             return result;
@@ -2124,10 +2132,10 @@ TryAgain:
                 params object[] args
             )
         {
-            using ( new IrbisContextSaver (this) )
+            using (new IrbisContextSaver(this))
             {
                 Database = database;
-                return SearchRead ( expression, args );
+                return SearchRead(expression, args);
             }
         }
 
@@ -2150,10 +2158,10 @@ TryAgain:
                 params object[] args
             )
         {
-            using ( new IrbisContextSaver (this) )
+            using (new IrbisContextSaver(this))
             {
                 Database = database;
-                return SearchReadOneRecord ( expression, args );
+                return SearchReadOneRecord(expression, args);
             }
         }
 
@@ -2189,10 +2197,10 @@ TryAgain:
                 string format
             )
         {
-            using ( new IrbisContextSaver (this) )
+            using (new IrbisContextSaver(this))
             {
                 Database = database;
-                return SearchFormat ( expression, format );
+                return SearchFormat(expression, format);
             }
         }
 
@@ -2243,10 +2251,10 @@ TryAgain:
             )
         {
 #if !PocketPC
-            if (format == "@" /* и версия сервера ниже той, когда разработчики наконец исправят ошибку */)            
-                format += OptFileRecord.SelectOptFile(record);            
+            if (format == "@" /* и версия сервера ниже той, когда разработчики наконец исправят ошибку */)
+                format += OptFileRecord.SelectOptFile(record);
 #endif
-            
+
             _CheckConnected();
             _CheckBusy();
 
@@ -2325,10 +2333,10 @@ TryAgain:
                 int mfn
             )
         {
-            using ( new IrbisContextSaver (this) )
+            using (new IrbisContextSaver(this))
             {
                 Database = database;
-                return FormatRecord ( format, mfn );
+                return FormatRecord(format, mfn);
             }
         }
 
@@ -2350,9 +2358,9 @@ TryAgain:
                 case 1:
                     if (string.IsNullOrEmpty(format))
                     {
-                        return new [] { string.Empty };
+                        return new[] { string.Empty };
                     }
-                    return new[] {FormatRecord(format, mfnList[0])};
+                    return new[] { FormatRecord(format, mfnList[0]) };
             }
 
             if (string.IsNullOrEmpty(format))
@@ -2425,14 +2433,14 @@ TryAgain:
         public string FormatRecordWithHighlight(string format, int mfn, string startMarker, string endMarker)
         {
             IrbisRecord record = ReadRecord(mfn);
-            return FormatRecordWithHighlight(format, record, startMarker, endMarker);            
+            return FormatRecordWithHighlight(format, record, startMarker, endMarker);
         }
 #endif
 
         /// <summary>
         /// Актуализирует запись.
         /// </summary>
-        /// <param name="mfn">MFN записи. 0 означает все 
+        /// <param name="mfn">MFN записи. 0 означает все
         /// неактуализированные записи в базе.</param>
         public void ActualizeRecord
             (
@@ -2473,7 +2481,7 @@ TryAgain:
         /// <see cref="Workstation"/> can't be switched at the
         /// runtime!
         /// </remarks>
-        public void TruncateDatabase ()
+        public void TruncateDatabase()
         {
             _CheckConnected();
             _CheckBusy();
@@ -2501,7 +2509,7 @@ TryAgain:
                 string database
             )
         {
-            using ( new IrbisContextSaver ( this ) )
+            using (new IrbisContextSaver(this))
             {
                 Database = database;
                 TruncateDatabase();
@@ -2551,9 +2559,9 @@ TryAgain:
         /// <summary>
         /// Получение информации о базе данных.
         /// </summary>
-        /// <returns>список логически удаленных, физически удаленных, 
+        /// <returns>список логически удаленных, физически удаленных,
         /// неактуализированных и заблокированных записей.</returns>
-        public IrbisDatabaseInfo GetDatabaseInfo ()
+        public IrbisDatabaseInfo GetDatabaseInfo()
         {
             _CheckConnected();
             _CheckBusy();
@@ -2585,10 +2593,10 @@ TryAgain:
                 string database
             )
         {
-            using ( new IrbisContextSaver (this) )
+            using (new IrbisContextSaver(this))
             {
                 Database = database;
-                return GetDatabaseInfo ();
+                return GetDatabaseInfo();
             }
         }
 
@@ -2875,7 +2883,7 @@ TryAgain:
                     {
                         string text = term.Text.Substring
                             (
-                                prefixLength, 
+                                prefixLength,
                                 term.Text.Length - prefixLength
                             );
                         if (!string.IsNullOrEmpty(text))
@@ -3221,10 +3229,10 @@ TryAgain:
                 _DebugDump(answer);
                 ResponseHeader response = ResponseHeader.Parse(answer);
                 _CheckReturnCode(response);
-                if ( response.Data.Count > 6 )
+                if (response.Data.Count > 6)
                 {
-                    bool result = (Convert.ToInt32 ( response.Data[0] ) == 0)
-                        && ( Convert.ToInt32 ( response.Data [ 6 ] ) != 0 );
+                    bool result = (Convert.ToInt32(response.Data[0]) == 0)
+                        && (Convert.ToInt32(response.Data[6]) != 0);
                     return result;
                 }
                 return false;
@@ -3497,7 +3505,7 @@ TryAgain:
             {
                 return null;
             }
-            IrbisRecord result = IrbisRecord.Parse(text,0);
+            IrbisRecord result = IrbisRecord.Parse(text, 0);
             if (result != null)
             {
                 result.Database = Database;
@@ -3595,7 +3603,7 @@ TryAgain:
         /// отбирающее записи.</param>
         /// <param name="searchFrom">Первый MFN в БД для поиска.</param>
         /// <param name="searchTo">Последний MFN в БД для поиска.</param>
-        /// <param name="firstMfn">Первый mfn в результате поиска 
+        /// <param name="firstMfn">Первый mfn в результате поиска
         /// для корректировки.</param>
         /// <param name="lastMfn">Последний mfn в результате поиска для корректировки.</param>
         /// <param name="mfns">Прямое перечисление MFN.</param>
@@ -3627,7 +3635,7 @@ TryAgain:
                 QueryHeader query = _CreateQuery('5');
                 List<string> data = new List<string>
                 {
-                    Database, 
+                    Database,
                     _BoolToString(updateIf)
                 };
                 StringBuilder builder = new StringBuilder();
@@ -3646,7 +3654,7 @@ TryAgain:
                 data.Add(searchExpression);
                 data.Add(searchFrom.ToInvariantString());
                 data.Add(searchTo.ToInvariantString());
-                
+
                 data.Add(string.Empty); // Пустая строка неизвестного назначения
 
                 if (mfns == null)
@@ -3898,7 +3906,7 @@ TryAgain:
 
 #if !PocketPC
         public IrbisOpt GetOptInfo(String OptFileName)
-        {            
+        {
             int formatItemsCount;
             int index;
             String txtLine;
@@ -3906,7 +3914,7 @@ TryAgain:
             {
                 string answer = ReadTextFile(IrbisPath.Data, Database + "\\" + OptFileName);
                 IrbisOpt irbisOpt = new IrbisOpt();
-                String[] OptBuffer = answer.Split(new [] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries); //answer.SplitLines()
+                String[] OptBuffer = answer.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries); //answer.SplitLines()
                 if (OptBuffer.Length == 0)
                 {
                     return new IrbisOpt();
@@ -4015,7 +4023,7 @@ TryAgain:
         //}
 
         /// <summary>
-        /// Данный метод нужен, чтобы клиент 
+        /// Данный метод нужен, чтобы клиент
         /// не пытался самостоятельно закрыть соединение с сервером.
         /// Этот метод может пригодиться при сохранении состояния
         /// клиента с последующим восстановлением.
@@ -4027,7 +4035,7 @@ TryAgain:
 
         /// <summary>
         /// Фиксирует в серверном INI-файле ФИО оператора и этап работы.
-        /// Это нужно для работы &amp;unifor('IPRIVATE,FIO') 
+        /// Это нужно для работы &amp;unifor('IPRIVATE,FIO')
         /// и &amp;unifor('IPRIVATE,ETR')
         /// </summary>
         public bool ReportSettingsToServer()
@@ -4039,12 +4047,12 @@ TryAgain:
 
             if (!string.IsNullOrEmpty(Username))
             {
-                settings.Add(string.Concat("FIO=",Username));
+                settings.Add(string.Concat("FIO=", Username));
                 result = true;
             }
             if (!string.IsNullOrEmpty(StageOfWork))
             {
-                settings.Add(string.Concat("ETR=",StageOfWork));
+                settings.Add(string.Concat("ETR=", StageOfWork));
                 result = true;
             }
 
@@ -4079,7 +4087,7 @@ TryAgain:
             MemoryStream stream = new MemoryStream(array);
             BinaryFormatter formatter = new BinaryFormatter();
             ManagedClient64 result = (ManagedClient64)formatter.Deserialize(stream);
-            result._waitHandle = new ManualResetEvent (true);
+            result._waitHandle = new ManualResetEvent(true);
             return result;
         }
 #endif

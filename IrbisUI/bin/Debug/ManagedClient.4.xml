@@ -219,6 +219,61 @@
             Book in processing.
             </summary>
         </member>
+        <member name="T:ManagedClient.FastNumber">
+            <summary>
+            Fast routines for integer numbers.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FastNumber.Int32ToString(System.Int32)">
+            <summary>
+            Convert integer to string.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FastNumber.Int64ToString(System.Int64)">
+            <summary>
+            Convert integer to string.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FastNumber.ParseInt32(System.String)">
+            <summary>
+            Fast number parsing.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FastNumber.ParseInt32(System.String,System.Int32,System.Int32)">
+            <summary>
+            Fast number parsing.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FastNumber.ParseInt32(System.Char[],System.Int32,System.Int32)">
+            <summary>
+            Fast number parsing.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FastNumber.ParseInt32(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Fast number parsing.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FastNumber.ParseInt64(System.String)">
+            <summary>
+            Fast number parsing.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FastNumber.ParseInt64(System.String,System.Int32,System.Int32)">
+            <summary>
+            Fast number parsing.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FastNumber.ParseInt64(System.Char[],System.Int32,System.Int32)">
+            <summary>
+            Fast number parsing.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.FastNumber.ParseInt64(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Fast number parsing.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Fields.ExemplarManager">
             <summary>
             Exemplar manager
@@ -7514,7 +7569,7 @@
         </member>
         <member name="M:ManagedClient.IrbisRecord.AddField(System.String,System.String)">
             <summary>
-            Добавление поля (в конец списка полей) 
+            Добавление поля (в конец списка полей)
             с указанными меткой и текстом.
             </summary>
             <param name="tag">Метка поля.</param>
@@ -9892,29 +9947,29 @@
             </summary>
         </member>
         <member name="F:ManagedClient.ManagedClient64.MaxPostings">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="F:ManagedClient.ManagedClient64.DefaultHost">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="F:ManagedClient.ManagedClient64.DefaultDatabase">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="F:ManagedClient.ManagedClient64.DefaultWorkstation">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="F:ManagedClient.ManagedClient64.DefaultPort">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="F:ManagedClient.ManagedClient64.DefaultRetryCount">
             <summary>
@@ -10021,7 +10076,7 @@
             <summary>
             Поток для вывода отладочной информации.
             </summary>
-            <remarks><para><c>null</c> означает, что вывод отладочной 
+            <remarks><para><c>null</c> означает, что вывод отладочной
             информации не нужен.</para>
             <para>Обратите внимание, что <see cref="P:ManagedClient.ManagedClient64.DebugWriter"/>
             не сериализуется, т. к. большинство потоков не умеют
@@ -10059,7 +10114,7 @@
         <member name="P:ManagedClient.ManagedClient64.PftOptFile">
             <summary>
             Имя файла оптимизации с расширением PFT
-            </summary>        
+            </summary>
         </member>
         <member name="P:ManagedClient.ManagedClient64.UserData">
             <summary>
@@ -10114,6 +10169,18 @@
             был подключен клиент на момент восстановления
             состояния.</returns>
         </member>
+        <member name="M:ManagedClient.ManagedClient64.EncodeNewLines(System.String)">
+            <summary>
+            Перекодирование переводов строки в представление ИРБИС.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.DecodeNewLines(System.String)">
+            <summary>
+            Декодирование переводов строки из представления ИРБИС.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
         <member name="M:ManagedClient.ManagedClient64.Connect">
             <summary>
             Подключение к серверу.
@@ -10142,7 +10209,7 @@
             <summary>
             Актуализирует запись.
             </summary>
-            <param name="mfn">MFN записи. 0 означает все 
+            <param name="mfn">MFN записи. 0 означает все
             неактуализированные записи в базе.</param>
         </member>
         <member name="M:ManagedClient.ManagedClient64.TruncateDatabase">
@@ -10159,7 +10226,7 @@
             <summary>
             Получение информации о базе данных.
             </summary>
-            <returns>список логически удаленных, физически удаленных, 
+            <returns>список логически удаленных, физически удаленных,
             неактуализированных и заблокированных записей.</returns>
         </member>
         <member name="M:ManagedClient.ManagedClient64.GetQueryCount">
@@ -10176,7 +10243,7 @@
             отбирающее записи.</param>
             <param name="searchFrom">Первый MFN в БД для поиска.</param>
             <param name="searchTo">Последний MFN в БД для поиска.</param>
-            <param name="firstMfn">Первый mfn в результате поиска 
+            <param name="firstMfn">Первый mfn в результате поиска
             для корректировки.</param>
             <param name="lastMfn">Последний mfn в результате поиска для корректировки.</param>
             <param name="mfns">Прямое перечисление MFN.</param>
@@ -10193,7 +10260,7 @@
         </member>
         <member name="M:ManagedClient.ManagedClient64.Shutdown">
             <summary>
-            Данный метод нужен, чтобы клиент 
+            Данный метод нужен, чтобы клиент
             не пытался самостоятельно закрыть соединение с сервером.
             Этот метод может пригодиться при сохранении состояния
             клиента с последующим восстановлением.
@@ -10202,7 +10269,7 @@
         <member name="M:ManagedClient.ManagedClient64.ReportSettingsToServer">
             <summary>
             Фиксирует в серверном INI-файле ФИО оператора и этап работы.
-            Это нужно для работы &amp;unifor('IPRIVATE,FIO') 
+            Это нужно для работы &amp;unifor('IPRIVATE,FIO')
             и &amp;unifor('IPRIVATE,ETR')
             </summary>
         </member>
