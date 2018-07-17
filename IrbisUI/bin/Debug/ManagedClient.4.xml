@@ -9941,35 +9941,30 @@
             Разделитель строк в пакете запроса к серверу.
             </summary>
         </member>
-        <member name="F:ManagedClient.ManagedClient64.ResponseLineDelimiter">
+        <member name="F:ManagedClient.ManagedClient64.MaxPostings">
             <summary>
-            Разделитель строк в пакете ответа сервера.
+            Максимальное количество постингов в ответе.
             </summary>
         </member>
-        <member name="F:ManagedClient.ManagedClient64.MaxPostings">
-             <summary>
-            
-             </summary>
-        </member>
         <member name="F:ManagedClient.ManagedClient64.DefaultHost">
-             <summary>
-            
-             </summary>
+            <summary>
+            Хост по умолчанию.
+            </summary>
         </member>
         <member name="F:ManagedClient.ManagedClient64.DefaultDatabase">
-             <summary>
-            
-             </summary>
+            <summary>
+            База данных по умолчанию.
+            </summary>
         </member>
         <member name="F:ManagedClient.ManagedClient64.DefaultWorkstation">
-             <summary>
-            
-             </summary>
+            <summary>
+            АРМ по умолчанию.
+            </summary>
         </member>
         <member name="F:ManagedClient.ManagedClient64.DefaultPort">
-             <summary>
-            
-             </summary>
+            <summary>
+            Порт по умолчанию.
+            </summary>
         </member>
         <member name="F:ManagedClient.ManagedClient64.DefaultRetryCount">
             <summary>
@@ -10006,14 +10001,14 @@
             Вызывается при смене базы данных.
             </summary>
         </member>
-        <member name="E:ManagedClient.ManagedClient64.BeforeQuery">
+        <member name="F:ManagedClient.ManagedClient64.Version">
             <summary>
-            Трансформация запроса перед отсылкой на сервер.
+            Версия клиента.
             </summary>
         </member>
-        <member name="E:ManagedClient.ManagedClient64.AfterQuery">
+        <member name="P:ManagedClient.ManagedClient64.Busy">
             <summary>
-            Трансформация ответа после получения с сервера.
+            Признак занятости.
             </summary>
         </member>
         <member name="P:ManagedClient.ManagedClient64.Host">
@@ -10113,7 +10108,7 @@
         </member>
         <member name="P:ManagedClient.ManagedClient64.PftOptFile">
             <summary>
-            Имя файла оптимизации с расширением PFT
+            Имя файла оптимизации с расширением PFT.
             </summary>
         </member>
         <member name="P:ManagedClient.ManagedClient64.UserData">

@@ -11,22 +11,19 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
-using System.Net.Sockets;
-using System.IO;
 using System.Text.RegularExpressions;
 
 using JetBrains.Annotations;
 
 using MoonSharp.Interpreter;
-
-#if !PocketPC
-using System.Runtime.Serialization.Formatters.Binary;
-#endif
 
 #endregion
 
@@ -51,45 +48,30 @@ namespace ManagedClient
         public const char QueryLineDelimiter = (char)0x0A;
 
         /// <summary>
-        /// Разделитель строк в пакете ответа сервера.
-        /// </summary>
-        public const string ResponseLineDelimiter = "";
-
-        /// <summary>
-        ///
+        /// Максимальное количество постингов в ответе.
         /// </summary>
         public const int MaxPostings = 32758;
 
         /// <summary>
-        ///
+        /// Хост по умолчанию.
         /// </summary>
         public const string DefaultHost = "127.0.0.1";
 
         /// <summary>
-        ///
+        /// База данных по умолчанию.
         /// </summary>
         public const string DefaultDatabase = "IBIS";
 
         /// <summary>
-        ///
+        /// АРМ по умолчанию.
         /// </summary>
         public const IrbisWorkstation DefaultWorkstation
             = IrbisWorkstation.Cataloger;
 
         /// <summary>
-        ///
+        /// Порт по умолчанию.
         /// </summary>
         public const int DefaultPort = 6666;
-
-        ///// <summary>
-        /////
-        ///// </summary>
-        //public const string DefaultUsername = "1";
-
-        ///// <summary>
-        /////
-        ///// </summary>
-        //public const string DefaultPassword = "1";
 
         /// <summary>
         /// Количество попыток повторения команды по умолчанию.
@@ -108,9 +90,7 @@ namespace ManagedClient
         /// <summary>
         /// Вызывается при возникновении ошибки.
         /// </summary>
-#if !PocketPC
         public event EventHandler<IrbisCommadEventArgs> ErrorHandler;
-#endif
 
         /// <summary>
         /// Вызывается, когда меняется состояние Busy;
@@ -122,7 +102,6 @@ namespace ManagedClient
         /// </summary>
         public event EventHandler Disposing;
 
-#if !PocketPC
         /// <summary>
         /// Вызывается при отсутствии логина/пароля для входа на сервер.
         /// </summary>
@@ -133,30 +112,21 @@ namespace ManagedClient
         /// </summary>
         public event EventHandler<DatabaseChangedEventArgs> DatabaseChanged;
 
-        /// <summary>
-        /// Трансформация запроса перед отсылкой на сервер.
-        /// </summary>
-        // ReSharper disable once EventNeverInvoked
-        public event EventHandler<BeforeQueryEventArgs> BeforeQuery;
-
-        /// <summary>
-        /// Трансформация ответа после получения с сервера.
-        /// </summary>
-        // ReSharper disable once EventNeverInvoked
-        public event EventHandler<AfterQueryEventArgs> AfterQuery;
-
-#endif
-
         #endregion
 
         #region Properties
 
+        /// <summary>
+        /// Версия клиента.
+        /// </summary>
         public static Version Version = Assembly
             .GetExecutingAssembly()
             .GetName()
             .Version;
 
-        //[Browsable(false)]
+        /// <summary>
+        /// Признак занятости.
+        /// </summary>
         public bool Busy { get; private set; }
 
         /// <summary>
@@ -281,7 +251,6 @@ namespace ManagedClient
         [DefaultValue(false)]
         public bool Interrupted { get; set; }
 
-#if !PocketPC
         public IrbisIniFile Settings
         {
             get
@@ -294,7 +263,6 @@ namespace ManagedClient
                 return _settings;
             }
         }
-#endif
 
         /// <summary>
         /// Флаг, устанавливающий необходимость парсинга поискового запроса с выделением ключевых слов
@@ -303,7 +271,6 @@ namespace ManagedClient
         [DefaultValue(false)]
         public bool NeedParseRequest { get; set; }
 
-#if !PocketPC
         public IrbisOpt OptFileRecord;
 
         /// <summary>
@@ -347,19 +314,14 @@ namespace ManagedClient
         }
 
         /// <summary>
-        /// Имя файла оптимизации с расширением PFT
+        /// Имя файла оптимизации с расширением PFT.
         /// </summary>
-
         public string PftOptFile { get; private set; }
-#endif
-
 
         /// <summary>
         /// Произвольные пользовательские данные
         /// </summary>
-#if !PocketPC
         [Browsable(false)]
-#endif
         public object UserData { get; set; }
 
         /// <summary>
@@ -367,15 +329,12 @@ namespace ManagedClient
         /// </summary>
         public string StageOfWork { get; set; }
 
-#if !PocketPC
-
         /// <summary>
         /// Кэш форматов, меню и т. д.
         /// По умолчанию отсутствует.
         /// См. <see cref="ReadTextFile(string)"/>.
         /// </summary>
         public IrbisCache Cache { get; set; }
-#endif
 
         #endregion
 
@@ -424,12 +383,10 @@ namespace ManagedClient
         private int _userID;
         private int _queryID;
 
-#if !PocketPC
         [NonSerialized]
         private IrbisIniFile _settings;
 
         private IrbisSearchEngine SearchEngine;
-#endif
 
         private string _database;
 
@@ -445,9 +402,6 @@ namespace ManagedClient
                 int returnCode
             )
         {
-#if PocketPC
-            return true;
-#else
             if (!string.IsNullOrEmpty(Username)
                 && !string.IsNullOrEmpty(Password))
             {
@@ -471,12 +425,9 @@ namespace ManagedClient
             {
                 return false;
             }
-            //Username = Username;
-            //Password = Password;
 
             return !string.IsNullOrEmpty(Username)
                    && !string.IsNullOrEmpty(Password);
-#endif
         }
 
         private void _CheckReturnCode
@@ -729,10 +680,9 @@ namespace ManagedClient
             _DebugDump(lines[0] + lines[1]);
             byte[] bytes1 = _cp1251.GetBytes(lines[0]);
             byte[] bytes2 = (ansiData ? _cp1251 : _utf8).GetBytes(lines[1]);
-            byte[] bytes = new byte[bytes1.Length + bytes2.Length];
-            Array.Copy(bytes1, 0, bytes, 0, bytes1.Length);
-            Array.Copy(bytes2, 0, bytes, bytes1.Length, bytes2.Length);
-            _client.GetStream().Write(bytes, 0, bytes.Length);
+            NetworkStream stream = _client.GetStream();
+            stream.Write(bytes1, 0, bytes1.Length);
+            stream.Write(bytes2, 0, bytes2.Length);
         }
 
         private void _Send
@@ -767,8 +717,7 @@ namespace ManagedClient
                 Utilities.DumpBytes(DebugWriter, buffer, 0, buffer.Length);
             }
 
-            string result = _Encoding(cp1251)
-                .GetString
+            string result = _Encoding(cp1251).GetString
                 (
                     buffer,
                     0,
@@ -843,7 +792,6 @@ namespace ManagedClient
 
             _database = newDatabase;
 
-#if !PocketPC
             if (string.Compare
                 (
                     oldDatabase,
@@ -868,7 +816,6 @@ namespace ManagedClient
                         );
                 }
             }
-#endif
         }
 
         #endregion
@@ -1078,9 +1025,7 @@ namespace ManagedClient
                         2,
                         eventArgs.Response.Data.Count - 2
                     );
-#if !PocketPC
                 _settings = null;
-#endif
 
                 returnCode = eventArgs.Response.ReturnCode;
                 // Приводило к зацикливанию,
@@ -1113,21 +1058,6 @@ namespace ManagedClient
             {
                 _CloseSocket();
                 _SetBusy(false);
-
-#if !PocketPC
-                //if (_connected)
-                //{
-                //    int index = _configuration.IndexOf("PftOpt=");
-                //    if (index != -1)
-                //    {
-                //        index += 7;
-                //        int length = _configuration.IndexOf("\r\n", index) - index;
-                //        PftOptFile = _configuration.Substring(index, length);
-                //        OptFileRecord = GetOptInfo(PftOptFile);
-                //    }
-                //    SearchEngine = new IrbisSearchEngine(this);
-                //}
-#endif
             }
             return null;
         }
@@ -1170,9 +1100,7 @@ namespace ManagedClient
                 _CheckReturnCode(eventArgs.Response, -1,
                     (int)IrbisReturnCode.ClientNotInList,
                     (int)IrbisReturnCode.WrongClientIdentifier);
-#if !PocketPC
                 _settings = null;
-#endif
                 _connected = false;
             }
             catch (Exception exception)
@@ -1350,9 +1278,6 @@ namespace ManagedClient
                 string name
             )
         {
-#if PocketPC
-            return ReadTextFile(IrbisPath.MasterFile, name);
-#else
             string result = (Cache == null)
                 ? ReadTextFile(IrbisPath.MasterFile, name)
                 : Cache.Get(name, this);
@@ -1367,7 +1292,6 @@ namespace ManagedClient
             }
 
             return result;
-#endif
         }
 
         public string[] ListFiles
@@ -2022,16 +1946,17 @@ namespace ManagedClient
                 count = rest + 2;
             }
 
-#if !PocketPC
             try
             {
                 if (NeedParseRequest)
+                {
                     SearchEngine.ParseRequest(expression);
+                }
             }
-            catch (RequestParsingException)
+            catch (RequestParsingException ex)
             {
+                Debug.WriteLine(ex);
             }
-#endif
 
             return result
                 .ToArray();
@@ -2250,10 +2175,8 @@ namespace ManagedClient
                 IrbisRecord record
             )
         {
-#if !PocketPC
             if (format == "@" /* и версия сервера ниже той, когда разработчики наконец исправят ошибку */)
                 format += OptFileRecord.SelectOptFile(record);
-#endif
 
             _CheckConnected();
             _CheckBusy();
@@ -2411,8 +2334,8 @@ namespace ManagedClient
             }
         }
 
-#if !PocketPC
-        public string FormatRecordWithHighlight(string format, IrbisRecord record, string startMarker, string endMarker)
+        public string FormatRecordWithHighlight (string format,
+            IrbisRecord record, string startMarker, string endMarker)
         {
             foreach (IrbisSearchEngine.SearchTerm term in SearchEngine.searchTerms)
             {
@@ -2430,12 +2353,12 @@ namespace ManagedClient
             return desc;
         }
 
-        public string FormatRecordWithHighlight(string format, int mfn, string startMarker, string endMarker)
+        public string FormatRecordWithHighlight(string format, int mfn,
+            string startMarker, string endMarker)
         {
             IrbisRecord record = ReadRecord(mfn);
             return FormatRecordWithHighlight(format, record, startMarker, endMarker);
         }
-#endif
 
         /// <summary>
         /// Актуализирует запись.
@@ -2858,11 +2781,7 @@ namespace ManagedClient
                 throw new ArgumentNullException("prefix");
             }
 
-#if PocketPC
-            prefix = prefix.ToUpper();
-#else
             prefix = prefix.ToUpperInvariant();
-#endif
 
             List<string> result = new List<string>();
 
@@ -3904,7 +3823,6 @@ namespace ManagedClient
                 .ToArray();
         }
 
-#if !PocketPC
         public IrbisOpt GetOptInfo(String OptFileName)
         {
             int formatItemsCount;
@@ -3941,7 +3859,6 @@ namespace ManagedClient
                 return null;
             }
         }
-#endif
 
         public void StartDebug(string fileName)
         {
@@ -4064,7 +3981,6 @@ namespace ManagedClient
             return result;
         }
 
-#if !PocketPC
         public static string SerializeToString
             (
                 ManagedClient64 client
@@ -4090,7 +4006,6 @@ namespace ManagedClient
             result._waitHandle = new ManualResetEvent(true);
             return result;
         }
-#endif
 
         public bool CanFixThisError
             (
@@ -4104,7 +4019,6 @@ namespace ManagedClient
             return false;
         }
 
-#if !PocketPC
         public void InvokeErrorHandler(IrbisCommadEventArgs eventArgs)
         {
             EventHandler<IrbisCommadEventArgs> handler = ErrorHandler;
@@ -4113,7 +4027,6 @@ namespace ManagedClient
                 handler.Invoke(this, eventArgs);
             }
         }
-#endif
 
         public TResult ExecuteFunction<TArgument, TResult>
             (
@@ -4142,9 +4055,7 @@ namespace ManagedClient
                     break;
                 }
                 {
-#if !PocketPC
                     InvokeErrorHandler(eventArgs);
-#endif
                     if (eventArgs.StopExecution)
                     {
                         break;
