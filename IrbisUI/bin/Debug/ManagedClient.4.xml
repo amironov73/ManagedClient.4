@@ -10096,14 +10096,36 @@
             (для продвинутых функций).
             </summary>
         </member>
+        <member name="P:ManagedClient.ManagedClient64.Settings">
+            <summary>
+            Содержимое серверного INI-файла, присланного при подключении.
+            </summary>
+        </member>
         <member name="P:ManagedClient.ManagedClient64.NeedParseRequest">
             <summary>
-            Флаг, устанавливающий необходимость парсинга поискового запроса с выделением ключевых слов
+            Флаг, устанавливающий необходимость парсинга поискового запроса
+            с выделением ключевых слов.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ManagedClient64.OptFileRecord">
+            <summary>
+            Файл оптимизации формата просмотра.
             </summary>
         </member>
         <member name="P:ManagedClient.ManagedClient64.MinCharsCountForSelect">
             <summary>
-            Минимальное необходимое количество символов для выделения термина
+            Минимальное необходимое количество символов
+            для выделения термина.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ManagedClient64.SearchScenarios">
+            <summary>
+            Сценарии поиска для текущей базы данных.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ManagedClient64.SearchQualifiers">
+            <summary>
+            Квалификаторы поиска для текущей базы данных.
             </summary>
         </member>
         <member name="P:ManagedClient.ManagedClient64.PftOptFile">
@@ -10173,17 +10195,65 @@
             <summary>
             Декодирование переводов строки из представления ИРБИС.
             </summary>
-            <param name="text"></param>
-            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.Reconnect">
+            <summary>
+            Переподключение (в случае ошибки).
+            </summary>
         </member>
         <member name="M:ManagedClient.ManagedClient64.Connect">
             <summary>
             Подключение к серверу.
             </summary>
         </member>
+        <member name="M:ManagedClient.ManagedClient64.Disconnect">
+            <summary>
+            Отключение от сервера.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.NoOp">
+            <summary>
+            Пустая операция.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.WriteIni(System.String[])">
+            <summary>
+            Обновление данных в серверном INI-файле.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.GetVersion">
+            <summary>
+            Получение версии сервера.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.ReadTextFile(ManagedClient.IrbisPath,System.String)">
+            <summary>
+            Чтение текстового файла с сервера.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.ReadTextFile(System.String)">
+            <summary>
+            Чтение текстового файла с сервера.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.ListFiles(ManagedClient.IrbisPath,System.String,System.String)">
+            <summary>
+            Получение списка файлов на сервере.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.WriteTextFile(ManagedClient.IrbisPath,System.String,System.String,System.String)">
+            <summary>
+            Сохранение текстового файла на сервере.
+            </summary>
+        </member>
         <member name="M:ManagedClient.ManagedClient64.ReadBinaryFile(ManagedClient.IrbisPath,System.String)">
             <summary>
             Чтение бинарного файла с сервера.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.ReadRawRecord(System.Int32,System.Boolean)">
+            <summary>
+            Чтение сырой записи с сервера.
             </summary>
         </member>
         <member name="M:ManagedClient.ManagedClient64.ReadRecord(System.Int32)">
@@ -10193,11 +10263,86 @@
             <param name="mfn">MFN записи для чтения.</param>
             <returns>Раскодированная по полям запись.</returns>
         </member>
+        <member name="M:ManagedClient.ManagedClient64.GetMaxMfn">
+            <summary>
+            Получение максимального MFN текущей базы данных.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.GetMaxMfn(System.String)">
+            <summary>
+            Получение максимального MFN для указанной базы данных.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.ReadRecords(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            Чтение указанных записей.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.WriteRecords(ManagedClient.IrbisRecord[],System.Boolean,System.Boolean)">
+            <summary>
+            Сохранение записей.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.WriteRawRecords(System.String[],System.Boolean,System.Boolean)">
+            <summary>
+            Сохранение сырых записей.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.WriteRecord(ManagedClient.IrbisRecord,System.Boolean,System.Boolean)">
+            <summary>
+            Сохранение записи на сервере.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.RawSearch(System.String,System.Int32,System.Int32,System.String,System.Int32@)">
+            <summary>
+            Сырой поиск записей.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.Search(System.String,System.Object[])">
+            <summary>
+            Поиск  записей.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.SearchCount(System.String,System.Object[])">
+            <summary>
+            Определение количества записей, соответствующих поисковому запросу.
+            </summary>
+        </member>
         <member name="M:ManagedClient.ManagedClient64.SearchDatabase(System.String,System.String,System.Object[])">
             <summary>
             Ищет по указанной базе данных.
             По окончанию поиска восстанавливает
             текущий контекст.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.SearchRead(System.String,System.Object[])">
+            <summary>
+            Поиск и загрузка найденных записей.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.SearchReadOneRecord(System.String,System.Object[])">
+            <summary>
+            Поиск и загрузка первой из найденных баз данных.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.SearchFormat(System.String,System.String)">
+            <summary>
+            Поиск и форматирование найденных записей.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.FormatRecord(System.String,ManagedClient.IrbisRecord)">
+            <summary>
+            Форматирование "виртуальной записи".
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.FormatRecord(System.String,System.Int32)">
+            <summary>
+            Форматирование записи с указанным MFN.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.FormatRecords(System.String,System.Int32[])">
+            <summary>
+            Форматирование записей с указанными MFN.
             </summary>
         </member>
         <member name="M:ManagedClient.ManagedClient64.ActualizeRecord(System.Int32)">
@@ -10224,11 +10369,48 @@
             <returns>список логически удаленных, физически удаленных,
             неактуализированных и заблокированных записей.</returns>
         </member>
+        <member name="M:ManagedClient.ManagedClient64.GetDatabaseInfo(System.String)">
+            <summary>
+            Получение информации о базе данных.
+            </summary>
+            <returns>список логически удаленных, физически удаленных,
+            неактуализированных и заблокированных записей.</returns>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.GetSearchTerms(System.String,System.Int32)">
+            <summary>
+            Получение термов поискового словаря.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.GetSearchTerms(System.String,System.Int32,System.String)">
+            <summary>
+            Получение термов поискового словаря с расформатированием.
+            </summary>
+        </member>
         <member name="M:ManagedClient.ManagedClient64.GetQueryCount">
             <summary>
             Общее число обращений к серверу, выполненных данным клиентом.
             </summary>
             <returns>Число обращений к серверу.</returns>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.UnlockDatabase(System.String)">
+            <summary>
+            Разблокировка базы данных.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.IsDatabaseLocked(System.String)">
+            <summary>
+            Получение флага, заблокирована ли указанная база данных.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.RebuildDictionary(System.String)">
+            <summary>
+            Пересоздание словаря для указанной базы данных.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.ActualizeDatabase(System.String)">
+            <summary>
+            Актуализировать указанную базу данных.
+            </summary>
         </member>
         <member name="M:ManagedClient.ManagedClient64.GlobalAdjustment(System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32[],System.Boolean,System.Boolean,System.Boolean,ManagedClient.Gbl.GblItem[])">
             <summary>
@@ -10249,9 +10431,18 @@
         </member>
         <member name="M:ManagedClient.ManagedClient64.RawSequentialSearch(System.String,System.Int32,System.Int32,System.String,System.Int32,System.Int32,System.String,System.Boolean)">
             <summary>
+            Сырой последовательный поиск.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.SequentialSearch(System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Boolean)">
+            <summary>
             Последовательный поиск.
             </summary>
-            <returns></returns>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.SequentialSearch(System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.String)">
+            <summary>
+            Последовательный поиск.
+            </summary>
         </member>
         <member name="M:ManagedClient.ManagedClient64.Shutdown">
             <summary>
@@ -10266,6 +10457,11 @@
             Фиксирует в серверном INI-файле ФИО оператора и этап работы.
             Это нужно для работы &amp;unifor('IPRIVATE,FIO')
             и &amp;unifor('IPRIVATE,ETR')
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ManagedClient64.Dispose">
+            <summary>
+            Отключение от сервера.
             </summary>
         </member>
         <member name="T:ManagedClient.Mapping.FieldAttribute">

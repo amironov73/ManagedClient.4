@@ -147,14 +147,12 @@ namespace ManagedClient
         /// Имя пользователя.
         /// </summary>
         /// <value>Имя пользователя.</value>
-        //[DefaultValue(DefaultUsername)]
         public string Username { get; set; }
 
         /// <summary>
         /// Пароль пользователя.
         /// </summary>
         /// <value>Пароль пользователя.</value>
-        //[DefaultValue(DefaultPassword)]
         public string Password { get; set; }
 
         /// <summary>
@@ -248,9 +246,9 @@ namespace ManagedClient
         [DefaultValue(DefaultTimeout)]
         public int Timeout { get; set; }
 
-        [DefaultValue(false)]
-        public bool Interrupted { get; set; }
-
+        /// <summary>
+        /// Содержимое серверного INI-файла, присланного при подключении.
+        /// </summary>
         public IrbisIniFile Settings
         {
             get
@@ -265,18 +263,22 @@ namespace ManagedClient
         }
 
         /// <summary>
-        /// Флаг, устанавливающий необходимость парсинга поискового запроса с выделением ключевых слов
+        /// Флаг, устанавливающий необходимость парсинга поискового запроса
+        /// с выделением ключевых слов.
         /// </summary>
 
         [DefaultValue(false)]
         public bool NeedParseRequest { get; set; }
 
+        /// <summary>
+        /// Файл оптимизации формата просмотра.
+        /// </summary>
         public IrbisOpt OptFileRecord;
 
         /// <summary>
-        /// Минимальное необходимое количество символов для выделения термина
+        /// Минимальное необходимое количество символов
+        /// для выделения термина.
         /// </summary>
-
         public int MinCharsCountForSelect
         {
             get
@@ -285,7 +287,6 @@ namespace ManagedClient
                     return SearchEngine.MinLKWLight;
                 return 0;
             }
-
             set
             {
                 if (SearchEngine != null)
@@ -293,6 +294,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Сценарии поиска для текущей базы данных.
+        /// </summary>
         public IrbisSearchEngine.SearchScenario[] SearchScenarios
         {
             get
@@ -303,6 +307,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Квалификаторы поиска для текущей базы данных.
+        /// </summary>
         public IrbisSearchEngine.SearchQualifier[] SearchQualifiers
         {
             get
@@ -369,6 +376,7 @@ namespace ManagedClient
         #region Private members
 
         private string _configuration;
+
         private bool _connected;
 
         [NonSerialized]
@@ -438,7 +446,7 @@ namespace ManagedClient
             // ReSharper restore UnusedParameter.Local
             )
         {
-            if ((response.ReturnCode < 0)
+            if (response.ReturnCode < 0
                  && !allowed.Contains(response.ReturnCode))
             {
                 throw new IrbisException(response.ReturnCode);
@@ -466,11 +474,6 @@ namespace ManagedClient
                 bool newState
             )
         {
-            if (newState)
-            {
-                Interrupted = false;
-            }
-
             if (newState != Busy)
             {
                 if (newState)
@@ -600,7 +603,7 @@ namespace ManagedClient
             )
         {
             int index = text.IndexOf('#');
-            return (index >= 0)
+            return index >= 0
                        ? text.Substring(index + 1)
                        : text;
         }
@@ -711,7 +714,7 @@ namespace ManagedClient
             byte[] buffer = _client.Client.ReadToEnd();
 
             if (AllowHexadecimalDump
-                 && (DebugWriter != null))
+                 && DebugWriter != null)
             {
                 DebugWriter.WriteLine("Received:");
                 Utilities.DumpBytes(DebugWriter, buffer, 0, buffer.Length);
@@ -885,7 +888,7 @@ namespace ManagedClient
                         break;
                     case "arm":
                     case "workstation":
-                        Workstation = (IrbisWorkstation)(byte)(value[0]);
+                        Workstation = (IrbisWorkstation)(byte)value[0];
                         break;
                     case "data":
                         UserData = value;
@@ -954,8 +957,6 @@ namespace ManagedClient
         /// <summary>
         /// Декодирование переводов строки из представления ИРБИС.
         /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
         public static string DecodeNewLines
             (
                 string text
@@ -969,6 +970,9 @@ namespace ManagedClient
             return result;
         }
 
+        /// <summary>
+        /// Переподключение (в случае ошибки).
+        /// </summary>
         public void Reconnect()
         {
             _connected = false;
@@ -1117,6 +1121,9 @@ namespace ManagedClient
             return null;
         }
 
+        /// <summary>
+        /// Отключение от сервера.
+        /// </summary>
         public void Disconnect()
         {
             // Возвращаемое значение не используется.
@@ -1161,6 +1168,9 @@ namespace ManagedClient
             return null;
         }
 
+        /// <summary>
+        /// Пустая операция.
+        /// </summary>
         public void NoOp()
         {
             // Возвращаемое значение не используется.
@@ -1168,6 +1178,9 @@ namespace ManagedClient
             _NoOp(null, new IrbisCommadEventArgs(this));
         }
 
+        /// <summary>
+        /// Обновление данных в серверном INI-файле.
+        /// </summary>
         public void WriteIni
             (
                 string[] iniText
@@ -1199,6 +1212,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Получение версии сервера.
+        /// </summary>
         public IrbisVersion GetVersion()
         {
             _CheckConnected();
@@ -1230,6 +1246,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Чтение текстового файла с сервера.
+        /// </summary>
         public string ReadTextFile
             (
                 IrbisPath path,
@@ -1273,12 +1292,15 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Чтение текстового файла с сервера.
+        /// </summary>
         public string ReadTextFile
             (
                 string name
             )
         {
-            string result = (Cache == null)
+            string result = Cache == null
                 ? ReadTextFile(IrbisPath.MasterFile, name)
                 : Cache.Get(name, this);
 
@@ -1294,6 +1316,9 @@ namespace ManagedClient
             return result;
         }
 
+        /// <summary>
+        /// Получение списка файлов на сервере.
+        /// </summary>
         public string[] ListFiles
             (
                 IrbisPath path,
@@ -1339,6 +1364,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Сохранение текстового файла на сервере.
+        /// </summary>
         public void WriteTextFile
             (
                 IrbisPath path,
@@ -1414,7 +1442,7 @@ namespace ManagedClient
             byte[] buffer = _client.GetStream().ReadToEnd();
 
             if (AllowHexadecimalDump
-                 && (DebugWriter != null))
+                 && DebugWriter != null)
             {
                 DebugWriter.WriteLine("Received:");
                 Utilities.DumpBytes(DebugWriter, buffer, 0, buffer.Length);
@@ -1492,6 +1520,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Чтение сырой записи с сервера.
+        /// </summary>
         public string[] ReadRawRecord
             (
                 int mfn,
@@ -1632,12 +1663,18 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Получение максимального MFN текущей базы данных.
+        /// </summary>
         public int GetMaxMfn()
         {
             return _GetMaxMfn(null, new IrbisCommadEventArgs(this));
         }
 
-        public int GetMaxMfnDatabase
+        /// <summary>
+        /// Получение максимального MFN для указанной базы данных.
+        /// </summary>
+        public int GetMaxMfn
             (
                 string database
             )
@@ -1649,6 +1686,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Чтение указанных записей.
+        /// </summary>
         public IrbisRecord[] ReadRecords
             (
                 IEnumerable<int> mfns
@@ -1682,6 +1722,9 @@ namespace ManagedClient
             return result;
         }
 
+        /// <summary>
+        /// Сохранение записей.
+        /// </summary>
         public void WriteRecords
             (
                 IrbisRecord[] records,
@@ -1737,6 +1780,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Сохранение сырых записей.
+        /// </summary>
         public void WriteRawRecords
             (
                 string[] records,
@@ -1786,6 +1832,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Сохранение записи на сервере.
+        /// </summary>
         public void WriteRecord
             (
                 IrbisRecord record,
@@ -1793,7 +1842,7 @@ namespace ManagedClient
                 bool ifUpdate
             )
         {
-            if ((record.Mfn == 0)
+            if (record.Mfn == 0
                 && record.Deleted
                 )
             {
@@ -1857,6 +1906,9 @@ namespace ManagedClient
             WriteRecord(clone, needLock, ifUpdate);
         }
 
+        /// <summary>
+        /// Сырой поиск записей.
+        /// </summary>
         public string[] RawSearch
             (
                 string expression,
@@ -1897,6 +1949,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Поиск  записей.
+        /// </summary>
         public int[] Search
             (
                 string format,
@@ -1962,6 +2017,9 @@ namespace ManagedClient
                 .ToArray();
         }
 
+        /// <summary>
+        /// Определение количества записей, соответствующих поисковому запросу.
+        /// </summary>
         public int SearchCount
             (
                 string format,
@@ -2023,6 +2081,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Поиск и загрузка найденных записей.
+        /// </summary>
         public IrbisRecord[] SearchRead
             (
                 string expression,
@@ -2064,6 +2125,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Поиск и загрузка первой из найденных баз данных.
+        /// </summary>
         public IrbisRecord SearchReadOneRecord
             (
                 string expression,
@@ -2071,7 +2135,7 @@ namespace ManagedClient
             )
         {
             IrbisRecord[] result = SearchRead(expression, args);
-            return ((result == null) || (result.Length == 0))
+            return result == null || result.Length == 0
                        ? null
                        : result[0];
         }
@@ -2090,6 +2154,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Поиск и форматирование найденных записей.
+        /// </summary>
         public string[] SearchFormat
             (
                 string expression,
@@ -2169,13 +2236,17 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Форматирование "виртуальной записи".
+        /// </summary>
         public string FormatRecord
             (
                 string format,
                 IrbisRecord record
             )
         {
-            if (format == "@" /* и версия сервера ниже той, когда разработчики наконец исправят ошибку */)
+            if (format == "@" /* и версия сервера ниже той, когда
+                разработчики наконец исправят ошибку */)
                 format += OptFileRecord.SelectOptFile(record);
 
             _CheckConnected();
@@ -2214,6 +2285,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Форматирование записи с указанным MFN.
+        /// </summary>
         public string FormatRecord
             (
                 string format,
@@ -2263,6 +2337,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Форматирование записей с указанными MFN.
+        /// </summary>
         public string[] FormatRecords
             (
                 string format,
@@ -2486,6 +2563,19 @@ namespace ManagedClient
         /// неактуализированных и заблокированных записей.</returns>
         public IrbisDatabaseInfo GetDatabaseInfo()
         {
+            return GetDatabaseInfo(Database);
+        }
+
+        /// <summary>
+        /// Получение информации о базе данных.
+        /// </summary>
+        /// <returns>список логически удаленных, физически удаленных,
+        /// неактуализированных и заблокированных записей.</returns>
+        public IrbisDatabaseInfo GetDatabaseInfo
+            (
+                string database
+            )
+        {
             _CheckConnected();
             _CheckBusy();
 
@@ -2494,7 +2584,7 @@ namespace ManagedClient
                 _SetBusy(true);
                 _OpenSocket();
                 QueryHeader query = _CreateQuery('0');
-                _Send(query, Database);
+                _Send(query, database);
                 string answer = _Receive(false);
                 _DebugDump(answer);
                 ResponseHeader response = ResponseHeader.Parse(answer);
@@ -2508,18 +2598,6 @@ namespace ManagedClient
             {
                 _CloseSocket();
                 _SetBusy(false);
-            }
-        }
-
-        public IrbisDatabaseInfo GetDatabaseInfo
-            (
-                string database
-            )
-        {
-            using (new IrbisContextSaver(this))
-            {
-                Database = database;
-                return GetDatabaseInfo();
             }
         }
 
@@ -2565,6 +2643,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Получение термов поискового словаря.
+        /// </summary>
         public SearchTermInfo[] GetSearchTerms
             (
                 string startTerm,
@@ -2604,12 +2685,15 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Получение термов поискового словаря с расформатированием.
+        /// </summary>
         public SearchPostingInfo[] GetSearchTerms
-        (
-            string startTerm,
-            int count,
-            string format
-        )
+            (
+                string startTerm,
+                int count,
+                string format
+            )
         {
             if (count < 0)
             {
@@ -2760,7 +2844,7 @@ namespace ManagedClient
                 ResponseHeader response = ResponseHeader.Parse(answer);
                 _CheckReturnCode(response, -202);
                 SearchPostingInfo[] postings = SearchPostingInfo.Parse(response.Data);
-                return (postings.Length == 0)
+                return postings.Length == 0
                     ? 0
                     : postings[0].Mfn;
             }
@@ -2808,7 +2892,7 @@ namespace ManagedClient
                         if (!string.IsNullOrEmpty(text))
                         {
                             if (!result.Contains(text)
-                                && (term.Count != 0))
+                                && term.Count != 0)
                             {
                                 result.Add(text);
                             }
@@ -3095,6 +3179,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Разблокировка базы данных.
+        /// </summary>
         public void UnlockDatabase
             (
                 string databaseName
@@ -3125,6 +3212,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Получение флага, заблокирована ли указанная база данных.
+        /// </summary>
         public bool IsDatabaseLocked
             (
                 string databaseName
@@ -3137,7 +3227,6 @@ namespace ManagedClient
             {
                 _SetBusy(true);
                 _OpenSocket();
-                //QueryHeader query = _CreateQuery('#');
                 QueryHeader query = _CreateQuery('0');
                 _Send
                     (
@@ -3148,13 +3237,9 @@ namespace ManagedClient
                 _DebugDump(answer);
                 ResponseHeader response = ResponseHeader.Parse(answer);
                 _CheckReturnCode(response);
-                if (response.Data.Count > 6)
-                {
-                    bool result = (Convert.ToInt32(response.Data[0]) == 0)
-                        && (Convert.ToInt32(response.Data[6]) != 0);
-                    return result;
-                }
-                return false;
+                IrbisDatabaseInfo info =
+                    IrbisDatabaseInfo.ParseServerResponse(response.Data.ToArray());
+                return info.DatabaseLocked;
             }
             finally
             {
@@ -3163,6 +3248,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Пересоздание словаря для указанной базы данных.
+        /// </summary>
         public void RebuildDictionary
             (
                 string database
@@ -3250,6 +3338,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Актуализировать указанную базу данных.
+        /// </summary>
         public void ActualizeDatabase
             (
                 string database
@@ -3617,9 +3708,8 @@ namespace ManagedClient
         }
 
         /// <summary>
-        /// Последовательный поиск.
+        /// Сырой последовательный поиск.
         /// </summary>
-        /// <returns></returns>
         public string[] RawSequentialSearch
             (
                 string dictionaryExpression,
@@ -3640,7 +3730,7 @@ namespace ManagedClient
             {
                 booleanExpression = string.Concat
                     (
-                        (forEveryField ? "*!" : "!if "),
+                        forEveryField ? "*!" : "!if ",
                         booleanExpression,
                         " then '1' else '0' fi"
                     );
@@ -3677,6 +3767,9 @@ namespace ManagedClient
             }
         }
 
+        /// <summary>
+        /// Последовательный поиск.
+        /// </summary>
         public int[] SequentialSearch
             (
                 string dictionaryExpression,
@@ -3700,10 +3793,13 @@ namespace ManagedClient
                     forEveryRepeat
                 )
                 .Where(_ => !string.IsNullOrEmpty(_))
-                .Select(_ => int.Parse(_))
+                .Select(FastNumber.ParseInt32)
                 .ToArray();
         }
 
+        /// <summary>
+        /// Последовательный поиск.
+        /// </summary>
         public int[] SequentialSearch
             (
                 string dictionaryExpression,
@@ -3726,7 +3822,7 @@ namespace ManagedClient
                     false
                 )
                 .Where(_ => !string.IsNullOrEmpty(_))
-                .Select(_ => int.Parse(_))
+                .Select(FastNumber.ParseInt32)
                 .ToArray();
         }
 
@@ -3893,7 +3989,7 @@ namespace ManagedClient
             bool result = string.CompareOrdinal
                 (
                     actualVersion.Version,
-                    ("64." + minimumVersion)
+                    "64." + minimumVersion
                 ) >= 0;
 
             if (!result
@@ -4075,6 +4171,9 @@ namespace ManagedClient
 
         #region Implementation of IDisposable
 
+        /// <summary>
+        /// Отключение от сервера.
+        /// </summary>
         public void Dispose()
         {
             if (Connected)
@@ -4091,10 +4190,9 @@ namespace ManagedClient
                 {
                     handler(this, EventArgs.Empty);
                 }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch
+                catch (Exception exception)
                 {
-                    // Nothing to do here
+                    Debug.WriteLine(exception);
                 }
             }
         }

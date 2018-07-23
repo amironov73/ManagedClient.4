@@ -61,6 +61,7 @@
     <Compile Include="IniFileTest.cs" />
     <Compile Include="SaveToStreamTest.cs" />
     <Compile Include="ReaderInfoTest.cs" />
+    <Compile Include="DatabaseInfoTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ManagedClient\ManagedClient.vs2013.csproj">

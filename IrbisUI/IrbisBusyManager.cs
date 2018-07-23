@@ -76,7 +76,7 @@ namespace IrbisUI
             Client = client;
             Client.BusyChanged += _BusyChanged;
             Client.Disposing += _ClientDisposing;
-            
+
             Debug.WriteLine("LEAVE IrbisBusyManager..ctor");
         }
 
@@ -121,17 +121,14 @@ namespace IrbisUI
             Debug.WriteLine("ENTER IrbisBusyManager._BreakPressed");
             _DebugThreadName();
 
-            if (!ReferenceEquals(Client, null))
-            {
-                Client.Interrupted = true;
-            }
+            // TODO do something?
 
             Debug.WriteLine("LEAVE IrbisBusyManager._BreakPressed");
         }
 
         private void _BusyChanged
             (
-                object sender, 
+                object sender,
                 EventArgs e
             )
         {
