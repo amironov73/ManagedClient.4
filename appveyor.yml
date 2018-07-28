@@ -28,6 +28,8 @@ build:
   parallel: true
   verbosity: minimal
 
+test: off
+
 artifacts:
   - path: IrbisUI\bin\Debug
     name: ManagedClient
