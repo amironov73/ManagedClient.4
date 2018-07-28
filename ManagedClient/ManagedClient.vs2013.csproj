@@ -82,6 +82,15 @@
     <Compile Include="FastNumber.cs" />
     <Compile Include="Fields\ExemplarManager.cs" />
     <Compile Include="IHandmadeSerializable.cs" />
+    <Compile Include="ImportExport\Iso2709.cs" />
+    <Compile Include="ImportExport\IsoReader.cs" />
+    <Compile Include="ImportExport\IsoRecordHeader.cs" />
+    <Compile Include="ImportExport\MarcBibliographicalIndex.cs" />
+    <Compile Include="ImportExport\MarcBibliographicalLevel.cs" />
+    <Compile Include="ImportExport\MarcCatalogingRules.cs" />
+    <Compile Include="ImportExport\MarcRecordStatus.cs" />
+    <Compile Include="ImportExport\MarcRecordType.cs" />
+    <Compile Include="ImportExport\MarcRelatedRecord.cs" />
     <Compile Include="IrbisEncoding.cs" />
     <Compile Include="Output\AbstractOutput.cs" />
     <Compile Include="AfterQueryEventArgs.cs" />

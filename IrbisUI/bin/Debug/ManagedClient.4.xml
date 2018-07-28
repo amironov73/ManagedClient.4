@@ -874,6 +874,343 @@
             Просим объект восстановить себя из потока.
             </summary>
         </member>
+        <member name="T:ManagedClient.ImportExport.Iso2709">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.Iso2709.MarkerLength">
+            <summary>
+            Marker length.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.Iso2709.RecordDelimiter">
+            <summary>
+            Record delimiter.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.Iso2709.FieldDelimiter">
+            <summary>
+            Field delimiter.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.Iso2709.SubfieldDelimiter">
+            <summary>
+            Subfield delimiter.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ImportExport.Iso2709.ReadRecord(System.IO.Stream,System.Text.Encoding)">
+            <summary>
+            Разбор 2709.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ImportExport.Iso2709.WriteIso(ManagedClient.IrbisRecord,System.IO.Stream,System.Text.Encoding)">
+            <summary>
+            Выводит запись в ISO-поток.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.ImportExport.IsoReader">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:ManagedClient.ImportExport.IsoReader.#ctor(System.String,System.Text.Encoding)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ImportExport.IsoReader.#ctor(System.IO.Stream,System.Text.Encoding)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ImportExport.IsoReader.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>An <see cref="T:System.Collections.IEnumerator" />
+            object that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:ManagedClient.ImportExport.IsoReader.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>A <see cref="T:System.Collections.Generic.IEnumerator`1" />
+            that can be used to iterate through the collection.</returns>
+        </member>
+        <member name="M:ManagedClient.ImportExport.IsoReader.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+        </member>
+        <member name="T:ManagedClient.ImportExport.IsoRecordHeader">
+            <summary>
+            Summary description for MarcRecordHeader.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ImportExport.IsoRecordHeader.RecordStatus">
+            <summary>
+            Статус записи.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ImportExport.IsoRecordHeader.RecordType">
+            <summary>
+            Тип записи.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ImportExport.IsoRecordHeader.BibliographicalIndex">
+            <summary>
+            Библиографический указатель.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ImportExport.IsoRecordHeader.BibliographicalLevel">
+            <summary>
+            Уровень описания.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ManagedClient.ImportExport.IsoRecordHeader.CatalogingRules">
+            <summary>
+            Правила каталогизации.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ImportExport.IsoRecordHeader.RelatedRecord">
+            <summary>
+            Наличие связанной записи.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ImportExport.IsoRecordHeader.Encode(System.Byte[],System.Int32)">
+            <summary>
+            Encode the header.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ImportExport.IsoRecordHeader.Parse(System.String)">
+            <summary>
+            Parse text representation.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ImportExport.IsoRecordHeader.Parse(System.Byte[],System.Int32)">
+            <summary>
+            Parse binary representation.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ImportExport.IsoRecordHeader.GetDefault">
+            <summary>
+            Заголовок по умолчанию.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ImportExport.IsoRecordHeader.ToString">
+            <inheritdoc cref="M:System.Object.ToString" />
+        </member>
+        <member name="T:ManagedClient.ImportExport.MarcBibliographicalIndex">
+            <summary>
+            Библиографический указатель.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcBibliographicalIndex.PartOfMonograph">
+            <summary>
+            Часть монографии.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcBibliographicalIndex.PartOfSerialPrinting">
+            <summary>
+            Часть сериального издания.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcBibliographicalIndex.Collection">
+            <summary>
+            Коллекция.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcBibliographicalIndex.PartOfCollection">
+            <summary>
+            Часть коллекции.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcBibliographicalIndex.Monograph">
+            <summary>
+            Монография (книга, рукопись, картина и т.д.).
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcBibliographicalIndex.SerialPrinting">
+            <summary>
+            Сериальное издание, периодика.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.ImportExport.MarcBibliographicalLevel">
+            <summary>
+            Уровень кодирования библиографического описания.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcBibliographicalLevel.Full">
+            <summary>
+            Полный уровень описания.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcBibliographicalLevel.FullNotChecked">
+            <summary>
+            Полный уровень, но запись не была проверена.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcBibliographicalLevel.NotComplete">
+            <summary>
+            Не окончательно созданная запись.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcBibliographicalLevel.Minimal">
+            <summary>
+            Минимальный уровень.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcBibliographicalLevel.Publisher">
+            <summary>
+            Запись сделана по тематическому плану издательства.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcBibliographicalLevel.Unknown">
+            <summary>
+            Уровень неизвестен.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcBibliographicalLevel.NotAvailable">
+            <summary>
+            Невозможно установить уровень записи.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.ImportExport.MarcCatalogingRules">
+            <summary>
+            Код правил описания записи.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcCatalogingRules.NotConforming">
+            <summary>
+            Не соответствуте ISBD, AACR2
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcCatalogingRules.AACR2">
+            <summary>
+            Соответствует AACR2.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcCatalogingRules.ISBD">
+            <summary>
+            Соответствует ISBD.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.ImportExport.MarcRecordStatus">
+            <summary>
+            Статус записи.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordStatus.LevelUp">
+            <summary>
+            При изменении записи увеличивается ее уровень.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordStatus.Changed">
+            <summary>
+            При изменении записи уровень остался прежним.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordStatus.Deleted">
+            <summary>
+            Запись удалена, но информация о ней сохраняется.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordStatus.New">
+            <summary>
+            Новая запись.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordStatus.Publisher">
+            <summary>
+            Запись изменилась после того, как была введена с плана издательства.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.ImportExport.MarcRecordType">
+            <summary>
+            Тип записи.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordType.Text">
+            <summary>
+            Текстовый материал.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordType.ArchiveMaterial">
+            <summary>
+            Архивный материал, рукописи.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordType.PrintedMusic">
+            <summary>
+            Печатные ноты.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordType.HandwrittenMusic">
+            <summary>
+            Рукописные ноты.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordType.PrintedMap">
+            <summary>
+            Печатные карты.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordType.HandwrittenMap">
+            <summary>
+            Рукописные карты.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordType.Film">
+            <summary>
+            Фильмокопии, видеофильмы и проч.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordType.NonMusicRecord">
+            <summary>
+            Немузыкальные записи.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordType.MusicRecord">
+            <summary>
+            Музыкальные записи.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordType.Picture">
+            <summary>
+            Картины, фотографии и т.д. (двумерная графика).
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordType.ComputerFiles">
+            <summary>
+            Компьютерные файлы.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordType.MixedMaterial">
+            <summary>
+            Смешанные материалы.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRecordType.Sculpture">
+            <summary>
+            Скульптуры и другие трехмерные объекты.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.ImportExport.MarcRelatedRecord">
+            <summary>
+            Необходимость связанной записи.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRelatedRecord.NotRequired">
+            <summary>
+            Не требуется.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ImportExport.MarcRelatedRecord.Required">
+            <summary>
+            Требуется.
+            </summary>
+        </member>
         <member name="T:ManagedClient.IrbisEncoding">
             <summary>
             Encoding used by IRBIS
@@ -11118,6 +11455,16 @@
         <member name="M:ManagedClient.RecordField.GetEmbeddedFields">
             <summary>
             Gets the embedded fields.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RecordField.NormalizeTag(System.String)">
+            <summary>
+            Нормализация тега.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.RecordField.IsFixed(System.String)">
+            <summary>
+            Означает ли тег фиксированное поле.
             </summary>
         </member>
         <member name="M:ManagedClient.RecordField.SaveToStream(System.IO.BinaryWriter)">
