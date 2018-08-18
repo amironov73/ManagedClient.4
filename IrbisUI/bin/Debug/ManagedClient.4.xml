@@ -204,6 +204,114 @@
             Смешаны ли в тексте латиница с кириллицей?
             </summary>
         </member>
+        <member name="T:ManagedClient.ChunkedBuffer">
+            <summary>
+            Analog for <see cref="T:System.IO.MemoryStream"/> that uses
+            small chunks to hold the data.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.ChunkedBuffer.DefaultChunkSize">
+            <summary>
+            Default chunk size.
+            </summary>
+        </member>
+        <member name="T:ManagedClient.ChunkedBuffer.Chunk">
+            <summary>
+            Chunk of bytes.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ChunkedBuffer.ChunkSize">
+            <summary>
+            Chunk size.
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ChunkedBuffer.Eof">
+            <summary>
+            End of data?
+            </summary>
+        </member>
+        <member name="P:ManagedClient.ChunkedBuffer.Length">
+            <summary>
+            Total length.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.#ctor(System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.CopyFrom(System.IO.Stream,System.Int32)">
+            <summary>
+            Copy data from the stream.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.Peek">
+            <summary>
+            Peek one byte.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.Read(System.Byte[])">
+            <summary>
+            Read array of bytes.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Read bytes.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.ReadByte">
+            <summary>
+            Read one byte.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.ReadLine(System.Text.Encoding)">
+            <summary>
+            Read one line from the current position.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.Rewind">
+            <summary>
+            Rewind to the beginning.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.ToArrays(System.Int32)">
+            <summary>
+            Get internal buffers.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.ToBigArray">
+            <summary>
+            Get all data as one big array of bytes.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.Write(System.Byte[])">
+            <summary>
+            Write a block of bytes to the current stream
+            using data read from a buffer.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Write a block of bytes to the current stream
+            using data read from a buffer.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.Write(System.String,System.Text.Encoding)">
+            <summary>
+            Write the text with encoding.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.ChunkedBuffer.WriteByte(System.Byte)">
+            <summary>
+            Write a byte to the current stream at the current position.
+            </summary>
+        </member>
         <member name="T:ManagedClient.ConfigDatabase">
             <summary>
             CONFIG database.
@@ -904,7 +1012,7 @@
             Разбор 2709.
             </summary>
         </member>
-        <member name="M:ManagedClient.ImportExport.Iso2709.WriteIso(ManagedClient.IrbisRecord,System.IO.Stream,System.Text.Encoding)">
+        <member name="M:ManagedClient.ImportExport.Iso2709.WriteRecord(ManagedClient.IrbisRecord,System.IO.Stream,System.Text.Encoding)">
             <summary>
             Выводит запись в ISO-поток.
             </summary>

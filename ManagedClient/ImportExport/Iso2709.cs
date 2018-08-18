@@ -55,27 +55,28 @@ namespace ManagedClient.ImportExport
 
         #region Private members
 
-        private static void _Encode(char[] chars, int pos, int len, int val)
+        private static void _Encode(byte[] bytes, int pos, int len, int val)
         {
             unchecked
             {
                 len--;
                 for (pos += len; len >= 0; len--)
                 {
-                    chars[pos] = (char)(val % 10 + (byte)'0');
+                    bytes[pos] = (byte)(val % 10 + (byte)'0');
                     val /= 10;
                     pos--;
                 }
             }
         }
 
-        private static int _Encode(char[] chars, int pos, string str)
+        private static int _Encode(byte[] bytes, int pos, string str, Encoding encoding)
         {
-            if (!ReferenceEquals(chars, null) && !ReferenceEquals(str, null))
+            if (!ReferenceEquals(str, null))
             {
-                for (int i = 0; i < str.Length; pos++, i++)
+                byte[] encoded = encoding.GetBytes(str);
+                for (int i = 0; i < encoded.Length; pos++, i++)
                 {
-                    chars[pos] = str[i];
+                    bytes[pos] = encoded[i];
                 }
             }
 
@@ -143,6 +144,7 @@ namespace ManagedClient.ImportExport
                 }
 
                 int tag = FastNumber.ParseInt32(record, directory, 3);
+                string tagText = tag.ToInvariantString();
                 int fieldLength = FastNumber.ParseInt32
                     (
                         record,
@@ -155,7 +157,7 @@ namespace ManagedClient.ImportExport
                         directory + 3 + lengthOfLength,
                         lengthOfOffset
                     );
-                RecordField field = new RecordField(tag.ToInvariantString());
+                RecordField field = new RecordField(tagText);
                 result.Fields.Add(field);
                 if (tag < 10)
                 {
@@ -220,11 +222,11 @@ namespace ManagedClient.ImportExport
         /// <summary>
         /// Выводит запись в ISO-поток.
         /// </summary>
-        public static void WriteIso
+        public static void WriteRecord
             (
-                IrbisRecord record,
-                Stream stream,
-                Encoding encoding
+                [NotNull] IrbisRecord record,
+                [NotNull] Stream stream,
+                [NotNull] Encoding encoding
             )
         {
             int recordLength = MarkerLength;
@@ -236,117 +238,143 @@ namespace ManagedClient.ImportExport
             {
                 dictionaryLength += 12; // Одна статья справочника
                 RecordField field = record.Fields[i];
+                int tag = FastNumber.ParseInt32(field.Tag);
+                if (tag <= 0 || tag >= 1000)
+                {
+                    throw new IrbisException("Wrong field: " + field.Tag);
+                }
                 int fldlen = 0;
-                string tag = RecordField.NormalizeTag(field.Tag);
-                if (RecordField.IsFixed(tag))
+                if (tag < 10)
                 {
                     // В фиксированном поле не бывает подполей.
-                    fldlen += (field.Text ?? string.Empty).Length;
+                    fldlen += encoding.GetByteCount(field.Text ?? string.Empty);
                 }
                 else
                 {
                     fldlen += 2; // Индикаторы
+                    fldlen += encoding.GetByteCount(field.Text ?? string.Empty);
                     for (int j = 0; j < field.SubFields.Count; j++)
                     {
                         fldlen += 2; // Признак подполя и его код
-                        fldlen +=
+                        fldlen += encoding.GetByteCount
                             (
                                 field.SubFields[j].Text
                                 ?? string.Empty
-                            ).Length;
+                            );
                     }
                 }
-                fldlen += 1; // Разделитель полей
+
+                fldlen++; // Разделитель полей
+                if (fldlen >= 10000)
+                {
+                    throw new IrbisException("Record too long");
+                }
+
                 fieldLength[i] = fldlen;
                 recordLength += fldlen;
             }
             recordLength += dictionaryLength; // Справочник
             recordLength++; // Разделитель записей
 
+            if (recordLength >= 100000)
+            {
+                // Слишком длинная запись
+                throw new IrbisException("Record too long");
+            }
+
             // Приступаем к кодированию
             int dictionaryPosition = MarkerLength;
             int baseAddress = MarkerLength + dictionaryLength;
             int currentAddress = baseAddress;
-            char[] chars = new char[recordLength];
+            byte[] bytes = new byte[recordLength];
 
             // Кодируем маркер
-            for (int i = 0; i < baseAddress; i++)
+            for (int i = 0; i <= baseAddress; i++)
             {
-                chars[i] = ' ';
+                bytes[i] = (byte)' ';
             }
-            _Encode(chars, 0, 5, recordLength);
-            _Encode(chars, 12, 5, baseAddress);
+            _Encode(bytes, 0, 5, recordLength);
+            _Encode(bytes, 12, 5, baseAddress);
 
-            IsoRecordHeader hdr = IsoRecordHeader.GetDefault();
-            chars[5] = (char)hdr.RecordStatus;
-            chars[6] = (char)hdr.RecordType;
-            chars[7] = (char)hdr.BibliographicalIndex;
-            chars[10] = '2';
-            chars[11] = '2';
-            chars[17] = (char)hdr.BibliographicalLevel;
-            chars[18] = (char)hdr.CatalogingRules;
-            chars[19] = (char)hdr.RelatedRecord;
-            chars[20] = '4';
-            chars[21] = '5';
-            chars[22] = '0';
-            chars[23] = '0';
+            bytes[5] = (byte)'n';
+            bytes[6] = (byte)'a';
+            bytes[7] = (byte)'m';
+            bytes[8] = (byte)'2';
+            bytes[10] = (byte)'2';
+            bytes[11] = (byte)'2';
+            bytes[18] = (byte)'i';
+            bytes[20] = (byte)'4';
+            bytes[21] = (byte)'5';
+            bytes[22] = (byte)'0';
 
             // Кодируем конец справочника
-            chars[baseAddress - 1] = (char)FieldDelimiter;
+            bytes[baseAddress - 1] = FieldDelimiter;
+
             // Проходим по полям
             for (int i = 0; i < record.Fields.Count; i++, dictionaryPosition += 12)
             {
                 // Кодируем справочник
                 RecordField field = record.Fields[i];
-                string tag = RecordField.NormalizeTag(field.Tag);
-                _Encode(chars, dictionaryPosition, tag);
-                _Encode(chars, dictionaryPosition + 3, 4, fieldLength[i]);
-                _Encode(chars, dictionaryPosition + 7, 5, currentAddress - baseAddress);
+                int tag = FastNumber.ParseInt32(field.Tag);
+                _Encode(bytes, dictionaryPosition, 3, tag);
+                _Encode(bytes, dictionaryPosition + 3, 4, fieldLength[i]);
+                _Encode(bytes, dictionaryPosition + 7, 5, currentAddress - baseAddress);
 
                 // Кодируем поле
-                if (RecordField.IsFixed(tag))
+                if (tag < 10)
                 {
                     // В фиксированном поле не бывает подполей и индикаторов.
                     currentAddress = _Encode
                         (
-                            chars,
+                            bytes,
                             currentAddress,
-                            field.Text
+                            field.Text,
+                            encoding
                         );
                 }
                 else
                 {
 #if WITH_INDICATORS
 
-                    chars[currentAddress++] = fld.Indicator1.Value[0];
-                    chars[currentAddress++] = fld.Indicator2.Value[0];
+                    chars[currentAddress++] = (byte)fld.Indicator1.Value[0];
+                    chars[currentAddress++] = (byte)fld.Indicator2.Value[0];
 
 #else
 
-                    chars[currentAddress++] = ' ';
-                    chars[currentAddress++] = ' ';
+                    bytes[currentAddress++] = (byte)' ';
+                    bytes[currentAddress++] = (byte)' ';
 
 #endif
 
+                    currentAddress = _Encode
+                        (
+                            bytes,
+                            currentAddress,
+                            field.Text,
+                            encoding
+                        );
+
                     for (int j = 0; j < field.SubFields.Count; j++)
                     {
-                        chars[currentAddress++] = (char)SubfieldDelimiter;
-                        chars[currentAddress++] = field.SubFields[j].Code;
+                        bytes[currentAddress++] = SubfieldDelimiter;
+                        bytes[currentAddress++] = (byte)field.SubFields[j].Code;
                         currentAddress = _Encode
                             (
-                                chars,
+                                bytes,
                                 currentAddress,
-                                field.SubFields[j].Text
+                                field.SubFields[j].Text,
+                                encoding
                             );
                     }
                 }
-                chars[currentAddress++] = (char)FieldDelimiter;
+                bytes[currentAddress++] = FieldDelimiter;
             }
+
             // Ограничитель записи
-            chars[recordLength - 1] = (char)RecordDelimiter;
+            bytes[recordLength - 2] = FieldDelimiter;
+            bytes[recordLength - 1] = RecordDelimiter;
 
             // Собственно записываем
-            byte[] bytes = encoding.GetBytes(chars);
             stream.Write(bytes, 0, bytes.Length);
         }
 
