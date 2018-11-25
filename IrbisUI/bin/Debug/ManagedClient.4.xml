@@ -1365,6 +1365,62 @@
             Override OEM encoding.
             </summary>
         </member>
+        <member name="T:ManagedClient.LocalList`1">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:ManagedClient.LocalList`1.#ctor(System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.LocalList`1.GetEnumerator">
+            <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator" />
+        </member>
+        <member name="M:ManagedClient.LocalList`1.Add(`0)">
+            <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Add(`0)" />
+        </member>
+        <member name="M:ManagedClient.LocalList`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Add some items.
+            </summary>
+        </member>
+        <member name="M:ManagedClient.LocalList`1.Clear">
+            <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Clear" />
+        </member>
+        <member name="M:ManagedClient.LocalList`1.Contains(`0)">
+            <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Contains(`0)" />
+        </member>
+        <member name="M:ManagedClient.LocalList`1.CopyTo(`0[],System.Int32)">
+            <inheritdoc cref="M:System.Collections.Generic.ICollection`1.CopyTo(`0[],System.Int32)" />
+        </member>
+        <member name="M:ManagedClient.LocalList`1.Remove(`0)">
+            <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Remove(`0)" />
+        </member>
+        <member name="P:ManagedClient.LocalList`1.Count">
+            <inheritdoc cref="P:System.Collections.Generic.ICollection`1.Count" />
+        </member>
+        <member name="P:ManagedClient.LocalList`1.IsReadOnly">
+            <inheritdoc cref="P:System.Collections.Generic.ICollection`1.IsReadOnly" />
+        </member>
+        <member name="M:ManagedClient.LocalList`1.IndexOf(`0)">
+            <inheritdoc cref="M:System.Collections.Generic.IList`1.IndexOf(`0)" />
+        </member>
+        <member name="M:ManagedClient.LocalList`1.Insert(System.Int32,`0)">
+            <inheritdoc cref="M:System.Collections.Generic.IList`1.Insert(System.Int32,`0)" />
+        </member>
+        <member name="M:ManagedClient.LocalList`1.RemoveAt(System.Int32)">
+            <inheritdoc cref="M:System.Collections.Generic.IList`1.RemoveAt(System.Int32)" />
+        </member>
+        <member name="P:ManagedClient.LocalList`1.Item(System.Int32)">
+            <inheritdoc cref="P:System.Collections.Generic.IList`1.Item(System.Int32)" />
+        </member>
+        <member name="M:ManagedClient.LocalList`1.ToArray">
+            <summary>
+            Convert the list to array.
+            </summary>
+        </member>
         <member name="T:ManagedClient.Output.AbstractOutput">
             <summary>
             Абстрактный объект текстового вывода. 

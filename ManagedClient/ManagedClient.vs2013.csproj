@@ -93,6 +93,7 @@
     <Compile Include="ImportExport\MarcRecordType.cs" />
     <Compile Include="ImportExport\MarcRelatedRecord.cs" />
     <Compile Include="IrbisEncoding.cs" />
+    <Compile Include="LocalList.cs" />
     <Compile Include="Output\AbstractOutput.cs" />
     <Compile Include="AfterQueryEventArgs.cs" />
     <Compile Include="BatchRecordReader.cs" />

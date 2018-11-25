@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 using JetBrains.Annotations;
@@ -21,6 +20,7 @@ namespace ManagedClient
     /// <summary>
     /// Filters fields and subfields.
     /// </summary>
+    [PublicAPI]
     public static class FieldFilter
     {
         #region Private members
@@ -45,14 +45,25 @@ namespace ManagedClient
         [ItemNotNull]
         public static SubField[] AllSubFields
             (
-                this IEnumerable<RecordField> fields
+                [NotNull] this IEnumerable<RecordField> fields
             )
         {
-            return fields
-                .NonNullItems()
-                .SelectMany(field => field.SubFields)
-                .NonNullItems()
-                .ToArray();
+            LocalList<SubField> result = new LocalList<SubField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    foreach (SubField subField in field.SubFields)
+                    {
+                        if (!ReferenceEquals(subField, null))
+                        {
+                            result.Add(subField);
+                        }
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         // ==========================================================
@@ -68,10 +79,19 @@ namespace ManagedClient
                 [NotNull] string tag
             )
         {
-            return fields
-                .NonNullItems()
-                .Where(field => field.Tag.SameString(tag))
-                .ToArray();
+            LocalList<RecordField> result = new LocalList<RecordField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.SameString(tag))
+                    {
+                        result.Add(field);
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
@@ -85,29 +105,23 @@ namespace ManagedClient
                 [NotNull] string tag
             )
         {
+            LocalList<RecordField> result = new LocalList<RecordField>();
             int count = fields.Count;
-            List<RecordField> result = null;
             for (int i = 0; i < count; i++)
             {
-                if (fields[i].Tag == tag)
+                if (fields[i].Tag.SameString(tag))
                 {
-                    if (ReferenceEquals(result, null))
-                    {
-                        result = new List<RecordField>();
-                    }
                     result.Add(fields[i]);
                 }
             }
 
-            return ReferenceEquals(result, null)
-                ? EmptyFieldArray
-                : result.ToArray();
+            return result.ToArray();
         }
 
         /// <summary>
         /// Filter fields.
         /// </summary>
-        [NotNull]
+        [CanBeNull]
         public static RecordField GetField
             (
                 [NotNull] this IEnumerable<RecordField> fields,
@@ -115,9 +129,23 @@ namespace ManagedClient
                 int occurrence
             )
         {
-            return fields
-                .GetField(tag)
-                .GetOccurrence(occurrence);
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.SameString(tag))
+                    {
+                        if (occurrence == 0)
+                        {
+                            return field;
+                        }
+
+                        occurrence--;
+                    }
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -134,7 +162,7 @@ namespace ManagedClient
             int count = fields.Count;
             for (int i = 0; i < count; i++)
             {
-                if (fields[i].Tag == tag)
+                if (fields[i].Tag.SameString(tag))
                 {
                     if (occurrence == 0)
                     {
@@ -158,10 +186,19 @@ namespace ManagedClient
                 params string[] tags
             )
         {
-            return fields
-                .NonNullItems()
-                .Where(field => field.Tag.OneOf(tags))
-                .ToArray();
+            LocalList<RecordField> result = new LocalList<RecordField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.OneOf(tags))
+                    {
+                        result.Add(field);
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
@@ -176,22 +213,16 @@ namespace ManagedClient
             )
         {
             int count = fields.Count;
-            List<RecordField> result = null;
+            LocalList<RecordField> result = new LocalList<RecordField>();
             for (int i = 0; i < count; i++)
             {
                 if (fields[i].Tag.OneOf(tags))
                 {
-                    if (ReferenceEquals(result, null))
-                    {
-                        result = new List<RecordField>();
-                    }
                     result.Add(fields[i]);
                 }
             }
 
-            return ReferenceEquals(result, null)
-                ? EmptyFieldArray
-                : result.ToArray();
+            return result.ToArray();
         }
 
         /// <summary>
@@ -205,9 +236,22 @@ namespace ManagedClient
                 int occurrence
             )
         {
-            return fields
-                .GetField(tags)
-                .GetOccurrence(occurrence);
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.OneOf(tags))
+                    {
+                        if (occurrence == 0)
+                        {
+                            return field;
+                        }
+
+                        occurrence--;
+                    }
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -230,6 +274,7 @@ namespace ManagedClient
                     {
                         return fields[i];
                     }
+
                     occurrence--;
                 }
             }
@@ -248,9 +293,19 @@ namespace ManagedClient
                 [NotNull] Func<RecordField, bool> predicate
             )
         {
-            return fields
-                .Where(predicate)
-                .ToArray();
+            LocalList<RecordField> result = new LocalList<RecordField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (predicate(field))
+                    {
+                        result.Add(field);
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
@@ -264,10 +319,23 @@ namespace ManagedClient
                 [NotNull] Func<SubField, bool> predicate
             )
         {
-            return fields
-                .NonNullItems()
-                .Where(field => field.SubFields.Any(predicate))
-                .ToArray();
+            LocalList<RecordField> result = new LocalList<RecordField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    foreach (SubField subField in field.SubFields)
+                    {
+                        if (predicate(subField))
+                        {
+                            result.Add(field);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
@@ -282,12 +350,23 @@ namespace ManagedClient
                 [NotNull] Func<SubField, bool> predicate
             )
         {
-            return fields
-                .Where(field => field.SubFields
-                    .NonNullItems()
-                    .Any(sub => sub.Code.OneOf(codes)
-                                && predicate(sub)))
-                .ToArray();
+            LocalList<RecordField> result = new LocalList<RecordField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    foreach (SubField subField in field.SubFields)
+                    {
+                        if (subField.Code.OneOf(codes) && predicate(subField))
+                        {
+                            result.Add(field);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
@@ -302,13 +381,24 @@ namespace ManagedClient
                 params string[] values
             )
         {
-            return fields
-                .Where(field => field.SubFields
-                    .NonNullItems()
-                    .Any(sub => sub.Code.OneOf(codes)
-                                && sub.Text.OneOf(values))
-                )
-                .ToArray();
+            LocalList<RecordField> result = new LocalList<RecordField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    foreach (SubField subField in field.SubFields)
+                    {
+                        if (subField.Code.OneOf(codes)
+                            && subField.Text.OneOf(values))
+                        {
+                            result.Add(field);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
@@ -323,13 +413,24 @@ namespace ManagedClient
                 [NotNull] string value
             )
         {
-            return fields
-                .NonNullItems()
-                .Where(field => field.SubFields
-                    .NonNullItems()
-                    .Any(sub => sub.Code.SameChar(code)
-                                && sub.Text.SameString(value)))
-                .ToArray();
+            LocalList<RecordField> result = new LocalList<RecordField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    foreach (SubField subField in field.SubFields)
+                    {
+                        if (subField.Code.SameChar(code)
+                            && subField.Text.SameString(value))
+                        {
+                            result.Add(field);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
@@ -345,13 +446,27 @@ namespace ManagedClient
                 [NotNull] string[] values
             )
         {
-            return fields
-                .NonNullItems()
-                .Where(field => field.Tag.OneOf(tags))
-                .Where(field => field.SubFields
-                    .Any(sub => sub.Code.OneOf(codes)
-                                && sub.Text.OneOf(values)))
-                .ToArray();
+            LocalList<RecordField> result = new LocalList<RecordField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.OneOf(tags))
+                    {
+                        foreach (SubField subField in field.SubFields)
+                        {
+                            if (subField.Code.OneOf(codes)
+                                && subField.Text.OneOf(values))
+                            {
+                                result.Add(field);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
@@ -366,11 +481,26 @@ namespace ManagedClient
                 [NotNull] Func<SubField, bool> subPredicate
             )
         {
-            return fields
-                .NonNullItems()
-                .Where(fieldPredicate)
-                .Where(field => field.SubFields.Any(subPredicate))
-                .ToArray();
+            LocalList<RecordField> result = new LocalList<RecordField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (fieldPredicate(field))
+                    {
+                        foreach (SubField subField in field.SubFields)
+                        {
+                            if (subPredicate(subField))
+                            {
+                                result.Add(field);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         // ==========================================================
@@ -378,103 +508,207 @@ namespace ManagedClient
         /// <summary>
         /// Filter fields.
         /// </summary>
+        [NotNull]
+        [ItemNotNull]
         public static RecordField[] GetFieldRegex
             (
-                this IEnumerable<RecordField> fields,
-                string tagRegex
+                [NotNull] this IEnumerable<RecordField> fields,
+                [NotNull] string tagRegex
             )
         {
-            Regex regex = new Regex(tagRegex);
-            return fields
-                .NonNullItems()
-                .Where(field => regex.IsMatch(field.Tag.ThrowIfNull()))
-                .ToArray();
+            LocalList<RecordField> result = new LocalList<RecordField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null)
+                   && !string.IsNullOrEmpty(field.Tag))
+                {
+                    if (Regex.IsMatch(field.Tag, tagRegex))
+                    {
+                        result.Add(field);
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
         /// Filter fields.
         /// </summary>
+        [CanBeNull]
         public static RecordField GetFieldRegex
             (
-                this IEnumerable<RecordField> fields,
-                string tagRegex,
+                [NotNull] this IEnumerable<RecordField> fields,
+                [NotNull] string tagRegex,
                 int occurrence
             )
         {
-            return fields
-                .GetFieldRegex(tagRegex)
-                .GetOccurrence(occurrence);
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null)
+                    && !string.IsNullOrEmpty(field.Tag))
+                {
+                    if (Regex.IsMatch(field.Tag, tagRegex))
+                    {
+                        if (occurrence == 0)
+                        {
+                            return field;
+                        }
+
+                        occurrence--;
+                    }
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
         /// Filter fields.
         /// </summary>
+        [NotNull]
+        [ItemNotNull]
         public static RecordField[] GetFieldRegex
             (
-                this IEnumerable<RecordField> fields,
-                string[] tags,
-                string textRegex
+                [NotNull] this IEnumerable<RecordField> fields,
+                [NotNull] string[] tags,
+                [NotNull] string textRegex
             )
         {
-            Regex regex = new Regex(textRegex);
-            return fields
-                .GetField(tags)
-                .Where(field => !ReferenceEquals(field.Text, null))
-                .Where(field => regex.IsMatch(field.Text))
-                .ToArray();
+            LocalList<RecordField> result = new LocalList<RecordField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.OneOf(tags)
+                        && !string.IsNullOrEmpty(field.Text))
+                    {
+                        if (Regex.IsMatch(field.Text, textRegex))
+                        {
+                            result.Add(field);
+                        }
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
         /// Filter fields.
         /// </summary>
+        [CanBeNull]
         public static RecordField GetFieldRegex
             (
-                this IEnumerable<RecordField> fields,
-                string[] tags,
-                string textRegex,
+                [NotNull] this IEnumerable<RecordField> fields,
+                [NotNull] string[] tags,
+                [NotNull] string textRegex,
                 int occurrence
             )
         {
-            return fields
-                .GetFieldRegex(tags, textRegex)
-                .GetOccurrence(occurrence);
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.OneOf(tags)
+                        && !string.IsNullOrEmpty(field.Text))
+                    {
+                        if (Regex.IsMatch(field.Text, textRegex))
+                        {
+                            if (occurrence == 0)
+                            {
+                                return field;
+                            }
+
+                            occurrence--;
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
         /// Filter fields.
         /// </summary>
+        [NotNull]
+        [ItemNotNull]
         public static RecordField[] GetFieldRegex
             (
-                this IEnumerable<RecordField> fields,
-                string[] tags,
-                char[] codes,
-                string textRegex
+                [NotNull] this IEnumerable<RecordField> fields,
+                [NotNull] string[] tags,
+                [NotNull] char[] codes,
+                [NotNull] string textRegex
             )
         {
-            Regex regex = new Regex(textRegex);
-            return fields
-                .GetField(tags)
-                .Where(field => field.FilterSubFields(codes)
-                    .Where(sub => !ReferenceEquals(sub.Text, null))
-                    .Any(sub => regex.IsMatch(sub.Text)))
-                .ToArray();
+            LocalList<RecordField> result = new LocalList<RecordField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.OneOf(tags))
+                    {
+                        foreach (SubField subField in field.SubFields)
+                        {
+                            if (subField.Code.OneOf(codes)
+                                && !string.IsNullOrEmpty(subField.Text))
+                            {
+                                if (Regex.IsMatch(subField.Text, textRegex))
+                                {
+                                    result.Add(field);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
         /// Filter fields.
         /// </summary>
+        [CanBeNull]
         public static RecordField GetFieldRegex
             (
-                this IEnumerable<RecordField> fields,
-                string[] tags,
-                char[] codes,
-                string textRegex,
+                [NotNull] this IEnumerable<RecordField> fields,
+                [NotNull] string[] tags,
+                [NotNull] char[] codes,
+                [NotNull] string textRegex,
                 int occurrence
             )
         {
-            return fields
-                .GetFieldRegex(tags, codes, textRegex)
-                .GetOccurrence(occurrence);
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.OneOf(tags))
+                    {
+                        foreach (SubField subField in field.SubFields)
+                        {
+                            if (subField.Code.OneOf(codes)
+                                && !string.IsNullOrEmpty(subField.Text))
+                            {
+                                if (Regex.IsMatch(subField.Text, textRegex))
+                                {
+                                    if (occurrence == 0)
+                                    {
+                                        return field;
+                                    }
+
+                                    occurrence--;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
 
         // ==========================================================
@@ -490,23 +724,17 @@ namespace ManagedClient
             )
         {
             int count = fields.Count;
-            List<string> result = null;
+            LocalList<string> result = new LocalList<string>();
             for (int i = 0; i < count; i++)
             {
                 string text = fields[i].Text;
                 if (!string.IsNullOrEmpty(text))
                 {
-                    if (ReferenceEquals(result, null))
-                    {
-                        result = new List<string>();
-                    }
                     result.Add(text);
                 }
             }
 
-            return ReferenceEquals(result, null)
-                ? EmptyStringArray
-                : result.ToArray();
+            return result.ToArray();
         }
 
         /// <summary>
@@ -533,11 +761,20 @@ namespace ManagedClient
                 [NotNull] this IEnumerable<RecordField> fields
             )
         {
-            return fields
-                .NonNullItems()
-                .Select(field => field.GetFieldText())
-                .NonEmptyLines()
-                .ToArray();
+            LocalList<string> result = new LocalList<string>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    string text = field.Text;
+                    if (!string.IsNullOrEmpty(text))
+                    {
+                        result.Add(text);
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         // ==========================================================
@@ -553,9 +790,19 @@ namespace ManagedClient
                 params char[] codes
             )
         {
-            return subFields
-                .Where(sub => sub.Code.OneOf(codes))
-                .ToArray();
+            LocalList<SubField> result = new LocalList<SubField>();
+            foreach (SubField subField in subFields)
+            {
+                if (!ReferenceEquals(subField, null))
+                {
+                    if (subField.Code.OneOf(codes))
+                    {
+                        result.Add(subField);
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
@@ -570,22 +817,16 @@ namespace ManagedClient
             )
         {
             int count = subFields.Count;
-            List<SubField> result = null;
+            LocalList<SubField> result = new LocalList<SubField>();
             for (int i = 0; i < count; i++)
             {
                 if (subFields[i].Code.OneOf(codes))
                 {
-                    if (ReferenceEquals(result, null))
-                    {
-                        result = new List<SubField>();
-                    }
                     result.Add(subFields[i]);
                 }
             }
 
-            return ReferenceEquals(result, null)
-                ? EmptySubFieldArray
-                : result.ToArray();
+            return result.ToArray();
         }
 
         /// <summary>
@@ -599,11 +840,22 @@ namespace ManagedClient
                 params char[] codes
             )
         {
-            return fields
-                .NonNullItems()
-                .AllSubFields()
-                .Where(sub=>sub.Code.OneOf(codes))
-                .ToArray();
+            LocalList<SubField> result = new LocalList<SubField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    foreach (SubField subField in field.SubFields)
+                    {
+                        if (subField.Code.OneOf(codes))
+                        {
+                            result.Add(subField);
+                        }
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
@@ -618,10 +870,25 @@ namespace ManagedClient
                 char code
             )
         {
-            return fields
-                .NonNullItems()
-                .GetField(tag)
-                .GetSubField(code);
+            LocalList<SubField> result = new LocalList<SubField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.SameString(tag))
+                    {
+                        foreach (SubField subField in field.SubFields)
+                        {
+                            if (subField.Code.SameChar(code))
+                            {
+                                result.Add(subField);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
@@ -637,12 +904,34 @@ namespace ManagedClient
                 int subOccurrence
             )
         {
-            return fields
-                .NonNullItems()
-                .GetField(tag)
-                .GetOccurrence(fieldOccurrence)
-                .GetSubField(code)
-                .GetOccurrence(subOccurrence);
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.SameString(tag))
+                    {
+                        if (fieldOccurrence == 0)
+                        {
+                            foreach (SubField subField in field.SubFields)
+                            {
+                                if (subField.Code.SameChar(code))
+                                {
+                                    if (subOccurrence == 0)
+                                    {
+                                        return subField;
+                                    }
+
+                                    subOccurrence--;
+                                }
+                            }
+                        }
+
+                        fieldOccurrence--;
+                    }
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -657,11 +946,29 @@ namespace ManagedClient
                 int occurrence
             )
         {
-            return fields
-                .NonNullItems()
-                .GetField(tag)
-                .GetSubField(code)
-                .GetOccurrence(occurrence);
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.SameString(tag))
+                    {
+                        foreach (SubField subField in field.SubFields)
+                        {
+                            if (subField.Code.SameChar(code))
+                            {
+                                if (occurrence == 0)
+                                {
+                                    return subField;
+                                }
+
+                                occurrence--;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -675,12 +982,22 @@ namespace ManagedClient
                 char code
             )
         {
-            return fields
-                .NonNullItems()
-                .AllSubFields()
-                .NonNullItems()
-                .Where(sub => sub.Code.SameChar(code))
-                .ToArray();
+            LocalList<SubField> result = new LocalList<SubField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    foreach (SubField subField in field.SubFields)
+                    {
+                        if (subField.Code.SameChar(code))
+                        {
+                            result.Add(subField);
+                        }
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
@@ -695,13 +1012,25 @@ namespace ManagedClient
                 [NotNull] Func<SubField, bool> subPredicate
             )
         {
-            return fields
-                .NonNullItems()
-                .Where(fieldPredicate)
-                .NonNullItems()
-                .GetSubField()
-                .Where(subPredicate)
-                .ToArray();
+            LocalList<SubField> result = new LocalList<SubField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (fieldPredicate(field))
+                    {
+                        foreach (SubField subField in field.SubFields)
+                        {
+                            if (subPredicate(subField))
+                            {
+                                result.Add(subField);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
@@ -716,12 +1045,25 @@ namespace ManagedClient
                 [NotNull] char[] codes
             )
         {
-            return fields
-                .NonNullItems()
-                .GetField(tags)
-                .NonNullItems()
-                .GetSubField(codes)
-                .ToArray();
+            LocalList<SubField> result = new LocalList<SubField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.OneOf(tags))
+                    {
+                        foreach (SubField subField in field.SubFields)
+                        {
+                            if (subField.Code.OneOf(codes))
+                            {
+                                result.Add(subField);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         // ==========================================================
@@ -729,54 +1071,94 @@ namespace ManagedClient
         /// <summary>
         /// Filter subfields.
         /// </summary>
+        [NotNull]
+        [ItemNotNull]
         public static SubField[] GetSubFieldRegex
             (
-                this IEnumerable<SubField> subFields,
-                string codeRegex
+                [NotNull] this IEnumerable<SubField> subFields,
+                [NotNull] string codeRegex
             )
         {
-            Regex regex = new Regex(codeRegex);
-            return subFields
-                .Where(sub => regex.IsMatch(sub.Code.ToString()))
-                .ToArray();
+            LocalList<SubField> result = new LocalList<SubField>();
+            foreach (SubField subField in subFields)
+            {
+                if (!ReferenceEquals(subField, null))
+                {
+                    if (Regex.IsMatch(codeRegex, subField.CodeString))
+                    {
+                        result.Add(subField);
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
         /// Filter subfields.
         /// </summary>
+        [NotNull]
+        [ItemNotNull]
         public static SubField[] GetSubFieldRegex
             (
-                this IEnumerable<SubField> subFields,
-                char[] codes,
-                string textRegex
+                [NotNull] this IEnumerable<SubField> subFields,
+                [NotNull] char[] codes,
+                [NotNull] string textRegex
             )
         {
-            Regex regex = new Regex(textRegex);
-            return subFields
-                .GetSubField(codes)
-                .Where(sub => !ReferenceEquals(sub.Text, null)
-                              && regex.IsMatch(sub.Text))
-                .ToArray();
+            LocalList<SubField> result = new LocalList<SubField>();
+            foreach (SubField subField in subFields)
+            {
+                if (!ReferenceEquals(subField, null))
+                {
+                    if (subField.Code.OneOf(codes)
+                        && !string.IsNullOrEmpty(subField.Text))
+                    {
+                        if (Regex.IsMatch(subField.Text, textRegex))
+                        {
+                            result.Add(subField);
+                        }
+                    }
+                }
+            }
+            return result.ToArray();
         }
 
         /// <summary>
         /// Filter subfields.
         /// </summary>
+        [NotNull]
+        [ItemNotNull]
         public static SubField[] GetSubFieldRegex
             (
-                this IEnumerable<RecordField> fields,
-                string[] tags,
-                char[] codes,
-                string textRegex
+                [NotNull] this IEnumerable<RecordField> fields,
+                [NotNull] string[] tags,
+                [NotNull] char[] codes,
+                [NotNull] string textRegex
             )
         {
-            Regex regex = new Regex(textRegex);
-            return fields
-                .GetField(tags)
-                .AllSubFields()
-                .Where(sub => !ReferenceEquals(sub.Text, null)
-                              && regex.IsMatch(sub.Text))
-                .ToArray();
+            LocalList<SubField> result = new LocalList<SubField>();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.OneOf(tags))
+                    {
+                        foreach (SubField subField in field.SubFields)
+                        {
+                            if (subField.Code.OneOf(codes)
+                                && !string.IsNullOrEmpty(subField.Text))
+                            {
+                                if (Regex.IsMatch(subField.Text, textRegex))
+                                {
+                                    result.Add(subField);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return result.ToArray();
         }
 
         // ==========================================================
@@ -806,11 +1188,20 @@ namespace ManagedClient
                 [NotNull] this IEnumerable<SubField> subFields
             )
         {
-            return subFields
-                .NonNullItems()
-                .Select(sub=>sub.Text)
-                .NonEmptyLines()
-                .ToArray();
+            LocalList<string> result = new LocalList<string>();
+            foreach (SubField subField in subFields)
+            {
+                if (!ReferenceEquals(subField, null))
+                {
+                    string text = subField.Text;
+                    if (!string.IsNullOrEmpty(text))
+                    {
+                        result.Add(text);
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
 
         /// <summary>
@@ -824,12 +1215,24 @@ namespace ManagedClient
                 char code
             )
         {
-            return fields
-                .NonNullItems()
-                .GetField(tag)
-                .GetSubField(code)
-                .FirstOrDefault()
-                .GetSubFieldText();
+            foreach (RecordField field in fields)
+            {
+                if (!ReferenceEquals(field, null))
+                {
+                    if (field.Tag.SameString(tag))
+                    {
+                        foreach (SubField subField in field.SubFields)
+                        {
+                            if (subField.Code.SameChar(code))
+                            {
+                                return subField.Text;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
 
         // ==========================================================
