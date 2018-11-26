@@ -3140,6 +3140,16 @@
             Filters fields and subfields.
             </summary>
         </member>
+        <member name="F:ManagedClient.FieldFilter.EmptyFieldArray">
+            <summary>
+            Empty array of <see cref="T:ManagedClient.RecordField"/>.
+            </summary>
+        </member>
+        <member name="F:ManagedClient.FieldFilter.EmptySubFieldArray">
+            <summary>
+            Empty array of <see cref="T:ManagedClient.SubField"/>.
+            </summary>
+        </member>
         <member name="M:ManagedClient.FieldFilter.AllSubFields(System.Collections.Generic.IEnumerable{ManagedClient.RecordField})">
             <summary>
             Get all subfields.

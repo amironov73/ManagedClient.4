@@ -5,6 +5,7 @@
 
 using System;
 using System.Linq;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using ManagedClient;
@@ -13,7 +14,7 @@ using ManagedClient;
 
 namespace Tests
 {
-    [TestClass]
+    //[TestClass]
     public class ParallelReaderTest
     {
         //[TestMethod]
@@ -38,7 +39,7 @@ namespace Tests
         //    Assert.AreEqual(mfn, mfnList[mfnList.Length-1] + 1);
         //}
 
-        [TestMethod]
+        //[TestMethod]
         public void TestMethod2()
         {
             int[] mfnList = Enumerable.Range(1, 6000).ToArray();

@@ -5,6 +5,7 @@
 
 using System;
 using System.Linq;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using ManagedClient;
@@ -13,15 +14,15 @@ using ManagedClient;
 
 namespace Tests
 {
-    [TestClass]
+    //[TestClass]
     public class BatchFormatterTest
     {
-        [TestMethod]
+        //[TestMethod]
         public void TestMethod1()
         {
             using (ManagedClient64 client = new ManagedClient64())
             {
-                const string connectionString 
+                const string connectionString
                     = "host=192.168.3.2;port=6666;user=Никто;password=Нигде;db=IBIS;";
                 client.ParseConnectionString(connectionString);
                 client.Connect();

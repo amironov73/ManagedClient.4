@@ -7,10 +7,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests
 {
-    [TestClass]
+    //[TestClass]
     public class ReaderInfoTest
     {
-        [TestMethod]
+        //[TestMethod]
         public void TestReaderInfo()
         {
             const string fileName = "readers.biz";

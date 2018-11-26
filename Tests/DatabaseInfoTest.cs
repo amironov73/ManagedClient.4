@@ -1,14 +1,13 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using ManagedClient;
 
 namespace Tests
 {
-    [TestClass]
+    //[TestClass]
     public class DatabaseInfoTest
     {
-        [TestMethod]
+        //[TestMethod]
         public void GetDatabaseInfo_1()
         {
             string connectionString = "host=127.0.0.1;port=6666;user=1;password=1;db=ISTU;arm=A;";

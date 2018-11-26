@@ -25,14 +25,15 @@ namespace ManagedClient
     {
         #region Private members
 
-        private static readonly RecordField[] EmptyFieldArray
-            = new RecordField[0];
+        /// <summary>
+        /// Empty array of <see cref="RecordField"/>.
+        /// </summary>
+        public static readonly RecordField[] EmptyFieldArray = new RecordField[0];
 
-        private static readonly SubField[] EmptySubFieldArray
-            = new SubField[0];
-
-        private static readonly string[] EmptyStringArray
-            = new string[0];
+        /// <summary>
+        /// Empty array of <see cref="SubField"/>.
+        /// </summary>
+        public static readonly SubField[] EmptySubFieldArray = new SubField[0];
 
         #endregion
 

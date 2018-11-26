@@ -16,10 +16,10 @@ using ManagedClient;
 
 namespace Tests
 {
-    [TestClass]
+    //[TestClass]
     public class ExemplarInfoTest
     {
-        [TestMethod]
+        //[TestMethod]
         public void TestExemplarInfo1()
         {
             List<ExemplarInfo> exemplars;
@@ -37,7 +37,7 @@ namespace Tests
             exemplars.ToArray().SaveToZipFile("exemplars.biz");
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void TestExemplarInfo2()
         {
             //ExemplarInfo[] exemplars = IrbisIOUtils.ReadFromFile

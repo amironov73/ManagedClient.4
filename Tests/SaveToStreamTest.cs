@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Linq;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using ManagedClient;
 
 namespace Tests
 {
-    [TestClass]
+    //[TestClass]
     public class SaveToStreamTest
     {
-        [TestMethod]
+        //[TestMethod]
         public void TestSaveToStream()
         {
             const string fileName = "records.biz";
